@@ -1,0 +1,168 @@
+.move{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #989898;
+  cursor: pointer;
+}
+
+.req{
+  color: red;
+}
+
+td.handle , .handle   {
+   background-image:url(/admin_theme/assets/img/move.png);
+    background-repeat:no-repeat; 
+    background-position: center center;   
+    cursor:pointer;  
+}
+
+.group_move_placeholder {
+  display: table-row; 
+}
+
+#mask_price, #mask_old_price{
+    text-align: left !important;
+}
+
+ #preloader {
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    background-color:#fff; /* change if the mask should have another color then white */
+    z-index:9999; /* makes sure it stays on top */
+}
+
+.nw{
+    white-space: nowrap;
+}
+
+.ac{
+  text-align: center;
+}
+
+#sidebar .theme-brand li.theme-logo img {
+    width: 100%;
+    height: auto;
+    padding: 20px;
+}
+
+#sidebar .theme-brand {
+    background: #9ea1a8;
+}
+
+.btn-xs {
+    padding:5px 8px !Important;
+    font-size: 12px;
+}
+
+.table > tbody > tr > td {
+    background-color: #fff;
+}
+
+#change-content {
+    display: none;
+}
+
+.area-panel {
+    margin-bottom: 50px;
+    display: none;
+}
+
+.area-panel.show{
+    display: block;
+}
+
+.widget{
+    position: relative;
+    padding: 20px;
+    border-radius: 8px;
+    border: none;
+    background: #fff;
+}
+
+.dd-handle{
+    height: 44px;
+    background-color: #fff;
+}
+
+.dd3-content{
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+}
+
+.dd3-name {
+    display: flex;
+    align-items: center;
+}
+
+.dd3-name label{
+    margin: 0;
+}
+
+.fileinput .thumbnail {
+    height: 200px;
+    background-color: #ededed;
+}
+
+.fileinput .thumbnail img{
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+}
+
+.ck-content {
+    border: 1px solid #ccc !important;
+}
+
+.ck-editor .editor {
+    min-height: 300px;
+}
+
+.editor-wrapper {
+    background-color: #ededed;
+    padding: 30px;
+}
+
+.editor-wrapper .editor {
+    background-color: #fff;
+    -webkit-box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
+    -moz-box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
+    box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
+}
+
+.dd3-items {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.dd3-items ul, .dd3-items ul li {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.dd3-items ul li{
+    list-style: none;
+    border-left: 1px dashed #ccc;
+    padding-left: 10px;
+}
+
+.dd3-items ul li:first-child {
+    border-left: 0;
+    padding-left: 0;
+}
+
+.dd3-items ul li label {
+    margin-bottom: 0px;
+}
+
+.dd3-items ul li span.option-name {
+    margin-right: 10px;
+    display: inline-block;
+}

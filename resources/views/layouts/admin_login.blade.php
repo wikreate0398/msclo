@@ -1,149 +1,79 @@
 <!DOCTYPE html>
-<!--
-Template Name: Metronic - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.1
-Version: 3.6
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Like: www.facebook.com/keenthemes
-Purchase: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
--->
-<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
-<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
-<!--[if !IE]><!-->
 <html lang="en">
-<!--<![endif]-->
-<!-- BEGIN HEAD -->
 <head>
-<meta charset="utf-8"/>
-<title>Авторизация</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-<meta content="" name="description"/>
-<meta content="" name="author"/>
-<!-- BEGIN GLOBAL MANDATORY STYLES -->
-<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
-<link href="/admin_theme/theme/assets/global/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
-<link href="/admin_theme/theme/assets/global/plugins/simple-line-icons/simple-line-icons.min.css" rel="stylesheet" type="text/css"/>
-<link href="/admin_theme/theme/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="/admin_theme/theme/assets/global/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
-<!-- END GLOBAL MANDATORY STYLES -->
-<!-- BEGIN PAGE LEVEL STYLES -->
-<link href="/admin_theme/theme/assets/global/plugins/select2/select2.css" rel="stylesheet" type="text/css"/>
-<link href="/admin_theme/theme/assets/admin/pages/css/login3.css" rel="stylesheet" type="text/css"/>
-<!-- END PAGE LEVEL SCRIPTS -->
-<!-- BEGIN THEME STYLES -->
-<link href="/admin_theme/theme/assets/global/css/components.css" id="style_components" rel="stylesheet" type="text/css"/>
-<link href="/admin_theme/theme/assets/global/css/plugins.css" rel="stylesheet" type="text/css"/>
-<link href="/admin_theme/theme/assets/admin/layout/css/layout.css" rel="stylesheet" type="text/css"/>
-<link href="/admin_theme/theme/assets/admin/layout/css/themes/darkblue.css" rel="stylesheet" type="text/css" id="style_color"/>
-<link href="/admin_theme/theme/assets/admin/layout/css/custom.css" rel="stylesheet" type="text/css"/>
-<link rel="stylesheet" href="/admin_theme/assets/css/admin.css?v=<?=time()?>">
-<!-- Main styles -->
-<link href="{{ asset('css/loader.css') . '?v=' . time() }}" rel="stylesheet">
-
-<!-- END THEME STYLES -->
-<link rel="shortcut icon" href="/fav.ico">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>Login Boxed | CORK - Multipurpose Bootstrap Dashboard Template </title>
+    <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    <link href="{{ asset('admin_theme/admin/') }}/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin_theme/admin/') }}/assets/css/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('admin_theme/admin/') }}/assets/css/authentication/form-2.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_theme/admin/') }}/assets/css/forms/theme-checkbox-radio.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('admin_theme/admin/') }}/assets/css/forms/switches.css">
+    <link href="{{ asset('admin_theme/admin/') }}/plugins/notification/snackbar/snackbar.min.css" rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/loader.css') . '?v=' . time() }}" rel="stylesheet">
 </head>
-<!-- END HEAD -->
-<!-- BEGIN BODY -->
-<body class="login">
-<!-- BEGIN LOGO -->
-<div class="logo">
+<body class="form">
 
-</div>
-<!-- END LOGO -->
-<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
-<div class="menu-toggler sidebar-toggler">
-</div>
-<!-- END SIDEBAR TOGGLER BUTTON -->
-<!-- BEGIN LOGIN -->
-<div class="content">
-    <!-- BEGIN LOGIN FORM -->
-    <form class="login-form ajax__submit" action="{{ route('admin_run_login') }}" method="post">
-        {{ csrf_field() }}
-         
-        <div class="logo-content" style="margin-bottom: 30px; text-align: center;">
-            <img src="/img/logo.png" width="150px" alt="">
-        </div>
-        @if ($errors->has('login'))
-            <div class="alert alert-danger">{{ $errors->first('login') }}</div>
-        @endif
-        <div class="form-group">
-            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
-            <label class="control-label-ie8 visible-ie9">E-mail</label>
-            <div class="input-icon">
-                <i class="fa fa-user"></i>
-                <input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="E-mail" required name="email"/>
+<div class="form-container outer">
+    <div class="form-form">
+        <div class="form-form-wrap">
+            <div class="form-container">
+                <div class="form-content">
+
+                    <h1 class="">Войти</h1>
+
+                    <form class="text-left login-form ajax__submit" action="{{ route('admin_run_login') }}">
+
+                        {{ csrf_field() }}
+
+                        <div class="form">
+
+                            @if ($errors->has('login'))
+                                <div class="alert alert-danger">{{ $errors->first('login') }}</div>
+                            @endif
+
+                            <div id="username-field" class="field-wrapper input">
+                                <label for="username">E-MAIL</label>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                <input id="username" name="email" type="text" class="form-control" placeholder="E-mail">
+                            </div>
+
+                            <div id="password-field" class="field-wrapper input mb-2">
+                                <div class="d-flex justify-content-between">
+                                    <label for="password">ПАРОЛЬ</label>
+                                </div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                <input id="password" name="password" type="password" class="form-control" placeholder="Пароль">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="toggle-password" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </div>
+                            <div class="d-sm-flex justify-content-between">
+                                <div class="field-wrapper">
+                                    <button type="submit" class="btn btn-primary submit-btn" value="">Войти</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
+
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <label class="control-label visible-ie8 visible-ie9">Пароль</label>
-            <div class="input-icon">
-                <i class="fa fa-lock"></i>
-                <input class="form-control placeholder-no-fix" type="password" autocomplete="off" placeholder="Пароль" required name="password"/>
-            </div>
-        </div>
-        <div class="alert alert-danger" id="error-respond" style="display: none;"></div>
-        <div class="form-actions" style="border-bottom:none;"> 
-            <button type="submit" class="btn green-haze">
-            	Войти <i class="m-icon-swapright m-icon-white"></i>
-            </button>
-        </div>
-    </form>
-    <style>
-        #error-respond p{
-            color:#a94442 !important;
-        }
-    </style>
-    <!-- END LOGIN FORM -->
-
+    </div>
 </div>
-<!-- END LOGIN -->
-<!-- BEGIN COPYRIGHT -->
-<div class="copyright">
 
-</div>
-<!-- END COPYRIGHT -->
-<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
-<!-- BEGIN CORE PLUGINS -->
-<!--[if lt IE 9]>
-<script src="/admin_theme/theme/assets/global/plugins/respond.min.js"></script>
-<script src="/admin_theme/theme/assets/global/plugins/excanvas.min.js"></script>
-<![endif]-->
-<script src="/admin_theme/theme/assets/global/plugins/jquery.min.js" type="text/javascript"></script>
-<script src="/admin_theme/theme/assets/global/plugins/jquery-migrate.min.js" type="text/javascript"></script>
-<script src="/admin_theme/theme/assets/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="/admin_theme/theme/assets/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-<script src="/admin_theme/theme/assets/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
-<script src="/admin_theme/theme/assets/global/plugins/jquery.cokie.min.js" type="text/javascript"></script>
-<!-- END CORE PLUGINS -->
-<!-- BEGIN PAGE LEVEL PLUGINS -->
-<script src="/admin_theme/theme/assets/global/plugins/jquery-validation/js/jquery.validate.min.js" type="text/javascript"></script>
-<script type="text/javascript" src="/admin_theme/theme/assets/global/plugins/select2/select2.min.js"></script>
-<!-- END PAGE LEVEL PLUGINS -->
-<!-- BEGIN PAGE LEVEL SCRIPTS -->
-<script src="/admin_theme/theme/assets/global/scripts/metronic.js" type="text/javascript"></script>
-<script src="/admin_theme/theme/assets/admin/layout/scripts/layout.js" type="text/javascript"></script>
-<script src="/admin_theme/theme/assets/admin/layout/scripts/demo.js" type="text/javascript"></script>
- 
-<!-- Main scripts -->
-<script src="/admin_theme/assets/js/jquery.nestable.js?v=<?=time()?>" type="text/javascript"></script>
-<script src="/admin_theme/assets/js/ajax.js?v={time()}" type="text/javascript"></script>
- <script type="text/javascript" src="/admin_theme/theme/assets/global/plugins/bootstrap-notify/bootstrap-notify.min.js"></script>
- 
-<!-- END PAGE LEVEL SCRIPTS -->
-<script>
-jQuery(document).ready(function() {
-  Metronic.init(); // init metronic core components
-  Layout.init(); // init current layout 
-  Demo.init();
-});
-</script>
-<!-- END JAVASCRIPTS -->
+
+<!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+<script src="{{ asset('admin_theme/admin/') }}/assets/js/libs/jquery-3.1.1.min.js"></script>
+<script src="{{ asset('admin_theme/admin/') }}/bootstrap/js/popper.min.js"></script>
+<script src="{{ asset('admin_theme/admin/') }}/bootstrap/js/bootstrap.min.js"></script>
+<script src="{{ asset('admin_theme/admin/') }}/plugins/notification/snackbar/snackbar.min.js"></script>
+
+<script src="/admin_theme/assets/js/ajax.js?v={{time()}}" type="text/javascript"></script>
+
 </body>
-<!-- END BODY -->
 </html>

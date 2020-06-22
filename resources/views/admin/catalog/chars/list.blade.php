@@ -35,7 +35,7 @@
 
 					@if(!$item['parent_id'])
 						<li>
-							<span class="option-name">Использовать при оформлении заказа</span>
+							<span class="option-name">Использовать при добавлении в корзину</span>
 							<label class="switch s-success mr-2" style="margin-bottom: 0">
 								<input type="checkbox"
 									   {{ !empty($item['view_filter']) ? 'checked' : '' }}

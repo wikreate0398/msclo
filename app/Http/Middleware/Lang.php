@@ -25,6 +25,7 @@ class Lang
      */
     public function handle($request, Closure $next, $guard = null)
     {
+        return redirect()->route('admin_menu');
         $this->determine();
         \View::share( 'lang', $this->currentLang);
         \View::share( 'page_data', \Pages::pageData());

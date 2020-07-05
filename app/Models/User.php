@@ -46,24 +46,24 @@ class User extends Authenticatable
   
     public function scopeFilter($query)
     {
-        if(request()->search)
-        {
+        if(request()->search) {
             $searchQuery = request()->search;
             $query->where('name', 'like', '%'.$searchQuery.'%')
                   ->orWhere('email', 'like', '%'.$searchQuery.'%');
         } 
 
-        if (request()->sort) 
-        {
+        if (request()->sort) {
           $sort = request()->sort;
-          if ($sort == 'no-active') 
-          {
+          if ($sort == 'no-active') {
             $query->where('active', '!=', '1');
           } 
-          elseif ($sort == 'active') 
-          {
+          elseif ($sort == 'active') {
             $query->where('active', '1');
           }
+        }
+
+        if (in_array(request()->type, ['user', 'provider'])) {
+            $query->where('type', request()->type);
         }
 
         return $query;

@@ -1,5 +1,7 @@
 $(document).ready(function(){
     startMaskNewInput();
+
+    fileUploader();
  
     $('a.confirm_link').on('click', function(e){  
         if (!confirm($(this).attr('data-confirm'))) {
@@ -427,4 +429,52 @@ function selectUserType(select){
     } 
 
     $('.usr_pass').show();
+}
+
+function fileUploader(){
+    if($('input.file_uploader_input').length){
+
+        $('input.file_uploader_input').each(function(){
+            //console.log(jQuery.parseJSON(JSON.stringify($(this).data('fileuploader-files'))));
+            if(!$(this).closest('.fileuploader').length){
+                $(this).fileuploader({
+                    extensions: ['image/*'],
+                    addMore: true,
+                    limit: 5,
+                    maxSize:2,
+                    enableApi: true,
+                    captions: {
+                        button: function(options) { return 'Выбрать ' + (options.limit == 1 ? 'file' : 'файлы');},
+                        removeConfirmation: 'Подтвердить удаление',
+                        feedback: 'Выберите файлы',
+                        errors: {
+                            filesLimit: 'Вы можете загрузить не более ${limit} файлов.',
+                            filesType: 'Вы можете загрузить файлы формата jpg,jpeg,png',
+                            fileSize: '${name} is too large! Please choose a file up to ${fileMaxSize}MB.',
+                        }
+                    },
+                    onRemove: function(item, listEl, parentEl, newInputEl, inputEl) {
+                        if (!$(inputEl).attr('data-json')) return;
+                        var data = JSON.parse($(inputEl).attr('data-json'));
+                        jQuery.ajax({
+                            url: '/'+ajaxPath+'/deleteImageByField',
+                            type: 'POST',
+                            data: {
+                                table: data.table,
+                                field: data.field,
+                                value: item.name,
+                                _token: CSRF_TOKEN
+                            },
+                            headers: {'X-CSRF-TOKEN': CSRF_TOKEN},
+                            dataType: 'json',
+                            beforeSend: function() {},
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                if (XMLHttpRequest.status === 401) document.location.reload(true);
+                            },
+                        });
+                    },
+                });
+            }
+        });
+    }
 }

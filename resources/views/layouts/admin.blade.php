@@ -19,6 +19,9 @@
    <link href="{{ asset('admin_theme/admin/') }}/assets/css/elements/breadcrumb.css" rel="stylesheet" type="text/css" />
    <link href="{{ asset('admin_theme/admin') }}/assets/css/forms/theme-checkbox-radio.css" rel="stylesheet" type="text/css">
 
+   <link href="{{ asset('admin_theme/assets/js') }}/fileuploader/dist/font/font-fileuploader.css" media="all" rel="stylesheet">
+   <link href="{{ asset('admin_theme/assets/js') }}/fileuploader/dist/jquery.fileuploader.min.css" media="all" rel="stylesheet">
+
    <!-- END GLOBAL MANDATORY STYLES -->
 
    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
@@ -250,6 +253,8 @@
 <script src="{{ asset('admin_theme/admin/') }}/plugins/notification/snackbar/snackbar.min.js"></script>
 <script type="text/javascript" src="{{ asset('admin_theme') }}/assets/js/bootstrap-fileinput/bootstrap-fileinput.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/19.1.1/decoupled-document/ckeditor.js"></script>
+<script src="{{ asset('admin_theme/assets/js') }}/fileuploader/dist/jquery.fileuploader.min.js?v={{ time() }}" type="text/javascript"></script>
+
 <script type="text/javascript">
    feather.replace();
 </script>

@@ -25,7 +25,7 @@
 	 
 	<div class="row">
 		<div class="col-md-12" style="margin-bottom: 20px;">
-			<a onclick="$('.area-panel').toggleClass('show'); return false;" class="btn btn-primary btn-sm open-area-btn">
+			<a onclick="$('.area-panel').toggleClass('show'); $('.area-panel .nav-link:first').toggleClass('active'); return false;" class="btn btn-primary btn-sm open-area-btn">
 				<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Добавить
 			</a> 
 		</div>
@@ -34,7 +34,7 @@
 			<div class="widget">
 				<div class="widget-header animated-underline-content">
 					<ul class="nav nav-tabs mb-3" id="animateLine">
-						<li class="active nav-item">
+						<li class="nav-item">
 							<a href="#tab_1" data-toggle="tab" class="nav-link active" id="tab_1-tab" role="tab" aria-controls="tab_1" aria-selected="true">
 								Основное </a>
 						</li>
@@ -55,21 +55,70 @@
 							<div class="tab-pane fade show active" id="tab_1">
 								@include('admin.utils.input', ['label' => 'Название', 'lang' => true, 'name' => 'name'])
 
+								@include('admin.utils.input', ['label' => 'Код', 'name' => 'code'])
+
+								@include('admin.utils.textarea', ['label' => 'Описание', 'lang' => true, 'name' => 'description', 'ckeditor' => true])
+
+								<div class="form-group">
+									<label>Поставщик <span class="req">*</span></label>
+									<div>
+										<select name="id_provider" class="form-control">
+											<option value="0">Выбрать</option>
+											@foreach($providers as $provider)
+												<option value="{{ $provider->id }}">{{ $provider->name }}</option>
+											@endforeach
+										</select>
+									</div>
+								</div>
+
 								<div class="form-group">
 									<label>Категория <span class="req">*</span></label>
 									<div>
-										<select name="" class="form-control">
+										<select name="id_category" class="form-control">
 											<option value="0">Выбрать</option>
 											@catOptions(map_tree($categories->toArray()), 0)
 										</select>
 									</div>
 								</div>
 
-								@include('admin.utils.textarea', ['label' => 'Описание', 'lang' => true, 'name' => 'description', 'ckeditor' => true])
+								<div class="form-group">
+									<label>Характеристики</label>
+									<div>
+										<table class="table table-bordered">
+											@foreach($chars as $char)
+												<tr>
+													<th style="width: 5%; white-space: nowrap; vertical-align: middle">{{ $char->name_ru }}</th>
+													<td>
+														@if($char->type == 'input')
+															<textarea name="char[{{ $char->type }}][{{ $char->id }}]" class="form-control"></textarea>
+														@elseif($char->childs->count())
+															@foreach($char->childs as $child)
+																<div class="custom-control custom-{{ $char->type }}">
+																	<input type="{{ $char->type }}"
+																		   name="char[{{ $char->type }}][{{ $char->id }}]"
+																		   value="{{ $child->id }}"
+																		   class="custom-control-input"
+																		   id="item-{{ $child->id }}">
+																	<label class="custom-control-label" for="item-{{ $child->id }}">{{ $child->name_ru }}</label>
+																</div>
+															@endforeach
+														@endif
+													</td>
+												</tr>
+											@endforeach
+										</table>
+									</div>
+								</div>
 
-								@include('admin.utils.input', ['label' => 'Кол-во', 'attributes' => ['class' => 'number'], 'name' => 'quantity'])
+								<button class="btn btn-sm btn-info" type="button" onclick="addProductPrice()">Добавить цену</button>
 
-								@include('admin.utils.input', ['label' => 'Цена руб', 'attributes' => ['class' => 'number'], 'name' => 'price'])
+								<div class="form-group" id="product-prices" style="display: none; margin-top: 15px; width: 50%;">
+								</div>
+
+								<input type="file"
+									   name="files"
+									   class="file_uploader_input">
+
 							</div>
 
 							<div class="tab-pane fade" id="tab_2">

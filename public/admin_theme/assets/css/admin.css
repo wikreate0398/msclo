@@ -166,3 +166,8 @@ td.handle , .handle   {
     margin-right: 10px;
     display: inline-block;
 }
+
+.btn-delete1 {
+    display: flex;
+    align-items: center;
+}

@@ -98,11 +98,11 @@
 				<div class="widget-content">
 					<form action="">
 						<div class="row">
-							<div class="col-md-5">
+							<div class="col-md-4">
 								<input type="text" name="search" value="{{ @request()->search }}" class="form-control">
 							</div>
 
-							<div class="col-md-5">
+							<div class="col-md-3">
 								<select name="sort" class="form-control">
 									<option value="0">Сортировать</option>
 									<option value="all" {{ (request()->sort == 'all') ? 'selected' : '' }}>
@@ -112,6 +112,20 @@
 										Активные
 									</option>
 									<option value="no-active" {{ (request()->sort == 'no-active') ? 'selected' : '' }}>
+										Неактивные
+									</option>
+								</select>
+							</div>
+
+							<div class="col-md-3">
+								<select name="sort" class="form-control">
+									<option value="all" {{ (request()->type == 'all') ? 'selected' : '' }}>
+										Все
+									</option>
+									<option value="active" {{ (request()->sort == 'client') ? 'selected' : '' }}>
+										Активные
+									</option>
+									<option value="no-active" {{ (request()->sort == 'provider') ? 'selected' : '' }}>
 										Неактивные
 									</option>
 								</select>
@@ -132,11 +146,7 @@
 			@if($data->count())
 				<div class="widget">
 					<div class="widget-content">
-						@foreach($data->groupBy('typeData.name_ru') as $type_name => $clients)
-							@php
-								$userType = $clients->first()->type;
-							@endphp
-							<h3>{{ $type_name }}</h3>
+
 							<table class="table table-bordered">
 								<tbody>
 								<tr>
@@ -150,7 +160,7 @@
 								</tr>
 								</tbody>
 								<tbody>
-								@foreach($clients as $item)
+								@foreach($data as $item)
 									<tr>
 										<td style="width:5px; white-space: nowrap;">
 											<label class="switch s-success mr-2">
@@ -179,7 +189,7 @@
 								@endforeach
 								</tbody>
 							</table>
-						@endforeach
+
 					</div>
 				</div>
 			@else

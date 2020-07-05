@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin\Catalog;
 
+use App\Models\Catalog\Char;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Catalog\Category;
@@ -16,7 +18,7 @@ class ProductsController extends Controller
 
     private $redirectRoute = 'admin_products';
 
-    private $returnDataFields = ['name'];
+    private $returnDataFields = ['name', 'description', 'seo_title', 'seo_description', 'seo_keywords'];
 
     /**
      * Create a new controller instance.
@@ -39,6 +41,8 @@ class ProductsController extends Controller
         $data = [
             'data'       => $this->model->orderByRaw('page_up asc, id desc')->get(),
             'categories' => Category::orderByPageUp()->get(),
+            'providers'  => User::provider()->get(),
+            'chars'      => Char::orderByPageUp()->where('parent_id', 0)->with('childs')->get(),
             'table'      => $this->model->getTable(),
             'method'     => $this->method
         ]; 
@@ -48,8 +52,23 @@ class ProductsController extends Controller
 
     public function create(Request $request)
     {
-        $this->model->create(\Language::returnData($this->returnDataFields));
+        $transData = \Language::returnData($this->returnDataFields);
+
+        $insertData = array_merge($transData, [
+            'code'        => $request->code,
+            'id_category' => $request->id_category
+        ]);
+
+        $id = $this->model->create($insertData)->id;
+
+        $this->saveChars($id);
+
         return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save')); 
+    }
+
+    private function saveChars($id)
+    {
+
     }
 
     public function showeditForm($id)
@@ -67,6 +86,4 @@ class ProductsController extends Controller
         $data->fill(\Language::returnData($this->returnDataFields))->save();
         return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save')); 
     }
-
-
 }

@@ -54,7 +54,7 @@ class Product extends Model
             });
         }
 
-        if (request()->id_provider) {
+        if (request()->id_provider && request()->id_provider != 'all') {
             $query->where('id_provider', request()->id_provider);
         }
 

@@ -174,10 +174,10 @@ function serializeForm(form, button, action, button_txt){
         },
         complete: function() {
             $(button).attr('disabled', false);
-            $(button).css({
-                'padding-left': '0',
-                'padding-right': '0'
-            });
+            // $(button).css({
+            //     'padding-left': '0',
+            //     'padding-right': '0'
+            // });
 
             $(button).text(button_txt);
         }

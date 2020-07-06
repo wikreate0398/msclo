@@ -23,8 +23,28 @@ class Char extends Model
         'type'
     ];
 
+	protected $casts = [
+	    'view_filter' => 'integer'
+    ];
+
 	public function childs()
     {
         return $this->hasMany('App\Models\Catalog\Char', 'parent_id', 'id')->orderByPageUp();
+    }
+
+    public function valuesProducts()
+    {
+        return $this->belongsToMany('App\Models\Catalog\Product', 'chars_catalog', 'value', 'id_product');
+    }
+
+    public function scopeFilters($query)
+    {
+        return $query->where('view_filter', 1)
+                     ->where('parent_id', 0)
+                     ->whereIn('type', ['checkbox', 'radio'])
+                     ->with(['childs' => function($query) {
+                         return $query->withCount('valuesProducts');
+                     }])
+                     ->has('childs');
     }
 }

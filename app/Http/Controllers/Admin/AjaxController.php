@@ -117,4 +117,9 @@ class AjaxController extends Controller
         }
         return \App\Utils\JsonResponse::success(['message' => trans('admin.ajax_true')]);
     }
+
+    public function deleteImageByField(Request $request)
+    {
+        DB::table($request->table)->where("{$request->field}", $request->value)->delete();
+    }
 }

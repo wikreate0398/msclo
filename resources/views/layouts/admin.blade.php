@@ -39,6 +39,7 @@
       const CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
       const adminArea  = '{{ config("admin.path") }}';
       const editors = {};
+      const ajaxPath     = '{{ config("admin.path") }}/ajax';
    </script>
 
 </head>

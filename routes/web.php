@@ -142,7 +142,8 @@ Route::group(['prefix' => $adminPath, 'namespace' => 'Admin', 'middleware' => ['
 		Route::post('deleteElement', 'AjaxController@deleteElement')->name('deleteElement');
 		Route::post('deleteImg', 'AjaxController@deleteImg')->name('deleteImg');
         Route::post('sortElement', 'AjaxController@sortElement')->name('sortElement');
-	});
+        Route::post('deleteImageByField', 'AjaxController@deleteImageByField');
+    });
 
 	Route::get('logout', 'LoginController@logout')->name('admin_logout');
 });

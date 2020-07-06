@@ -18,8 +18,8 @@ const productPrice = `
         <div class="input-group-prepend">
             <span class="input-group-text">Цена/Кол-во</span>
         </div>
-        <input type="text" name="price" placeholder="Цена руб" class="form-control number">
-        <input type="text" name="quantity" placeholder="Кол-во " class="form-control number">
+        <input type="text" name="prices[price][]" placeholder="Цена руб" class="form-control number">
+        <input type="text" name="prices[quantity][]" placeholder="Кол-во " class="form-control number">
         <a href="javascript:;" onclick="deleteLoadItem(this, '.input-group')" class="btn btn-danger btn-delete1 btn-sm">
             <i class="fa fa-times"></i>
         </a>

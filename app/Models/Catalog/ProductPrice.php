@@ -4,7 +4,7 @@ namespace App\Models\Catalog;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CatalogPrice extends Model
+class ProductPrice extends Model
 {
 	public $timestamps = false;
 

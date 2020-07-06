@@ -247,7 +247,8 @@ return [
         'QrCode'   => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'Ballance'   => App\Utils\Ballance::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'PDF' => Barryvdh\DomPDF\Facade::class
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+        'ValidationError' => App\Utils\Exceptions\ValidationError::class
     ],
 
 ];

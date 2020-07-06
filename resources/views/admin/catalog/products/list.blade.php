@@ -1,26 +1,5 @@
 @extends('layouts.admin')
 
-@function ( catOptions($categories, $depth=0) )
-	@foreach ($categories as $item)
-
-		@php
-			if (!$item['parent_id']) {
-               $depth = 0;
-           }
-		@endphp
-
-		<option value="{{ $item['id'] }}" {{ ($item['parent_id'] && empty($item['childs'])) ? '' : 'disabled' }}>
-			{{ sepByNum($depth) }}
-			{{ $item['name_ru'] }}
-		</option>
-
-		@if(!empty($item['childs']))
-
-			@catOptions($item['childs'], $depth+1)
-		@endif
-	@endforeach
-@endfunction
-
 @section('content')
 	 
 	<div class="row">
@@ -40,7 +19,7 @@
 						</li>
 						<li class="nav-item">
 							<a href="#tab_2" data-toggle="tab" class="nav-link" id="tab_2-tab" role="tab" aria-controls="tab_2" aria-selected="false">
-								Сео </a>
+								Seo </a>
 						</li>
 					</ul>
 		            @include('admin.utils.language_switcher')
@@ -54,6 +33,8 @@
 						<div class="tab-content" id="animateLineContent-4">
 							<div class="tab-pane fade show active" id="tab_1">
 								@include('admin.utils.input', ['label' => 'Название', 'lang' => true, 'name' => 'name'])
+
+								@include('admin.utils.input', ['label' => 'Ссылка', 'req' => true, 'name' => 'url', 'help' => 'Без http://www и.т.п просто английская фраза, без пробелов, отражающая пункт меню, например Наш подход - our-approach'])
 
 								@include('admin.utils.input', ['label' => 'Код', 'name' => 'code'])
 
@@ -71,15 +52,7 @@
 									</div>
 								</div>
 
-								<div class="form-group">
-									<label>Категория <span class="req">*</span></label>
-									<div>
-										<select name="id_category" class="form-control">
-											<option value="0">Выбрать</option>
-											@catOptions(map_tree($categories->toArray()), 0)
-										</select>
-									</div>
-								</div>
+								@include('admin.catalog.products.utils.categories', ['categories' => $categories])
 
 								<div class="form-group">
 									<label>Характеристики</label>
@@ -95,7 +68,7 @@
 															@foreach($char->childs as $child)
 																<div class="custom-control custom-{{ $char->type }}">
 																	<input type="{{ $char->type }}"
-																		   name="char[{{ $char->type }}][{{ $char->id }}]"
+																		   name="char[{{ $char->type }}][{{ $char->id }}][]"
 																		   value="{{ $child->id }}"
 																		   class="custom-control-input"
 																		   id="item-{{ $child->id }}">
@@ -130,13 +103,13 @@
 							</div>
 						</div>
 
-{{--						<button type="submit" class="btn btn-success mt-3 submit-btn">Сохранить</button>--}}
+						<button type="submit" class="btn btn-success mt-3 submit-btn">Сохранить</button>
 					</form>
 				</div>
 			</div>
 		</div>
 
-	   	<div class="col-md-12 col-12">
+		<div class="col-md-9 col-9">
 			@if($data->count())
 				<div class="widget">
 					<div class="widget-content">
@@ -153,7 +126,7 @@
 							@foreach($data as $item)
 								<tr id="<?=$item['id']?>">
 									<td style="width:50px; text-align:center;" class="handle"> </td>
-									<td style="width:5px; white-space: nowrap;">
+									<td style="width:5px; white-space: nowrap;" align="center">
 										<label class="switch s-success mr-2">
 											<input type="checkbox"
 												   {{ !empty($item['view']) ? 'checked' : '' }}
@@ -179,9 +152,78 @@
 					</div>
 				</div>
 			@else
-				<div class="alert alert-warning">Нет данных</div>
+				<div class="col-md-12">
+					<div class="alert alert-warning">Нет данных</div>
+				</div>
 			@endif
-	   	</div>
+		</div>
+
+		<div class="col-md-3 col-3">
+			<div class="widget widget-activity-three" style="height: auto; margin-bottom: 20px;">
+				<h5 style="margin-bottom: 20px;">Фильтр</h5>
+				<div class="widget-content filter-content" style="padding: 0">
+
+					<div class="filter-item">
+						<h6>Поставщик</h6>
+						<select name="id_provider" id="id_provider" class="form-control" onchange="filterCatalog()">
+							<option value="all">Все</option>
+							@foreach($providers as $provider)
+								<option {{ (request()->id_provider == $provider->id) ? 'selected' : '' }} value="{{ $provider->id }}">{{ $provider->name }}</option>
+							@endforeach
+						</select>
+					</div>
+
+					@foreach($filters as $char)
+						<div class="filter-item">
+							<h6 style="border-bottom: 1px dashed #ccc; padding-bottom: 10px; margin-bottom: 10px;">{{ $char->name_ru }}</h6>
+							@foreach($char->childs as $child)
+								@if($child->values_products_count)
+									<div class="custom-control custom-{{ $char->type }}">
+										<input type="{{ $char->type }}"
+											   name="char[{{ $char->type }}][{{ $char->id }}][]"
+											   value="{{ $child->id }}"
+											   class="custom-control-input filter-input"
+											   id="filter-{{ $child->id }}"
+											   {{ (request()->params && in_array($child->id, explode(',', request()->params))) ? 'checked' : '' }}
+											   onchange="filterCatalog()">
+										<label class="custom-control-label" for="filter-{{ $child->id }}">
+											{{ $child->name_ru }} ({{ $child->values_products_count }})
+										</label>
+									</div>
+								@endif
+							@endforeach
+						</div>
+					@endforeach
+				</div>
+			</div>
+
+			@if(request()->params)
+				<div style="text-align: center">
+					<a href="/{{ $method }}" class="btn btn-danger" style="display: block">Сбросить</a>
+				</div>
+			@endif
+		</div>
 	</div>
+
+	<script>
+		function filterCatalog() {
+			olink='/{{ $method }}/';
+			const id_provider = $('#id_provider').val();
+
+			params='';
+			pluser='';
+			$.each($('input.filter-input'),function() {
+				if ($(this).is(':checked')) {
+					params+=pluser+$(this).val();
+					pluser=',';
+				}
+			});
+
+			flt='?filter=1';
+			if (params!='') flt+='&params='+params;
+			if (id_provider) flt+= '&id_provider=' + id_provider;
+			window.location.href = olink+flt;
+		}
+	</script>
 @stop
 

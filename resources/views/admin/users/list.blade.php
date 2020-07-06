@@ -118,15 +118,15 @@
 							</div>
 
 							<div class="col-md-3">
-								<select name="sort" class="form-control">
+								<select name="type" class="form-control">
 									<option value="all" {{ (request()->type == 'all') ? 'selected' : '' }}>
 										Все
 									</option>
-									<option value="active" {{ (request()->sort == 'client') ? 'selected' : '' }}>
-										Активные
+									<option value="user" {{ (request()->type == 'user') ? 'selected' : '' }}>
+										Клиент
 									</option>
-									<option value="no-active" {{ (request()->sort == 'provider') ? 'selected' : '' }}>
-										Неактивные
+									<option value="provider" {{ (request()->type == 'provider') ? 'selected' : '' }}>
+										Поставщик
 									</option>
 								</select>
 							</div>

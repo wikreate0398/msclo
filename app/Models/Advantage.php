@@ -15,7 +15,15 @@ class Advantage extends Model
 	protected $table = 'advantages';
 
 	protected $fillable = [
-        'name_ru', 
-        'name_en', 
-    ]; 
+        'name_ru',
+        'name_en',
+        'description_ru',
+        'description_en',
+        'image'
+    ];
+
+	public function scopeGetAll($query)
+    {
+        return $query->visible()->orderByPageUp()->get();
+    }
 }

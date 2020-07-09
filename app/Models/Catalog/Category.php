@@ -18,5 +18,5 @@ class Category extends Model
         'name_ru', 
         'name_en',
         'parent_id'
-    ]; 
+    ];
 }

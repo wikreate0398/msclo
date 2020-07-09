@@ -29,12 +29,10 @@ class Pages
     public static function pageData($page_type = false)
     {
         $query = new Menu;
-        if(!empty($page_type))
-        {
+        if(!empty($page_type)) {
             $query = $query->where('page_type', $page_type);
         }
-        else
-        { 
+        else {
             $query = $query->where('url', self::uriName());
         }
         return $query->first();

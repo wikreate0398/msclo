@@ -38,7 +38,7 @@ class Product extends Model
 
     public function prices()
     {
-        return $this->hasMany('App\Models\Catalog\ProductPrice', 'id_product', 'id');
+        return $this->hasMany('App\Models\Catalog\ProductPrice', 'id_product', 'id')->orderBy('quantity', 'asc');
     }
 
     public function images()

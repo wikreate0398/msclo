@@ -96,6 +96,10 @@ function getAppUrl($subdomain = false, $path = ''){
     return $url; 
 }
 
+function offLink(){
+    return 'style="cursor:default !important;" onclick="return false;"';
+}
+
 function percentFormat($percent=null, $zecimals = 1)
 {
     if (empty($percent)) return '0'; 
@@ -245,6 +249,22 @@ function adminMenu()
             'edit' => 'Редактировать'
         ],
 
+        'slider' => [
+            'name' => 'Слайдер',
+            'icon' => '<i data-feather="image"></i>',
+            'link' => '/'.config('admin.path').'/slider/',
+            'view' => true,
+            'edit' => 'Редактировать'
+        ],
+
+        'banners' => [
+            'name' => 'Баннера',
+            'icon' => '<i data-feather="layout"></i>',
+            'link' => '/'.config('admin.path').'/banners/',
+            'view' => true,
+            'edit' => 'Редактировать'
+        ],
+
 //        'advantages' => [
 //            'name' => 'Преимущества',
 //            'icon' => '<i data-feather="star"></i>',
@@ -269,13 +289,13 @@ function adminMenu()
             'edit' => 'Редактировать'
         ],
 
-//        'constants' => [
-//            'name' => 'Константы',
-//            'icon' => '<i data-feather="anchor"></i>',
-//            'link' => '/'.config('admin.path').'/constants/',
-//            'view' => true,
-//            'edit' => 'Редактировать'
-//        ],
+        'constants' => [
+            'name' => 'Константы',
+            'icon' => '<i data-feather="anchor"></i>',
+            'link' => '/'.config('admin.path').'/constants/',
+            'view' => true,
+            'edit' => 'Редактировать'
+        ],
 
         // Скрытые страницы
 
@@ -349,7 +369,7 @@ function lang()
 }
 
 function setUri($uri){
-    return '/' . lang() . '/' . $uri;
+    return '/' . lang() . '/' . trim($uri, '/');
 }
 
 function sepByNum($num) {

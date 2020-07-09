@@ -15,7 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+//        \View::share( 'lang', lang());
+//        \View::share( 'page_data', \Pages::pageData());
     }
 
     /**

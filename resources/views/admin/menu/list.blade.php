@@ -3,8 +3,6 @@
 @section('content')
 	 
 	<div class="row">
-
-
 		<div class="col-md-12" style="margin-bottom: 20px;">
 			<a onclick="$('.area-panel').toggleClass('show'); return false;" class="btn btn-primary btn-sm open-area-btn">
 				<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Добавить

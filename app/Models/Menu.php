@@ -26,5 +26,10 @@ class Menu extends Model
         'seo_description_en',
         'seo_keywords_ru', 
         'seo_keywords_en'
-    ]; 
+    ];
+
+	public function scopeGetAll($query)
+    {
+        return $query->where('view_top', 1)->orderByPageUp()->get();
+    }
 }

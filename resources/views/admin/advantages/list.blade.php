@@ -18,7 +18,11 @@
 
 						@include('admin.utils.input', ['label' => 'Название', 'lang' => true, 'name' => 'name'])
 
-						<button type="submit" class="btn btn-success">Сохранить</button>
+						@include('admin.utils.textarea', ['label' => 'Описание', 'lang' => true, 'name' => 'description'])
+
+						@include('admin.utils.image', ['inputName' => 'image'])
+
+						<button type="submit" class="btn btn-success submit-btn">Сохранить</button>
 					</form> 
 				</div>
 			</div>
@@ -33,11 +37,11 @@
 							<tr>
 								<td style="width:50px; text-align:center;"></td>
 								<th style="width:5%; text-align: center"><i class="fa fa-check-square" aria-hidden="true"></i></th>
-								<th class="nw">Заголовок</th>
+								<th class="nw">Название</th>
 								<th style="width:5%; text-align: center"><i class="fa fa-cogs" aria-hidden="true"></i></th>
 							</tr>
 							</tbody>
-							<tbody id="sort-items" data-table="{{ $table }}" data-action="{{ route('sortElement') }}">
+							<tbody class="sort-items" data-table="{{ $table }}" data-action="{{ route('sortElement') }}">
 							@foreach($data as $item)
 								<tr id="<?=$item['id']?>">
 									<td style="width:50px; text-align:center;" class="handle"> </td>

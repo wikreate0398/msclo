@@ -9,6 +9,8 @@ $(document).ready(function(){
         }
     });
 
+    var ss = $(".basic-select2").select2();
+
     $(document).find('table.eq-table-cell').each(function(){   
         //console.log($(table).find('thead tr th').length);
         var table = $(this);

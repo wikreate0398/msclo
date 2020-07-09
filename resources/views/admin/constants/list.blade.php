@@ -2,47 +2,46 @@
 
 @section('content')
 
-	@if(request()->dev)
-		<div class="note note-success" onclick="$('.taggle_win').slideToggle();" style="cursor:pointer; background-color:#F5F5F5;">
-			<i class="fa fa-plus"></i> Add
+		@if(\Auth::user()->id === 1)
+		<div class="btn btn-info" onclick="$('.taggle_win').slideToggle();" style="cursor:pointer; margin-bottom: 20px;">
+			<i class="fa fa-plus"></i> Добавить
 		</div>
+		@endif
 
-		<div class="row taggle_win">
+		<div class="row taggle_win" style="margin-bottom: 20px; display: none">
 			<div class="col-md-12">
-				<div class="portlet light bg-inverse">
-					<div class="portlet-body form">
+				<div class="widget">
 						<!-- BEGIN FORM-->
 						<form action="/{{ $method }}/createConstant" method="POST" class="ajax__submit form-horizontal" data-redirect="/{{ $method }}/?dev=1">
 							{{ csrf_field() }}
-							<div class="form-body">
 
 								<div class="form-group">
-									<label class="col-md-12 control-label">Define Name</label>
-									<div class="col-md-12">
+									<label>Константа</label>
+									<div>
 										<input type="text" class="form-control" name="name">
 									</div>
 								</div>
 
 								<div class="form-group">
-									<label class="col-md-12 control-label">Description</label>
-									<div class="col-md-12">
+									<label>Описание</label>
+									<div>
 										<input type="text" class="form-control" name="description">
 									</div>
 								</div>
 
 								<div class="form-group">
-									<label class="col-md-12 control-label">Editor</label>
-									<div class="col-md-12">
+									<label>Ckeditor</label>
+									<div>
 										<input type="checkbox" name="editor">
 									</div>
 								</div>
 
 								<div class="form-group">
-									<label class="col-md-12 control-label">Category
+									<label>Категория
 									</label>
-									<div class="col-md-12">
+									<div>
 										<select class="form-control" name="id_category">
-											<option value="0">Select...</option>
+											<option value="0">Выбрать...</option>
 											@foreach($categories as $item)
 												<option value="{{ $item['id'] }}">{{ $item["name"] }}</option>
 											@endforeach
@@ -52,70 +51,61 @@
 
 								@foreach($langs as $key => $language)
 									<div class="form-group">
-										<label class="col-md-12 control-label">Value {{ $language->short }}</label>
-										<div class="col-md-12">
+										<label> Значение {{ $language->short }}</label>
+										<div>
 											<textarea name="value[{{ $language->short }}]" class="form-control"></textarea>
 										</div>
 									</div>
 								@endforeach
 
 
-							</div>
-							<div class="form-actions">
-								<div class="row">
-									<div class="col-md-4">
-										<button type="submit" class="btn green submit-btn">Save</button>
-									</div>
-								</div>
-							</div>
+							<button type="submit" class="btn btn-success btn-submit">Сохранить</button>
 						</form>
 						<!-- END FORM-->
-					</div>
 				</div>
 			</div>
 		</div>
-	@endif
 
 	<div class="row">
-		<form action="/{{ $method }}/create" class="ajax__submit form-horizontal">
+		<div class="col-md-12">
 
-			{{ csrf_field() }}
+			<form action="/{{ $method }}/create" class="ajax__submit form-horizontal widget">
+
+				{{ csrf_field() }}
 
 
-			<div class="col-md-12">
-				<div class="list-group">
-					@foreach($data as $category => $constants) 
-						<div class="list-group-item">
-							<h2 class="list-group-item-heading">{{ $category }}</h2>
-							<hr>
-							<div class="list-group-item-text">
-								@foreach($constants as $constant)
-									<h4>{{ $constant->description }}</h4>
-									<div class="row">
-										@foreach($langs as $key => $language)
-											<div class="col-md-{{ 12/$langs->count() }}"> 
-												@if($langs->count() > 1)
-													<span style="display: block;" class="label label-info">
-														{{ $language->name }}
-													</span>
-												@endif 
-												<textarea name="data[{{ $constant->id }}][{{ $language->short }}]"
-														  class="form-control {{ $constant->editor ? 'ckeditor' : '' }}"
-														  style="max-width: 100%; min-width: 100%; min-height: 55px;">{{ @$constant->constants_value->keyBy('lang')[$language->short]['value'] }}</textarea>
-											</div>
-										@endforeach
-									</div>
-								@endforeach
+					<div class="list-group" style="margin-bottom: 20px">
+						@foreach($data as $category => $constants)
+							<div class="list-group-item">
+								<h2 class="list-group-item-heading">{{ $category }}</h2>
+								<hr>
+								<div class="list-group-item-text">
+									@foreach($constants as $constant)
+										<h5>{{ $constant->description }}</h5>
+										<div class="row" style="margin-bottom: 20px;">
+											@foreach($langs as $key => $language)
+												<div class="col-md-{{ 12/$langs->count() }}">
+													@if($langs->count() > 1)
+														<span style="display: block;" class="label label-info">
+															{{ $language->name }}
+														</span>
+													@endif
+													<textarea name="data[{{ $constant->id }}][{{ $language->short }}]"
+															  class="form-control {{ $constant->editor ? 'ckeditor' : '' }}"
+															  style="max-width: 100%; min-width: 100%; min-height: 55px;">{{ @$constant->constants_value->keyBy('lang')[$language->short]['value'] }}</textarea>
+												</div>
+											@endforeach
+										</div>
+									@endforeach
+								</div>
 							</div>
-						</div> 
-					@endforeach
-				</div>
-			</div>
- 
-			<div class="col-md-12" style="margin-top: 20px;">
-				<button type="submit" class="btn green">Save</button>
-			</div> 
-		</form>
+						@endforeach
+					</div>
+
+					<button type="submit" class="btn btn-success btn-submit">Сохранить</button>
+
+			</form>
+		</div>
 	</div>
 @stop
 

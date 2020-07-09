@@ -51,12 +51,26 @@ Route::group(['prefix' => $adminPath, 'namespace' => 'Admin', 'middleware' => ['
 		Route::post('{id}/update', 'LanuagesController@update');
 	});
 
-	Route::group(['prefix' => 'advantages'], function() {
-		Route::get('/', 'AdvantagesController@show')->name('admin_advantages');
-		Route::get('{id}/edit', 'AdvantagesController@showeditForm');
-		Route::post('create', 'AdvantagesController@create');
-		Route::post('{id}/update', 'AdvantagesController@update');
+	Route::group(['prefix' => 'slider'], function() {
+		Route::get('/', 'SliderController@show')->name('admin_slider');
+		Route::get('{id}/edit', 'SliderController@showeditForm');
+		Route::post('create', 'SliderController@create');
+		Route::post('{id}/update', 'SliderController@update');
 	});
+
+    Route::group(['prefix' => 'banners'], function() {
+        Route::get('/', 'BannersController@show')->name('admin_banners');
+        Route::get('{id}/edit', 'BannersController@showeditForm');
+        Route::post('create', 'BannersController@create');
+        Route::post('{id}/update', 'BannersController@update');
+    });
+
+    Route::group(['prefix' => 'advantages'], function() {
+        Route::get('/', 'AdvantagesController@show')->name('admin_advantages');
+        Route::get('{id}/edit', 'AdvantagesController@showeditForm');
+        Route::post('create', 'AdvantagesController@create');
+        Route::post('{id}/update', 'AdvantagesController@update');
+    });
 
     Route::group(['prefix' => 'profile-menu'], function() {
         Route::get('/', 'ProfileMenuController@show')->name('admin_profile_menu');

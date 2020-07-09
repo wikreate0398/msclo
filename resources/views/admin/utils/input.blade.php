@@ -3,7 +3,7 @@
 		<label>{!! $label !!} {!! @$req ? '<span class="req">*</span>' : '' !!}</label>
 		<input type="{{ empty($type) ? 'text' : $type }}" autocomplete="off" class="form-control {{ @$attributes['class'] }}" {{ @$req ? 'required' : '' }} value="{{ !empty($data[@$name]) ? $data[@$name] : '' }}" name="{{ $name }}">
 		@if(!empty($help))
-			<span class="help-block">{{ $help }}</span>
+			<span class="help-block">{!! $help !!}</span>
 		@endif
 	</div>
 @else
@@ -16,7 +16,7 @@
 			       name="{{ $name }}[{{$language['short']}}]">
 
 				@if(!empty($help))
-					<span class="help-block">{{ $help }}</span>
+					<span class="help-block">{!! $help !!}</span>
 				@endif
 		</div>
 	@endforeach

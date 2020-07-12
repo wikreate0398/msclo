@@ -342,7 +342,7 @@
                 <div class="catalog-product">
                     <ul class="row list-unstyled products-group no-gutters">
                         @foreach($catalog as $item)
-                            <li class="col-6 col-md-3 col-wd-2gdot4 product-item">
+                            <li class="col-6 col-md-3 col-wd-2gdot4 product-item js_list__item">
                                 @include('public.catalog.blocks.product_item', ['product' => $item])
                             </li>
                         @endforeach

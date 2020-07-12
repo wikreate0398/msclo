@@ -176,7 +176,7 @@
                                 <div class="tab-pane fade pt-2 {{ !$key ? 'show active' : '' }}" id="tag-tab-{{ $tag->id }}" role="tabpanel" aria-labelledby="tag-tab-{{ $tag->id }}-control">
                                     <ul class="row list-unstyled products-group no-gutters">
                                         @foreach($tag->products as $product)
-                                            <li class="col-6 col-wd-3 col-md-4 product-item d-wd-block remove-divider-wd list-product-{{ $product->id }}">
+                                            <li class="col-6 col-wd-3 col-md-4 product-item js_list__item d-wd-block remove-divider-wd list-product-{{ $product->id }}">
                                                 @include('public.catalog.blocks.product_item', ['product' => $product])
                                             </li>
                                         @endforeach
@@ -218,7 +218,7 @@
                             <div class="row no-gutters">
                                 <ul class="row list-unstyled products-group no-gutters mb-0 flex-xl-row flex-wd-row" style="width:100%;">
                                     @foreach($cat->products as $product)
-                                        <li class="col-xl-3 product-item max-width-xl-100 remove-divider list-product-{{ $product->id }}">
+                                        <li class="col-xl-3 product-item js_list__item max-width-xl-100 remove-divider list-product-{{ $product->id }}">
                                             <div class="product-item__outer h-100 w-100 prodcut-box-shadow">
                                                 <div class="product-item__inner bg-white p-3">
                                                     <div class="product-item__body pb-xl-2">

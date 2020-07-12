@@ -52,9 +52,50 @@ $(document).ready(function(){
 });
 
 $(window).load(function () {
-    fixHeight('.products-group-4-1-4');
+    setEqualHeight($('.products-group .product-item') , $('.products-group'));
     fixHeight('.catalog-product');
 });
+
+function setEqualHeight(columns, parent) {
+    if (!$(columns).length ) {
+        return false;
+    }
+
+    if (parent) {
+        var width       = $(parent).width();
+        var item_width  = $(columns).closest('.js_list__item').outerWidth();
+        var itemInRow = parseInt(width/item_width, 10);
+    }else{
+        var itemInRow = 3;
+    }
+
+
+    cloudHeight    = 0;
+    var totalItems = $(columns).length
+    if (totalItems < itemInRow) itemInRow = totalItems;
+
+    $(columns).each(function(index){
+        index=index+1;
+        currentHeight = $(this).height();
+        if(currentHeight > cloudHeight) {
+            cloudHeight = currentHeight;
+        }
+        rest = 0;
+        if (totalItems%itemInRow!=0) rest = totalItems%itemInRow;
+        if (index%itemInRow==0) {
+            for (var i = index - 1; i >= index-itemInRow; i--) {
+                $(columns).eq(i).height(cloudHeight);
+            }
+            if ((totalItems-index-1) == rest) {
+                for (var i = totalItems; i >=  totalItems-rest; i--) {
+                    $(columns).eq(i).height(cloudHeight);
+                }
+            }
+            cloudHeight=0;
+        }
+    });
+    return;
+}
 
 function fixHeight(item) {
     $(item).height($(item).height());

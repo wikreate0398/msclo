@@ -202,7 +202,14 @@
                     <ul class="nav nav-classic nav-tab nav-tab-sm px-md-3 justify-content-start justify-content-lg-center flex-nowrap flex-lg-wrap overflow-auto overflow-lg-visble border-md-down-bottom-0 pb-1 pb-lg-0 mb-n1 mb-lg-0" id="pills-tab-1" role="tablist">
                         @foreach($cats as $key => $cat)
                             <li class="nav-item flex-shrink-0 flex-lg-shrink-1">
-                                <a class="nav-link {{ !$key ? 'active' : '' }}" id="cat-{{ $cat->id }}" data-toggle="pill" href="#cat-tab-{{ $cat->id }}" role="tab" aria-controls="cat-{{ $cat->id }}" aria-selected="true">
+                                <a class="nav-link {{ !$key ? 'active' : '' }}"
+                                   id="cat-{{ $cat->id }}"
+                                   data-toggle="pill"
+                                   href="#cat-tab-{{ $cat->id }}"
+                                   role="tab"
+                                   aria-controls="cat-{{ $cat->id }}"
+                                   aria-selected="true"
+                                   onclick="setEqualHeight($('.products-group .product-item') , $('.products-group'));">
                                     <div class="d-md-flex justify-content-md-center align-items-md-center">
                                         {{ $cat["name_$lang"] }}
                                     </div>

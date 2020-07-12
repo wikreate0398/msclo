@@ -53,7 +53,7 @@ $(document).ready(function(){
 
 $(window).load(function () {
     setEqualHeight($('.products-group .product-item') , $('.products-group'));
-    fixHeight('.catalog-product');
+    //fixHeight('.catalog-product');
 });
 
 function setEqualHeight(columns, parent) {

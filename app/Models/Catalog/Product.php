@@ -38,7 +38,17 @@ class Product extends Model
 
     public function prices()
     {
-        return $this->hasMany('App\Models\Catalog\ProductPrice', 'id_product', 'id')->orderBy('quantity', 'asc');
+        return $this->hasMany('App\Models\Catalog\ProductPrice', 'id_product', 'id')->orderBy('price', 'asc');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany('App\Models\Catalog\Tag', 'catalog_tags', 'id_product', 'id_tag')->orderBy('page_up', 'asc');
+    }
+
+    public function category()
+    {
+        return $this->hasOne('App\Models\Catalog\Category', 'id', 'id_category');
     }
 
     public function images()
@@ -58,6 +68,45 @@ class Product extends Model
             $query->where('id_provider', request()->id_provider);
         }
 
+        $priceQuery = '(SELECT price FROM catalog_prices WHERE catalog_prices.id_product = catalog.id ORDER BY price asc LIMIT 1)';
+
+        $query->selectRaw("$priceQuery as price");
+
+        switch (request()->sort_by){
+            case ('price_asc'):
+                $query->orderByRaw("price asc");
+                break;
+            case ('price_desc'):
+                $query->orderByRaw("price desc");
+                break;
+            default:
+                $query->orderByPageUp();
+                break;
+        }
+
+        if (request('price_from') && request('price_to')) {
+            $query->whereBetween(\DB::Raw($priceQuery), [request('price_from'), request('price_to')]);
+        }
+
         return $query;
+    }
+
+    public function scopeWithRelations($query)
+    {
+        return $query->with(['images', 'prices', 'category']);
+    }
+
+    public function scopeGetFavorites($query)
+    {
+        $ids = session()->get('favorites');
+        return $query->whereIn('id', $ids ?: [])->withRelations()->orderByPageUp()->visible()->get();
+    }
+
+    public function scopeCatalog($query, $catIds)
+    {
+        return $query->select('catalog.*')
+                     ->whereIn('id_category', $catIds)
+                     ->withRelations()
+                     ->visible();
     }
 }

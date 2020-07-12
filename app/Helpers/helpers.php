@@ -225,6 +225,13 @@ function adminMenu()
                     'edit' => 'Редактировать'
                 ],
 
+                'tags' => [
+                    'name' => 'Тэги',
+                    'link' => '/'.config('admin.path').'/catalog/tags/',
+                    'view' => true,
+                    'edit' => 'Редактировать'
+                ],
+
                 'chars' => [
                     'name' => 'Характеристики',
                     'link' => '/'.config('admin.path').'/catalog/chars/',
@@ -261,6 +268,14 @@ function adminMenu()
             'name' => 'Баннера',
             'icon' => '<i data-feather="layout"></i>',
             'link' => '/'.config('admin.path').'/banners/',
+            'view' => true,
+            'edit' => 'Редактировать'
+        ],
+
+        'brands' => [
+            'name' => 'Брэнды',
+            'icon' => '<i data-feather="layout"></i>',
+            'link' => '/'.config('admin.path').'/brands/',
             'view' => true,
             'edit' => 'Редактировать'
         ],
@@ -382,7 +397,11 @@ function sepByNum($num) {
     }
 }
 
-function priceString($price, $zecimals = 0, $space = ' '){ 
+function sessArray($name) {
+    return \App\Utils\ArraySess::init($name);
+}
+
+function priceString($price = null, $zecimals = 0, $space = ' '){
     if (empty($price)) return '0'; 
     return number_format($price, $zecimals, '.', $space);
 }

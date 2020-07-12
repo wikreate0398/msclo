@@ -58,6 +58,13 @@ Route::group(['prefix' => $adminPath, 'namespace' => 'Admin', 'middleware' => ['
 		Route::post('{id}/update', 'SliderController@update');
 	});
 
+    Route::group(['prefix' => 'brands'], function() {
+        Route::get('/', 'BrandsController@show')->name('admin_brands');
+        Route::get('{id}/edit', 'BrandsController@showeditForm');
+        Route::post('create', 'BrandsController@create');
+        Route::post('{id}/update', 'BrandsController@update');
+    });
+
     Route::group(['prefix' => 'banners'], function() {
         Route::get('/', 'BannersController@show')->name('admin_banners');
         Route::get('{id}/edit', 'BannersController@showeditForm');
@@ -126,6 +133,13 @@ Route::group(['prefix' => $adminPath, 'namespace' => 'Admin', 'middleware' => ['
             Route::post('{id}/update', 'CategoriesController@update');
         });
 
+        Route::group(['prefix' => 'tags'], function() {
+            Route::get('/', 'TagsController@show')->name('admin_tags');
+            Route::get('{id}/edit', 'TagsController@showeditForm');
+            Route::post('create', 'TagsController@create');
+            Route::post('{id}/update', 'TagsController@update');
+        });
+
         Route::group(['prefix' => 'chars'], function() {
             Route::get('/', 'CharsController@show')->name('admin_chars');
             Route::get('{id}/edit', 'CharsController@showeditForm');
@@ -162,14 +176,25 @@ Route::group(['prefix' => $adminPath, 'namespace' => 'Admin', 'middleware' => ['
 	Route::get('logout', 'LoginController@logout')->name('admin_logout');
 });
 
-Route::get('/', 'HomeController@index')->middleware(['lang', 'web'])->name('home');
+Route::get('/', 'HomeController@index')->middleware(['lang', 'web', 'const'])->name('home');
 
-Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web']], function() {
+Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], function() {
 
     Route::get('/', 'HomeController@index');
-    Route::post('questions', 'HomeController@questions')->name('questions');
-    Route::post('set-code', 'Pay\PaymentController@setСode')->name('set_code_home');
-    Route::post('give-thanks', 'HomeController@giveThanks')->name('give_thanks');
+
+    Route::group(['prefix' => 'favorites'], function() {
+        Route::post('add', 'FavoritesController@add')->name('add_fav');
+        Route::get('list', 'FavoritesController@list')->name('fav_list');
+    });
+
+    Route::group(['prefix' => 'compare'], function() {
+        Route::post('add', 'CompareController@add')->name('add_compare');
+        Route::get('list', 'CompareController@list')->name('compare_list');
+    });
+
+    Route::group(['prefix' => 'catalog'], function() {
+        Route::get('/{url}', 'CatalogController@list');
+    });
     
     Route::group(['middlewars' => 'guest'], function(){
         Route::get('registration', 'Auth\RegisterController@showForm')->name('registration');

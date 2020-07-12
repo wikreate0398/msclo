@@ -19,4 +19,9 @@ class ProductPrice extends Model
 	protected $casts = [
 	  'quantity' => 'integer'
     ];
+
+    public function product()
+    {
+        return $this->hasOne('App\Models\Catalog\Product', 'id', 'id_product');
+    }
 }

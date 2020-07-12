@@ -58,7 +58,7 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin'    => \App\Http\Middleware\Admin::class,
         'lang'     => \App\Http\Middleware\Lang::class,
-        //'const'    => \App\Http\Middleware\DetermineConst::class,
+        'const'    => \App\Http\Middleware\DetermineConst::class,
         'web_auth' => \App\Http\Middleware\WebAuthenticate::class,
         'cart'     => \App\Http\Middleware\CartRegulations::class,
         'cors' => \App\Http\Middleware\Cors::class,

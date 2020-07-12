@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 */
 class JsonResponse  
 {
-
 	private static $flash_message = 'flash_message';
 
 	function __construct() {} 

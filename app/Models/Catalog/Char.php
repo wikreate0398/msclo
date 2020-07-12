@@ -37,12 +37,17 @@ class Char extends Model
         return $this->belongsToMany('App\Models\Catalog\Product', 'chars_catalog', 'value', 'id_product');
     }
 
-    public function scopeFilters($query)
+    public function scopeFilters($query, $idsCats = [])
     {
         return $query->where('view_filter', 1)
                      ->where('parent_id', 0)
                      ->whereIn('type', ['checkbox', 'radio'])
-                     ->with(['childs' => function($query) {
+                     ->with(['childs' => function($query) use($idsCats) {
+                         if ($idsCats) {
+                             $query->whereHas('valuesProducts', function ($query) use($idsCats) {
+                                return $query->whereIn('id_category', $idsCats);
+                             });
+                         }
                          return $query->withCount('valuesProducts');
                      }])
                      ->has('childs');

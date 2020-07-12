@@ -10,16 +10,16 @@ $(document).ready(function(){
         }else{ 
             $('.navbar').removeClass('fixed-header');
         } 
-    }); 
+    });
 
     $('.reg-btn-tabs button.active').click();
 
     $('.toggle-link').click(function(e){
         e.preventDefault(); 
         scrollToBlock($(this).attr('href')); 
-    });   
+    });
 
-    inputMask();
+    //inputMask();
 
     changeByKeyup();
 
@@ -29,27 +29,36 @@ $(document).ready(function(){
         }
     });  
 
-    $('.rating-stars').each(function(){
-        var currentRating = $(this).data('current-rating');
-
-        var itemRating = $(this);
-        $(this).barrating({
-            theme: 'fontawesome-stars-o',
-            showSelectedRating: false,
-            initialRating: parseFloat(currentRating),
-            allowEmpty:true, 
-            deselectable:true,
-            emptyValue: 0,
-            onSelect:function(value, text, event){  
-                if($('.rating-comment').length){ 
-                    $('.rating-comment').show();
-                }
-            } 
-        }); 
-        var state = ($(this).attr('data-readonly') == 'true') ? true : false; 
-        $(this).barrating('readonly', state);  
-    }); 
+    // $('.rating-stars').each(function(){
+    //     var currentRating = $(this).data('current-rating');
+    //
+    //     var itemRating = $(this);
+    //     $(this).barrating({
+    //         theme: 'fontawesome-stars-o',
+    //         showSelectedRating: false,
+    //         initialRating: parseFloat(currentRating),
+    //         allowEmpty:true,
+    //         deselectable:true,
+    //         emptyValue: 0,
+    //         onSelect:function(value, text, event){
+    //             if($('.rating-comment').length){
+    //                 $('.rating-comment').show();
+    //             }
+    //         }
+    //     });
+    //     var state = ($(this).attr('data-readonly') == 'true') ? true : false;
+    //     $(this).barrating('readonly', state);
+    // });
 });
+
+$(window).load(function () {
+    fixHeight('.products-group-4-1-4');
+    fixHeight('.catalog-product');
+});
+
+function fixHeight(item) {
+    $(item).height($(item).height());
+}
 
 function scrollToBlock(id){
     $('html, body').animate({

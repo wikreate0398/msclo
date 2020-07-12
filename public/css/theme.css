@@ -36331,6 +36331,10 @@ blockquote:not(.blockquote) p {
   max-width: 9.375rem;
 }
 
+.max-width-170 {
+  max-width: 170px;
+}
+
 .max-width-148 {
   max-width: 9.25rem;
 }
@@ -37491,6 +37495,24 @@ blockquote:not(.blockquote) p {
 
 .u-range-slider-indicator .irs-slider {
   top: 0.2rem;
+}
+
+a.compare-icon.active, a.fav-icon.active {
+  color: #7fd9cf !important;
+}
+
+#sidebarHeaderInvokerMenu {
+  display: none !important;
+}
+
+@media screen and (max-width: 500px) {
+  #sidebarHeaderInvokerMenu {
+    display: block !important;
+  }
+}
+
+.in-wrapper {
+  min-height: 350px;
 }
 
 /*------------------------------------

@@ -187,3 +187,7 @@ td .switch {
 .filter-content .filter-item:last-child {
     margin-bottom: 0;
 }
+
+.ms-container {
+    width: 100% !important;
+}

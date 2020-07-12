@@ -19,4 +19,19 @@ class Category extends Model
         'name_en',
         'parent_id'
     ];
+
+    public function products()
+    {
+        return $this->hasMany('App\Models\Catalog\Product', 'id_category', 'id')->orderByPageUp()->visible();
+    }
+
+    public function childs()
+    {
+        return $this->hasMany('App\Models\Catalog\Category', 'parent_id', 'id')->orderByPageUp()->withCount('products');
+    }
+
+	public function scopeGetWithProducts($query)
+    {
+        return $query->with('products')->has('products')->get();
+    }
 }

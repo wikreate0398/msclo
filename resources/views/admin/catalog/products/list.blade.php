@@ -38,7 +38,9 @@
 
 								@include('admin.utils.input', ['label' => 'Код', 'name' => 'code'])
 
-								@include('admin.utils.textarea', ['label' => 'Описание', 'lang' => true, 'name' => 'description', 'ckeditor' => true])
+								@include('admin.utils.textarea', ['label' => 'Описание', 'lang' => true, 'name' => 'description'])
+
+								@include('admin.utils.textarea', ['label' => 'Текст', 'lang' => true, 'name' => 'text', 'ckeditor' => true])
 
 								<div class="form-group">
 									<label>Поставщик <span class="req">*</span></label>

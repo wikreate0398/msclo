@@ -1,3 +1,5 @@
+
+
 function addToCompare(item, id, hide = false) {
 
     const status = $(item).hasClass('active') ? false : true;
@@ -24,17 +26,17 @@ function addToCompare(item, id, hide = false) {
         data: {idProduct:id, _token: CSRF_TOKEN},
         success: function(jsonData){
             if (jsonData.msg == 'error') {
-                Cart.alertError(jsonData.cause);
+                Notify.setStatus('error').setMessage(jsonData.cause);
             }else{
                 if($(item).hasClass('active')){
-                    $(`.list-product-${id}`).each(function () {
-                        $(this).find('.compare-icon').removeClass('active');
+                    $(`.compare-icon-${id}`).each(function () {
+                        $(this).removeClass('active');
                     });
                 }else{
-                    $(`.list-product-${id}`).each(function () {
-                        $(this).find('.compare-icon').addClass('active');
+                    $(`.compare-icon-${id}`).each(function () {
+                        $(this).addClass('active');
                     });
-                    //showModal('#alert_modal', _add_compare);
+                    Notify.setStatus('success').setMessage('Товар успещно добавлен в сравнение');
                 }
                 $('.qty_compare').each(function () {
                     $(this).text(jsonData.totalCompare);
@@ -81,19 +83,19 @@ function addToFav(item, id, canHide = false) {
         data: {idProduct:id, _token: CSRF_TOKEN},
         success: function(jsonData){
             if (jsonData.msg == 'error') {
-                Cart.alertError(jsonData.cause);
+                Notify.setStatus('error').setMessage(jsonData.cause);
             }else{
                 if($(item).hasClass('active')){
                     $(item).removeClass('active');
-                    $(`.list-product-${id}`).each(function () {
-                        $(this).find('.fav-icon').removeClass('active');
+                    $(`.fav-icon-${id}`).each(function () {
+                        $(this).removeClass('active');
                     });
                 }else{
                     $(item).addClass('active');
-                    $(`.list-product-${id}`).each(function () {
-                        $(this).find('.fav-icon').addClass('active');
+                    $(`.fav-icon-${id}`).each(function () {
+                        $(this).addClass('active');
                     });
-                    //showModal('#alert_modal', _add_favorites);
+                    Notify.setStatus('success').setMessage('Товар успещно добавлен в избранное');
                 }
 
                 $('.qty_fav').each(function () {
@@ -116,4 +118,28 @@ function addToFav(item, id, canHide = false) {
             }
         }
     });
+}
+
+function addToCart(form) {
+    $.ajax({
+        url: $(form).attr('action'),
+        type: 'POST',
+        async: true,
+        data: new FormData($(form)[0]),
+        contentType: false,
+        cache: false,
+        processData: false,
+        dataType: 'json',
+        success: function(jsonData){
+            if (jsonData.msg == false) {
+                Notify.setStatus('danger').setMessage(jsonData.message);
+            }else{
+                Notify.setStatus('success').setMessage(jsonData.message);
+            }
+        }
+    });
+}
+
+function changeQty(input, id) {
+
 }

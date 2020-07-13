@@ -194,6 +194,11 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
 
     Route::group(['prefix' => 'catalog'], function() {
         Route::get('/{url}', 'CatalogController@list');
+        Route::get('product/{url}', 'CatalogController@viewProduct')->name('view_product');
+    });
+
+    Route::group(['prefix' => 'cart'], function() {
+        Route::post('add', 'CartController@add')->name('add_to_cart');
     });
     
     Route::group(['middlewars' => 'guest'], function(){

@@ -16,7 +16,13 @@ interface CatalogRepositoryInterface
 
     public function getSameCats($id_parent);
 
-    public function getBreads($allCats, $id_category);
+    public function getBreads($allCats, $id_category, $def = []);
 
     public function getMinMaxPrices($idsCats);
+
+    public function getProduct($url);
+
+    public function getPriceByQty($idProduct, $qty);
+
+    public function getProductById($id);
 }

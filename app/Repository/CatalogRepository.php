@@ -35,6 +35,66 @@ class CatalogRepository implements CatalogRepositoryInterface
         return $data;
     }
 
+    public function getProduct($url)
+    {
+        return Product::whereUrl($url)->with(['category', 'chars'])
+                      ->withRelations()
+                      ->visible()
+                      ->firstOrFail();
+    }
+
+    public function getPriceByQty($idProduct, $qty)
+    {
+        return ProductPrice::where('quantity', '<=', $qty)
+                           ->where('id_product', $idProduct)
+                           ->orderBy('quantity', 'asc')
+                           ->firstOrFail();
+    }
+
+    public function getProductById($id)
+    {
+        return Product::whereId($id)->firstOrFail();
+    }
+
+    public function getProductChars($idProduct, $usedCart = false, $lang = false)
+    {
+        $lang = $lang ?: lang();
+        $chars = Char::orderByPageUp()
+                      ->with(['charProducts' => function ($query) use($idProduct) {
+                          return $query->where('id_product', $idProduct)
+                                       ->with('optionValue');
+                      }])
+                      ->usedCart($usedCart)
+                      ->where('parent_id', 0)
+                      ->get();
+
+        $data = collect();
+        foreach ($chars as $char) {
+
+            if ($char->type == 'input') {
+                $value = @$char->charProducts->first()['value'];
+            } else {
+                $value = collect();
+                foreach ($char->charProducts as $item) {
+                    $value->push([
+                        'id'   => $item->optionValue->id,
+                        'name' => $item->optionValue["name_$lang"],
+                    ]);
+                }
+            }
+
+            $data->push([
+                'id'        => $char->id,
+                'name'      => $char["name_$lang"],
+                'type'      => $char->type,
+                'used_cart' => $char->used_cart,
+                'value'     => $value
+            ]);
+        }
+
+        return $data;
+    }
+
     public function getMinMaxPrices($idsCats)
     {
         $prices = ProductPrice::whereHas('product', function($query) use($idsCats) {
@@ -77,9 +137,13 @@ class CatalogRepository implements CatalogRepositoryInterface
         }
     }
 
-    public function getBreads($allCats, $idCategory, $breadcrumbs_array = [])
+    public function getBreads($allCats, $idCategory, $def = [], $breadcrumbs_array = [])
     {
         if(!$idCategory) return false;
+
+        if ($def) {
+            $breadcrumbs_array[] = (object) $def;
+        }
 
         $lang = lang();
         for($i = 0; $i < count($allCats); $i++){

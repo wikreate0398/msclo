@@ -19,17 +19,25 @@ class Char extends Model
         'name_en',
         'parent_id',
         'view_filter',
+        'used_cart',
         'view',
         'type'
     ];
 
 	protected $casts = [
-	    'view_filter' => 'integer'
+	    'view_filter' => 'integer',
+        'used_cart'   => 'integer',
+        'view'        => 'integer'
     ];
 
 	public function childs()
     {
         return $this->hasMany('App\Models\Catalog\Char', 'parent_id', 'id')->orderByPageUp();
+    }
+
+    public function charProducts()
+    {
+        return $this->hasMany('App\Models\Catalog\CharProduct', 'id_char', 'id');
     }
 
     public function valuesProducts()
@@ -51,5 +59,14 @@ class Char extends Model
                          return $query->withCount('valuesProducts');
                      }])
                      ->has('childs');
+    }
+
+    public function scopeUsedCart($query, $flag = false)
+    {
+        if ($flag) {
+            $query->where('used_cart', 1);
+        }
+
+        return $query;
     }
 }

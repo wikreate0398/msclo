@@ -525,9 +525,19 @@
 <script src="/js/components/hs.go-to.js"></script>
 <script src="/js/components/hs.selectpicker.js"></script>
 <script src="/js/components/hs.range-slider.js"></script>
+<script src="/js/components/hs.quantity-counter.js?v={{ time() }}"></script>
 
 <script src="/js/catalog.js?v={{ time() }}"></script>
 <script src="/js/main.js?v={{ time() }}"></script>
+<script src="/js/notify.js?v={{ time() }}"></script>
+
+<div class="popup" id="cart-popup" style="display: none">
+    <div class="popup-content"></div>
+</div>
+
+<div class="popup" id="alert_modal" style="display: none">
+    <p></p>
+</div>
 
 <!-- JS Plugins Init. -->
 <script>
@@ -609,6 +619,8 @@
 
         // initialization of go to
         $.HSCore.components.HSGoTo.init('.js-go-to');
+
+        $.HSCore.components.HSQantityCounter.init('.js-quantity');
 
         // initialization of hamburgers
         $.HSCore.components.HSHamburgers.init('#hamburgerTrigger');

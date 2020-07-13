@@ -21,6 +21,11 @@ class CharProduct extends Model
         return $this->hasOne('App\Models\Catalog\Char', 'id', 'id_char');
     }
 
+    public function optionValue()
+    {
+        return $this->hasOne('App\Models\Catalog\Char', 'id', 'value');
+    }
+
     public function product()
     {
         return $this->hasOne('App\Models\Catalog\Product', 'id', 'id_product');

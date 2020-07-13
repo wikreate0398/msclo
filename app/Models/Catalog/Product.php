@@ -15,6 +15,7 @@ class Product extends Model
 	protected $table = 'catalog';
 
 	protected $fillable = [
+	    'code',
 	    'url',
 	    'id_provider',
 	    'id_category',
@@ -22,6 +23,8 @@ class Product extends Model
         'name_en',
         'description_ru',
         'description_en',
+        'text_ru',
+        'text_en',
         'quantity',
         'price',
         'is_new'

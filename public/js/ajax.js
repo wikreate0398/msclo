@@ -42,7 +42,7 @@ var Ajax = function() {
                         message += '<p>' + jsonResponse.messages + '</p>';
                     }
 
-                    Notify.setStatus('danger').setMessage(message).show();
+                    Notify.setStatus('danger').setMessage(message);
 
                 } else {
  
@@ -63,7 +63,7 @@ var Ajax = function() {
 
                         if (jsonResponse.reload == true) {
                             if(jsonResponse.messages !== undefined){
-                                Notify.setStatus('success').setMessage(jsonResponse.messages).show();
+                                Notify.setStatus('success').setMessage(jsonResponse.messages);
                                 setTimeout(function () {
                                     window.location.reload(true);
                                 }, 1500);
@@ -72,7 +72,7 @@ var Ajax = function() {
                             }
                         }else{
                             if (jsonResponse.messages !== undefined) {
-                                Notify.setStatus('success').setMessage(jsonResponse.messages).show();
+                                Notify.setStatus('success').setMessage(jsonResponse.messages);
                                 $(form)[0].reset();
                             }
                         }

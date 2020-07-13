@@ -7674,6 +7674,15 @@ a.badge-indigo:focus, a.badge-indigo.focus {
   border-color: #f6cbc7;
 }
 
+#alert_modal.alert-danger {
+  color: #fff;
+  background-color: #ff6b5c;
+}
+
+#alert_modal.alert-danger p {
+  color:#fff;
+}
+
 .alert-danger hr {
   border-top-color: #f2b7b1;
 }
@@ -37515,6 +37524,10 @@ a.compare-icon.active, a.fav-icon.active {
   min-height: 350px;
 }
 
+#alert_modal p {
+  margin: 0 ;
+  font-size: 16px;
+}
 /*------------------------------------
   File for your custom SCSS style
 ------------------------------------*/

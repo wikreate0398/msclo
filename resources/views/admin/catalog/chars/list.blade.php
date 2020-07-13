@@ -38,8 +38,8 @@
 							<span class="option-name">Использовать при добавлении в корзину</span>
 							<label class="switch s-success mr-2" style="margin-bottom: 0">
 								<input type="checkbox"
-									   {{ !empty($item['view_filter']) ? 'checked' : '' }}
-									   onchange="Ajax.buttonView(this, '{{ $table }}', '{{ $item["id"] }}', 'view_filter')">
+									   {{ !empty($item['used_cart']) ? 'checked' : '' }}
+									   onchange="Ajax.buttonView(this, '{{ $table }}', '{{ $item["id"] }}', 'used_cart')">
 								<span class="slider round"></span>
 							</label>
 						</li>

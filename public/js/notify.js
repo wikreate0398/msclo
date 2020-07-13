@@ -13,6 +13,7 @@ var Notify = function () {
 
     this.setMessage = function(message) {
         self.message = message;
+        self.show();
         return this;
     };
 
@@ -27,19 +28,25 @@ var Notify = function () {
     };
 
     this.show = function () {
-        $('#ajax-notify').removeClass('notify-success').removeClass('notify-danger');
-        $('#ajax-notify').addClass('notify-' + self.status);
-        $('#ajax-notify .notify-inner').html(self.message);
+
         $.fancybox.open({
-            src  : '#ajax-notify',
-            type : 'inline'
+            src: '#alert_modal',
+
         });
+
+        $('#alert_modal').removeClass('alert-success')
+                     .removeClass('alert-danger')
+                     .addClass('alert-' + self.status)
+                     .find('p')
+                     .html(self.message);
+
+
         clearTimeout(self.timeout);
         self.timeout = setTimeout(function() {
             $.fancybox.close({
-                src  : '#ajax-notify'
+                src  : '#alert_modal'
             });
-        }, 7000);
+        }, 127000);
     };
 }
 var Notify = new Notify();

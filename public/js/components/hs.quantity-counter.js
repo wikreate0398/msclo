@@ -68,15 +68,16 @@
           resultVal += 1;
 
           $result.val(resultVal);
+          $result.trigger('change');
         });
 
         $minus.on('click', function (e) {
           e.preventDefault();
 
-          if (resultVal >= 1) {
+          if (resultVal >= 2) {
             resultVal -= 1;
-
             $result.val(resultVal);
+            $result.trigger('change');
           } else {
             return false;
           }

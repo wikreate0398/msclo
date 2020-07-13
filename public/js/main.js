@@ -12,6 +12,10 @@ $(document).ready(function(){
         } 
     });
 
+    $('[data-fancybox]').fancybox({
+        buttons: ['close'],
+    });
+
     $('.reg-btn-tabs button.active').click();
 
     $('.toggle-link').click(function(e){
@@ -49,18 +53,25 @@ $(document).ready(function(){
     //     var state = ($(this).attr('data-readonly') == 'true') ? true : false;
     //     $(this).barrating('readonly', state);
     // });
+
+    $('.nav').find('a').on('shown.bs.tab', function () {
+        fixHeight('.products-group-4-1-4');
+    });
 });
 
 $(window).load(function () {
-    setEqualHeight($('.products-group .product-item') , $('.products-group'));
-    //fixHeight('.catalog-product');
+    initEqHeight();
 });
+
+function initEqHeight() {
+    fixHeight('.products-group-4-1-4');
+    fixHeight('.catalog-product');
+}
 
 function setEqualHeight(columns, parent) {
     if (!$(columns).length ) {
         return false;
     }
-
     if (parent) {
         var width       = $(parent).width();
         var item_width  = $(columns).closest('.js_list__item').outerWidth();
@@ -69,14 +80,13 @@ function setEqualHeight(columns, parent) {
         var itemInRow = 3;
     }
 
-
     cloudHeight    = 0;
     var totalItems = $(columns).length
     if (totalItems < itemInRow) itemInRow = totalItems;
 
     $(columns).each(function(index){
         index=index+1;
-        currentHeight = $(this).height();
+        currentHeight = $(this).outerHeight();
         if(currentHeight > cloudHeight) {
             cloudHeight = currentHeight;
         }
@@ -98,6 +108,7 @@ function setEqualHeight(columns, parent) {
 }
 
 function fixHeight(item) {
+    $(item).height('auto');
     $(item).height($(item).height());
 }
 
@@ -159,4 +170,11 @@ function changeRegType(btn, type){
             }
         }
     });
-} 
+}
+//
+// function alertModal(text, status = 'success'){
+//     $.fancybox.open({
+//         src: '#alert_modal'
+//     });
+//     $('#alert_modal').removeClassPrefix('alert-').addClass('alert-' + status).find('p').html(text);
+// }

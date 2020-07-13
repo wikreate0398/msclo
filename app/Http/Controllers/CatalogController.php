@@ -37,6 +37,25 @@ class CatalogController extends Controller
         return view('public/catalog/category', compact(['category', 'catalog', 'filters', 'breads', 'moreCats', 'filterPrices']));
     }
 
+    public function viewProduct($lang, $url)
+    {
+        $product   = $this->repository->getProduct($url);
+        $chars     = $this->repository->getProductChars($product->id);
+        $charsCart = $chars->filter(function ($item) {
+            return $item['used_cart'];
+        });
+        $allCats   = $this->repository->getCats()->keyBy('id');
+        $breads    = $this->generateBreads(
+            $this->repository->getBreads(
+                $allCats->toArray(),
+                $product->category->id,
+                ['name' => $product["name_$lang"]]
+            )
+        );
+
+        return view('public/catalog/product', compact(['product', 'breads', 'chars', 'charsCart']));
+    }
+
     private function generateBreads($items)
     {
         $crumb   = BreadFactory::init();
@@ -45,7 +64,7 @@ class CatalogController extends Controller
         foreach ($items as $item) {
             $crumb->add(
                 Crumb::name($item->name)
-                     ->link(setUri("catalog/{$item->url}"))
+                     ->link(@$item->url ? setUri("catalog/{$item->url}") : '')
             );
         }
 

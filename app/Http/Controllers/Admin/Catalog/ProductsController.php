@@ -22,7 +22,7 @@ class ProductsController extends Controller
 
     private $redirectRoute = 'admin_products';
 
-    private $returnDataFields = ['name', 'description', 'seo_title', 'seo_description', 'seo_keywords'];
+    private $returnDataFields = ['name', 'description', 'text', 'seo_title', 'seo_description', 'seo_keywords'];
 
     /**
      * Create a new controller instance.
@@ -43,7 +43,7 @@ class ProductsController extends Controller
     public function show()
     {  
         $data = [
-            'data'       => $this->model->filter()->orderByRaw('page_up asc, id desc')->get(),
+            'data'       => $this->model->select('catalog.*')->filter()->orderByRaw('page_up asc, id desc')->get(),
             'categories' => Category::orderByPageUp()->get(),
             'providers'  => User::provider()->get(),
             'chars'      => Char::orderByPageUp()->where('parent_id', 0)->with('childs')->get(),

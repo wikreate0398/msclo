@@ -3,10 +3,10 @@
         <div class="product-item__body pb-xl-2">
             <div class="mb-2"><a href="{{ setUri("catalog/{$product->category->url}") }}" class="font-size-12 text-gray-5">{{ $product->category["name_$lang"] }}</a></div>
             <h5 class="mb-1 product-item__title">
-                <a href="{{ setUri("product/$product->url") }}" class="text-blue font-weight-bold">{{ $product["name_$lang"] }}</a>
+                <a href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}" class="text-blue font-weight-bold">{{ $product["name_$lang"] }}</a>
             </h5>
             <div class="mb-2">
-                <a href="{{ setUri("product/$product->url") }}" class="d-block text-center">
+                <a href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}" class="d-block text-center">
                     <img class="img-fluid" src="{{ imageThumb(@$product->images->first()->image, 'uploads/products', 212, 200, 'list') }}" alt="{{ $product["name_$lang"] }}">
                 </a>
             </div>
@@ -25,14 +25,14 @@
         <div class="product-item__footer">
             <div class="border-top pt-2 flex-center-between flex-wrap">
                 <a href="javascript:;"
-                   class="text-gray-6 compare-icon font-size-13 {{ sessArray('compare')->exist($product->id) ? 'active' : '' }}"
+                   class="text-gray-6 compare-icon compare-icon-{{ $product->id }} font-size-13 {{ sessArray('compare')->exist($product->id) ? 'active' : '' }}"
                    onclick="addToCompare(this, {{ $product->id }}); return false;">
-                    <i class="ec ec-compare mr-1 font-size-15"></i> Сравнить
+                    <i class="ec ec-compare font-size-15"></i> Сравнить
                 </a>
                 <a href="javascript:;"
-                   class="text-gray-6 fav-icon font-size-13 {{ sessArray('favorites')->exist($product->id) ? 'active' : '' }}"
+                   class="text-gray-6 fav-icon fav-icon-{{ $product->id }} font-size-13 {{ sessArray('favorites')->exist($product->id) ? 'active' : '' }}"
                    onclick="addToFav(this, {{ $product->id }}); return false;">
-                    <i class="ec ec-favorites mr-1 font-size-15"></i> Избранное
+                    <i class="ec ec-favorites font-size-15"></i> Избранное
                 </a>
             </div>
         </div>

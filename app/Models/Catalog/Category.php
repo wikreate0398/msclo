@@ -32,6 +32,6 @@ class Category extends Model
 
 	public function scopeGetWithProducts($query)
     {
-        return $query->with('products')->has('products')->get();
+        return $query->with('products')->has('products')->orderByPageUp()->visible()->get();
     }
 }

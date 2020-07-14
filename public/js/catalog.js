@@ -149,7 +149,12 @@ function addToCart(form) {
             }else{
                 Notify.setStatus('success').setMessage(jsonData.message);
                 htmlData('.cart-qty', jsonData.totalQty);
-                $('.cart-qty').show();
+
+                if (!jsonData.totalQty) {
+                    hideItems('.cart-qty');
+                } else {
+                    showItems('.cart-qty');
+                }
             }
         }
     });
@@ -158,6 +163,18 @@ function addToCart(form) {
 function htmlData(item, value) {
     $(item).each(function () {
         $(this).html(value);
+    });
+}
+
+function showItems(item) {
+    $(item).each(function () {
+        $(this).show();
+    });
+}
+
+function hideItems(item) {
+    $(item).each(function () {
+        $(this).hide();
     });
 }
 

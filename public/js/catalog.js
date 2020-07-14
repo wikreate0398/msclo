@@ -168,13 +168,13 @@ function htmlData(item, value) {
 
 function showItems(item) {
     $(item).each(function () {
-        $(this).show();
+        $(this).removeClass('d-none').addClass('d-flex');
     });
 }
 
 function hideItems(item) {
     $(item).each(function () {
-        $(this).hide();
+        $(this).addClass('d-none').removeClass('d-flex');
     });
 }
 

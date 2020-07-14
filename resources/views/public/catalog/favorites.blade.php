@@ -67,7 +67,7 @@
                 </div>
             </div>
         @else
-            <div class="alert alert-danger mb-13">
+            <div class="alert alert-warning mb-13">
                 Нет товаров
             </div>
         @endif

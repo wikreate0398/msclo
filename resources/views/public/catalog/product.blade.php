@@ -87,35 +87,54 @@
                     @if($product["code"])
                         <p><strong>Код</strong>: {{ $product["code"] }}</p>
                     @endif
-                    <div class="mb-4">
-                        <div class="d-flex align-items-baseline">
-                            <ins class="font-size-36 text-decoration-none">
-                                {{ RUB }}{{ priceString($product->prices->first()->price) }}
-                            </ins>
-{{--                            <del class="font-size-20 ml-2 text-gray-6">$2,299.00</del>--}}
-                        </div>
-                    </div>
 
                     <form action="{{ route('add_to_cart', ['lang' => $lang]) }}"
                           onsubmit="addToCart(this); return false;"
                           class="add-cart-form">
+
+                        <div class="mb-4">
+                            <div class="d-flex align-items-baseline">
+                                @php
+                                    $price        = $product->prices->sortBy('quantity')->first()['price'];
+                                    $minPriceData = $product->prices->sortBy('price')->first();
+                                @endphp
+                                <ins class="font-size-36 text-decoration-none">
+                                    {{ RUB }}
+                                    <span class="product-price-{{ $product->id }}">
+                                        {{ priceString($price) }}
+                                    </span>
+                                </ins>
+    {{--                            <del class="font-size-20 ml-2 text-gray-6">$2,299.00</del>--}}
+                            </div>
+                            @if($price > $minPriceData->price)
+                                <span class="font-size-16 text-gray-6">
+                                    от {{ $minPriceData->quantity }}шт -
+                                    {{ RUB }}
+                                    {{ priceString($minPriceData->price) }}
+                                </span>
+                            @endif
+                        </div>
+
+
                         {{ csrf_field() }}
                         <input type="hidden" name="id" value="{{ $product->id }}">
                         <div class="border-top border-bottom py-3 mb-4 d-flex">
                             @foreach($charsCart as $item)
-                                <div class="d-flex align-items-center" style="margin-right: 15px;">
-                                    <h6 class="font-size-14 mb-0">{{ $item['name'] }}</h6>
-                                    <!-- Select -->
-                                    <select class="js-select selectpicker dropdown-select ml-3"
-                                            data-style="btn-sm bg-white font-weight-normal py-2 border"
-                                            name="char[{{ $item['id'] }}]">
-                                        <option value="0">Выбрать</option>
-                                        @foreach($item['value'] as $value)
-                                            <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
-                                        @endforeach
-                                    </select>
-                                    <!-- End Select -->
-                                </div>
+                                @if($item['value']->count())
+                                    <div class="d-flex align-items-center" style="margin-right: 15px;">
+                                        <h6 class="font-size-14 mb-0">{{ $item['name'] }} <span class="text-danger">*</span></h6>
+                                        <!-- Select -->
+                                        <select class="js-select selectpicker dropdown-select ml-3"
+                                                data-style="btn-sm bg-white font-weight-normal py-2 border"
+                                                name="char[{{ $item['id'] }}]">
+                                            <option value="0">Выбрать</option>
+                                            @foreach($item['value'] as $value)
+                                                <option {{ ($item['value']->count() == 1) ? 'selected' : '' }} value="{{ $value['id'] }}">{{ $value['name'] }}</option>
+                                            @endforeach
+                                        </select>
+                                        <!-- End Select -->
+                                    </div>
+                                @endif
                             @endforeach
                         </div>
 
@@ -126,12 +145,13 @@
                                 <div class="border rounded-pill py-2 px-3 border-color-1">
                                     <div class="js-quantity row align-items-center">
                                         <div class="col">
-                                            <input class="js-result form-control h-auto border-0 rounded p-0 shadow-none"
+                                            <input class="js-result bg-white form-control h-auto border-0 rounded p-0 shadow-none"
                                                    type="number"
                                                    min="1"
                                                    value="1"
                                                    name="qty"
-                                                   onchange="changeQty(this, {{ $product->id }})">
+                                                   readonly
+                                                   onchange="changePriceByQty(this, {{ $product->id }})">
                                         </div>
                                         <div class="col-auto pr-1">
                                             <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"

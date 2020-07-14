@@ -16,6 +16,7 @@
                 </div>
                 <div class="d-none d-xl-block prodcut-add-cart">
                     <a href="javascript:;"
+                       onclick="showModalCart(this, {{ $product->id }})"
                        class="btn-add-cart btn-primary transition-3d-hover">
                         <i class="ec ec-add-to-cart"></i>
                     </a>

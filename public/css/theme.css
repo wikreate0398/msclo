@@ -37528,6 +37528,18 @@ a.compare-icon.active, a.fav-icon.active {
   margin: 0 ;
   font-size: 16px;
 }
+
+#cart-popup {
+  min-width: 50%;
+}
+.cart-modal-thumb {
+  margin-right: 20px;
+  width: 300px;
+}
+
+.cart-modal-thumb img{
+  width: 100%;
+}
 /*------------------------------------
   File for your custom SCSS style
 ------------------------------------*/

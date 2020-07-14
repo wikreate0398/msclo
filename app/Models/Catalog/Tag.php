@@ -21,11 +21,11 @@ class Tag extends Model
 
     public function products()
     {
-        return $this->belongsToMany('App\Models\Catalog\Product', 'catalog_tags', 'id_tag', 'id_product')->orderBy('page_up', 'asc');
+        return $this->belongsToMany('App\Models\Catalog\Product', 'catalog_tags', 'id_tag', 'id_product')->visible()->orderBy('page_up', 'asc');
     }
 
     public function scopeGetHome($query)
     {
-        return $query->visible()->orderByPageUp()->with(['products.category', 'products.images', 'products.prices'])->has('products')->get();
+        return $query->visible()->orderByPageUp()->with(['products.category', 'products.images', 'products.prices'])->get();
     }
 }

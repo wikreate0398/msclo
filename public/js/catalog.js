@@ -38,9 +38,8 @@ function addToCompare(item, id, hide = false) {
                     });
                     Notify.setStatus('success').setMessage('Товар успещно добавлен в сравнение');
                 }
-                $('.qty_compare').each(function () {
-                    $(this).text(jsonData.totalCompare);
-                });
+
+                htmlData('.qty_compare', jsonData.totalCompare);
 
                 if(jsonData.totalCompare == 0){
                     hideQty();
@@ -98,9 +97,7 @@ function addToFav(item, id, canHide = false) {
                     Notify.setStatus('success').setMessage('Товар успещно добавлен в избранное');
                 }
 
-                $('.qty_fav').each(function () {
-                    $(this).text(jsonData.totalFav);
-                });
+                htmlData('.qty_fav', jsonData.totalCompare);
 
                 if(jsonData.totalFav == 0){
                     hideQty()
@@ -120,6 +117,22 @@ function addToFav(item, id, canHide = false) {
     });
 }
 
+function showModalCart(item, id) {
+    $.ajax({
+        url: showModalCartRoute,
+        type: 'GET',
+        data: {id: id, _token: CSRF_TOKEN},
+        success: function(content){
+            $('#cart-popup .popup-content').html(content);
+            $.fancybox.open({
+                src: '#cart-popup'
+            });
+            $.HSCore.components.HSSelectPicker.init('.js-select');
+            $.HSCore.components.HSQantityCounter.init('.js-quantity');
+        }
+    });
+}
+
 function addToCart(form) {
     $.ajax({
         url: $(form).attr('action'),
@@ -135,11 +148,42 @@ function addToCart(form) {
                 Notify.setStatus('danger').setMessage(jsonData.message);
             }else{
                 Notify.setStatus('success').setMessage(jsonData.message);
+                htmlData('.cart-qty', jsonData.totalQty);
             }
         }
     });
 }
 
-function changeQty(input, id) {
+function htmlData(item, value) {
+    $(item).each(function () {
+        $(this).html(value);
+    });
+}
 
+function changePriceByQty(input, id) {
+    $.ajax({
+        url: changePriceByQtyRoute,
+        type: 'POST',
+        data: {qty: $(input).val(), id: id, _token: CSRF_TOKEN},
+        dataType: 'json',
+        success: function(jsonData){
+            if (jsonData.msg == false) {
+                Notify.setStatus('danger').setMessage(jsonData.message);
+            }else{
+                if (jsonData.price) {
+                    $(input).closest('form').find(`.product-price-${id}`).text(priceString(jsonData.price));
+                }
+            }
+        }
+    });
+}
+
+function number_format(e,n,t,i){e=(e+"").replace(/[^0-9+\-Ee.]/g,"");var r=isFinite(+e)?+e:0,a=isFinite(+n)?Math.abs(n):0,o="undefined"==typeof i?",":i,d="undefined"==typeof t?".":t,u="",f=function(e,n){var t=Math.pow(10,n);return""+(Math.round(e*t)/t).toFixed(n)};return u=(a?f(r,a):""+Math.round(r)).split("."),u[0].length>3&&(u[0]=u[0].replace(/\B(?=(?:\d{3})+(?!\d))/g,o)),(u[1]||"").length<a&&(u[1]=u[1]||"",u[1]+=new Array(a-u[1].length+1).join("0")),u.join(d)}
+
+function priceString(price, a){
+    var a = a ? a : 0;
+    if (!price) {
+        return '0';
+    }
+    return number_format(price, a, '.', ' ');
 }

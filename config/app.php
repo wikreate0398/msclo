@@ -187,6 +187,7 @@ return [
 
         App\Providers\ViewServiceProvider::class,
         App\Repository\RepositoryServiceProvider::class,
+        App\Providers\CartServiceProvider::class,
 
     ],
 
@@ -250,7 +251,8 @@ return [
         'Ballance'   => App\Utils\Ballance::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-        'ValidationError' => App\Utils\Exceptions\ValidationError::class
+        'ValidationError' => App\Utils\Exceptions\ValidationError::class,
+        'Cart'            =>  App\Cart\CartFacade::class
     ],
 
 ];

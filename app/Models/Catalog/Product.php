@@ -31,8 +31,15 @@ class Product extends Model
     ];
 
 	protected $casts = [
-	  'is_new' => 'integer'
+	  'is_new' => 'integer',
+      'view'   => 1
     ];
+
+	public function scopeVisible($query)
+    {
+        return $query->where('view', 1)
+                     ->has('prices');
+    }
 
     public function chars()
     {

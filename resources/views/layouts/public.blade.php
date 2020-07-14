@@ -36,6 +36,8 @@
         const addToFavUrl     = '{{ route('add_fav', ['lang' => $lang]) }}';
         const _favPage        = false;
         const addToCompareUrl = '{{ route('add_compare', ['lang' => $lang]) }}';
+        const changePriceByQtyRoute = '{{ route('change_price', ['lang' => $lang]) }}';
+        const showModalCartRoute    = '{{ route('load_cart_modal', ['lang' => $lang]) }}';
     </script>
 
 </head>

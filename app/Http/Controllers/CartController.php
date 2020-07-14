@@ -38,11 +38,34 @@ class CartController extends Controller
                 'chars' => $request->char
             ]);
 
-            return \JsonResponse::success(['message' => 'Товар успешно добавлен в корзину']);
+            return \JsonResponse::success([
+                'message'    => 'Товар успешно добавлен в корзину',
+                'totalQty'   => $this->cartRepository->getTotalQty(),
+                'totalPrice' => $this->cartRepository->getTotalPrice()
+            ]);
 
         } catch (\ValidationError $e) {
             return \JsonResponse::error(['message' => $e->getMessage()]);
         }
+    }
+
+    public function loadModal($lang, Request $request)
+    {
+        $product    = $this->catalogRepository->getProductById($request->id);
+        $chars     = $this->catalogRepository->getProductChars($product->id);
+        $charsCart = $chars->filter(function ($item) {
+            return $item['used_cart'];
+        });
+        return view('public.cart.modal', compact(['product', 'charsCart']));
+    }
+
+    public function changePriceByQty($lang, Request $request)
+    {
+        $product = $this->catalogRepository->getProductById($request->id);
+        $price = $this->cartRepository
+                      ->getPriceByQty($product->prices, $request->qty);
+
+        return \JsonResponse::success(['price' => $price]);
     }
 
     private function attachProduct($data, $updated = false)
@@ -77,16 +100,6 @@ class CartController extends Controller
             if (empty($chars[$id_char]) or !in_array($id_value, $chars[$id_char]['value']->pluck('id')->toArray())) {
                 throw new \ValidationError('Укажите все параметры');
             }
-        }
-    }
-
-    public function getPriceByQty($lang, Request $request)
-    {
-        $price = $this->catalogRepository
-                      ->getPriceByQty($request->idProduct, $request->qty);
-
-        if ($price) {
-
         }
     }
 }

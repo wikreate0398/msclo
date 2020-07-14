@@ -43,14 +43,6 @@ class CatalogRepository implements CatalogRepositoryInterface
                       ->firstOrFail();
     }
 
-    public function getPriceByQty($idProduct, $qty)
-    {
-        return ProductPrice::where('quantity', '<=', $qty)
-                           ->where('id_product', $idProduct)
-                           ->orderBy('quantity', 'asc')
-                           ->firstOrFail();
-    }
-
     public function getProductById($id)
     {
         return Product::whereId($id)->firstOrFail();
@@ -92,7 +84,9 @@ class CatalogRepository implements CatalogRepositoryInterface
             ]);
         }
 
-        return $data;
+        return $data->filter(function($item) {
+            return ($item['type'] != 'input' && !$item['value']->count()) ? false : true;
+        });
     }
 
     public function getMinMaxPrices($idsCats)

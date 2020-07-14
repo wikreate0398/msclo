@@ -22,7 +22,5 @@ interface CatalogRepositoryInterface
 
     public function getProduct($url);
 
-    public function getPriceByQty($idProduct, $qty);
-
     public function getProductById($id);
 }

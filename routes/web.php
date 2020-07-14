@@ -198,7 +198,11 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
     });
 
     Route::group(['prefix' => 'cart'], function() {
+        Route::get('view', 'CartController@view')->name('view_cart');
+
+        Route::get('load-modal', 'CartController@loadModal')->name('load_cart_modal');
         Route::post('add', 'CartController@add')->name('add_to_cart');
+        Route::post('change-price', 'CartController@changePriceByQty')->name('change_price');
     });
     
     Route::group(['middlewars' => 'guest'], function(){

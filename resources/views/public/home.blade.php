@@ -238,7 +238,7 @@
                                                         </h5>
                                                         <div class="mb-2">
                                                             <a href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}" class="d-block text-center">
-                                                                <img class="img-fluid" src="{{ imageThumb(@$product->images->first()->image, 'uploads/products', 212, 200, 'list') }}" alt="Image Description">
+                                                                <img class="img-fluid" src="{{ imageThumb(@$product->images->first()->image, 'uploads/products', 212, 200, '212X200') }}" alt="Image Description">
                                                             </a>
                                                         </div>
                                                         <div class="flex-center-between mb-1">
@@ -246,7 +246,9 @@
                                                                 <div class="text-gray-100">{{ RUB }}{{ priceString(@$product->prices->first()->price) }}</div>
                                                             </div>
                                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                                <a href="" class="btn-add-cart btn-primary transition-3d-hover">
+                                                                <a href="javascript:;"
+                                                                   onclick="showModalCart(this, {{ $product->id }})"
+                                                                   class="btn-add-cart btn-primary transition-3d-hover">
                                                                     <i class="ec ec-add-to-cart"></i>
                                                                 </a>
                                                             </div>

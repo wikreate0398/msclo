@@ -785,6 +785,10 @@ function generateAccountNumber()
     return $zeros.$accountNumber;
 }
 
+function cart() {
+    return app('cart');
+}
+
 if (!function_exists('toUrl')) {
     function toUrl($str, $separator = 'dash', $lowercase = true)
     {

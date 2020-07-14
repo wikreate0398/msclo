@@ -8,6 +8,8 @@ interface CartRepositoryInterface
 
     public function getTotalPrice();
 
+    public function getProducts();
+
     public function getPricesRange($dataPrices);
 
     public function getPriceFromRange($data, $qty);

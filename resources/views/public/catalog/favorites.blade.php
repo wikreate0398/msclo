@@ -56,7 +56,9 @@
                                 </td>
 
                                 <td>
-                                    <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">
+                                    <button type="button"
+                                            class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto"
+                                            onclick="showModalCart(this, {{ $product->id }})">
                                         Добавить в корзину
                                     </button>
                                 </td>

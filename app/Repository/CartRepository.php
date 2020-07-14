@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Models\Catalog\Char;
+use App\Models\Catalog\Product;
 use App\Models\Catalog\ProductPrice;
 use App\Repository\Interfaces\CartRepositoryInterface;
-use App\Repository\Interfaces\CatalogRepositoryInterface;
 
 class CartRepository implements CartRepositoryInterface
 {
@@ -14,7 +15,7 @@ class CartRepository implements CartRepositoryInterface
 
     public function getTotalQty($qty = 0)
     {
-        foreach ($this->cartData() as $key => $value) {
+        foreach ($this->cartSess() as $key => $value) {
             $qty += $value['qty'];
         }
         return $qty;
@@ -25,7 +26,7 @@ class CartRepository implements CartRepositoryInterface
         $getPrices = ProductPrice::whereIn('id_product', $this->ids())->get();
         $prices    = $this->getPricesRange($getPrices);
 
-        foreach ($this->cartData() as $key => $value) {
+        foreach ($this->cartSess() as $key => $value) {
             $productPrice = $this->getPriceFromRange(
                 $prices[$value['id']], $value['qty']
             );
@@ -34,11 +35,69 @@ class CartRepository implements CartRepositoryInterface
         return $price;
     }
 
+    public function getProducts()
+    {
+        $lang         = lang();
+        $productsData = Product::visible()
+                           ->whereIn('id', $this->ids())
+                           ->withRelations()
+                           ->orderByPageUp()
+                           ->get()
+                           ->keyBy('id');
+
+        $charsData = Char::whereIn('id', $this->charsIds())->get()->keyBy('id');
+
+        $data = collect();
+
+        foreach ($this->cartSess() as $cartId => $item) {
+            $product = $productsData[$item['id']];
+
+            $chars = collect();
+            if ($charsData->count()) {
+                foreach ($item['chars'] as $id_char => $id_value) {
+                    $chars->push([
+                        'name'  => @$charsData[$id_char]["name_$lang"],
+                        'value' => @$charsData[$id_value]["name_$lang"],
+                    ]);
+                }
+            }
+
+            $data->push([
+                'cart_id' => $cartId,
+                'id'      => $item['id'],
+                'name'    => $product["name_$lang"],
+                'image'   => imageThumb(@$product->images->first()->image, 'uploads/products', 300, 300, '300X300'),
+                'price'   => $this->getPriceByQty($product->prices, $item['qty']),
+                'qty'     => $item['qty'],
+                'chars'   => $chars
+            ]);
+        }
+
+        return $data;
+    }
+
     private function ids()
     {
         return array_map(function($item) {
             return $item['id'];
-        }, $this->cartData());
+        }, $this->cartSess());
+    }
+
+    private function charsIds()
+    {
+        $ids = [];
+        foreach ($this->cartSess() as $item) {
+            if (!empty($item['chars'])) {
+                $a = array_merge(
+                    array_keys($item['chars']),
+                    array_values($item['chars'])
+                );
+                foreach ($a as $k => $v) {
+                    $ids[$v] = $v;
+                }
+            }
+        }
+        return $ids;
     }
 
     public function getPricesRange($dataPrices)
@@ -94,7 +153,7 @@ class CartRepository implements CartRepositoryInterface
         })->first();
     }
 
-    private function cartData()
+    private function cartSess()
     {
         return \Session::get('cart') ?: [];
     }

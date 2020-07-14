@@ -97,7 +97,7 @@ function addToFav(item, id, canHide = false) {
                     Notify.setStatus('success').setMessage('Товар успещно добавлен в избранное');
                 }
 
-                htmlData('.qty_fav', jsonData.totalCompare);
+                htmlData('.qty_fav', jsonData.totalFav);
 
                 if(jsonData.totalFav == 0){
                     hideQty()
@@ -149,6 +149,7 @@ function addToCart(form) {
             }else{
                 Notify.setStatus('success').setMessage(jsonData.message);
                 htmlData('.cart-qty', jsonData.totalQty);
+                $('.cart-qty').show();
             }
         }
     });

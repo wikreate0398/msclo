@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Catalog\Product;
-use App\Models\Catalog\ProductPrice;
 use App\Repository\Interfaces\CartRepositoryInterface;
 use App\Repository\Interfaces\CatalogRepositoryInterface;
+use App\Utils\Crumbs\BreadFactory;
+use App\Utils\Crumbs\Crumb;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -18,6 +18,16 @@ class CartController extends Controller
     {
         $this->cartRepository    = $cartRepository;
         $this->catalogRepository = $catalogRepository;
+    }
+
+    public function view()
+    {
+        $crumb   = BreadFactory::init();
+        $crumb->add(Crumb::name('Корзина'));
+        $breads  = $crumb->toHtml();
+        $products = $this->cartRepository->getProducts();
+
+        return view('public.cart.view', compact(['products', 'breads']));
     }
 
     public function add($lang, Request $request)

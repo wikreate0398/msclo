@@ -246,9 +246,9 @@
                                 </li>
                                 <li class="col d-xl-none px-2 px-sm-3"><a href="../shop/my-account.html" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="My Account"><i class="font-size-22 ec ec-user"></i></a></li>
                                 <li class="col pr-xl-0 px-2 px-sm-3">
-                                    <a href="{{ route('view_cart', compact('lang')) }}" class="text-gray-90 position-relative d-flex " data-toggle="tooltip" data-placement="top" title="Cart">
+                                    <a href="{{ route('view_cart', compact('lang')) }}" class="text-gray-90 position-relative d-flex " data-toggle="tooltip" data-placement="top" title="Корзина">
                                         <i class="font-size-22 ec ec-shopping-bag"></i>
-                                        <span class="width-22 height-22 bg-dark position-absolute d-flex align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12 text-white cart-qty">
+                                        <span class="width-22 height-22 bg-dark position-absolute {{ cart()->has() ? 'd-flex' : 'd-none' }} align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12 text-white cart-qty">
                                             {{ cart()->getTotalQty() }}
                                         </span>
 {{--                                        <span class="d-none d-xl-block font-weight-bold font-size-16 text-gray-90 ml-3">--}}
@@ -391,10 +391,11 @@
                                 </li>
 
                                 <li class="col pr-0">
-                                    <a href="" class="text-gray-90 position-relative d-flex " data-toggle="tooltip" data-placement="top" title="Cart">
+                                    <a href="{{ route('view_cart', compact('lang')) }}"
+                                       class="text-gray-90 position-relative d-flex" data-toggle="tooltip" data-placement="top" title="Корзина">
                                         <i class="font-size-22 ec ec-shopping-bag"></i>
 
-                                        <span class="width-22 height-22 bg-dark position-absolute flex-content-center text-white rounded-circle left-12 top-8 font-weight-bold font-size-12 cart-qty">
+                                        <span class="width-22 height-22 bg-dark {{ cart()->has() ? '' : 'd-none' }} position-absolute flex-content-center text-white rounded-circle left-12 top-8 font-weight-bold font-size-12 cart-qty">
                                             {{ cart()->getTotalQty() }}
                                         </span>
 {{--                                        <span class="font-weight-bold font-size-16 text-gray-90 ml-3">--}}

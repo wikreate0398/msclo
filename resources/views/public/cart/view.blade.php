@@ -62,6 +62,7 @@
                                     <div class="col">
                                         <input class="js-result form-control h-auto border-0 rounded p-0 shadow-none"
                                                type="text"
+                                               readonly
                                                value="{{ $product['qty'] }}"
                                                onchange="changeCartQty(this, {{ $product['id'] }}, {{ $product['cart_id'] }})">
                                     </div>

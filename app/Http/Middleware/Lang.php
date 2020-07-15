@@ -52,17 +52,14 @@ class Lang
      */
     public function determine()
     {
-        if(in_array(\Request::segment(1), $this->languages_array))
-        {
+        if(in_array(\Request::segment(1), $this->languages_array)) {
             $this->currentLang = request()->segment(1);
         }
-        elseif (\Session::has('lang'))
-        {
+        elseif (\Session::has('lang')) {
             $this->currentLang = \Session::get('lang');
         }
-        elseif (in_array(self::getHttpAcceptLang(), $this->languages_array))
-        {
-            $this->currentLang = self::getHttpAcceptLang();
+        else {
+            $this->currentLang = 'ru';
         }
 
         $this->putAndSave();

@@ -46,7 +46,7 @@ var Notify = function () {
             $.fancybox.close({
                 src  : '#alert_modal'
             });
-        }, 127000);
+        }, 5000);
     };
 }
 var Notify = new Notify();

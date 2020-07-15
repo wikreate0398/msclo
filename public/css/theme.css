@@ -37524,6 +37524,10 @@ a.compare-icon.active, a.fav-icon.active {
   min-height: 350px;
 }
 
+#alert_modal {
+  padding-right: 50px;
+}
+
 #alert_modal p {
   margin: 0 ;
   font-size: 16px;

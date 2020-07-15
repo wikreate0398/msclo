@@ -22,6 +22,19 @@ class Cart
         return $this->cartRepository->getTotalPrice();
     }
 
+    public function delete($key = null)
+    {
+        if ($key === null) return;
+        sessArray('cart')->detachByKey($key);
+    }
+
+    public function update($key = null, $data)
+    {
+        if ($this->has($key)) {
+            sessArray('cart')->update($key, $data);
+        }
+    }
+
     public function has()
     {
         return session()->has('cart');

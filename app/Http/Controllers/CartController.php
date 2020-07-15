@@ -30,6 +30,17 @@ class CartController extends Controller
         return view('public.cart.view', compact(['products', 'breads']));
     }
 
+    public function checkout()
+    {
+        $crumb   = BreadFactory::init();
+        $crumb->add(Crumb::name('Корзина')->link(route('view_cart'), ['lang' => lang()]))
+              ->add(Crumb::name('Оформить'));
+        $breads  = $crumb->toHtml();
+        $products = $this->cartRepository->getProducts();
+
+        return view('public.cart.view', compact(['products', 'breads']));
+    }
+
     public function add($lang, Request $request)
     {
         $product = $this->catalogRepository->getProductById($request->id);
@@ -76,6 +87,36 @@ class CartController extends Controller
                       ->getPriceByQty($product->prices, $request->qty);
 
         return \JsonResponse::success(['price' => $price]);
+    }
+
+    public function changeQty($lang, Request $request)
+    {
+        $product = $this->catalogRepository->getProductById($request->id);
+        $price   = $this->cartRepository->getPriceByQty($product->prices, $request->qty);
+
+        if (cart()->has($request->cartId)) {
+            cart()->update($request->cartId, [
+                'qty' => $request->qty
+            ]);
+        }
+
+        return \JsonResponse::success([
+            'price'      => $price,
+            'totalQty'   => $this->cartRepository->getTotalQty(),
+            'totalPrice' => $this->cartRepository->getTotalPrice()
+        ]);
+    }
+
+    public function removeCart($lang, Request $request)
+    {
+        if (cart()->has($request->cartId)) {
+            cart()->delete($request->cartId);
+        }
+
+        return \JsonResponse::success([
+            'totalQty'   => $this->cartRepository->getTotalQty(),
+            'totalPrice' => $this->cartRepository->getTotalPrice()
+        ]);
     }
 
     private function attachProduct($data, $updated = false)

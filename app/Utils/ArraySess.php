@@ -31,6 +31,24 @@ class ArraySess
         }
     }
 
+    public function update($key = null, $data)
+    {
+        $sessData = $this->_getData();
+        if (array_key_exists($key, $sessData)) {
+            $sessData[$key] = array_merge($sessData[$key], $data);
+            session()->put($this->name, $sessData);
+        }
+    }
+
+    public function detachByKey($key = null)
+    {
+        $sessData = $this->_getData();
+        if (array_key_exists($key, $sessData)) {
+            unset($sessData[$key]);
+            session()->put($this->name, $sessData);
+        }
+    }
+
     public function exist($value)
     {
         if (session()->has($this->name) && $this->isArray()) {

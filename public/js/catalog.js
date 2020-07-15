@@ -147,18 +147,47 @@ function addToCart(form) {
             if (jsonData.msg == false) {
                 Notify.setStatus('danger').setMessage(jsonData.message);
             }else{
+                $.fancybox.close();
                 Notify.setStatus('success').setMessage(jsonData.message);
-                htmlData('.cart-qty', jsonData.totalQty);
+                updateCartData(jsonData);
+            }
+        }
+    });
+}
 
-                if (!jsonData.totalQty) {
-                    hideItems('.cart-qty');
+function updateCartData({totalQty, totalPrice}) {
+    htmlData('.cart-qty', totalQty);
+
+    $('.total-amount').text(priceString(totalPrice))
+
+    if (!totalQty) {
+        hideItems('.cart-qty');
+    } else {
+        showItems('.cart-qty');
+    }
+}
+
+function removeFromCart(item, id, cartId) {
+    $.ajax({
+        url: removeCartRoute,
+        type: 'POST',
+        data: {id: id, cartId: cartId, _token: CSRF_TOKEN},
+        dataType: 'json',
+        success: function(jsonData){
+            if (jsonData.msg == false) {
+                Notify.setStatus('danger').setMessage(jsonData.message);
+            }else{
+                if ($('.cart-table table tbody tr').length == 1) {
+                    window.location.reload();
                 } else {
-                    showItems('.cart-qty');
+                    updateCartData(jsonData);
+                    $(item).closest('tr').remove();
                 }
             }
         }
     });
 }
+
 
 function htmlData(item, value) {
     $(item).each(function () {
@@ -178,7 +207,7 @@ function hideItems(item) {
     });
 }
 
-function changePriceByQty(input, id) {
+function changePriceByQty(input, id, cart_id = null) {
     $.ajax({
         url: changePriceByQtyRoute,
         type: 'POST',
@@ -190,7 +219,29 @@ function changePriceByQty(input, id) {
             }else{
                 if (jsonData.price) {
                     $(input).closest('form').find(`.product-price-${id}`).text(priceString(jsonData.price));
+                    if (cart_id != null) {
+                        $(input).closest('tr').find(`.product-price-${id}-${cart_id}`).text(`${RUB} ${priceString(jsonData.price)}`);
+                    }
                 }
+            }
+        }
+    });
+}
+
+function changeCartQty(input, id, cart_id) {
+    $.ajax({
+        url: changeCartQtyRoute,
+        type: 'POST',
+        data: {qty: $(input).val(), cartId:cart_id, id: id, _token: CSRF_TOKEN},
+        dataType: 'json',
+        success: function(jsonData){
+            if (jsonData.msg == false) {
+                Notify.setStatus('danger').setMessage(jsonData.message);
+            }else{
+                if (jsonData.price) {
+                    $(input).closest('tr').find(`.product-price-${id}-${cart_id}`).text(`${RUB} ${priceString(jsonData.price)}`);
+                }
+                updateCartData(jsonData);
             }
         }
     });

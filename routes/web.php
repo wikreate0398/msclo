@@ -199,22 +199,23 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
 
     Route::group(['prefix' => 'cart'], function() {
         Route::get('view', 'CartController@view')->name('view_cart');
+        Route::get('checkout', 'CartController@checkout')->name('view_checkout');
 
         Route::get('load-modal', 'CartController@loadModal')->name('load_cart_modal');
         Route::post('add', 'CartController@add')->name('add_to_cart');
         Route::post('change-price', 'CartController@changePriceByQty')->name('change_price');
+        Route::post('remove-cart', 'CartController@removeCart')->name('remove_cart');
+        Route::post('change-qty', 'CartController@changeQty')->name('change_qty');
     });
     
     Route::group(['middlewars' => 'guest'], function(){
-        Route::get('registration', 'Auth\RegisterController@showForm')->name('registration');
-        Route::post('register', 'Auth\RegisterController@register')->name('register');
+        Route::post('register', 'Auth\RegisterController@register')->name('register_user');
         Route::get('registration-confirm/{confirmation_hash}', 'Auth\RegisterController@confirmation')->name('registration_confirm');
 
         Route::get('finish-registration/{hash}', 'Auth\RegisterController@finishRegistrationForm')->name('finish_registration');
         Route::post('update-registration', 'Auth\RegisterController@finishRegistration')->name('update_registration');
 
         Route::post('login', 'Auth\LoginController@login')->name('login');
-        Route::get('login', 'Auth\LoginController@showLogin')->name('show_login');
         Route::post('reset-password', 'Auth\ForgotPasswordController@sendResetPassword')->name('send_reset_pass');
 
         Route::group(['prefix' => 'profile', 'namespace' => 'Profile', 'middleware' => 'web_auth'], function() {
@@ -229,38 +230,6 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
                 Route::post('invitation-response', 'AccountController@invitationResponse')->name('invitation_response');
             });
 
-            Route::group(['prefix' => 'contact-us'], function() {
-                Route::get('/', 'ContactController@index')->name('contact');
-                Route::post('send', 'ContactController@send')->name('send_contact_us');
-            });
-
-            Route::group(['prefix' => 'my-referrals'], function() {
-                Route::get('/', 'MyReferralsController@index')->name('my_referrals');
-            });
-
-            Route::group(['prefix' => 'workspace'], function() {
-                Route::get('/', 'WorkspaceController@index')->name('workspace');
-                Route::post('add-qr', 'WorkspaceController@addQrCode')->name('add_qr');
-                Route::get('delete-qr/{id}', 'WorkspaceController@deleteQrCode')->name('delete_qr');
-                Route::get('to-pdf/{id}', 'WorkspaceController@qrCodeToPdf')->name('qr_to_pdf');
-            });
-
-            Route::group(['prefix' => 'ballance'], function() {
-                Route::get('/', 'BallanceController@index')->name('ballance');
-                Route::post('add-credit-card', 'BallanceController@addCreditCard')->name('add_card');
-                Route::post('withdraw-funds', 'BallanceController@withdrawFunds')->name('withdraw_funds');
-                Route::get('delete-credit-card/{id}', 'BallanceController@deleteCreditCard')->name('delete_card');
-            });
-
-            Route::group(['prefix' => 'my-oficiants'], function() {
-                Route::get('/', 'OficiantsController@index')->name('my_oficiants');
-                Route::post('add-oficiant', 'OficiantsController@addNewOficiant')->name('add_oficiant');
-                Route::post('inviteOficiant', 'OficiantsController@inviteOficiant')->name('invite_oficiant');
-                Route::post('request-money', 'OficiantsController@requestMoney')->name('request_money');
-            });
-
-            Route::get('agent-enrollment', 'Partner\PartnerEnrollmentController@index')->name('partner_enrollment');
-            Route::get('enrollment', 'EnrollmentController@index')->name('enrollment');
         });
     });
 

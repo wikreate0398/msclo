@@ -98,7 +98,7 @@ var Ajax = function() {
                 $(form).remove('.preloader__form_content');
 
                 if (typeof inputMask !== 'undefined' && $.isFunction(inputMask)) {
-                    inputMask();
+                    //inputMask();
                 } 
 
                 if (!$(button).length && $('.page-preloader').length) {
@@ -138,7 +138,6 @@ $(document).ready(function(){
 
         $(button).width(button_width)
             .height(button_height);
-
 
         if (!$(button).length && $('.page-preloader').length) {
             $('.page-preloader').css('display', 'flex');

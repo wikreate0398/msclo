@@ -49,35 +49,27 @@ class LoginController extends Controller
                 'password' => 'required|string',
             ]);
 
-            if ($validator->fails())
-            {
-                return \JsonResponse::error(['messages' => \Constant::get('REQ_FIELDS')]);
+            if ($validator->fails()) {
+                return \JsonResponse::error(['messages' => 'Заполните все поля']);
             }
 
             if (Auth::guard('web')->attempt(['email' => $request->input('email'),
                     'password' => $request->input('password'),
                     'active'   => 1,
-                    'confirm'  => 1], false) == true)
-            {
+                    'confirm'  => 1], false) == true) {
+
                 User::whereId(\Auth::id())->update([
                     'last_entry' => date('Y-m-d H:i:s'), 
                     'user_agent' => request()->server('HTTP_USER_AGENT')
                 ]);
 
-                $route = (\Auth::user()->type == 'agent') ? 'my_referrals' : 'workspace';
-                return \JsonResponse::success(['redirect' => route($route, ['lang' => lang()])], false);
+                return \JsonResponse::success(['redirect' => route('account', ['lang' => lang()])], false);
             }
-            else
-            {
-                return \JsonResponse::error(['messages' => \Constant::get('AUTH_ERR')]);
+            else {
+                return \JsonResponse::error(['messages' => 'Ошибка авторизации']);
             }
         } catch (validationException $e) {
-            return \JsonResponse::error(['messages' => \Constant::get('AUTH_ERR')]);
+            return \JsonResponse::error(['messages' => 'Ошибка авторизации']);
         }
-    }
-
-    public function showLogin()
-    {
-        return view('auth/login');
     }
 }

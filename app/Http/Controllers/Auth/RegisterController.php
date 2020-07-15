@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Utils\Exceptions\ValidationError;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -46,74 +47,52 @@ class RegisterController extends Controller
         $this->middleware('guest', ['except' => ['confirmation', 'finishRegistrationForm', 'finishRegistration']]);
     }
 
-    public function showForm()
-    {  
-        $userTypes = UserType::get();
-        return view('auth/registration', compact('userTypes'));
-    }
-
     public function register(Request $request)
-    { 
-        if(!$request->type or !$request->name or !$request->email or !$request->lastname or !$request->phone or !$request->password or !$request->password_confirmation or ($request->type == 'admin' && !$request->institution_name))
-        {
-            return \JsonResponse::error(['messages' => \Constant::get('REQ_FIELDS')]);
-        } 
-
-        if (!in_array($request->type, UserType::select('type')->get()->pluck('type')->toArray())) 
-        {
-            return \JsonResponse::error(['messages' => 'Ошибка']);
-        }
-
+    {
         try {
+            if(!$request->type or !$request->name or !$request->email  or !$request->password or !$request->password_confirmation) {
+                throw new \ValidationError('Заполните все поля');
+            }
+
+            if (!in_array($request->type, UserType::select('type')->get()->pluck('type')->toArray())) {
+                throw new \ValidationError('Ошибка');
+            }
+
             $this->checkPass($request->password, $request->password_confirmation);
-        } catch (\Exception $e) {
-            return \JsonResponse::error(['messages' => $e->getMessage()]);   
-        } 
 
-        if(User::where('email', $request->email)->count())
-        {
-            return \JsonResponse::error(['messages' => \Constant::get('USER_EXIST')]);
+
+            if(User::where('email', $request->email)->count()) {
+                throw new \ValidationError('Пользователь с таким e-mail адоресом уже существует');
+            }
+
+            $confirm_hash = md5(microtime());
+
+            $user = User::create([
+                'name'             => $request->name,
+                'type'             => $request->type,
+                'email'            => $request->email,
+                'confirm_hash'     => $confirm_hash,
+                'password'         => bcrypt($request->password),
+                'lang'             => lang(),
+            ]);
+
+            $user->notify(new ConfirmRegistration($confirm_hash, lang()));
+            return \JsonResponse::success([
+                'messages' => 'Вы успешно зарегистрировались. На вашу почту мы отправили ссылку для подтверждение регистрации'
+            ]);
+        } catch (\ValidationError $e) {
+            return \JsonResponse::error(['messages' => $e->getMessage()]);
         }
-
-        if (!empty($request->agent_code) && !User::where('code', '=', $request->agent_code)->count()) 
-        { 
-            return \JsonResponse::error(['messages' => 'Код партнера не действителен']);
-        } 
-
-        $confirm_hash = md5(microtime());
-
-        $user = User::create([
-            'name'             => $request->name,
-            'type'             => $request->type,
-            'work_type'        => ($request->type == 'admin') ? 'common_sum' : '',
-            'lastname'         => $request->lastname,
-            'institution_name' => $request->institution_name ?: '',
-            'agent_code'       => $request->agent_code ?: '',
-            'phone'            => $request->phone,
-            'email'            => $request->email,
-            'confirm_hash'     => $confirm_hash,
-            'password'         => bcrypt($request->password),
-            'lang'             => lang(),
-            'rand'             => generate_id(7),
-            'code'             => ($request->type == 'agent') ? generate_id(4) : ''
-        ]);
-
-        $user->notify(new ConfirmRegistration($confirm_hash, lang()));
-        return \JsonResponse::success([
-            'messages' => htmlspecialchars_decode(\Constant::get('REG_SUCCESS'))
-        ]);
     }    
 
     private function checkPass($password, $password_confirmation)
     {
-        if($password != $password_confirmation)
-        {
-            throw new \Exception(\Constant::get('PASS_NOT_MATCH')); 
+        if($password != $password_confirmation) {
+            throw new \ValidationError('Пароль не совпадает');
         }
 
-        if(strlen($password) < 8)
-        {
-            throw new \Exception(\Constant::get('PASS_RESTRICTION'));  
+        if(strlen($password) < 8) {
+            throw new \ValidationError('Пароль должен состоять из 8 или более символов');
         }
     }
 

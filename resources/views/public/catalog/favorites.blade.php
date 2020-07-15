@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('content')
-    <div class="container in-wrapper">
+    <div class="container in-wrapper" style="min-height: 400px;">
         <div class="my-6">
             <h1 class="text-center">Избранное</h1>
         </div>
@@ -69,7 +69,7 @@
                 </div>
             </div>
         @else
-            <div class="alert alert-warning mb-13">
+            <div class="alert alert-warning">
                 Нет товаров
             </div>
         @endif

@@ -199,39 +199,44 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
 
     Route::group(['prefix' => 'cart'], function() {
         Route::get('view', 'CartController@view')->name('view_cart');
-        Route::get('checkout', 'CartController@checkout')->name('view_checkout');
+
 
         Route::get('load-modal', 'CartController@loadModal')->name('load_cart_modal');
         Route::post('add', 'CartController@add')->name('add_to_cart');
         Route::post('change-price', 'CartController@changePriceByQty')->name('change_price');
         Route::post('remove-cart', 'CartController@removeCart')->name('remove_cart');
         Route::post('change-qty', 'CartController@changeQty')->name('change_qty');
+
+        Route::group(['middleware' => ['web_auth', 'cart']], function(){
+            Route::get('checkout', 'CartController@showCheckout')->name('view_checkout');
+            Route::post('checkout', 'CartController@checkout')->name('checkout');
+        });
+        Route::get('success', 'CartController@success')->name('order_added');
     });
     
-    Route::group(['middlewars' => 'guest'], function(){
+    Route::group(['middleware' => 'guest'], function(){
         Route::post('register', 'Auth\RegisterController@register')->name('register_user');
         Route::get('registration-confirm/{confirmation_hash}', 'Auth\RegisterController@confirmation')->name('registration_confirm');
 
-        Route::get('finish-registration/{hash}', 'Auth\RegisterController@finishRegistrationForm')->name('finish_registration');
-        Route::post('update-registration', 'Auth\RegisterController@finishRegistration')->name('update_registration');
-
         Route::post('login', 'Auth\LoginController@login')->name('login');
         Route::post('reset-password', 'Auth\ForgotPasswordController@sendResetPassword')->name('send_reset_pass');
+    });
 
-        Route::group(['prefix' => 'profile', 'namespace' => 'Profile', 'middleware' => 'web_auth'], function() {
+    Route::group(['prefix' => 'profile', 'namespace' => 'Profile', 'middleware' => 'web_auth'], function() {
 
-            Route::group(['prefix' => 'account'], function() {
-                Route::get('/', 'AccountController@index')->name('account');
-                Route::post('edit-userdata', 'AccountController@edit')->name('edit_userdata');
-                Route::post('change-password', 'AccountController@changePassword')->name('change_password');
-                Route::post('save-avatar', 'AccountController@saveAvatar')->name('save_avatar');
-                Route::post('upload-verification-file', 'AccountController@uploadVerificationFile')->name('upload_verification_file');
+        Route::group(['prefix' => 'account'], function() {
+            Route::get('/', 'AccountController@index')->name('account');
+            Route::post('edit-userdata', 'AccountController@edit')->name('edit_userdata');
+            Route::post('change-password', 'AccountController@changePassword')->name('change_password');
+            Route::post('save-avatar', 'AccountController@saveAvatar')->name('save_avatar');
+        });
 
-                Route::post('invitation-response', 'AccountController@invitationResponse')->name('invitation_response');
-            });
-
+        Route::group(['prefix' => 'contacts'], function() {
+            Route::get('/', 'ContactsController@index')->name('provider_contacts');
+            Route::post('save', 'ContactsController@save')->name('save_provider_contacts');
         });
     });
+
 
     /*
      * Routes for authorized users

@@ -43,19 +43,25 @@
 {{--                            </li>--}}
                             <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
                                 <!-- Account Sidebar Toggle Button -->
-                                <a id="sidebarNavToggler" href="javascript:;" role="button" class="u-header-topbar__nav-link"
-                                   aria-controls="sidebarContent"
-                                   aria-haspopup="true"
-                                   aria-expanded="false"
-                                   data-unfold-event="click"
-                                   data-unfold-hide-on-scroll="false"
-                                   data-unfold-target="#sidebarContent"
-                                   data-unfold-type="css-animation"
-                                   data-unfold-animation-in="fadeInRight"
-                                   data-unfold-animation-out="fadeOutRight"
-                                   data-unfold-duration="500">
-                                    <i class="ec ec-user mr-1"></i> Зарегистрироваться <span class="text-gray-50">или</span> Войти в ЛК
-                                </a>
+                                @if(!\Auth::check())
+                                    <a id="sidebarNavToggler" href="javascript:;" role="button" class="u-header-topbar__nav-link"
+                                       aria-controls="sidebarContent"
+                                       aria-haspopup="true"
+                                       aria-expanded="false"
+                                       data-unfold-event="click"
+                                       data-unfold-hide-on-scroll="false"
+                                       data-unfold-target="#sidebarContent"
+                                       data-unfold-type="css-animation"
+                                       data-unfold-animation-in="fadeInRight"
+                                       data-unfold-animation-out="fadeOutRight"
+                                       data-unfold-duration="500">
+                                        <i class="ec ec-user mr-1"></i> Зарегистрироваться <span class="text-gray-50">или</span> Войти в ЛК
+                                    </a>
+                                @else
+                                    <a href="{{ route('account', compact('lang')) }}" class="u-header-topbar__nav-link">
+                                        <i class="ec ec-user mr-1"></i> {{ user()->name }}
+                                    </a>
+                                @endif
                                 <!-- End Account Sidebar Toggle Button -->
                             </li>
                         </ul>
@@ -168,11 +174,13 @@
                                             </a>
                                         </li>
                                     @endforeach
-                                    <li class="nav-item u-header__nav-last-item">
-                                        <a class="btn-round transition-3d-hover" href="#" target="_blank">
-                                            Стать поставщиком
-                                        </a>
-                                    </li>
+                                    @if(!\Auth::check())
+                                        <li class="nav-item u-header__nav-last-item">
+                                            <a class="btn-round transition-3d-hover" href="#" target="_blank">
+                                                <i class="ec ec-user"></i> Стать поставщиком
+                                            </a>
+                                        </li>
+                                    @endif
                                 </ul>
                             </div>
                             <!-- End Navigation -->
@@ -244,7 +252,11 @@
                                               style="left: 25px">{{ sessArray('favorites')->count() }}</span>
                                     </a>
                                 </li>
-                                <li class="col d-xl-none px-2 px-sm-3"><a href="../shop/my-account.html" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="My Account"><i class="font-size-22 ec ec-user"></i></a></li>
+                                <li class="col d-xl-none px-2 px-sm-3">
+                                    <a href="../shop/my-account.html" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="My Account">
+                                        <i class="font-size-22 ec ec-user"></i>
+                                    </a>
+                                </li>
                                 <li class="col pr-xl-0 px-2 px-sm-3">
                                     <a href="{{ route('view_cart', compact('lang')) }}" class="text-gray-90 position-relative d-flex " data-toggle="tooltip" data-placement="top" title="Корзина">
                                         <i class="font-size-22 ec ec-shopping-bag"></i>

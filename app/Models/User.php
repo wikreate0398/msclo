@@ -27,7 +27,21 @@ class User extends Authenticatable
         'image', 
         'user_agent', 
         'last_entry',
-        'type'
+        'type',
+        'work_from',
+        'work_to',
+        'phone',
+        'phone2',
+        'contact_email',
+        'feedback_email',
+        'site',
+        'skype',
+        'vk',
+        'instagram',
+        'office_address',
+        'warehouse_address',
+        'other_contacts',
+        'note'
     ];
 
     /**

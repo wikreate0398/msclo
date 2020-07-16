@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order\Order;
+use App\Models\Order\OrderProduct;
 use App\Repository\Interfaces\CartRepositoryInterface;
 use App\Repository\Interfaces\CatalogRepositoryInterface;
 use App\Utils\Crumbs\BreadFactory;
@@ -30,15 +32,70 @@ class CartController extends Controller
         return view('public.cart.view', compact(['products', 'breads']));
     }
 
-    public function checkout()
+    public function showCheckout()
     {
         $crumb   = BreadFactory::init();
-        $crumb->add(Crumb::name('Корзина')->link(route('view_cart'), ['lang' => lang()]))
+        $crumb->add(Crumb::name('Корзина')->link(route('view_cart', ['lang' => lang()])))
               ->add(Crumb::name('Оформить'));
         $breads  = $crumb->toHtml();
         $products = $this->cartRepository->getProducts();
 
-        return view('public.cart.view', compact(['products', 'breads']));
+        return view('public.cart.checkout', compact(['products', 'breads']));
+    }
+
+    public function checkout($lang, Request $request)
+    {
+        try {
+
+            if (!isAuth() or !cart()->has()) return;
+
+            $req = collect(['name', 'lastname', 'agree', 'payment_type', 'city', 'street', 'house', 'phone']);
+            $req->each(function($v){
+                if (!request($v)) {
+                    throw new \ValidationError('Заполните все обязательные поля');
+                }
+            });
+
+            $order = Order::create([
+                'name'         => $request->name,
+                'lastname'     => $request->lastname,
+                'payment_type' => $request->payment_type,
+                'city'         => $request->city,
+                'street'       => $request->street,
+                'house'        => $request->house,
+                'phone'        => $request->phone,
+                'comment'      => $request->comment,
+                'company'      => $request->company,
+                'id_user'      => user()->id,
+                'rand'         => generate_id(6),
+                'total_price'  => cart()->getTotalPrice()
+            ]);
+
+            $products = $this->cartRepository->getProducts();
+            foreach ($products as $product) {
+                OrderProduct::create([
+                    'id_order'    => $order->id,
+                    'id_provider' => $product['id_provider'],
+                    'id_product'  => $product['id'],
+                    'qty'         => $product['qty'],
+                    'price'       => $product['price']
+                ]);
+            }
+
+            cart()->remove();
+            return \JsonResponse::success(['redirect' => route('order_added', ['lang' => lang()])]);
+        } catch (\ValidationError $e) {
+            return \JsonResponse::error(['messages' => $e->getMessage()]);
+        }
+    }
+
+    public function success()
+    {
+        $crumb   = BreadFactory::init();
+        $crumb->add(Crumb::name('Корзина'))
+              ->add(Crumb::name('Оформить'));
+        $breads  = $crumb->toHtml();
+        return view('public.cart.success', compact(['breads']));
     }
 
     public function add($lang, Request $request)
@@ -46,6 +103,10 @@ class CartController extends Controller
         $product = $this->catalogRepository->getProductById($request->id);
 
         try {
+
+            if (isAuth() && $product->id_provider == user()->id) {
+                throw new \ValidationError('Вы не можете покупать свои товары');
+            }
 
             if (empty($request->qty)) {
                 throw new \ValidationError('Укажите кол-во');
@@ -110,7 +171,7 @@ class CartController extends Controller
     public function removeCart($lang, Request $request)
     {
         if (cart()->has($request->cartId)) {
-            cart()->delete($request->cartId);
+            cart()->deleteItem($request->cartId);
         }
 
         return \JsonResponse::success([

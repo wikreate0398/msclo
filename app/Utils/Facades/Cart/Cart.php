@@ -22,7 +22,7 @@ class Cart
         return $this->cartRepository->getTotalPrice();
     }
 
-    public function delete($key = null)
+    public function deleteItem($key = null)
     {
         if ($key === null) return;
         sessArray('cart')->detachByKey($key);
@@ -33,6 +33,11 @@ class Cart
         if ($this->has($key)) {
             sessArray('cart')->update($key, $data);
         }
+    }
+
+    public function remove()
+    {
+        session()->pull('cart');
     }
 
     public function has()

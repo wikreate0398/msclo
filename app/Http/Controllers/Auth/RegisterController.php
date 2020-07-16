@@ -96,71 +96,21 @@ class RegisterController extends Controller
         }
     }
 
-    public function finishRegistrationForm($lang, $hash)
-    {
-        $user = LocationUser::where('hash', $hash)->with('user')->firstOrFail();
-        return view('auth.finish_registration', compact('user'));
-    } 
-
-    public function finishRegistration(Request $request)
-    {
-
-        if(!$request->name or !$request->lastname or !$request->phone or !$request->password or !$request->password_confirmation)
-        {
-            return \JsonResponse::error(['messages' => \Constant::get('REQ_FIELDS')]);
-        }  
-
-        $userLocation = LocationUser::where('hash', $request->hash)->with('user')->first();
-
-        if (!$userLocation) 
-        {
-            return \JsonResponse::error(['messages' => 'Ошибка']);
-        }
-
-        try {
-            $this->checkPass($request->password, $request->password_confirmation);
-        } catch (\Exception $e) {
-            return \JsonResponse::error(['messages' => $e->getMessage()]);   
-        }  
-
-        User::whereId($userLocation->id_user)->update([
-            'name'         => $request->name, 
-            'lastname'     => $request->lastname, 
-            'phone'        => $request->phone,  
-            'password'     => bcrypt($request->password),
-            'lang'         => lang(),
-            'active'       => 1,
-            'confirm'      => 1
-        ]);
-
-        $userLocation->hash = '';
-        $userLocation->status = 'confirmed';
-        $userLocation->save(); 
-
-        return \JsonResponse::success([
-            'messages' => 'Вы успешно завершили регистрацию. Теперь вы можете перейти на страницу <a href="'. route('show_login', ['lang' => lang()]) .'">авторизации</a>'
-        ]);
-    } 
-
     public function confirmation($lang, $confirmation_hash)
     { 
-        $user = User::where('confirm_hash', $confirmation_hash)->first();
-
-        if(!$user) abort('404');
+        $user = User::where('confirm_hash', $confirmation_hash)->firstOrFail();
 
         if (empty($user->active)) {
             User::where('id', $user->id)
-                ->update(['active' => 1, 'confirm' => 1]);
+                ->update(['active' => 1, 'confirm' => 1, 'confirm_hash' => '']);
 
-            if (Auth::check())
-            {
+            if (Auth::check()) {
                 Auth::guard('web')->logout();
             }
             Auth::guard('web')->login($user);
 
-            return redirect()->route('workspace', ['lang' => lang()])->with('flash_message', trans('auth.success_login'));
+            session()->put('flash_message', 'Вы успешно активировали свой профиль');
         }
-
-        return view('auth.confirmation', compact('user'));
+        return redirect()->route('home');
     }
 }

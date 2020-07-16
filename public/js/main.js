@@ -171,6 +171,73 @@ function changeRegType(btn, type){
         }
     });
 }
+
+function profilePhoto(fileName){
+
+    var file = fileName.files[0];
+
+    var reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    var fileSize = parseInt(file["size"]) / 1000;
+    var fileExtension = ["image/gif", "image/jpeg", "image/png", "image/jpg"];
+    var fileType = file["type"];
+
+    if (fileSize > 2048) {
+        alert('Максимальный размер изображения 2МБ');
+        return;
+    }
+
+    if (jQuery.inArray(fileType, fileExtension) == -1) {
+        alert('Файл не неверного формата');
+        return;
+    }
+
+    reader.onload = function (e) {
+        $.fancybox.open({
+            'src': '#profile-avatar'
+        });
+
+        $('.cropper__image_content').html('<img src="" id="image__crop">');
+        var image = $('img#image__crop');
+
+        $(image).attr('src', reader.result);
+        $('input#avatar').val(reader.result);
+
+        var image = document.getElementById('image__crop');
+        var button = document.getElementById('crop__btn');
+
+        var croppable = false;
+        var cropper = new Cropper(image, {
+            aspectRatio: 1,
+            viewMode: 1,
+            ready: function () {
+                croppable = true;
+            }
+        });
+
+        button.onclick = function () {
+            $('.cropper__section, #overlay').fadeOut(150);
+            var croppedCanvas;
+            var roundedCanvas;
+            var roundedImage;
+
+            if (!croppable) {
+                return;
+            }
+
+            base64 = cropper.getCroppedCanvas().toDataURL();
+
+            $('input#avatar').val(base64);
+            $('.profile__img').css('background-image', 'url('+base64+')');
+            $('.save__cropped_image').show();
+            $('form.profile__image_form').submit();
+
+            $.fancybox.close();
+        };
+    };
+}
 //
 // function alertModal(text, status = 'success'){
 //     $.fancybox.open({

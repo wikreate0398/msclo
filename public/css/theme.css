@@ -34094,7 +34094,7 @@ blockquote:not(.blockquote) p {
 ------------------------------------*/
 .form-label {
   display: block;
-  text-transform: capitalize;
+  text-transform: none;
   font-size: 0.875rem;
   font-weight: 700;
 }
@@ -37543,6 +37543,100 @@ a.compare-icon.active, a.fav-icon.active {
 
 .cart-modal-thumb img{
   width: 100%;
+}
+
+.cropper__image_content{
+  text-align: center;
+  margin-bottom: 20px;
+  height: 300px;
+}
+
+.cropper__image_content img{
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.profile__img{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 50%;
+  padding-bottom: 50%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid #ededed;
+}
+
+.profile__img{
+  position: relative;
+  cursor: pointer;
+  background-size: contain;
+}
+
+.actions__upload_photo{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.7);
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  justify-content: center;
+  display: none;
+  align-items: center;
+}
+
+.actions__upload_photo .btn-file{
+  background-color: #047edf ;
+  display: inline-block;
+  color: #fff;
+  /* margin-right: 10px;*/
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  cursor: pointer;
+}
+
+.edit__profile__photo-icon{
+  color: #b93777;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  line-height: 35px;
+  background-color: #fff;
+}
+
+.profile__img:hover .actions__upload_photo{
+  display: flex;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file], input.avatar__fileimage{
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+}
+
+.avatar__fileimage:hover{
+  cursor: pointer;
 }
 /*------------------------------------
   File for your custom SCSS style

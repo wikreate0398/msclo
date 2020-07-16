@@ -445,7 +445,8 @@ function setLangUri($lang){
 
 
 function imageThumb($image = false, $path, $width, $height=null, $v)
-{ 
+{
+//    if (empty($image)) return '';
     $height = empty($height) ? null : $height;
     $path = str_replace('.', '/', $path); 
 
@@ -472,7 +473,7 @@ function imageThumb($image = false, $path, $width, $height=null, $v)
     if (empty($image)) {
         $explodePath = explode('/', $path);
         $defImg = 'no-image.png';
-        if (end($explodePath) == 'clients')
+        if (end($explodePath) == 'users')
         {
             $defImg = 'no-avatar.png';
         }  
@@ -783,6 +784,14 @@ function generateAccountNumber()
         $zeros .= 0;
     }
     return $zeros.$accountNumber;
+}
+
+function user(){
+    return \Auth::user();
+}
+
+function isAuth() {
+    return \Auth::check();
 }
 
 function cart() {

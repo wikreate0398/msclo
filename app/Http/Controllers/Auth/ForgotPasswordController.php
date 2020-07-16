@@ -35,15 +35,14 @@ class ForgotPasswordController extends Controller
 
     public function sendResetPassword(Request $request)
     { 
-        if (empty($request->email))
-        {
-            return \JsonResponse::error(['messages' => \Constant::get('ENTER_EMAIL')]);
+        if (empty($request->email)) {
+            return \JsonResponse::error(['messages' => 'Введите e-mail']);
         }
 
         $user = User::whereEmail($request->email)->first();
         if (empty($user))
         {
-            return \JsonResponse::error(['messages' => \Constant::get('USER_NOT_EXIST')]);
+            return \JsonResponse::error(['messages' => 'Мы не можем найти пользователя с таким адресом']);
         }
 
         $newPassword    = random_str(8);
@@ -52,6 +51,6 @@ class ForgotPasswordController extends Controller
 
         $user->notify(new ResetPassword($newPassword));
 
-        return \JsonResponse::success(['messages' => \Constant::get('NEW_PASS_SEND')]);
+        return \JsonResponse::success(['messages' => 'Новый пароль отправлен на почту']);
     }
 }

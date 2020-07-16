@@ -63,7 +63,9 @@ class LoginController extends Controller
                     'user_agent' => request()->server('HTTP_USER_AGENT')
                 ]);
 
-                return \JsonResponse::success(['redirect' => route('account', ['lang' => lang()])], false);
+                $route = $request->from_cart ? route('view_cart', ['lang' => lang()]) : route('home');
+
+                return \JsonResponse::success(['redirect' => $route], false);
             }
             else {
                 return \JsonResponse::error(['messages' => 'Ошибка авторизации']);

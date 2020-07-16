@@ -63,14 +63,15 @@ class CartRepository implements CartRepositoryInterface
             }
 
             $data->push([
-                'cart_id' => $cartId,
-                'url'     => $product->url,
-                'id'      => $item['id'],
-                'name'    => $product["name_$lang"],
-                'image'   => imageThumb(@$product->images->first()->image, 'uploads/products', 300, 300, '300X300'),
-                'price'   => $this->getPriceByQty($product->prices, $item['qty']),
-                'qty'     => $item['qty'],
-                'chars'   => $chars
+                'cart_id'     => $cartId,
+                'url'         => $product->url,
+                'id'          => $item['id'],
+                'id_provider' => $product->id_provider,
+                'name'        => $product["name_$lang"],
+                'image'       => imageThumb(@$product->images->first()->image, 'uploads/products', 300, 300, '300X300'),
+                'price'       => $this->getPriceByQty($product->prices, $item['qty']),
+                'qty'         => $item['qty'],
+                'chars'       => $chars
             ]);
         }
 

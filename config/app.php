@@ -252,7 +252,8 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'ValidationError' => App\Utils\Exceptions\ValidationError::class,
-        'Cart'            =>  App\Cart\CartFacade::class
+        'Cart'            =>  App\Cart\CartFacade::class,
+        'CatalogCrud'     =>  App\Catalog\CatalogCrudFacade::class
     ],
 
 ];

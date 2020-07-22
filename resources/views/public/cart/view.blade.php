@@ -139,6 +139,7 @@
                data-unfold-type="css-animation"
                data-unfold-animation-in="fadeInRight"
                data-unfold-animation-out="fadeOutRight"
+               onclick="showLogin()"
                data-unfold-duration="500">
                 <strong>авторизироваться</strong>
             </a>

@@ -11,7 +11,7 @@
 		<!-- End Title -->
 
 		<form action="{{ route('save_provider_contacts', ['lang' => $lang]) }}"
-			  class="ajax__submit" onsubmit="return false">
+			  class="ajax__submit">
 			{{ csrf_field() }}
 			<div class="row">
 				<div class="col-md-4">

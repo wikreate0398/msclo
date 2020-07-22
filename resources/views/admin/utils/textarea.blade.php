@@ -8,8 +8,8 @@
 			@else
 				<div class="ck-editor">
 					<div class="toolbar-container"></div>
-					<div class="editor">
-
+					<div class="editor-wrapper">
+						<div class="editor"></div>
 					</div>
 					<textarea name="{{ $name }}" style="display: none;">
 						{{ !empty($data[@$name]) ? $data[@$name] : '' }}

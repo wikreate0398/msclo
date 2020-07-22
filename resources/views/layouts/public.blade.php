@@ -43,6 +43,7 @@
         const removeCartRoute       = '{{ route('remove_cart', ['lang' => $lang]) }}';
         const changeCartQtyRoute    = '{{ route('change_qty', ['lang' => $lang]) }}';
         const RUB                   = '{{ RUB }}';
+        const editors = {};
     </script>
 
 </head>
@@ -107,7 +108,7 @@
                             <input type="email" class="form-control border-0 height-40" name="email" id="subscribeSrEmail" placeholder="Телевфон" aria-label="Телевфон" aria-describedby="subscribeButton" required
                                    data-msg="Please enter a valid email address.">
                             <div class="input-group-append">
-                                <button type="submit" class="btn btn-dark btn-sm-wide height-40 py-2" id="subscribeButton">Отправить</button>
+                                <button type="submit" class="btn btn-dark btn-sm-wide height-40 py-2 submit-btn" id="subscribeButton">Отправить</button>
                             </div>
                         </div>
                     </form>
@@ -309,7 +310,7 @@
                                     </div>
 
                                     <div class="mb-2">
-                                        <button type="submit" class="btn btn-block btn-sm btn-primary transition-3d-hover">Войти</button>
+                                        <button type="submit" class="btn btn-block btn-sm btn-primary transition-3d-hover submit-btn">Войти</button>
                                     </div>
 
                                     <div class="text-center mb-4">
@@ -443,7 +444,7 @@
                                     <!-- End Input -->
 
                                     <div class="mb-2">
-                                        <button type="submit" class="btn btn-block btn-sm btn-primary transition-3d-hover">Зарегистрироваться</button>
+                                        <button type="submit" class="btn btn-block btn-sm btn-primary transition-3d-hover submit-btn">Зарегистрироваться</button>
                                     </div>
 
                                     <div class="text-center mb-4">
@@ -507,7 +508,7 @@
                                     <!-- End Form Group -->
 
                                     <div class="mb-2">
-                                        <button type="submit" class="btn btn-block btn-sm btn-primary transition-3d-hover">Отправить</button>
+                                        <button type="submit" class="btn btn-block btn-sm btn-primary transition-3d-hover submit-btn">Отправить</button>
                                     </div>
 
                                     <div class="text-center mb-4">
@@ -579,7 +580,8 @@
 <script src="/js/components/hs.go-to.js"></script>
 <script src="/js/components/hs.selectpicker.js"></script>
 <script src="/js/components/hs.range-slider.js"></script>
-<script src="/js/components/hs.quantity-counter.js?v={{ time() }}"></script>
+<script src="/js/components/hs.quantity-counter.js"></script>
+<script src="https://use.fontawesome.com/7d23dee490.js"></script>
 
 <script src="/js/catalog.js?v={{ time() }}"></script>
 <script src="/js/main.js?v={{ time() }}"></script>
@@ -712,7 +714,9 @@
 
 @if(session()->has('flash_message'))
     <script>
-        Notify.setStatus('success').setMessage('{{ session()->get('flash_message') }}');
+        $(window).load(function () {
+            Notify.setStatus('success').setMessage('{{ session()->get('flash_message') }}');
+        })
     </script>
     @php session()->forget('flash_message') @endphp
 @endif

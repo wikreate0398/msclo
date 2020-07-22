@@ -12,6 +12,8 @@ interface CatalogRepositoryInterface
 
     public function getFilters($idsCats = []);
 
+    public function getProvidersFilter($idsCats = []);
+
     public function getSubcatsIds($allCats, $id_category);
 
     public function getSameCats($id_parent);
@@ -23,4 +25,8 @@ interface CatalogRepositoryInterface
     public function getProduct($url);
 
     public function getProductById($id);
+
+    public function getProviderProducts($id_provider);
+
+    public function deleteProduct($id, $id_provider);
 }

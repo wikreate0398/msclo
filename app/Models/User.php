@@ -56,6 +56,7 @@ class User extends Authenticatable
     protected $casts = [
         'confirm'    => 'integer',
         'active'     => 'integer',
+        'last_entry' => 'datetime'
     ];
   
     public function scopeFilter($query)
@@ -86,7 +87,24 @@ class User extends Authenticatable
     public function typeData()
     {
       return $this->hasOne('App\Models\UserType', 'type', 'type');
-    }  
+    }
+
+    public function provider_options()
+    {
+        return $this->hasMany('App\Models\Provider\CharProduct', 'id_provider', 'id');
+    }
+
+    public function products()
+    {
+        return $this->hasMany('App\Models\Catalog\Product', 'id_provider', 'id');
+    }
+
+    public function scopeWhereProdsInCats($query, $idsCats)
+    {
+        return $query->whereHas('products', function($query) use($idsCats) {
+            return $query->whereIn('id_category', $idsCats);
+        });
+    }
 
     public function scopeRegistered($query, $time = false)
     {

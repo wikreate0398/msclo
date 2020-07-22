@@ -120,8 +120,14 @@ $(document).ready(function(){
     $('form.ajax__submit').submit(function(e){
         e.preventDefault();
 
+        if (typeof editors == 'object') {
+            $.each(editors, function (k,v) {
+                $(`#textarea-${k}`).val(v.getData());
+            });
+        }
+
         var form   = $(this);
-        var button = $(form).find('button[type="submit"]');
+        var button = $(form).find('button[type="submit"].submit-btn');
         var action = $(form).attr('action');
         $(button).attr('disabled', true);
 

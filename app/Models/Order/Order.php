@@ -32,4 +32,16 @@ class Order extends Model
     {
         return $this->hasOne('App\Models\User', 'id', 'id_user');
     }
+
+    public function products()
+    {
+        return $this->hasMany('App\Models\Order\OrderProduct', 'id_order', 'id');
+    }
+
+    public function scopeGetPurchase($query)
+    {
+        return $query->where('id_user', user()->id)
+                     ->with(['products'])
+                     ->get();
+    }
 }

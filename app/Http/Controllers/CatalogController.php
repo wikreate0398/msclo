@@ -33,8 +33,9 @@ class CatalogController extends Controller
 
         $filters  = $this->repository->getFilters($idsCats);
         $breads   = $this->generateBreads($this->repository->getBreads($allCats->toArray(), $category->id));
+        $providers = $this->repository->getProvidersFilter($idsCats);
 
-        return view('public/catalog/category', compact(['category', 'catalog', 'filters', 'breads', 'moreCats', 'filterPrices']));
+        return view('public/catalog/category', compact(['category', 'providers', 'catalog', 'filters', 'breads', 'moreCats', 'filterPrices']));
     }
 
     public function viewProduct($lang, $url)

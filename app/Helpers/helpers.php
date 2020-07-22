@@ -256,6 +256,14 @@ function adminMenu()
             'edit' => 'Редактировать'
         ],
 
+        'providers-services' => [
+            'name' => 'Информация поставщика',
+            'icon' => '<i data-feather="edit"></i>',
+            'link' => '/'.config('admin.path').'/providers-services/',
+            'view' => true,
+            'edit' => 'Редактировать'
+        ],
+
         'slider' => [
             'name' => 'Слайдер',
             'icon' => '<i data-feather="image"></i>',
@@ -274,7 +282,7 @@ function adminMenu()
 
         'brands' => [
             'name' => 'Брэнды',
-            'icon' => '<i data-feather="layout"></i>',
+            'icon' => '<i data-feather="book"></i>',
             'link' => '/'.config('admin.path').'/brands/',
             'view' => true,
             'edit' => 'Редактировать'

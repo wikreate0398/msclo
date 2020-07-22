@@ -155,6 +155,13 @@ Route::group(['prefix' => $adminPath, 'namespace' => 'Admin', 'middleware' => ['
         });
     });
 
+    Route::group(['prefix' => 'providers-services'], function() {
+        Route::get('/', 'ProvidersServicesController@show')->name('admin_providers_services');
+        Route::get('{id}/edit', 'ProvidersServicesController@showeditForm');
+        Route::post('create', 'ProvidersServicesController@create');
+        Route::post('{id}/update', 'ProvidersServicesController@update');
+    });
+
 	Route::group(['prefix' => 'profile'], function() {
         Route::get('/', 'ProfileController@showForm')->name('profile');
         Route::get('{id}/edit-user', 'ProfileController@editAdminUser');
@@ -229,6 +236,31 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
             Route::post('edit-userdata', 'AccountController@edit')->name('edit_userdata');
             Route::post('change-password', 'AccountController@changePassword')->name('change_password');
             Route::post('save-avatar', 'AccountController@saveAvatar')->name('save_avatar');
+        });
+
+        Route::group(['prefix' => 'purchases'], function() {
+            Route::get('/', 'PurchasesController@index')->name('purchases');
+        });
+
+        Route::group(['prefix' => 'files'], function() {
+            Route::get('/', 'FilesController@index')->name('files');
+            Route::post('save', 'FilesController@saveFiles')->name('save_files');
+            Route::post('delete', 'FilesController@delete')->name('delete_file');
+        });
+
+        Route::group(['prefix' => 'services'], function() {
+            Route::get('/', 'ServicesController@index')->name('services');
+            Route::post('save', 'ServicesController@save')->name('save_services');
+        });
+
+        Route::group(['prefix' => 'products'], function() {
+            Route::get('/', 'ProductsController@index')->name('view_profile_product');
+            Route::get('{id}/edit', 'ProductsController@showEditForm')->name('view_edit_product');
+
+            Route::get('add-form', 'ProductsController@showAddForm')->name('profile_add_product');
+            Route::post('create', 'ProductsController@create')->name('create_product');
+            Route::post('{id}\update', 'ProductsController@update')->name('update_product');
+            Route::get('delete/{id}', 'ProductsController@delete')->name('delete_product');
         });
 
         Route::group(['prefix' => 'contacts'], function() {

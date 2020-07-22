@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Models\Catalog\Char;
 use App\Models\Catalog\Product;
 use App\Models\Catalog\ProductPrice;
+use App\Models\User;
 use App\Repository\Interfaces\CatalogRepositoryInterface;
 use App\Models\Catalog\Category;
 
@@ -32,6 +33,20 @@ class CatalogRepository implements CatalogRepositoryInterface
         $data = Product::catalog($ids)
                        ->filter()
                        ->paginate(request('per_page') ?: 20);
+        return $data;
+    }
+
+    public function deleteProduct($id, $id_provider)
+    {
+        $product = Product::whereId($id)->where('id_provider', $id_provider)->firstOrFail();
+        $product->delete();
+    }
+
+    public function getProviderProducts($id_provider)
+    {
+        $data = Product::withRelations()
+                        ->where('id_provider', $id_provider)
+                        ->get();
         return $data;
     }
 
@@ -106,6 +121,11 @@ class CatalogRepository implements CatalogRepositoryInterface
     public function getFilters($idsCats = [])
     {
         return Char::filters($idsCats)->get();
+    }
+
+    public function getProvidersFilter($idsCats = [])
+    {
+        return User::provider()->whereProdsInCats($idsCats)->get();
     }
 
     public function getSubcatsIds($dataset, $id_parent)

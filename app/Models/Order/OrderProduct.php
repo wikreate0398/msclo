@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderProduct extends Model
 {
-    use SoftDeletes;
-
     public $timestamps = false;
 
     protected $table = 'orders_products';
@@ -24,5 +22,10 @@ class OrderProduct extends Model
     public function provider()
     {
         return $this->hasOne('App\Models\User', 'id', 'id_provider');
+    }
+
+    public function product()
+    {
+        return $this->hasOne('App\Models\Catalog\Product', 'id', 'id_product')->with('images')->withTrashed();
     }
 }

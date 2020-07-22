@@ -23,9 +23,15 @@ $(document).ready(function(){
         scrollToBlock($(this).attr('href')); 
     });
 
-    //inputMask();
+    fileUploader();
 
     changeByKeyup();
+
+    $('a.confirm_link').on('click', function(e){
+        if (!confirm($(this).attr('data-confirm'))) {
+            e.preventDefault();
+        }
+    });
 
     $('.number').keypress(function(event) {
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
@@ -57,6 +63,74 @@ $(document).ready(function(){
     $('.nav').find('a').on('shown.bs.tab', function () {
         fixHeight('.products-group-4-1-4');
     });
+
+    if ($('input.provider_files').length) {
+        $('input.provider_files').fileuploader({
+            extensions: ['application/pdf', 'application/x-download', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'application/octet-stream'],
+            addMore: true,
+            limit: 5,
+            maxSize: 2,
+            enableApi: true,
+            captions: {
+                button: function (options) {
+                    return 'Выбрать ' + (options.limit == 1 ? 'file' : 'файлы');
+                },
+                feedback2: function (options) {
+                    return options.length + ' файл(ов) выбрано';
+                },
+                removeConfirmation: 'Подтвердить удаление',
+                feedback: 'Выберите файлы',
+                errors: {
+                    filesLimit: 'Вы можете загрузить не более ${limit} файлов.',
+                    filesType: 'Вы можете загрузить файлы формата pdf,doc,docx,word',
+                    fileSize: '${name} is too large! Please choose a file up to ${fileMaxSize}MB.',
+                }
+            },
+            afterSelect: function (listEl, parentEl, newInputEl, inputEl) {
+
+                $(listEl).find('li').each(function () {
+                    if (!$(this).find('.column-inputs').length) {
+                        $inputs = $('<div\>', {'class': 'column-inputs d-flex align-items-center'});
+                        $inputs.html(`
+							<input type="text" placeholder="Заголовок" class="form-control" name="title[]">
+							<textarea name="text[]" placeholder="Описание" rows="3" class="form-control"></textarea>
+						`);
+
+                        $($inputs).insertAfter($(this).find('.column-title'));
+                        $('.files-btn-save').show();
+                    }
+                })
+            },
+            afterRender: function (listEl, parentEl, newInputEl, inputEl) {
+                const info = JSON.parse(inputEl[0].dataset.info);
+                $(listEl).find('li').each(function (i) {
+                    if (info[i]) {
+                        $(this).find('input').val(info[i].title);
+                        $(this).find('textarea').val(info[i].text);
+                    }
+                })
+            },
+            onRemove: function (item, listEl, parentEl, newInputEl, inputEl) {
+                if (!$(inputEl).attr('data-json')) return;
+                var data = JSON.parse($(inputEl).attr('data-json'));
+                jQuery.ajax({
+                    url: deleteProviderFileRoute,
+                    type: 'POST',
+                    data: {
+                        name: item.name,
+                        _token: CSRF_TOKEN
+                    },
+                    headers: {'X-CSRF-TOKEN': CSRF_TOKEN},
+                    dataType: 'json',
+                    beforeSend: function () {
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        if (XMLHttpRequest.status === 401) document.location.reload(true);
+                    },
+                });
+            },
+        });
+    }
 });
 
 $(window).load(function () {
@@ -238,10 +312,70 @@ function profilePhoto(fileName){
         };
     };
 }
-//
-// function alertModal(text, status = 'success'){
-//     $.fancybox.open({
-//         src: '#alert_modal'
-//     });
-//     $('#alert_modal').removeClassPrefix('alert-').addClass('alert-' + status).find('p').html(text);
-// }
+
+function showSignup() {
+    $('[data-target="#signup"]').trigger('click');
+    $('input#tprovider').prop('checked', true);
+}
+
+function showLogin() {
+    $('[data-target="#login"]').trigger('click');
+    $('input#tclient').prop('checked', true);
+}
+
+function showPurchaseProducts(item) {
+    $(item).closest('tr').next('tr').toggleClass('active-purchase-prod');
+    if ($(item).find('i').hasClass('fa-angle-down')) {
+        $(item).find('i').removeClass('fa-angle-down').addClass('fa-angle-right');
+    } else {
+        $(item).find('i').removeClass('fa-angle-right').addClass('fa-angle-down');
+    }
+}
+
+function fileUploader(){
+    if($('input.file_uploader_input').length){
+
+        $('input.file_uploader_input').each(function(){
+            //console.log(jQuery.parseJSON(JSON.stringify($(this).data('fileuploader-files'))));
+            if(!$(this).closest('.fileuploader').length){
+                $(this).fileuploader({
+                    extensions: ['image/*'],
+                    addMore: true,
+                    limit: 5,
+                    maxSize:2,
+                    enableApi: true,
+                    captions: {
+                        button: function(options) { return 'Выбрать ' + (options.limit == 1 ? 'file' : 'файлы');},
+                        removeConfirmation: 'Подтвердить удаление',
+                        feedback: 'Выберите файлы',
+                        errors: {
+                            filesLimit: 'Вы можете загрузить не более ${limit} файлов.',
+                            filesType: 'Вы можете загрузить файлы формата jpg,jpeg,png',
+                            fileSize: '${name} is too large! Please choose a file up to ${fileMaxSize}MB.',
+                        }
+                    },
+                    onRemove: function(item, listEl, parentEl, newInputEl, inputEl) {
+                        if (!$(inputEl).attr('data-json')) return;
+                        var data = JSON.parse($(inputEl).attr('data-json'));
+                        jQuery.ajax({
+                            url: '/'+ajaxPath+'/deleteImageByField',
+                            type: 'POST',
+                            data: {
+                                table: data.table,
+                                field: data.field,
+                                value: item.name,
+                                _token: CSRF_TOKEN
+                            },
+                            headers: {'X-CSRF-TOKEN': CSRF_TOKEN},
+                            dataType: 'json',
+                            beforeSend: function() {},
+                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                if (XMLHttpRequest.status === 401) document.location.reload(true);
+                            },
+                        });
+                    },
+                });
+            }
+        });
+    }
+}

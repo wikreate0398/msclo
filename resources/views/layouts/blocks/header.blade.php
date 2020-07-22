@@ -54,6 +54,7 @@
                                        data-unfold-type="css-animation"
                                        data-unfold-animation-in="fadeInRight"
                                        data-unfold-animation-out="fadeOutRight"
+                                       onclick="showLogin()"
                                        data-unfold-duration="500">
                                         <i class="ec ec-user mr-1"></i> Зарегистрироваться <span class="text-gray-50">или</span> Войти в ЛК
                                     </a>
@@ -176,7 +177,19 @@
                                     @endforeach
                                     @if(!\Auth::check())
                                         <li class="nav-item u-header__nav-last-item">
-                                            <a class="btn-round transition-3d-hover" href="#" target="_blank">
+
+                                            <a id="sidebarNavToggler" href="javascript:;" role="button" class="btn-round transition-3d-hover"
+                                               aria-controls="sidebarContent"
+                                               aria-haspopup="true"
+                                               aria-expanded="false"
+                                               data-unfold-event="click"
+                                               data-unfold-hide-on-scroll="false"
+                                               data-unfold-target="#sidebarContent"
+                                               data-unfold-type="css-animation"
+                                               data-unfold-animation-in="fadeInRight"
+                                               data-unfold-animation-out="fadeOutRight"
+                                               onclick="showSignup()"
+                                               data-unfold-duration="500">
                                                 <i class="ec ec-user"></i> Стать поставщиком
                                             </a>
                                         </li>

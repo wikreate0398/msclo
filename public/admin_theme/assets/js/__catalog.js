@@ -28,6 +28,7 @@ const productPrice = `
 
 $(document).ready(function () {
     Ajax.sortItems('.sort-chars');
+
 });
 
 function deleteLoadItem(item, parent) {

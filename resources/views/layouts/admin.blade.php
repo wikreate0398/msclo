@@ -69,13 +69,13 @@
                <div class="dropdown-item">
                   <a href="/{{ config('admin.path') }}/profile/">
                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                     <span>My Profile</span>
+                     <span>Мой профиль</span>
                   </a>
                </div>
                <div class="dropdown-item">
                   <a href="{{ route('admin_logout') }}">
                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                     <span>Log Out</span>
+                     <span>Выйти</span>
                   </a>
                </div>
             </div>
@@ -259,7 +259,7 @@
 
 <script type="text/javascript" src="{{ asset('admin_theme') }}/assets/js/bootstrap-fileinput/bootstrap-fileinput.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/19.1.1/decoupled-document/ckeditor.js"></script>
-<script src="{{ asset('admin_theme/assets/js') }}/fileuploader/dist/jquery.fileuploader.min.js?v={{ time() }}" type="text/javascript"></script>
+<script src="{{ asset('admin_theme/assets/js') }}/fileuploader/dist/jquery.fileuploader.min.js" type="text/javascript"></script>
 <script src="{{ asset('admin_theme') }}/assets/js/multiselect/js/jquery.multi-select.js" type="text/javascript"></script>
 
 <script src="{{ asset('admin_theme') }}/assets/js/quicksearch.js" type="text/javascript"></script>
@@ -273,8 +273,9 @@
 <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" integrity="sha256-xNjb53/rY+WmG+4L6tTl9m6PpqknWZvRt0rO1SRnJzw=" crossorigin="anonymous"></script>
 <script src="{{ asset('admin_theme') }}/assets/js/jquery.nestable.js" type="text/javascript"></script>
 <script src="{{ asset('admin_theme') }}/assets/js/ajax.js?v={{ time() }}" type="text/javascript"></script>
-<script src="{{ asset('admin_theme') }}/assets/js/catalog.js?v={{ time() }}" type="text/javascript"></script>
+<script src="/js/catalog.js?v={{ time() }}" type="text/javascript"></script>
 <script src="{{ asset('admin_theme') }}/assets/js/custom.js?v={{ time() }}" type="text/javascript"></script>
+<script src="/js/ckinit.js" type="text/javascript"></script>
 
 </body>
 </html>

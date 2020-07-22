@@ -19569,7 +19569,7 @@ a.text-warning:hover, a.text-warning:focus {
   color: #ba8b00 !important;
 }
 
-.text-danger {
+.text-danger, .req {
   color: #de4437 !important;
 }
 
@@ -37638,6 +37638,81 @@ a.compare-icon.active, a.fav-icon.active {
 .avatar__fileimage:hover{
   cursor: pointer;
 }
-/*------------------------------------
+
+.provider_files_wrapper .fileuploader-item .columns {
+  align-items: center;
+}
+
+.provider_files_wrapper .fileuploader-item .column-inputs {
+  flex: 1;
+  margin-left: 15px;
+}
+
+.provider_files_wrapper .fileuploader-item .column-inputs input {
+  width: 350px;
+  margin-right: 15px;
+}
+
+.provider_files_wrapper .fileuploader-item .column-title{
+  display: none;
+}
+
+.provider_files_wrapper .fileuploader-item column-actions {
+  transform: none;
+}
+
+.purchase-collapse:hover{
+  cursor: pointer;
+}
+
+.purchase-prod {
+  display: none;
+}
+
+.active-purchase-prod {
+  display: table-row !important;
+}
+
+.account-navbar .dropdown-toggle::after {
+  content: "\f105";
+  font-size: 14px;
+  line-height: 1;
+  position: absolute;
+  right: 0;
+}
+
+.ck-content {
+  border: 1px solid #ccc !important;
+}
+
+.ck-editor .editor {
+  min-height: 300px;
+}
+
+.editor-wrapper {
+  background-color: #ededed;
+  padding: 30px;
+}
+
+.ck-file-dialog-button {
+  display: none;
+}
+
+.editor-wrapper .editor {
+  background-color: #fff;
+  -webkit-box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
+  -moz-box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 4px 6px 0 rgba(85, 85, 85, 0.08), 0 1px 20px 0 rgba(0, 0, 0, 0.07), 0px 1px 11px 0px rgba(0, 0, 0, 0.07);
+}
+
+.self-checkbox-wrapper .self-checkbox-item:first-child {
+  margin-top: 0px;
+}
+
+.self-checkbox-item {
+  margin-top: 10px;
+}
+/*-------------------
+-----------------
   File for your custom SCSS style
 ------------------------------------*/

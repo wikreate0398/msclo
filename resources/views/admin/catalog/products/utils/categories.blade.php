@@ -20,7 +20,7 @@
 @endfunction
 
 <div class="form-group">
-    <label>Категория <span class="req">*</span></label>
+    <label class="form-label">Категория <span class="req">*</span></label>
     <div>
         <select name="id_category" class="form-control">
             <option value="0">Выбрать</option>

@@ -15,7 +15,6 @@ class ContactsController extends Controller
     }
 
     public function save(Request $request){
-        //exit(print_arr($request->all()));
         $user = User::whereId(\Auth::user()->id)->first();
         $user->fill($request->all())->save();
         return \JsonResponse::success(['messages' => 'Данные успешно изменены', 'reload' => true]);

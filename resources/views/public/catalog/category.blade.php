@@ -59,7 +59,7 @@
                     <!-- End List -->
                 </div>
 
-                @if($catalog->count())
+                @if($filters->count())
                     <div class="mb-6">
                         <div class="border-bottom border-color-1 mb-5">
                             <h3 class="section-title section-title__sm mb-0 pb-2 font-size-18">Фильтр</h3>
@@ -67,6 +67,28 @@
 
                         <input type="hidden" id="page" id="page_num" value="{{ request('page') ?: 1 }}">
                         <input type="hidden" id="cat" value="{{ uri(3) }}">
+
+                        @if($providers->count() > 1)
+                            <div class="border-bottom pb-4 mb-4">
+                                <h4 class="font-size-14 mb-3 font-weight-bold">Поставщики</h4>
+
+                                @foreach($providers as $provider)
+                                    <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox"
+                                                   value="{{ $provider->id }}"
+                                                   class="custom-control-input provider-input"
+                                                   onchange="filterCatalog()"
+                                                   id="filter-provider-{{ $provider->id }}"
+                                                    {{ (request()->providers && in_array($provider->id, explode(',', request()->providers))) ? 'checked' : '' }}>
+                                            <label class="custom-control-label" for="filter-provider-{{ $provider->id }}">
+                                                {{ $provider->name }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
 
                         @foreach($filters as $char)
                             @if($char->childs->count())
@@ -403,8 +425,19 @@
                 }
             });
 
+            providers='';
+            pluser='';
+            $.each($('input.provider-input'),function() {
+                if ($(this).is(':checked')) {
+                    providers+=pluser+$(this).val();
+                    pluser=',';
+                }
+            });
+
+
             flt='?filter=1';
             if (params!='') flt+=`&params=${params}`;
+            if (providers!='') flt+=`&providers=${providers}`;
             if (sort) flt+= `&sort_by=${sort}`;
             if (per_page) flt+= `&per_page=${per_page}`;
             if (page) flt+= `&page=${page}`;

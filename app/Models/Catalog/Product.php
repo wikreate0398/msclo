@@ -5,12 +5,13 @@ namespace App\Models\Catalog;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\OrderingTrait;
 use App\Models\Traits\PermisionTrait;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-	use OrderingTrait, PermisionTrait;
+	use OrderingTrait, PermisionTrait, SoftDeletes;
 	
-	public $timestamps = false;
+	public $timestamps = true;
 
 	protected $table = 'catalog';
 
@@ -74,7 +75,12 @@ class Product extends Model
             });
         }
 
+        if (request()->providers) {
+            $query->whereIn('id_provider', explode(',', request()->providers));
+        }
+
         if (request()->id_provider && request()->id_provider != 'all') {
+
             $query->where('id_provider', request()->id_provider);
         }
 

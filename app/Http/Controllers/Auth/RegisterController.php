@@ -77,6 +77,7 @@ class RegisterController extends Controller
             ]);
 
             $user->notify(new ConfirmRegistration($confirm_hash, lang()));
+
             return \JsonResponse::success([
                 'messages' => 'Вы успешно зарегистрировались. На вашу почту мы отправили ссылку для подтверждение регистрации'
             ]);

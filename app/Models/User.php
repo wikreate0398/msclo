@@ -106,6 +106,32 @@ class User extends Authenticatable
         });
     }
 
+    public function scopeGetHomeProviders($query)
+    {
+        return $query->provider()->hasVisibleProducts()->get();
+    }
+
+    public function scopeHasVisibleProducts($query)
+    {
+        return $query->whereHas('products', function($query) {
+            return $query->visible();
+        });
+    }
+
+    public function scopeOrderProviders($query)
+    {
+        return $query->withCount('products')->orderBy('products_count', 'desc');
+    }
+
+    public function scopeGetProvidersCats($query)
+    {
+        return $query->provider()->hasVisibleProducts()->with(['products' => function($query) {
+            return $query->visible()
+                         ->select('id', 'id_provider', 'id_category')
+                         ->with('category');
+        }])->get();
+    }
+
     public function scopeRegistered($query, $time = false)
     {
       if ($time == 'week') 
@@ -118,6 +144,25 @@ class User extends Authenticatable
       }
 
       return $query->where('confirm', '1');
+    }
+
+    public function scopeFilterProviders($query)
+    {
+        $query->whereHas('products', function($query) {
+            $priceQuery = '(SELECT price FROM catalog_prices WHERE catalog_prices.id_product = catalog.id ORDER BY price asc LIMIT 1)';
+
+            if (request('price_from') && request('price_to')) {
+                $query->whereBetween(\DB::Raw($priceQuery), [request('price_from'), request('price_to')]);
+            }
+
+            if (request()->cats) {
+                $query->whereIn('id_category', explode(',', request()->cats));
+            }
+            return $query;
+        });
+
+
+        return $query->orderProviders();
     }
 
     public function scopeActive($query)

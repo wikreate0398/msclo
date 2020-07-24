@@ -42,14 +42,6 @@ class CatalogRepository implements CatalogRepositoryInterface
         $product->delete();
     }
 
-    public function getProviderProducts($id_provider)
-    {
-        $data = Product::withRelations()
-                        ->where('id_provider', $id_provider)
-                        ->get();
-        return $data;
-    }
-
     public function getProduct($url)
     {
         return Product::whereUrl($url)->with(['category', 'chars'])
@@ -104,13 +96,17 @@ class CatalogRepository implements CatalogRepositoryInterface
         });
     }
 
-    public function getMinMaxPrices($idsCats)
+    public function getMinMaxPrices($idsCats = false)
     {
         $prices = ProductPrice::whereHas('product', function($query) use($idsCats) {
-            return $query->whereHas('category', function($query) use($idsCats) {
-                return $query->whereIn('id_category', $idsCats);
-            });
+            if (!empty($idsCats)) {
+                $query->whereHas('category', function($query) use($idsCats) {
+                    return $query->whereIn('id_category', $idsCats);
+                });
+            }
+            return $query->visible();
         })->get();
+
 
         return collect([
             'min' => $prices->min('price'),
@@ -121,11 +117,6 @@ class CatalogRepository implements CatalogRepositoryInterface
     public function getFilters($idsCats = [])
     {
         return Char::filters($idsCats)->get();
-    }
-
-    public function getProvidersFilter($idsCats = [])
-    {
-        return User::provider()->whereProdsInCats($idsCats)->get();
     }
 
     public function getSubcatsIds($dataset, $id_parent)

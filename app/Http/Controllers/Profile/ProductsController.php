@@ -6,6 +6,7 @@ use App\Models\Catalog\Category;
 use App\Models\Catalog\Char;
 use App\Models\Catalog\Product;
 use App\Repository\Interfaces\CatalogRepositoryInterface;
+use App\Repository\Interfaces\ProviderRepositoryInterface;
 use App\Utils\Facades\Catalog\CatalogCrud;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -16,7 +17,7 @@ class ProductsController extends Controller
 {
     private $repository;
 
-    public function __construct(CatalogRepositoryInterface $repository)
+    public function __construct(ProviderRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }

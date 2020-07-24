@@ -39,7 +39,10 @@ class Product extends Model
 	public function scopeVisible($query)
     {
         return $query->where('view', 1)
-                     ->has('prices');
+                     ->has('prices')
+                     ->whereHas('provider', function($query) {
+                         return $query->active();
+                     });
     }
 
     public function chars()
@@ -60,6 +63,11 @@ class Product extends Model
     public function category()
     {
         return $this->hasOne('App\Models\Catalog\Category', 'id', 'id_category');
+    }
+
+    public function provider()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'id_provider');
     }
 
     public function images()

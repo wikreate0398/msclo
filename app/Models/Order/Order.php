@@ -30,7 +30,7 @@ class Order extends Model
 
     public function user()
     {
-        return $this->hasOne('App\Models\User', 'id', 'id_user');
+        return $this->hasOne('App\Models\User', 'id', 'id_user')->withTrashed();
     }
 
     public function products()

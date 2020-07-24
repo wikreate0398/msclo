@@ -54,7 +54,7 @@
                         </li>
 
                         <li>
-                            <a href="" class="font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
+                            <a href="{{ route('orders', compact('lang')) }}" class="{{ (uri(3) == 'orders') ? 'font-weight-bold' : '' }} font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
                                 <i class="mr-2 fas fa-angle-right"></i>
                                 Заказы
                             </a>

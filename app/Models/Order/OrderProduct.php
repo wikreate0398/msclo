@@ -21,7 +21,7 @@ class OrderProduct extends Model
 
     public function provider()
     {
-        return $this->hasOne('App\Models\User', 'id', 'id_provider');
+        return $this->hasOne('App\Models\User', 'id', 'id_provider')->withTrashed();
     }
 
     public function product()

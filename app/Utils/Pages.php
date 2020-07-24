@@ -43,7 +43,7 @@ class Pages
         return \Request::segment(2) ? \Request::segment(2) : '/';
     }
 
-    public function getUriByType($type)
+    public static function getUriByType($type)
     {
         return @Menu::where('page_type', $type)->first()->url;
     }

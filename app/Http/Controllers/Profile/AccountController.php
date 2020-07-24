@@ -29,7 +29,7 @@ class AccountController extends Controller
             return \JsonResponse::error(['messages' => 'Заполните все поля']);
         }
 
-        if(User::withTrashed()->whereEmail($request->email)->where('id', '<>', \Auth::user()->id)->count()) {
+        if(User::whereEmail($request->email)->where('id', '<>', \Auth::user()->id)->count()) {
             return \JsonResponse::error(['messages' =>  'Пользователь с таким адресом почты уже существует']);
         }
 

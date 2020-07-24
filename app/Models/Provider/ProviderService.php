@@ -32,4 +32,9 @@ class ProviderService extends Model
     {
         return $this->hasMany('App\Models\Provider\ProviderService', 'parent_id', 'id')->orderByPageUp();
     }
+
+    public function providerServiceIntersect()
+    {
+        return $this->hasMany('App\Models\Provider\ProviderServiceIntersect', 'id_service', 'id');
+    }
 }

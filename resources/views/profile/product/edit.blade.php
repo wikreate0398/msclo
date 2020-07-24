@@ -34,7 +34,7 @@
 
                     <div class="col-md-6">
                         <label class="form-label">
-                            Артикуль
+                            Артикул
                             <span class="text-danger">*</span>
                         </label>
                         <input type="text" class="form-control" name="code" value="{{ $data->code }}" autocomplete="off">

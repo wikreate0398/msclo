@@ -282,6 +282,78 @@
         </div>
     @endif
 
+    <div class="mb-6">
+        <div class="container">
+            <div class="row min-height-564 align-items-center">
+                <div class="col-12 col-lg-4 col-xl-5 col-wd-6 d-none d-md-block">
+                    <img class="img-fluid" src="/img/665X616/img1.png" alt="Image Description">
+                </div>
+                <div class="col-12 col-lg-8 col-xl-7 col-wd-6 pt-6 pt-md-0">
+                    <div class=" d-flex border-bottom border-color-1 mr-md-2">
+                        <h3 class="section-title section-title__full mb-0 pb-2 font-size-22">Поставщики</h3>
+                    </div>
+                    <div class="js-slick-carousel position-static u-slick u-slick--gutters-2 u-slick overflow-hidden u-slick-overflow-visble py-5"
+                         data-arrows-classes="position-absolute top-0 font-size-17 u-slick__arrow-normal top-10 pt-6 pt-md-0"
+                         data-arrow-left-classes="fa fa-angle-left right-2"
+                         data-arrow-right-classes="fa fa-angle-right right-1"
+                         data-pagi-classes="text-center right-0 bottom-1 left-0 u-slick__pagination u-slick__pagination--long mb-0 z-index-n1 mt-4">
+
+                        @foreach($providers as $items)
+                            <div class="js-slide">
+                                <ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible">
+                                    @foreach($items as $provider)
+                                        <li class="col-md-6 product-item product-item__card mb-2 remove-divider pr-md-2 border-bottom-0"
+                                            style="min-height: 148px;">
+                                            <div class="product-item__outer h-100 w-100">
+                                                <div class="product-item__inner p-md-3 row no-gutters bg-white max-width-334">
+                                                    <div class="col col-lg-auto product-media-left">
+                                                        <a href="{{ route('view_provider', ['lang' => $lang, 'id' => $provider->id]) }}" class="max-width-120 d-block">
+                                                            <img class="img-fluid"
+                                                                 src="{{ imageThumb($provider->image, 'uploads/users', 150, 140, '150X140') }}"
+                                                                 alt="Поставщик {{ $provider['name'] }}">
+                                                        </a>
+                                                    </div>
+                                                    <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1 pr-3 pr-md-0 pt-1 pt-md-0">
+                                                        <div class="mb-2" style="min-height: 65px;">
+                                                            <h5 class="product-item__title">
+                                                                <a href="{{ route('view_provider', ['lang' => $lang, 'id' => $provider->id]) }}"
+                                                                   class="text-blue font-weight-bold"
+                                                                   style="min-height: auto">
+                                                                    {{ $provider['name'] }}
+                                                                </a>
+                                                            </h5>
+                                                            <div class="mb-2">
+                                                                @foreach($providersCats[$provider->id]->sortByDesc('countProducts')->take(4) as $provider_cat)
+                                                                    <a href="{{ route('view_catalog', ['lang' => $lang, 'url' => $provider_cat['category_data']['url'], 'providers' => $provider->id]) }}"
+                                                                       class="font-size-12 text-gray-5 d-block"
+                                                                        style="width: 100%">
+                                                                        <i class="fa fa-angle-right"></i> {{ $provider_cat['category_data']["name_$lang"] }}
+                                                                    </a>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-flex mb-2" style="justify-content: flex-end">
+                                                            <div class="d-flex prodcut-add-cart">
+                                                                <a href="{{ route('view_provider', ['lang' => $lang, 'id' => $provider->id]) }}"
+                                                                   class="btn-add-cart btn-primary transition-3d-hover">
+                                                                    <i class="fa fa-angle-right"></i>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    @endforeach
+
+                                </ul>
+                            </div>
+                        @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
     @if(false)
         <!-- Full banner -->

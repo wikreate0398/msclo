@@ -65,7 +65,7 @@
 				<div class="profile-photo">
 					<form class="ajax__submit profile__image_form" method="POST" action="{{ route('save_avatar', ['lang' => $lang]) }}">
 						{{ csrf_field() }}
-						<div class="profile__img" style="background-image: url('/uploads/users/{{ user()->image }}');">
+						<div class="profile__img" style="background-image: url('{{ user()->image ? '/uploads/users/' . user()->image : '/uploads/no-avatar.png' }}');">
 							<div class="actions__upload_photo" >
 									<span class="btn-file">
 									    <i class="fa fa-image" aria-hidden="true"></i>

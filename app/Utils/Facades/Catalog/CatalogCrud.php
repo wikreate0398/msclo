@@ -143,7 +143,6 @@ class CatalogCrud
                 }
             } else {
                 foreach ( $chars as $id_char => $values) {
-                    exit(print_arr($values));
                     foreach ($values as $key => $id_value) {
                         $insert[] = [
                             'id_char'    => $id_char,

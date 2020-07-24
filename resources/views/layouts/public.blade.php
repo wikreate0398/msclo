@@ -102,11 +102,11 @@
                 </div>
                 <div class="col-lg-5">
                     <!-- Subscribe Form -->
-                    <form class="js-validate js-form-message">
-                        <label class="sr-only" for="subscribeSrEmail">Телевфон</label>
+                    <form class="js-form-message ajax__submit" action="{{ route('callback', compact('lang')) }}">
+                        {{ csrf_field() }}
+                        <label class="sr-only" for="subscribeSrEmail">Телефон</label>
                         <div class="input-group input-group-pill">
-                            <input type="email" class="form-control border-0 height-40" name="email" id="subscribeSrEmail" placeholder="Телевфон" aria-label="Телевфон" aria-describedby="subscribeButton" required
-                                   data-msg="Please enter a valid email address.">
+                            <input type="text" class="form-control border-0 height-40" name="phone" id="subscribeSrEmail" placeholder="Телефон" required>
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-dark btn-sm-wide height-40 py-2 submit-btn" id="subscribeButton">Отправить</button>
                             </div>
@@ -135,35 +135,48 @@
                             </div>
                             <div class="col pl-3">
                                 <div class="font-size-13 font-weight-light">Появились вопросы? Мы доступны 24/7!</div>
-                                <a href="tel:+80080018588" class="font-size-20 text-gray-90">(800) 8001-8588, </a><a href="tel:+0600874548" class="font-size-20 text-gray-90">(0600) 874 548</a>
+                                @php $comma = ''; @endphp
+                                @foreach(explode(',', PHONE) as $key => $phone)
+                                    {{ $comma }}
+                                    <a href="tel:{{ $phone }}" class="font-size-20 text-gray-90">{{ $phone }}</a>
+                                    @php $comma = ', '; @endphp
+                                @endforeach
                             </div>
                         </div>
                     </div>
 
                     <h6 class="font-weight-bold">Мы в соц-сетях</h6>
-                        <ul class="list-inline mb-0 opacity-7">
+                    <ul class="list-inline mb-0 opacity-7">
+                        @if(@FB)
                             <li class="list-inline-item mr-0">
-                                <a class="btn font-size-20 btn-icon btn-soft-dark btn-bg-transparent rounded-circle" href="#">
+                                <a class="btn font-size-20 btn-icon btn-soft-dark btn-bg-transparent rounded-circle"
+                                   href="{{ FB }}"
+                                   target="_blank">
                                     <span class="fab fa-facebook-f btn-icon__inner"></span>
                                 </a>
                             </li>
-                            <li class="list-inline-item mr-0">
-                                <a class="btn font-size-20 btn-icon btn-soft-dark btn-bg-transparent rounded-circle" href="#">
-                                    <span class="fab fa-google btn-icon__inner"></span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item mr-0">
-                                <a class="btn font-size-20 btn-icon btn-soft-dark btn-bg-transparent rounded-circle" href="#">
-                                    <span class="fab fa-twitter btn-icon__inner"></span>
-                                </a>
-                            </li>
-                            <li class="list-inline-item mr-0">
-                                <a class="btn font-size-20 btn-icon btn-soft-dark btn-bg-transparent rounded-circle" href="#">
-                                    <span class="fab fa-github btn-icon__inner"></span>
-                                </a>
-                            </li>
-                        </ul>
+                        @endif
 
+                        @if(@INSTA)
+                            <li class="list-inline-item mr-0">
+                                <a class="btn font-size-20 btn-icon btn-soft-dark btn-bg-transparent rounded-circle"
+                                   href="{{ INSTA }}"
+                                   target="_blank">
+                                    <span class="fab fa-instagram btn-icon__inner"></span>
+                                </a>
+                            </li>
+                        @endif
+
+                        @if(@YOUTUBE)
+                            <li class="list-inline-item mr-0">
+                                <a class="btn font-size-20 btn-icon btn-soft-dark btn-bg-transparent rounded-circle"
+                                   href="{{ YOUTUBE }}"
+                                   target="_blank">
+                                    <span class="fab fa-youtube btn-icon__inner"></span>
+                                </a>
+                            </li>
+                        @endif
+                    </ul>
                 </div>
                 <div class="col-lg-7">
                     <div class="row">
@@ -198,9 +211,41 @@
                             <h6 class="mb-3 font-weight-bold">Данные клиента</h6>
                             <!-- List Group -->
                             <ul class="list-group list-group-flush list-group-borderless mb-0 list-group-transparent">
-                                <li><a class="list-group-item list-group-item-action" href="">Мой профиль</a></li>
-                                <li><a class="list-group-item list-group-item-action" href="">Мои заказы</a></li>
-                                <li><a class="list-group-item list-group-item-action" href="">Избранное</a></li>
+                                <li>
+                                    <a class="list-group-item list-group-item-action"
+                                       href="{{ isAuth() ? route('account', compact('lang')) : 'javascript:;' }}"
+                                       @if(!isAuth())
+                                       aria-controls="sidebarContent"
+                                       aria-haspopup="true"
+                                       aria-expanded="false"
+                                       data-unfold-event="click"
+                                       data-unfold-hide-on-scroll="false"
+                                       data-unfold-target="#sidebarContent"
+                                       data-unfold-type="css-animation"
+                                       data-unfold-animation-in="fadeInRight"
+                                       data-unfold-animation-out="fadeOutRight"
+                                       onclick="showLogin()"
+                                       data-unfold-duration="500" @endif>Мой профиль</a>
+                                </li>
+                                <li>
+                                    <a class="list-group-item list-group-item-action"
+                                       href="{{ isAuth() ? route('purchases', compact('lang')) : 'javascript:;' }}"
+                                       @if(!isAuth())
+                                       aria-controls="sidebarContent"
+                                       aria-haspopup="true"
+                                       aria-expanded="false"
+                                       data-unfold-event="click"
+                                       data-unfold-hide-on-scroll="false"
+                                       data-unfold-target="#sidebarContent"
+                                       data-unfold-type="css-animation"
+                                       data-unfold-animation-in="fadeInRight"
+                                       data-unfold-animation-out="fadeOutRight"
+                                       onclick="showLogin()"
+                                       data-unfold-duration="500" @endif>Мои покупки</a>
+                                </li>
+                                <li>
+                                    <a class="list-group-item list-group-item-action" href="{{ route('fav_list', compact('lang')) }}">Избранное</a>
+                                </li>
                             </ul>
                             <!-- End List Group -->
                         </div>

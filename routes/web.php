@@ -189,6 +189,8 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
 
     Route::get('/', 'HomeController@index');
 
+    Route::post('callback', 'HomeController@callback')->name('callback');
+
     Route::group(['prefix' => 'favorites'], function() {
         Route::post('add', 'FavoritesController@add')->name('add_fav');
         Route::get('list', 'FavoritesController@list')->name('fav_list');
@@ -200,13 +202,17 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
     });
 
     Route::group(['prefix' => 'catalog'], function() {
-        Route::get('/{url}', 'CatalogController@list');
+        Route::get('/{url}', 'CatalogController@list')->name('view_catalog');
         Route::get('product/{url}', 'CatalogController@viewProduct')->name('view_product');
+    });
+
+    Route::group(['prefix' => 'suppliers'], function() {
+        Route::get('/', 'ProviderController@list')->name('view_providers');
+        Route::get('view/{id}', 'ProviderController@viewProvider')->name('view_provider');
     });
 
     Route::group(['prefix' => 'cart'], function() {
         Route::get('view', 'CartController@view')->name('view_cart');
-
 
         Route::get('load-modal', 'CartController@loadModal')->name('load_cart_modal');
         Route::post('add', 'CartController@add')->name('add_to_cart');
@@ -240,6 +246,10 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
 
         Route::group(['prefix' => 'purchases'], function() {
             Route::get('/', 'PurchasesController@index')->name('purchases');
+        });
+
+        Route::group(['prefix' => 'orders'], function() {
+            Route::get('/', 'OrdersController@index')->name('orders');
         });
 
         Route::group(['prefix' => 'files'], function() {

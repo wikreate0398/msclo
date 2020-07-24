@@ -41,7 +41,8 @@ class User extends Authenticatable
         'office_address',
         'warehouse_address',
         'other_contacts',
-        'note'
+        'note',
+        'description'
     ];
 
     /**

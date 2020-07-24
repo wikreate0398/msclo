@@ -36,7 +36,8 @@ class AccountController extends Controller
         User::whereId(\Auth::user()->id)->update([
         	'name'  => $request->name,
         	'phone' => $request->phone,
-        	'email' => $request->email
+        	'email' => $request->email,
+            'description' => @$request->description ?: ''
         ]);
 
         return \JsonResponse::success(['messages' => 'Данные успешно изменены', 'reload' => true]);

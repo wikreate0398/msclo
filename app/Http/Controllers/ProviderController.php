@@ -35,11 +35,12 @@ class ProviderController extends Controller
 
     public function viewProvider($lang, $id)
     {
+        return redirect()->back();
         $provider = $this->providerRepository->getProvider($id);
         $services = $this->providerRepository->getProviderServices($provider->id);
         $breads   = $this->generateBreads($provider);
 
-        return view('public/provider/view', compact(['product', 'breads', 'services']));
+        return view('public/providers/view', compact(['provider', 'breads', 'services']));
     }
 
     private function generateBreads($provider)

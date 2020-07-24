@@ -195,20 +195,20 @@
                                                     @endforeach
                                                 </div>
 
-                                                <div class="product-item__footer">
-                                                    <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                        <a href="javascript:;"
-                                                           class="text-gray-6 font-size-13"
-                                                           onclick="return false;">
-                                                            <i class="ec ec-compare font-size-15"></i> Сравнить
-                                                        </a>
-                                                        <a href="javascript:;"
-                                                           class="text-gray-6 font-size-13"
-                                                           onclick="return false;">
-                                                            <i class="ec ec-favorites font-size-15"></i> В закладки
-                                                        </a>
-                                                    </div>
-                                                </div>
+{{--                                                <div class="product-item__footer">--}}
+{{--                                                    <div class="border-top pt-2 flex-center-between flex-wrap">--}}
+{{--                                                        <a href="javascript:;"--}}
+{{--                                                           class="text-gray-6 font-size-13"--}}
+{{--                                                           onclick="return false;">--}}
+{{--                                                            <i class="ec ec-compare font-size-15"></i> Сравнить--}}
+{{--                                                        </a>--}}
+{{--                                                        <a href="javascript:;"--}}
+{{--                                                           class="text-gray-6 font-size-13"--}}
+{{--                                                           onclick="return false;">--}}
+{{--                                                            <i class="ec ec-favorites font-size-15"></i> В закладки--}}
+{{--                                                        </a>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
                                             </div>
                                         </div>
                                     </div>

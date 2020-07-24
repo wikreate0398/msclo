@@ -54,6 +54,21 @@
 
 						<div class="w-100"></div>
 
+						@if(user()->type == 'provider')
+							<div class="col-md-12">
+								<label class="form-label">
+									Описание в карточке
+								</label>
+								<div class="ck-editor">
+									<div class="toolbar-container"></div>
+									<div class="editor-wrapper">
+										<div class="editor"></div>
+									</div>
+									<textarea name="description" style="display: none;"></textarea>
+								</div>
+							</div>
+					 	@endif
+
 					</div>
 					<button type="submit" class="btn btn-primary-dark-w">
 						Сохранить
@@ -171,4 +186,6 @@
 
 <link  href="{{ asset('js/cropperjs/dist/cropper.css') }}" rel="stylesheet">
 <script src="{{ asset('js/cropperjs/dist/cropper.js') }}"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/19.1.1/decoupled-document/ckeditor.js"></script>
+<script src="/js/ckinit.js" type="text/javascript"></script>
 @stop

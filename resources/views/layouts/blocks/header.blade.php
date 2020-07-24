@@ -268,7 +268,20 @@
                                     </a>
                                 </li>
                                 <li class="col d-xl-none px-2 px-sm-3">
-                                    <a href="../shop/my-account.html" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="My Account">
+                                    <a href="{{ isAuth() ? route('purchases', compact('lang')) : 'javascript:;' }}"
+                                       @if(!isAuth())
+                                       aria-controls="sidebarContent"
+                                       aria-haspopup="true"
+                                       aria-expanded="false"
+                                       data-unfold-event="click"
+                                       data-unfold-hide-on-scroll="false"
+                                       data-unfold-target="#sidebarContent"
+                                       data-unfold-type="css-animation"
+                                       data-unfold-animation-in="fadeInRight"
+                                       data-unfold-animation-out="fadeOutRight"
+                                       onclick="showLogin()"
+                                       data-unfold-duration="500" @endif
+                                       class="text-gray-90">
                                         <i class="font-size-22 ec ec-user"></i>
                                     </a>
                                 </li>

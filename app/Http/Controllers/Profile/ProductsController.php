@@ -17,9 +17,12 @@ class ProductsController extends Controller
 {
     private $repository;
 
-    public function __construct(ProviderRepositoryInterface $repository)
+    private $catalogRepository;
+
+    public function __construct(ProviderRepositoryInterface $repository, CatalogRepositoryInterface $catalogRepository)
     {
         $this->repository = $repository;
+        $this->catalogRepository = $catalogRepository;
     }
 
     public function index()
@@ -49,7 +52,7 @@ class ProductsController extends Controller
 
     public function delete($lang, $id, Request $request)
     {
-        $this->repository->deleteProduct($id, user()->id);
+        $this->catalogRepository->deleteProduct($id, user()->id);
         return redirect()->back();
     }
 

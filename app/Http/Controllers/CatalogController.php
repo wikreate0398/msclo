@@ -6,6 +6,7 @@ use App\Models\Catalog\Category;
 use App\Models\Catalog\Char;
 use App\Models\Catalog\Product;
 use App\Repository\Interfaces\CatalogRepositoryInterface;
+use App\Repository\Interfaces\ProviderRepositoryInterface;
 use App\Utils\ArraySess;
 use App\Utils\Crumbs\BreadFactory;
 use App\Utils\Crumbs\Crumb;
@@ -15,9 +16,12 @@ class CatalogController extends Controller
 {
     private $repository;
 
-    public function __construct(CatalogRepositoryInterface $repository)
+    private $providerRep;
+
+    public function __construct(CatalogRepositoryInterface $repository, ProviderRepositoryInterface $providerRep)
     {
-        $this->repository = $repository;
+        $this->repository  = $repository;
+        $this->providerRep = $providerRep;
     }
 
     public function list($lang, $url)
@@ -33,7 +37,7 @@ class CatalogController extends Controller
 
         $filters  = $this->repository->getFilters($idsCats);
         $breads   = $this->generateBreads($this->repository->getBreads($allCats->toArray(), $category->id));
-        $providers = $this->repository->getProvidersFilter($idsCats);
+        $providers = $this->providerRep->getProvidersFilter($idsCats);
 
         return view('public/catalog/category', compact(['category', 'providers', 'catalog', 'filters', 'breads', 'moreCats', 'filterPrices']));
     }

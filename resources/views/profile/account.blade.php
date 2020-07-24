@@ -70,7 +70,7 @@
 					 	@endif
 
 					</div>
-					<button type="submit" class="btn btn-primary-dark-w">
+					<button type="submit" class="btn btn-primary-dark-w mt-5">
 						Сохранить
 					</button>
 				</form>

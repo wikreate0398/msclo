@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Repository\CatalogRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -77,15 +78,18 @@ class AjaxController extends Controller
         $id    = $request->input('id');
         $table = $request->input('table');
 
-        if(Schema::hasColumn($table, 'deleted_at'))
-        {
+        if(Schema::hasColumn($table, 'deleted_at')) {
             DB::table($table)->where('id', $id)->update(['deleted_at' => \Carbon\Carbon::now()]);
-        }
-        else{
+        } else {
             DB::table($table)->where('id', $id)->delete();
         }
 
-        if (Schema::hasColumn($table, 'parent_id')) {
+        if ($table == 'categories') {
+            $repository = new CatalogRepository;
+            $allCats  = $repository->getCats()->keyBy('id');
+            $idsCats  = array_merge([$id], $repository->getSubcatsIds($allCats->toArray(), $id));
+            DB::table($table)->whereIn('id', $idsCats)->delete();
+        } else if (Schema::hasColumn($table, 'parent_id')) {
             DB::table($table)->where('parent_id', $id)->delete();
         }
 

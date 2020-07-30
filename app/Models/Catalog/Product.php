@@ -42,7 +42,7 @@ class Product extends Model
                      ->has('prices')
                      ->whereHas('provider', function($query) {
                          return $query->active();
-                     });
+                     })->has('category');
     }
 
     public function chars()

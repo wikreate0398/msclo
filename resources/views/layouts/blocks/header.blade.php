@@ -358,6 +358,25 @@
                                                                         {{--                                                                    <img class="img-fluid" src="/img/500X400/img1.png" alt="Image Description">--}}
                                                                         {{--                                                                </div>--}}
                                                                         <div class="row u-header__mega-menu-wrapper">
+
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    @foreach($category['childs'] as $child)
+                                                                                        @if(empty($child['childs']))
+                                                                                            <li>
+                                                                                                <a class="nav-link u-header__sub-menu-nav-link"
+                                                                                                   href="{{ setUri('catalog/' . $child['url']) }}">
+                                                                                                    {{ $child["name_$lang"] }}
+                                                                                                    @if($child['products_count'])
+                                                                                                        <span class="text-gray-25 font-size-12 font-weight-normal"> ({{ $child['products_count'] }})</span>
+                                                                                                    @endif
+                                                                                                </a>
+                                                                                            </li>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                </ul>
+                                                                            </div>
+
                                                                             @foreach($category['childs'] as $child)
                                                                                 @if(!empty($child['childs']))
                                                                                     <div class="col mb-3 mb-sm-0">
@@ -383,23 +402,6 @@
                                                                                 @endif
                                                                             @endforeach
 
-                                                                            <div class="col mb-3 mb-sm-0">
-                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
-                                                                                    @foreach($category['childs'] as $child)
-                                                                                        @if(empty($child['childs']))
-                                                                                            <li>
-                                                                                                <a class="nav-link u-header__sub-menu-nav-link"
-                                                                                                   href="{{ setUri('catalog/' . $child['url']) }}">
-                                                                                                    {{ $child["name_$lang"] }}
-                                                                                                    @if($child['products_count'])
-                                                                                                        <span class="text-gray-25 font-size-12 font-weight-normal"> ({{ $child['products_count'] }})</span>
-                                                                                                    @endif
-                                                                                                </a>
-                                                                                            </li>
-                                                                                        @endif
-                                                                                    @endforeach
-                                                                                </ul>
-                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 @endif

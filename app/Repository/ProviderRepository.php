@@ -16,6 +16,7 @@ class ProviderRepository implements ProviderRepositoryInterface
     public function getProviderProducts($id_provider)
     {
         $data = Product::withRelations()
+                        ->visible()
                         ->where('id_provider', $id_provider)
                         ->get();
         return $data;
@@ -26,9 +27,9 @@ class ProviderRepository implements ProviderRepositoryInterface
         return User::provider()->whereProdsInCats($idsCats)->get();
     }
 
-    public function getCatsGroupedByProviders()
+    public function getCatsGroupedByProviders($id_provider = false)
     {
-        $providers = User::getProvidersCats();
+        $providers = User::getProvidersCats($id_provider);
         $cats      = collect();
         foreach ($providers as $provider) {
             foreach ($provider->products->groupBy('id_category') as $id_category => $products) {
@@ -58,7 +59,11 @@ class ProviderRepository implements ProviderRepositoryInterface
 
     public function getProvider($id)
     {
-        return User::whereId($id)->provider()->hasVisibleProducts()->firstOrFail();
+        return User::whereId($id)
+                   ->provider()
+                   ->with(['files'])
+                   ->hasVisibleProducts()
+                   ->firstOrFail();
     }
 
     public function getProviderServices($id, $lang = false)
@@ -95,13 +100,15 @@ class ProviderRepository implements ProviderRepositoryInterface
                 }
             }
 
-            $data->push([
-                'id'        => $char->id,
-                'name'      => $char["name_$lang"],
-                'type'      => $char->type,
-                'used_cart' => $char->used_cart,
-                'value'     => $value
-            ]);
+            if (!empty($value)) {
+                $data->push([
+                    'id'        => $char->id,
+                    'name'      => $char["name_$lang"],
+                    'type'      => $char->type,
+                    'used_cart' => $char->used_cart,
+                    'value'     => $value
+                ]);
+            }
         }
 
         return $data->filter(function($item) {

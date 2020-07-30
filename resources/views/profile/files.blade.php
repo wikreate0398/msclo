@@ -49,7 +49,7 @@
 			</div>
 
 			<button type="submit"
-					class="btn btn-primary-dark-w files-btn-save"
+					class="btn btn-primary-dark-w files-btn-save submit-btn"
 					style="{{ !$files->count() ? 'display:none' : '' }}">
 				Сохранить
 			</button>

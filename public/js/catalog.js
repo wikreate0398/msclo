@@ -329,6 +329,7 @@ function changeCartQty(input, id, cart_id) {
             }else{
                 if (jsonData.price) {
                     $(input).closest('tr').find(`.product-price-${id}-${cart_id}`).text(`${RUB} ${priceString(jsonData.price)}`);
+                    $(input).closest('tr').find(`.total-product-price-${id}-${cart_id}`).text(`${RUB} ${priceString(jsonData.price*parseFloat(jsonData.qty))}`);
                 }
                 updateCartData(jsonData);
             }

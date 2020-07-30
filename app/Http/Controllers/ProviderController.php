@@ -6,6 +6,10 @@ use App\Models\Catalog\Category;
 use App\Models\Catalog\Char;
 use App\Models\Catalog\Product;
 use App\Models\Provider\ProviderServiceIntersect;
+use App\Models\ProviderFile;
+use App\Models\User;
+use App\Notifications\ConfirmRegistration;
+use App\Notifications\SendContactToProvider;
 use App\Repository\Interfaces\CatalogRepositoryInterface;
 use App\Repository\Interfaces\ProviderRepositoryInterface;
 use App\Utils\ArraySess;
@@ -35,12 +39,13 @@ class ProviderController extends Controller
 
     public function viewProvider($lang, $id)
     {
-        return redirect()->back();
         $provider = $this->providerRepository->getProvider($id);
         $services = $this->providerRepository->getProviderServices($provider->id);
         $breads   = $this->generateBreads($provider);
+        $providersCats = $this->providerRepository->getCatsGroupedByProviders($id);
+        $products = $this->providerRepository->getProviderProducts($id);
 
-        return view('public/providers/view', compact(['provider', 'breads', 'services']));
+        return view('public/providers/view', compact(['provider', 'breads', 'services', 'providersCats', 'products']));
     }
 
     private function generateBreads($provider)
@@ -54,5 +59,22 @@ class ProviderController extends Controller
         );
 
         return $crumb->toHtml();
+    }
+
+    public function downloadFile($lang, $id)
+    {
+        $file = ProviderFile::whereId($id)->with('provider')->has('provider')->firstOrFail();
+        return response()->streamDownload(function () use($file) {
+            echo file_get_contents(url('uploads/provider_files/' . $file->file));
+        }, 'provider-' . str_replace(' ', '_', $file->name_ru) . '.' . explode('.', $file->file)[1]);
+    }
+
+    public function leaveMessage($lang, $id_provider, Request $request)
+    {
+        $provider = User::provider()->whereId($id_provider)->firstOrFail();
+        $provider->notify(new SendContactToProvider($request->all()));
+        return \JsonResponse::success([
+            'messages' => 'Ваше сообщение успешно оправлено поставщику. В скором он с вами свяжется'
+        ]);
     }
 }

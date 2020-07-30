@@ -295,6 +295,7 @@ $(window).load(function () {
 function initEqHeight() {
     fixHeight('.products-group-4-1-4');
     fixHeight('.catalog-product');
+    fixHeight('.products-group');
 }
 
 function setEqualHeight(columns, parent) {
@@ -461,7 +462,6 @@ function profilePhoto(fileName){
             $('input#avatar').val(base64);
             $('.profile__img').css('background-image', 'url('+base64+')');
             $('.save__cropped_image').show();
-            $('form.profile__image_form').submit();
 
             $.fancybox.close();
         };

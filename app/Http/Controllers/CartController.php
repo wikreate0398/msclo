@@ -163,6 +163,7 @@ class CartController extends Controller
 
         return \JsonResponse::success([
             'price'      => $price,
+            'qty'        => $request->qty,
             'totalQty'   => $this->cartRepository->getTotalQty(),
             'totalPrice' => $this->cartRepository->getTotalPrice()
         ]);

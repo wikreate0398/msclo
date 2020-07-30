@@ -28,11 +28,11 @@ class CatalogRepository implements CatalogRepositoryInterface
         return Category::where('parent_id', $id_parent)->withCount('products')->visible()->get();
     }
 
-    public function getCategoryProducts($ids)
+    public function getCategoryProducts($ids, $per_page = 20)
     {
         $data = Product::catalog($ids)
                        ->filter()
-                       ->paginate(request('per_page') ?: 20);
+                       ->paginate($per_page);
         return $data;
     }
 
@@ -52,7 +52,7 @@ class CatalogRepository implements CatalogRepositoryInterface
 
     public function getProductById($id)
     {
-        return Product::whereId($id)->firstOrFail();
+        return Product::whereId($id)->visible()->firstOrFail();
     }
 
     public function getProductChars($idProduct, $usedCart = false, $lang = false)
@@ -105,8 +105,7 @@ class CatalogRepository implements CatalogRepositoryInterface
                 });
             }
             return $query->visible();
-        })->get();
-
+        })->orderBy('price', 'asc')->groupBy('id_product')->get();
 
         return collect([
             'min' => $prices->min('price'),
@@ -116,7 +115,9 @@ class CatalogRepository implements CatalogRepositoryInterface
 
     public function getFilters($idsCats = [])
     {
-        return Char::filters($idsCats)->get();
+        return Char::filters($idsCats)->get()->filter(function ($item) {
+            return $item->childs->count();
+        });
     }
 
     public function getSubcatsIds($dataset, $id_parent)

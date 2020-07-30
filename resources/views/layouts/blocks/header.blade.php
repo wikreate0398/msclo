@@ -143,12 +143,14 @@
                                                 <!-- List -->
                                                 <ul id="headerSidebarList" class="u-header-collapse__nav">
                                                     @foreach($menu as $item)
-                                                        <li>
-                                                            <a class="u-header-collapse__submenu-nav-link {{ $item->page_type == @$page_data->page_type ? 'text-sale' : '' }}"
-                                                               href="{{ setUri($item->url) }}" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">
-                                                                {{ $item["name_$lang"] }}
-                                                            </a>
-                                                        </li>
+                                                        @if($item->view_top)
+                                                            <li>
+                                                                <a class="u-header-collapse__submenu-nav-link {{ $item->page_type == @$page_data->page_type ? 'text-sale' : '' }}"
+                                                                   href="{{ setUri($item->url) }}" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">
+                                                                    {{ $item["name_$lang"] }}
+                                                                </a>
+                                                            </li>
+                                                        @endif
                                                     @endforeach
                                                 </ul>
                                                 <!-- End List -->
@@ -170,12 +172,14 @@
                             <div id="navBar" class="collapse navbar-collapse u-header__navbar-collapse">
                                 <ul class="navbar-nav u-header__navbar-nav">
                                     @foreach($menu as $item)
-                                        <li class="nav-item u-header__nav-item">
-                                            <a class="nav-link u-header__nav-link {{ $item->page_type == @$page_data->page_type ? 'text-sale' : '' }}"
-                                               href="{{ setUri($item->url) }}" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">
-                                                {{ $item["name_$lang"] }}
-                                            </a>
-                                        </li>
+                                        @if($item->view_top)
+                                            <li class="nav-item u-header__nav-item">
+                                                <a class="nav-link u-header__nav-link {{ $item->page_type == @$page_data->page_type ? 'text-sale' : '' }}"
+                                                   href="{{ setUri($item->url) }}" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">
+                                                    {{ $item["name_$lang"] }}
+                                                </a>
+                                            </li>
+                                        @endif
                                     @endforeach
                                     @if(!\Auth::check())
                                         <li class="nav-item u-header__nav-last-item">

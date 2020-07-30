@@ -37712,6 +37712,14 @@ a.compare-icon.active, a.fav-icon.active {
 .self-checkbox-item {
   margin-top: 10px;
 }
+
+.provider-serv p {
+  margin:0 0 5px 0 !important;
+}
+
+.provider-serv h6 {
+  margin-top: 10px;
+}
 /*-------------------
 -----------------
   File for your custom SCSS style

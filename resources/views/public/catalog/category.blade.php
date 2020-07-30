@@ -59,7 +59,7 @@
                     <!-- End List -->
                 </div>
 
-                @if($filters->count())
+                @if($filters->count() or ($filterPrices['min'] && $filterPrices['max'] && $filterPrices['min'] != $filterPrices['max']))
                     <div class="mb-6">
                         <div class="border-bottom border-color-1 mb-5">
                             <h3 class="section-title section-title__sm mb-0 pb-2 font-size-18">Фильтр</h3>
@@ -120,39 +120,41 @@
                             @endif
                         @endforeach
 
-                        <div class="range-slider">
-                            <h4 class="font-size-14 mb-3 font-weight-bold">Цена</h4>
-                            <!-- Range Slider -->
-                            <input class="js-range-slider" type="text"
-                                   data-extra-classes="u-range-slider u-range-slider-indicator u-range-slider-grid"
-                                   data-type="double"
-                                   data-grid="false"
-                                   data-hide-from-to="true"
-                                   data-prefix="{{ RUB }}"
-                                   data-min="{{ $filterPrices['min'] }}"
-                                   data-max="{{ $filterPrices['max'] }}"
-                                   data-from="{{ (request('price_from') && request('price_from') >= $filterPrices['min']) ? request('price_from') : $filterPrices['min'] }}"
-                                   data-to="{{ (request('price_to') && request('price_to') <= $filterPrices['max']) ? request('price_to') : $filterPrices['max'] }}"
-                                   data-result-min="#rangeSliderExample3MinResult"
-                                   data-result-max="#rangeSliderExample3MaxResult">
+                        @if($filterPrices['min'] && $filterPrices['max'] && $filterPrices['min'] != $filterPrices['max'])
+                            <div class="range-slider">
+                                <h4 class="font-size-14 mb-3 font-weight-bold">Цена</h4>
+                                <!-- Range Slider -->
+                                <input class="js-range-slider" type="text"
+                                       data-extra-classes="u-range-slider u-range-slider-indicator u-range-slider-grid"
+                                       data-type="double"
+                                       data-grid="false"
+                                       data-hide-from-to="true"
+                                       data-prefix="{{ RUB }}"
+                                       data-min="{{ $filterPrices['min'] }}"
+                                       data-max="{{ $filterPrices['max'] }}"
+                                       data-from="{{ (request('price_from') && request('price_from') >= $filterPrices['min']) ? request('price_from') : $filterPrices['min'] }}"
+                                       data-to="{{ (request('price_to') && request('price_to') <= $filterPrices['max']) ? request('price_to') : $filterPrices['max'] }}"
+                                       data-result-min="#rangeSliderExample3MinResult"
+                                       data-result-max="#rangeSliderExample3MaxResult">
 
-                            <!-- End Range Slider -->
-                            <div class="mt-1 text-gray-111 d-flex mb-4">
-                                <span class="mr-0dot5">Цена: </span>
-                                <span>{{ RUB }}</span>
-                                <span id="rangeSliderExample3MinResult" class=""></span>
-                                <span class="mx-0dot5"> — </span>
-                                <span>{{ RUB }}</span>
-                                <span id="rangeSliderExample3MaxResult" class=""></span>
+                                <!-- End Range Slider -->
+                                <div class="mt-1 text-gray-111 d-flex mb-4">
+                                    <span class="mr-0dot5">Цена: </span>
+                                    <span>{{ RUB }}</span>
+                                    <span id="rangeSliderExample3MinResult" class=""></span>
+                                    <span class="mx-0dot5"> — </span>
+                                    <span>{{ RUB }}</span>
+                                    <span id="rangeSliderExample3MaxResult" class=""></span>
+                                </div>
+
+                                <input type="hidden"
+                                       id="price_from"
+                                       value="{{ (request('price_from') && request('price_from') >= $filterPrices['min']) ? request('price_from') : $filterPrices['min'] }}">
+                                <input type="hidden"
+                                       id="price_to"
+                                       value="{{ (request('price_to') && request('price_to') <= $filterPrices['max']) ? request('price_to') : $filterPrices['max'] }}">
                             </div>
-
-                            <input type="hidden"
-                                   id="price_from"
-                                   value="{{ (request('price_from') && request('price_from') >= $filterPrices['min']) ? request('price_from') : $filterPrices['min'] }}">
-                            <input type="hidden"
-                                   id="price_to"
-                                   value="{{ (request('price_to') && request('price_to') <= $filterPrices['max']) ? request('price_to') : $filterPrices['max'] }}">
-                        </div>
+                        @endif
 
                         @if(request('filter'))
                             <a href="{{ setUri("catalog/{$category->url}") }}" class="btn btn-danger">Сбросить</a>
@@ -376,7 +378,7 @@
                     @if($catalog->count())
                         <ul class="row list-unstyled products-group no-gutters">
                             @foreach($catalog as $item)
-                                <li class="col-6 col-md-3 col-wd-2gdot4 product-item js_list__item">
+                                <li class="col-6 col-md-3 col-wd-2gdot4 product-item">
                                     @include('public.catalog.blocks.product_item', ['product' => $item])
                                 </li>
                             @endforeach

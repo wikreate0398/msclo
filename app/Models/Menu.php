@@ -30,6 +30,6 @@ class Menu extends Model
 
 	public function scopeGetAll($query)
     {
-        return $query->where('view_top', 1)->orderByPageUp()->get();
+        return $query->where('view_top', 1)->orWhere('view_bottom', 1)->orderByPageUp()->get();
     }
 }

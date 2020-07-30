@@ -133,7 +133,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Оформить</button>
+                                <button type="submit" class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3 submit-btn">Оформить</button>
                             </div>
                             <!-- End Order Summary -->
                         </div>

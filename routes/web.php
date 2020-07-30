@@ -209,6 +209,9 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
     Route::group(['prefix' => 'suppliers'], function() {
         Route::get('/', 'ProviderController@list')->name('view_providers');
         Route::get('view/{id}', 'ProviderController@viewProvider')->name('view_provider');
+        Route::get('download-file/{id_file}', 'ProviderController@downloadFile')->name('provider_dwn_file');
+
+        Route::post('leave-message/{id}', 'ProviderController@leaveMessage')->name('provider_send_contact');
     });
 
     Route::group(['prefix' => 'cart'], function() {

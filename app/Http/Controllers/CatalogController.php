@@ -32,7 +32,7 @@ class CatalogController extends Controller
 
         $idsCats  = array_merge([$category->id], $this->repository->getSubcatsIds($allCats->toArray(), $category->id));
 
-        $catalog = $this->repository->getCategoryProducts($idsCats);
+        $catalog = $this->repository->getCategoryProducts($idsCats, request('per_page'));
         $filterPrices  = $this->repository->getMinMaxPrices($idsCats);
 
         $filters  = $this->repository->getFilters($idsCats);
@@ -58,7 +58,12 @@ class CatalogController extends Controller
             )
         );
 
-        return view('public/catalog/product', compact(['product', 'breads', 'chars', 'charsCart']));
+        $sameProducts = $this->repository->getCategoryProducts([$product->id_category], 5)
+                                         ->filter(function ($item) use($product) {
+                                                return $item['id']!=$product->id;
+                                            });
+
+        return view('public/catalog/product', compact(['product', 'breads', 'chars', 'charsCart', 'sameProducts']));
     }
 
     private function generateBreads($items)

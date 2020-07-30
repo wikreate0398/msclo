@@ -21,12 +21,20 @@ $(document).ready(function () {
 
     function createEditor(idEditor, idToolbar, idTextarea) {
         return DecoupledEditor
-            .create( document.getElementById( idEditor ) )
+            .create( document.getElementById( idEditor ), {
+                forcePasteAsPlainText : true,
+            })
             .then( editor => {
                 const toolbarContainer = document.getElementById( idToolbar );
                 toolbarContainer.appendChild( editor.ui.view.toolbar.element );
                 editors[ idEditor ] = editor;
                 editor.setData($('#' + idTextarea).val());
+
+                editor.model.schema.addAttributeCheck( ( ctx, attributeName ) => {
+                    if ( ctx.startsWith( '$clipboardHolder' ) ) {
+                        return false;
+                    }
+                } );
             })
             .catch( error => {
             });

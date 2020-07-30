@@ -17,7 +17,12 @@
 						@include('admin.utils.input', ['label' => 'Theme', 'name' => 'theme', 'lang' => true, 'data' => $data])
 
 						@include('admin.utils.textarea', ['label' => 'Message', 'ckeditor' => true, 'name' => 'message', 'lang' => true, 'data' => $data, 'const' => explode(',', $data->const)])
-						 
+						<div style="margin-bottom: 20px">
+							<span>Переменные:</span>
+							@foreach(explode(',', $data->const) as $key => $val)
+								<code>{{ $val }}</code> |
+							@endforeach
+						</div>
 					</div>
 					<button type="submit" class="btn btn-success submit-btn">Save</button>
 				</form>

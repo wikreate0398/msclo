@@ -42,7 +42,8 @@ class User extends Authenticatable
         'warehouse_address',
         'other_contacts',
         'note',
-        'description'
+        'description',
+        'text'
     ];
 
     /**
@@ -95,6 +96,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Provider\CharProduct', 'id_provider', 'id');
     }
 
+    public function files()
+    {
+        return $this->hasMany('App\Models\ProviderFile', 'id_provider', 'id');
+    }
+
     public function products()
     {
         return $this->hasMany('App\Models\Catalog\Product', 'id_provider', 'id');
@@ -124,8 +130,11 @@ class User extends Authenticatable
         return $query->withCount('products')->orderBy('products_count', 'desc');
     }
 
-    public function scopeGetProvidersCats($query)
+    public function scopeGetProvidersCats($query, $id_provider = false)
     {
+        if (!empty($id_provider)) {
+            $query->where('id', $id_provider);
+        }
         return $query->provider()->hasVisibleProducts()->with(['products' => function($query) {
             return $query->visible()
                          ->select('id', 'id_provider', 'id_category')

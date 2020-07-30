@@ -34,11 +34,13 @@ class ServicesController extends Controller
             } else {
                 foreach ($options as $id_char => $values) {
                     foreach ($values as $key => $value) {
-                        $insert[] = [
-                            'id_service'  => $id_char,
-                            'value'       => $value,
-                            'id_provider' => user()->id
-                        ];
+                        if (!empty($value)) {
+                            $insert[] = [
+                                'id_service'  => $id_char,
+                                'value'       => $value,
+                                'id_provider' => user()->id
+                            ];
+                        }
                     }
                 }
             }

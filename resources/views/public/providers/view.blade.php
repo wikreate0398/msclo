@@ -5,7 +5,7 @@
         <!-- Single Product Body -->
         <div class="mb-xl-14 mb-6">
             <div class="row">
-                <div class="col-md-5 mb-4 mb-md-0">
+                <div class="col-md-3 mb-4 mb-md-0">
 
                     <div id="sliderSyncingNav" class="js-slick-carousel u-slick mb-2"
                          data-infinite="true"
@@ -18,7 +18,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-7 mb-md-6 mb-lg-0">
+                <div class="col-md-9 mb-md-6 mb-lg-0">
                     <div class="mb-2">
                         <div class="border-bottom mb-3 pb-md-1 pb-3">
                             <h2 class="font-size-25 text-lh-1dot2">{{ $provider["name"] }}</h2>
@@ -38,27 +38,24 @@
 
                             </div>
                         </div>
-                        <div class="flex-horizontal-center flex-wrap mb-4">
-                            <a href="javascript:;"
-                               class="text-gray-6 font-size-13"
-                               onclick="return false;">
-                                <i class="ec ec-compare font-size-15"></i> Сравнить
-                            </a>
-                            <a href="javascript:;"
-                               class="text-gray-6 font-size-13"
-                               onclick="return false;">
-                                <i class="ec ec-favorites font-size-15"></i> В закладки
-                            </a>
+
+                        @if($provider->description)
+                            <p>{{ $provider["description"] }}</p>
+                            <hr>
+                        @endif
+                        <div class="mb-2">
+
+                            @foreach($providersCats[$provider->id]->sortByDesc('countProducts')->take(4) as $provider_cat)
+                                <a href="{{ route('view_catalog', ['lang' => $lang, 'url' => $provider_cat['category_data']['url'], 'providers' => $provider->id]) }}"
+                                   class="font-size-14 text-blue d-block"
+                                   style="width: 100%; margin-bottom: 4px;">
+                                    <i class="fa fa-angle-right"></i> &nbsp;
+                                    {{ $provider_cat['category_data']["name_$lang"] }}
+                                </a>
+                            @endforeach
+
                         </div>
-                        {{--                    <div class="mb-2">--}}
-                        {{--                        <ul class="font-size-14 pl-3 ml-1 text-gray-110">--}}
-                        {{--                            <li>4.5 inch HD Touch Screen (1280 x 720)</li>--}}
-                        {{--                            <li>Android 4.4 KitKat OS</li>--}}
-                        {{--                            <li>1.4 GHz Quad Core™ Processor</li>--}}
-                        {{--                            <li>20 MP Electro and 28 megapixel CMOS rear camera</li>--}}
-                        {{--                        </ul>--}}
-                        {{--                    </div>--}}
-                        <p>{{ $provider["description"] }}</p>
+
 
                     </div>
                 </div>
@@ -76,16 +73,34 @@
             <div class="mb-8">
                 <div class="position-relative position-md-static px-md-6">
                     <ul class="nav nav-classic nav-tab nav-tab-lg justify-content-xl-center flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble border-0 pb-1 pb-xl-0 mb-n1 mb-xl-0" id="pills-tab-8" role="tablist">
+                        @if($services->count())
+                            <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
+                                <a class="nav-link active" data-toggle="pill" href="#serv-tab" role="tab" aria-controls="serv-tab" aria-selected="true">
+                                    Услуги
+                                </a>
+                            </li>
+                        @endif
+
+                        @if($provider->files->count())
+                            <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
+                                <a class="nav-link"  data-toggle="pill" href="#file-tab" role="tab" aria-controls="file-tab" aria-selected="false">
+                                    Файлы
+                                </a>
+                            </li>
+                        @endif
+
+                        @if($provider->text)
+                            <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
+                                <a class="nav-link"  data-toggle="pill" href="#info-tab" role="tab" aria-controls="info-tab" aria-selected="false">
+                                    Информация
+                                </a>
+                            </li>
+                        @endif
 
                         <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
-                            <a class="nav-link active" id="Jpills-two-example1-tab" data-toggle="pill" href="#Jpills-two-example1" role="tab" aria-controls="Jpills-two-example1" aria-selected="true">
-                                Услуги
+                            <a class="nav-link"  data-toggle="pill" href="#contacts-tab" role="tab" aria-controls="contacts-tab" aria-selected="false">
+                                Контакты
                             </a>
-                        </li>
-
-
-                        <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
-                            <a class="nav-link" id="Jpills-three-example1-tab" data-toggle="pill" href="#Jpills-three-example1" role="tab" aria-controls="Jpills-three-example1" aria-selected="false">Характеристики</a>
                         </li>
 
                     </ul>
@@ -94,23 +109,192 @@
                 <div class="borders-radius-17 border p-4 mt-4 mt-md-0 px-lg-10 py-lg-9">
                     <div class="tab-content" id="Jpills-tabContent">
 
-                        <div class="tab-pane fade active show" id="Jpills-two-example1" role="tabpanel" aria-labelledby="Jpills-two-example1-tab">
-                            <div class="table-responsive mb-4">
+                        <div class="tab-pane fade active show" id="serv-tab" role="tabpanel" aria-labelledby="serv-tab">
+                            <div class="row">
                                 @foreach($services as $key => $char)
-                                    <div class="col-md-3">
-                                        <h4>{{ $char['name'] }}</h4>
-                                        <ul>
-                                            <li>
-                                                {{ ($char['type'] == 'input') ? $char['value'] : $char['value']->pluck('name')->implode(', ') }}
-                                            </li>
-                                        </ul>
+                                    <div class="col-md-3 provider-serv">
+                                        <h6 class="font-weight-bold">{{ $char['name'] }}</h6>
+
+                                        @if($char['type'] == 'input')
+                                            <p><i class="mr-2 fas fa-angle-right"></i> {{ $char['value'] }}</p>
+                                        @else
+                                            @foreach($char['value'] as $item)
+                                                <p><i class="mr-2 fas fa-angle-right"></i> {{ $item['name'] }}</p>
+                                            @endforeach
+                                        @endif
                                     </div>
                                 @endforeach
                             </div>
                         </div>
-                        <div class="tab-pane fade" id="Jpills-three-example1" role="tabpanel" aria-labelledby="Jpills-three-example1-tab">
+                        <div class="tab-pane fade" id="file-tab" role="tabpanel" aria-labelledby="file-tab">
                             <div class="mx-md-5 pt-1">
+                                @foreach($provider->files as $file)
+                                    <div class="row">
+                                        <div class="col-md-2 d-flex align-items-center justify-content-center">
+                                            <a class="file-icon" href="{{ route('provider_dwn_file', ['lang' => $lang, 'id' => $file->id]) }}">
+                                                {{ explode('.', $file->file)[1] }}
+                                                &nbsp;
+                                                <i class="fa fa-download" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <h5 class="font-weight-bold">
+                                                {{ $file->name_ru }}
+                                            </h5>
+                                            <p>
+                                                {{ nl2br($file->description_ru) }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                @endforeach
+                            </div>
+                        </div>
 
+                        <div class="tab-pane fade" id="info-tab" role="tabpanel" aria-labelledby="info-tab">
+                            <div class="mx-md-5 pt-1">
+                                <div>
+                                    {!! $provider->text !!}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade" id="contacts-tab" role="tabpanel" aria-labelledby="contacts-tab">
+                            <div class="mx-md-5 pt-1">
+                                <div class="row justify-content-center">
+
+                                    @if($provider->office_address || $provider->warehouse_address)
+                                        <div class="col-md-3 provider-serv">
+                                            @if($provider->office_address)
+                                                <h6 class="font-weight-bold">Офис</h6>
+                                                <p>{{ $provider->office_address }}</p>
+                                            @endif
+
+                                            @if($provider->warehouse_address)
+                                                <h6 class="font-weight-bold mt-4">Склад</h6>
+                                                <p>{{ $provider->warehouse_address }}</p>
+                                            @endif
+                                        </div>
+                                    @endif
+
+                                    <div class="col-md-3 provider-serv">
+                                        @if($provider->work_from && $provider->work_to)
+                                            <h6 class="font-weight-bold">
+                                                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                                {{ $provider->work_from }} - {{ $provider->work_to }}
+                                            </h6>
+                                        @endif
+
+                                        @if($provider->phone1)
+                                            <p>
+                                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                                {{ $provider->phone1 }}
+                                            </p>
+                                        @endif
+
+                                        @if($provider->phone2)
+                                            <p>
+                                                <i class="fa fa-phone" aria-hidden="true"></i>
+                                                {{ $provider->phone2 }}
+                                            </p>
+                                        @endif
+
+                                        @if($provider->contact_email || $provider->feedback_email)
+                                            <p>
+                                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                                                {!! $provider->contact_email ? '<a href="mailto:'.$provider->contact_email.'">'.$provider->contact_email.'</a>' : '' !!}
+                                                {!! $provider->feedback_email ? '<a href="mailto:'.$provider->feedback_email.'">'.$provider->feedback_email.'</a>' : '' !!}
+                                            </p>
+                                        @endif
+
+                                        @if($provider->site)
+                                            <p>
+                                                <i class="fa fa-globe" aria-hidden="true"></i>
+                                                {{ $provider->site }}
+                                            </p>
+                                        @endif
+
+                                        @if($provider->skype)
+                                            <p>
+                                                <i class="fa fa-skype" aria-hidden="true"></i>
+                                                {{ $provider->skype }}
+                                            </p>
+                                        @endif
+                                    </div>
+
+                                    @if($provider->other_contacts)
+                                        <div class="col-md-3 provider-serv">
+                                            <h6 class="font-weight-bold">Другие контакты</h6>
+                                            <p>{{ $provider->other_contacts }}</p>
+                                        </div>
+                                    @endif
+
+                                    @if($provider->info)
+                                        <div class="col-md-3 provider-serv">
+                                            <h6 class="font-weight-bold">Информация</h6>
+                                            <p>{{ $provider->info }}</p>
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="border-bottom border-color-1 mb-5 mt-10">
+                                    <h3 class="section-title mb-0 pb-2 font-size-25">Связаться</h3>
+                                </div>
+                                <!-- End Title -->
+
+                                <!-- Billing Form -->
+                                <form action="{{ route('provider_send_contact', ['lang' => $lang, 'id' => $provider->id]) }}"
+                                      class="ajax__submit" onsubmit="return false">
+                                    {{ csrf_field() }}
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <!-- Input -->
+                                            <div class="js-form-message mb-6">
+                                                <label class="form-label">
+                                                    Имя
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <input type="text" class="form-control" name="name" value="" autocomplete="off">
+                                            </div>
+                                            <!-- End Input -->
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <!-- Input -->
+                                            <div class="js-form-message mb-6">
+                                                <label class="form-label">
+                                                    E-mail
+                                                    <span class="text-danger">*</span>
+                                                </label>
+                                                <input type="email" class="form-control" name="email" value="" autocomplete="off">
+                                            </div>
+                                            <!-- End Input -->
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <!-- Input -->
+                                            <div class="js-form-message mb-6">
+                                                <label class="form-label">
+                                                    Телефон
+                                                </label>
+                                                <input type="text" class="form-control" name="phone" value="" autocomplete="off">
+                                            </div>
+                                            <!-- End Input -->
+                                        </div>
+
+                                        <div class="w-100"></div>
+
+                                        <div class="col-md-12 mb-5">
+                                            <label class="form-label">
+                                                Сообщение
+                                            </label>
+                                            <textarea name="message" class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary-dark-w mt-5 submit-btn">
+                                        Отправить
+                                    </button>
+                                </form>
                             </div>
                         </div>
 
@@ -119,183 +303,41 @@
                 <!-- End Tab Content -->
             </div>
 
+        <style>
+            .file-icon {
+                background: #f23c0f;
+                width: 50px;
+                height: 50px;
+                display: flex;
+                border-radius: 10px;
+                justify-content: center;
+                align-items: center;
+                color: #fff !important;
+            }
+
+            .file-icon:hover {
+                background: #c7330e;
+                cursor: pointer;
+                color: #ededed;
+            }
+        </style>
+
     <!-- End Single Product Tab -->
 
-        @if(false)
-        <!-- Related products -->
+        @if($products->count())
             <div class="mb-6">
                 <div class="d-flex justify-content-between align-items-center border-bottom border-color-1 flex-lg-nowrap flex-wrap mb-4">
-                    <h3 class="section-title mb-0 pb-2 font-size-22">Related products</h3>
+                    <h3 class="section-title mb-0 pb-2 font-size-22">Популярные товары</h3>
                 </div>
                 <ul class="row list-unstyled products-group no-gutters">
-                    <li class="col-6 col-md-3 col-xl-2gdot4-only col-wd-2 product-item">
-                        <div class="product-item__outer h-100">
-                            <div class="product-item__inner px-xl-4 p-3">
-                                <div class="product-item__body pb-xl-2">
-                                    <div class="mb-2"><a href="../shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">Speakers</a></div>
-                                    <h5 class="mb-1 product-item__title"><a href="../shop/single-product-fullwidth.html" class="text-blue font-weight-bold">Wireless Audio System Multiroom 360 degree Full base audio</a></h5>
-                                    <div class="mb-2">
-                                        <a href="../shop/single-product-fullwidth.html" class="d-block text-center"><img class="img-fluid" src="/img/212X200/img1.jpg" alt="Image Description"></a>
-                                    </div>
-                                    <div class="flex-center-between mb-1">
-                                        <div class="prodcut-price">
-                                            <div class="text-gray-100">$685,00</div>
-                                        </div>
-                                        <div class="d-none d-xl-block prodcut-add-cart">
-                                            <a href="../shop/single-product-fullwidth.html" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-item__footer">
-                                    <div class="border-top pt-2 flex-center-between flex-wrap">
-                                        <a href="../shop/compare.html" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                        <a href="../shop/wishlist.html" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="col-6 col-md-3 col-xl-2gdot4-only col-wd-2 product-item">
-                        <div class="product-item__outer h-100">
-                            <div class="product-item__inner px-xl-4 p-3">
-                                <div class="product-item__body pb-xl-2">
-                                    <div class="mb-2"><a href="../shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">Speakers</a></div>
-                                    <h5 class="mb-1 product-item__title"><a href="../shop/single-product-fullwidth.html" class="text-blue font-weight-bold">Tablet White EliteBook Revolve 810 G2</a></h5>
-                                    <div class="mb-2">
-                                        <a href="../shop/single-product-fullwidth.html" class="d-block text-center"><img class="img-fluid" src="/img/212X200/img2.jpg" alt="Image Description"></a>
-                                    </div>
-                                    <div class="flex-center-between mb-1">
-                                        <div class="prodcut-price d-flex align-items-center position-relative">
-                                            <ins class="font-size-20 text-red text-decoration-none">$1999,00</ins>
-                                            <del class="font-size-12 tex-gray-6 position-absolute bottom-100">$2 299,00</del>
-                                        </div>
-                                        <div class="d-none d-xl-block prodcut-add-cart">
-                                            <a href="../shop/single-product-fullwidth.html" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-item__footer">
-                                    <div class="border-top pt-2 flex-center-between flex-wrap">
-                                        <a href="../shop/compare.html" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                        <a href="../shop/wishlist.html" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="col-6 col-md-3 col-xl-2gdot4-only col-wd-2 product-item">
-                        <div class="product-item__outer h-100">
-                            <div class="product-item__inner px-xl-4 p-3">
-                                <div class="product-item__body pb-xl-2">
-                                    <div class="mb-2"><a href="../shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">Speakers</a></div>
-                                    <h5 class="mb-1 product-item__title"><a href="../shop/single-product-fullwidth.html" class="text-blue font-weight-bold">Purple Solo 2 Wireless</a></h5>
-                                    <div class="mb-2">
-                                        <a href="../shop/single-product-fullwidth.html" class="d-block text-center"><img class="img-fluid" src="/img/212X200/img3.jpg" alt="Image Description"></a>
-                                    </div>
-                                    <div class="flex-center-between mb-1">
-                                        <div class="prodcut-price">
-                                            <div class="text-gray-100">$685,00</div>
-                                        </div>
-                                        <div class="d-none d-xl-block prodcut-add-cart">
-                                            <a href="../shop/single-product-fullwidth.html" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-item__footer">
-                                    <div class="border-top pt-2 flex-center-between flex-wrap">
-                                        <a href="../shop/compare.html" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                        <a href="../shop/wishlist.html" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="col-6 col-md-3 col-xl-2gdot4-only col-wd-2 product-item remove-divider-md-lg">
-                        <div class="product-item__outer h-100">
-                            <div class="product-item__inner px-xl-4 p-3">
-                                <div class="product-item__body pb-xl-2">
-                                    <div class="mb-2"><a href="../shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">Speakers</a></div>
-                                    <h5 class="mb-1 product-item__title"><a href="../shop/single-product-fullwidth.html" class="text-blue font-weight-bold">Smartphone 6S 32GB LTE</a></h5>
-                                    <div class="mb-2">
-                                        <a href="../shop/single-product-fullwidth.html" class="d-block text-center"><img class="img-fluid" src="/img/212X200/img4.jpg" alt="Image Description"></a>
-                                    </div>
-                                    <div class="flex-center-between mb-1">
-                                        <div class="prodcut-price">
-                                            <div class="text-gray-100">$685,00</div>
-                                        </div>
-                                        <div class="d-none d-xl-block prodcut-add-cart">
-                                            <a href="../shop/single-product-fullwidth.html" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-item__footer">
-                                    <div class="border-top pt-2 flex-center-between flex-wrap">
-                                        <a href="../shop/compare.html" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                        <a href="../shop/wishlist.html" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="col-6 col-md-3 col-xl-2gdot4-only col-wd-2 product-item remove-divider-xl">
-                        <div class="product-item__outer h-100">
-                            <div class="product-item__inner px-xl-4 p-3">
-                                <div class="product-item__body pb-xl-2">
-                                    <div class="mb-2"><a href="../shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">Speakers</a></div>
-                                    <h5 class="mb-1 product-item__title"><a href="../shop/single-product-fullwidth.html" class="text-blue font-weight-bold">Widescreen NX Mini F1 SMART NX</a></h5>
-                                    <div class="mb-2">
-                                        <a href="../shop/single-product-fullwidth.html" class="d-block text-center"><img class="img-fluid" src="/img/212X200/img5.jpg" alt="Image Description"></a>
-                                    </div>
-                                    <div class="flex-center-between mb-1">
-                                        <div class="prodcut-price">
-                                            <div class="text-gray-100">$685,00</div>
-                                        </div>
-                                        <div class="d-none d-xl-block prodcut-add-cart">
-                                            <a href="../shop/single-product-fullwidth.html" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-item__footer">
-                                    <div class="border-top pt-2 flex-center-between flex-wrap">
-                                        <a href="../shop/compare.html" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                        <a href="../shop/wishlist.html" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="col-6 col-md-3 col-xl-2gdot4-only col-wd-2 product-item remove-divider-wd d-xl-none d-wd-block">
-                        <div class="product-item__outer h-100">
-                            <div class="product-item__inner px-xl-4 p-3">
-                                <div class="product-item__body pb-xl-2">
-                                    <div class="mb-2"><a href="../shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">Speakers</a></div>
-                                    <h5 class="mb-1 product-item__title"><a href="../shop/single-product-fullwidth.html" class="text-blue font-weight-bold">Tablet White EliteBook Revolve 810 G2</a></h5>
-                                    <div class="mb-2">
-                                        <a href="../shop/single-product-fullwidth.html" class="d-block text-center"><img class="img-fluid" src="/img/212X200/img2.jpg" alt="Image Description"></a>
-                                    </div>
-                                    <div class="flex-center-between mb-1">
-                                        <div class="prodcut-price d-flex align-items-center position-relative">
-                                            <ins class="font-size-20 text-red text-decoration-none">$1999,00</ins>
-                                            <del class="font-size-12 tex-gray-6 position-absolute bottom-100">$2 299,00</del>
-                                        </div>
-                                        <div class="d-none d-xl-block prodcut-add-cart">
-                                            <a href="../shop/single-product-fullwidth.html" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-item__footer">
-                                    <div class="border-top pt-2 flex-center-between flex-wrap">
-                                        <a href="../shop/compare.html" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                        <a href="../shop/wishlist.html" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
+                    @foreach($products as $item)
+                        <li class="col-6 col-md-3 col-xl-2gdot4-only col-wd-2 product-item js_list__item">
+                            @include('public.catalog.blocks.product_item', ['product' => $item])
+                        </li>
+                    @endforeach
                 </ul>
             </div>
         @endif
-        <!-- End Related products -->
 
         @if($brands->count())
             <div class="mb-8">

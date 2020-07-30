@@ -185,11 +185,13 @@
                             <h6 class="mb-3 font-weight-bold">Компания</h6>
                             <ul class="list-group list-group-flush list-group-borderless mb-0 list-group-transparent">
                                 @foreach($menu as $item)
-                                    <li>
-                                        <a class="list-group-item list-group-item-action" href="{{ setUri($item['url']) }}">
-                                            {{ $item["name_$lang"] }}
-                                        </a>
-                                    </li>
+                                    @if($item->view_bottom)
+                                        <li>
+                                            <a class="list-group-item list-group-item-action" href="{{ setUri($item['url']) }}">
+                                                {{ $item["name_$lang"] }}
+                                            </a>
+                                        </li>
+                                    @endif
                                 @endforeach
                             </ul>
                         </div>

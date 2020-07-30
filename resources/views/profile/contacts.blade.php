@@ -157,7 +157,7 @@
 						<label class="form-label">
 							Другие контакты
 						</label>
-						<input type="text" class="form-control" name="other_contacts" value="{{ user()->other_contacts }}" autocomplete="off">
+						<textarea name="other_contacts" class="form-control">{{ user()->other_contacts }}</textarea>
 					</div>
 					<!-- End Input -->
 				</div>
@@ -167,13 +167,13 @@
 						<label class="form-label">
 							Примечание (отображаются на боковой плашке)
 						</label>
-						<input type="text" class="form-control" name="note" value="{{ user()->note }}" autocomplete="off">
+						<textarea name="note" class="form-control">{{ user()->note }}</textarea>
 					</div>
 					<!-- End Input -->
 				</div>
 
 			</div>
-			<button type="submit" class="btn btn-primary-dark-w">
+			<button type="submit" class="btn btn-primary-dark-w submit-btn">
 				Сохранить
 			</button>
 		</form>

@@ -21,4 +21,9 @@ class ProviderFile extends Model
     {
         return $query->where('id_provider', $id_provider)->get();
     }
+
+    public function provider()
+    {
+        return $this->hasOne('App\Models\User', 'id', 'id_provider');
+    }
 }

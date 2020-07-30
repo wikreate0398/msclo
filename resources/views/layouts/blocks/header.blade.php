@@ -347,17 +347,13 @@
                                                                 data-animation-out="fadeOut"
                                                                 @endif
                                                                 data-position="left">
-                                                                <a id="basicMegaMenu" class="nav-link u-header__nav-link {{ !empty($category['childs']) ? 'u-header__nav-link-toggle' : '' }}"
-                                                                   href="{{ !empty($category['childs']) ? 'javascript:;' : setUri('catalog/' . $category['url']) }}"
-                                                                   @if(!empty($category['childs']))
-                                                                   aria-haspopup="true"
-                                                                   aria-expanded="false"
-                                                                        @endif >
+                                                                <a id="basicMegaCat-{{ $category['id'] }}" class="nav-link u-header__nav-link {{ !empty($category['childs']) ? 'u-header__nav-link-toggle' : '' }}"
+                                                                   href="{{ setUri('catalog/' . $category['url']) }}">
                                                                     {{ $category["name_$lang"] }}
                                                                 </a>
 
                                                                 @if(!empty($category['childs']))
-                                                                    <div class="hs-mega-menu vmm-tfw u-header__sub-menu" aria-labelledby="basicMegaMenu">
+                                                                    <div class="hs-mega-menu vmm-tfw u-header__sub-menu" aria-labelledby="basicMegaCat-{{ $category['id'] }}">
                                                                         {{--                                                                <div class="vmm-bg">--}}
                                                                         {{--                                                                    <img class="img-fluid" src="/img/500X400/img1.png" alt="Image Description">--}}
                                                                         {{--                                                                </div>--}}
@@ -365,7 +361,11 @@
                                                                             @foreach($category['childs'] as $child)
                                                                                 @if(!empty($child['childs']))
                                                                                     <div class="col mb-3 mb-sm-0">
-                                                                                        <span class="u-header__sub-menu-title">{{ $child["name_$lang"] }}</span>
+                                                                                        <a class="u-header__sub-menu-title"
+                                                                                           href="{{ setUri('catalog/' . $child['url']) }}">
+                                                                                            {{ $child["name_$lang"] }}
+                                                                                        </a>
+
                                                                                         <ul class="u-header__sub-menu-nav-group mb-3">
                                                                                             @foreach($child['childs'] as $child2)
                                                                                                 <li>
@@ -382,6 +382,24 @@
                                                                                     </div>
                                                                                 @endif
                                                                             @endforeach
+
+                                                                            <div class="col mb-3 mb-sm-0">
+                                                                                <ul class="u-header__sub-menu-nav-group mb-3">
+                                                                                    @foreach($category['childs'] as $child)
+                                                                                        @if(empty($child['childs']))
+                                                                                            <li>
+                                                                                                <a class="nav-link u-header__sub-menu-nav-link"
+                                                                                                   href="{{ setUri('catalog/' . $child['url']) }}">
+                                                                                                    {{ $child["name_$lang"] }}
+                                                                                                    @if($child['products_count'])
+                                                                                                        <span class="text-gray-25 font-size-12 font-weight-normal"> ({{ $child['products_count'] }})</span>
+                                                                                                    @endif
+                                                                                                </a>
+                                                                                            </li>
+                                                                                        @endif
+                                                                                    @endforeach
+                                                                                </ul>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 @endif

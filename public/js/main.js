@@ -295,7 +295,7 @@ $(window).load(function () {
 function initEqHeight() {
     fixHeight('.products-group-4-1-4');
     fixHeight('.catalog-product');
-    fixHeight('.products-group');
+    fixHeight('.products-list');
 }
 
 function setEqualHeight(columns, parent) {

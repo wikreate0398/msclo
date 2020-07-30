@@ -501,7 +501,7 @@
             <div class="d-flex justify-content-between align-items-center border-bottom border-color-1 flex-lg-nowrap flex-wrap mb-4">
                 <h3 class="section-title mb-0 pb-2 font-size-22">Похожие товары товары</h3>
             </div>
-            <ul class="row list-unstyled products-group no-gutters">
+            <ul class="row list-unstyled products-group products-list no-gutters">
                 @foreach($sameProducts as $item)
                     <li class="col-6 col-md-3 col-xl-2gdot4-only col-wd-2 product-item js_list__item">
                         @include('public.catalog.blocks.product_item', ['product' => $item])

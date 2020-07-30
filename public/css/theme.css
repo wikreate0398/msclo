@@ -36283,7 +36283,7 @@ blockquote:not(.blockquote) p {
 
 @media (min-width: 1200px) {
   .vmm-tfw {
-    min-width: auto;
+    min-width: 500px;
   }
   .vmm-fw {
     width: 56.25025rem;

@@ -26,6 +26,6 @@ class Tag extends Model
 
     public function scopeGetHome($query)
     {
-        return $query->visible()->orderByPageUp()->with(['products.category', 'products.images', 'products.prices'])->get();
+        return $query->visible()->orderByPageUp()->with(['products.category', 'products.images', 'products.prices'])->has('products')->get();
     }
 }

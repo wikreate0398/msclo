@@ -5,7 +5,7 @@
         <div class="row mb-8">
             <div class="d-none d-xl-block col-xl-3 col-wd-2gdot5">
 
-                @if($filterPrices->count())
+                @if($filterPrices->count() && $filterPrices['min'] != $filterPrices['max'])
                     <div class="mb-6">
                         <div class="border-bottom border-color-1 mb-5">
                             <h3 class="section-title section-title__sm mb-0 pb-2 font-size-18">Фильтр</h3>

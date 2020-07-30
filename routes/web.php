@@ -271,6 +271,7 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
             Route::post('create', 'ProductsController@create')->name('create_product');
             Route::post('{id}\update', 'ProductsController@update')->name('update_product');
             Route::get('delete/{id}', 'ProductsController@delete')->name('delete_product');
+            Route::post('delete-image', 'ProductsController@deleteImage')->name('delete_product_image');
         });
 
         Route::group(['prefix' => 'contacts'], function() {

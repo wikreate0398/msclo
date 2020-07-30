@@ -28,7 +28,7 @@
 						<div class="tab-pane active" id="tab_1">
 							@include('admin.utils.input', ['label' => 'Название', 'lang' => true, 'name' => 'name', 'data' => $data])
 
-							@include('admin.utils.input', ['label' => 'Ссылка', 'req' => true, 'name' => 'url', 'help' => 'Без http://www и.т.п просто английская фраза, без пробелов, отражающая пункт меню, например Наш подход - our-approach', 'data' => $data])
+{{--							@include('admin.utils.input', ['label' => 'Ссылка', 'req' => true, 'name' => 'url', 'help' => 'Без http://www и.т.п просто английская фраза, без пробелов, отражающая пункт меню, например Наш подход - our-approach', 'data' => $data])--}}
 
 							@include('admin.utils.input', ['label' => 'Код', 'name' => 'code'])
 

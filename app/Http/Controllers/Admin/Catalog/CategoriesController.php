@@ -45,7 +45,10 @@ class CategoriesController extends Controller
 
     public function create(Request $request)
     {
-        $this->model->create(\Language::returnData($this->returnDataFields));
+        $create      = $this->model->create(\Language::returnData($this->returnDataFields));
+        $create->url = toUrl($request->name['ru']) . '-' . $create->id;
+        $create->save();
+
         return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save')); 
     }
 
@@ -61,9 +64,12 @@ class CategoriesController extends Controller
     public function update($id, Request $request)
     {
         $data = $this->model->findOrFail($id);
-        $data->fill(\Language::returnData($this->returnDataFields))->save();
+
+        $insertData = array_merge(\Language::returnData($this->returnDataFields), [
+            'url' => $data->url ?: toUrl($request->name['ru']) . '-' . $data->id
+        ]);
+
+        $data->fill($insertData)->save();
         return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save')); 
     }
-
-
 }

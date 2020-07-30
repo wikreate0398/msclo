@@ -33,7 +33,7 @@ class Product extends Model
 
 	protected $casts = [
 	  'is_new' => 'integer',
-      'view'   => 1
+      'view'   => 'integer'
     ];
 
 	public function scopeVisible($query)
@@ -72,7 +72,7 @@ class Product extends Model
 
     public function images()
     {
-        return $this->hasMany('App\Models\Catalog\ProductImage', 'id_product', 'id');
+        return $this->hasMany('App\Models\Catalog\ProductImage', 'id_product', 'id')->orderByPageUp();
     }
 
     public function scopeFilter($query)

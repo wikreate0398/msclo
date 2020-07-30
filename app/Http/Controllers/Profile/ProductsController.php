@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Profile;
 use App\Models\Catalog\Category;
 use App\Models\Catalog\Char;
 use App\Models\Catalog\Product;
+use App\Models\Catalog\ProductImage;
 use App\Repository\Interfaces\CatalogRepositoryInterface;
 use App\Repository\Interfaces\ProviderRepositoryInterface;
 use App\Utils\Facades\Catalog\CatalogCrud;
@@ -54,6 +55,15 @@ class ProductsController extends Controller
     {
         $this->catalogRepository->deleteProduct($id, user()->id);
         return redirect()->back();
+    }
+
+    public function deleteImage($lang, Request $request)
+    {
+        ProductImage::where('image', $request->value)
+                    ->whereHas('product', function($query) {
+                        return $query->where('id_provider', user()->id);
+                    })
+                    ->delete();
     }
 
     public function create($lang, Request $request)

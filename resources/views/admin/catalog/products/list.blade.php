@@ -34,7 +34,7 @@
 							<div class="tab-pane fade show active" id="tab_1">
 								@include('admin.utils.input', ['label' => 'Название', 'lang' => true, 'name' => 'name'])
 
-								@include('admin.utils.input', ['label' => 'Ссылка', 'req' => true, 'name' => 'url', 'help' => 'Без http://www и.т.п просто английская фраза, без пробелов, отражающая пункт меню, например Наш подход - our-approach'])
+{{--								@include('admin.utils.input', ['label' => 'Ссылка', 'req' => true, 'name' => 'url', 'help' => 'Без http://www и.т.п просто английская фраза, без пробелов, отражающая пункт меню, например Наш подход - our-approach'])--}}
 
 								@include('admin.utils.input', ['label' => 'Код', 'name' => 'code'])
 

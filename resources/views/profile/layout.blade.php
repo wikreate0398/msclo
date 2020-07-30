@@ -1,6 +1,9 @@
 @extends('layouts.public')
 
 @section('content')
+    <script>
+        const deleteProductImageRoute = '{{ route('delete_product_image', compact('lang')) }}';
+    </script>
     <div class="container" style="min-height: 400px;">
 
         <!-- End Accordion -->

@@ -24,15 +24,15 @@
 
                     <div class="w-100" style="margin-bottom: 15px;"></div>
 
-                    <div class="col-md-6">
-                        <label class="form-label">
-                            Ссылка
-                            <span class="text-danger">*</span>
-                        </label>
-                        <input type="text" class="form-control" name="url" autocomplete="off">
-                    </div>
+{{--                    <div class="col-md-6">--}}
+{{--                        <label class="form-label">--}}
+{{--                            Ссылка--}}
+{{--                            <span class="text-danger">*</span>--}}
+{{--                        </label>--}}
+{{--                        <input type="text" class="form-control" name="url" autocomplete="off">--}}
+{{--                    </div>--}}
 
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <label class="form-label">
                             Артикул
                             <span class="text-danger">*</span>
@@ -95,7 +95,9 @@
 
                     <input type="file"
                            name="files"
-                           class="file_uploader_input">
+                           class="gallery_media">
+
+                    <input type="hidden" name="image_sort" value="" id="img-sort">
 
                     <div class="w-100" style="margin-bottom: 15px;"></div>
 
@@ -133,6 +135,8 @@
 
     <link href="{{ asset('admin_theme/assets/js') }}/fileuploader/dist/font/font-fileuploader.css" media="all" rel="stylesheet">
     <link href="{{ asset('admin_theme/assets/js') }}/fileuploader/dist/jquery.fileuploader.min.css" media="all" rel="stylesheet">
+    <link href="{{ asset('admin_theme/assets/js') }}/fileuploader/examples/gallery/css/jquery.fileuploader-theme-gallery.css" media="all" rel="stylesheet">
+
     <script src="{{ asset('admin_theme/assets/js') }}/fileuploader/dist/jquery.fileuploader.min.js" type="text/javascript"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/19.1.1/decoupled-document/ckeditor.js"></script>
     <script src="/js/ckinit.js" type="text/javascript"></script>

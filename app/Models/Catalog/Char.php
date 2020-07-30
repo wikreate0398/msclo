@@ -56,7 +56,9 @@ class Char extends Model
                                 return $query->whereIn('id_category', $idsCats);
                              });
                          }
-                         return $query->withCount('valuesProducts');
+                         return $query->withCount(['valuesProducts' => function ($query) use($idsCats) {
+                             return $query->whereIn('id_category', $idsCats);
+                         }]);
                      }])
                      ->has('childs');
     }

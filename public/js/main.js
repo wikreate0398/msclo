@@ -64,6 +64,161 @@ $(document).ready(function(){
         fixHeight('.products-group-4-1-4');
     });
 
+    if ($('input.gallery_media').length) {
+        var $fileuploader = $('input.gallery_media').fileuploader({
+            limit: 10,
+            fileMaxSize: 3,
+            extensions: ['image/*'],
+            changeInput: ' ',
+            theme: 'gallery',
+            enableApi: true,
+            thumbnails: {
+                box: '<div class="fileuploader-items">' +
+                    '<ul class="fileuploader-items-list">' +
+                    '<li class="fileuploader-input"><button type="button" class="fileuploader-input-inner"><i class="fileuploader-icon-main"></i> <span>${captions.feedback}</span></button></li>' +
+                    '</ul>' +
+                    '</div>',
+                item: '<li class="fileuploader-item">' +
+                    '<div class="fileuploader-item-inner">' +
+                    '<div class="actions-holder">' +
+                    '<button type="button" class="fileuploader-action fileuploader-action-sort" title="${captions.sort}"><i class="fileuploader-icon-sort"></i></button>' +
+                    '<button type="button" class="fileuploader-action fileuploader-action-remove" title="${captions.remove}"><i class="fileuploader-icon-remove"></i></button>' +
+                    '</div>' +
+                    '<div class="thumbnail-holder">' +
+                    '${image}' +
+                    '<span class="fileuploader-action-popup"></span>' +
+                    '<div class="progress-holder"><span></span>${progressBar}</div>' +
+                    '</div>' +
+                    '<div class="content-holder"><h5 title="${name}">${name}</h5><span>${size2}</span></div>' +
+                    '<div class="type-holder">${icon}</div>' +
+                    '</div>' +
+                    '</li>',
+                item2: '<li class="fileuploader-item">' +
+                    '<div class="fileuploader-item-inner">' +
+                    '<div class="actions-holder">' +
+                    '<button type="button" class="fileuploader-action fileuploader-action-sort" title="${captions.sort}"><i class="fileuploader-icon-sort"></i></button>' +
+                    '<button type="button" class="fileuploader-action fileuploader-action-remove" title="${captions.remove}"><i class="fileuploader-icon-remove"></i></button>' +
+                    '</div>' +
+                    '<div class="thumbnail-holder">' +
+                    '${image}' +
+                    '<span class="fileuploader-action-popup"></span>' +
+                    '<div class="progress-holder"><span></span>${progressBar}</div>' +
+                    '</div>' +
+                    '<div class="content-holder"><h5 title="${name}">${name}</h5><span>${size2}</span></div>' +
+                    '<div class="type-holder">${icon}</div>' +
+                    '</div>' +
+                    '</li>',
+                itemPrepend: true,
+                startImageRenderer: true,
+                canvasImage: false,
+                onItemShow: function(item, listEl, parentEl, newInputEl, inputEl) {
+                    var api = $.fileuploader.getInstance(inputEl),
+                        color = api.assets.textToColor(item.format),
+                        $plusInput = listEl.find('.fileuploader-input'),
+                        $progressBar = item.html.find('.progress-holder');
+
+                    // put input first in the list
+                    $plusInput.prependTo(listEl);
+
+                    // color the icon and the progressbar with the format color
+                    item.html.find('.type-holder .fileuploader-item-icon')[api.assets.isBrightColor(color) ? 'addClass' : 'removeClass']('is-bright-color').css('backgroundColor', color);
+                    $progressBar.css('backgroundColor', color);
+                },
+                onImageLoaded: function(item, listEl, parentEl, newInputEl, inputEl) {
+                    var api = $.fileuploader.getInstance(inputEl);
+
+                    // add icon
+                    item.image.find('.fileuploader-item-icon i').html('')
+                        .addClass('fileuploader-icon-' + (['image', 'video', 'audio'].indexOf(item.format) > -1 ? item.format : 'file'));
+
+                    // check the image size
+                    if (item.format == 'image' && item.upload && !item.imU) {
+                        if (item.reader.node && (item.reader.width < 100 || item.reader.height < 100)) {
+                            alert(api.assets.textParse(api.getOptions().captions.imageSizeError, item));
+                            return item.remove();
+                        }
+
+                        item.image.hide();
+                        item.reader.done = true;
+                        item.upload.send();
+                    }
+
+                },
+                onItemRemove: function(html) {
+                    html.fadeOut(250);
+                }
+            },
+            dragDrop: {
+                container: '.fileuploader-theme-gallery .fileuploader-input'
+            },
+            sorter: {
+                onSort: function(list, listEl, parentEl, newInputEl, inputEl) {
+                    var api = $.fileuploader.getInstance(inputEl),
+                        fileList = api.getFiles(),
+                        list = [];
+
+                    // prepare the sorted list
+                    api.getFiles().forEach(function(item) {
+                        list.push({
+                            name: item.name,
+                            index: item.index
+                        });
+                    });
+                    $('#img-sort').val(JSON.stringify(list));
+                }
+            },
+            afterRender: function(listEl, parentEl, newInputEl, inputEl) {
+                var api = $.fileuploader.getInstance(inputEl),
+                    $plusInput = listEl.find('.fileuploader-input');
+
+                // bind input click
+                $plusInput.on('click', function() {
+                    api.open();
+                });
+
+                // bind dropdown buttons
+                $('body').on('click', function(e) {
+                    var $target = $(e.target),
+                        $item = $target.closest('.fileuploader-item'),
+                        item = api.findFile($item);
+
+                    // toggle dropdown
+                    $('.gallery-item-dropdown').hide();
+                    if ($target.is('.fileuploader-action-settings') || $target.parent().is('.fileuploader-action-settings')) {
+                        $item.find('.gallery-item-dropdown').show(150);
+                    }
+
+                });
+            },
+            onRemove: function(item, listEl, parentEl, newInputEl, inputEl) {
+                if (!$(inputEl).attr('data-json')) return;
+                var data = JSON.parse($(inputEl).attr('data-json'));
+                jQuery.ajax({
+                    url: deleteProductImageRoute,
+                    type: 'POST',
+                    data: {
+                        value: item.name,
+                        _token: CSRF_TOKEN
+                    },
+                    headers: {'X-CSRF-TOKEN': CSRF_TOKEN},
+                    dataType: 'json',
+                    beforeSend: function() {},
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        if (XMLHttpRequest.status === 401) document.location.reload(true);
+                    },
+                });
+            },
+            captions: {
+                feedback: 'Выберите',
+                errors: {
+                    filesLimit: 'Вы можете загрузить не более ${limit} файлов.',
+                    filesType: 'Вы можете загрузить файлы формата pdf,doc,docx,word',
+                    fileSize: '${name} is too large! Please choose a file up to ${fileMaxSize}MB.',
+                }
+            }
+        });
+    }
+
     if ($('input.provider_files').length) {
         $('input.provider_files').fileuploader({
             extensions: ['application/pdf', 'application/x-download', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'application/octet-stream'],
@@ -346,6 +501,9 @@ function fileUploader(){
                     enableApi: true,
                     captions: {
                         button: function(options) { return 'Выбрать ' + (options.limit == 1 ? 'file' : 'файлы');},
+                        feedback2: function (options) {
+                            return options.length + ' файл(ов) выбрано';
+                        },
                         removeConfirmation: 'Подтвердить удаление',
                         feedback: 'Выберите файлы',
                         errors: {
@@ -358,11 +516,9 @@ function fileUploader(){
                         if (!$(inputEl).attr('data-json')) return;
                         var data = JSON.parse($(inputEl).attr('data-json'));
                         jQuery.ajax({
-                            url: '/'+ajaxPath+'/deleteImageByField',
+                            url: deleteProductImageRoute,
                             type: 'POST',
                             data: {
-                                table: data.table,
-                                field: data.field,
                                 value: item.name,
                                 _token: CSRF_TOKEN
                             },

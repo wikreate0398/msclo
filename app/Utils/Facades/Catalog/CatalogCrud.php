@@ -35,7 +35,7 @@ class CatalogCrud
         \DB::beginTransaction();
 
         try {
-            if (!$this->request->id_category or !$this->id_provider or !$this->request->url) {
+            if (!$this->request->id_category or !$this->id_provider) {
                 throw new \ValidationError('Заполните обязательные поля');
             }
 
@@ -45,14 +45,15 @@ class CatalogCrud
                 'code'        => $this->request->code,
                 'id_category' => $this->request->id_category,
                 'id_provider' => $this->id_provider,
-                'url'         => toUrl($this->request->url ?: $this->request->name_ru)
             ]);
 
-            $id = Product::create($insertData)->id;
+            $create      = Product::create($insertData);
+            $create->url = toUrl($this->request->name['ru']) . '-' . $create->id;
+            $create->save();
 
-            $this->saveChars($id, $this->request->char);
-            $this->savePrices($id, $this->request->prices);
-            $this->saveImages($id);
+            $this->saveChars($create->id, $this->request->char);
+            $this->savePrices($create->id, $this->request->prices);
+            $this->saveImages($create->id);
             \DB::commit();
 
             return $this->response(true);
@@ -68,7 +69,7 @@ class CatalogCrud
         \DB::beginTransaction();
 
         try {
-            if (!$this->request->id_category or !$this->id_provider or !$this->request->url) {
+            if (!$this->request->id_category or !$this->id_provider) {
                 throw new \ValidationError('Заполните обязательные поля');
             }
 
@@ -78,7 +79,7 @@ class CatalogCrud
                 'code'        => $this->request->code,
                 'id_category' => $this->request->id_category,
                 'id_provider' => $this->id_provider,
-                'url'         => toUrl($this->request->url ?: $this->request->name_ru)
+                'url'         => $data->url ?: toUrl($this->request->name['ru']) . '-' . $id
             ]);
 
             $data->fill($insertData)->save();
@@ -97,16 +98,27 @@ class CatalogCrud
 
     private function saveImages($id)
     {
+        $imageSort   = $this->request->image_sort ? collect(json_decode($this->request->image_sort, true)) : false;
         if (request()->files->count()) {
             $uploadImage = new UploadImage;
             $images      = $uploadImage->setExtensions('jpeg,jpg,png')
-                                        ->setSize(12000)
-                                        ->multipleUpload('files', 'products');
+                                       ->setSize(12000)
+                                       ->sort($imageSort)
+                                       ->multipleUpload('files', 'products');
 
             foreach ($images as $key => $image) {
                 ProductImage::create([
                     'id_product' => $id,
-                    'image'      => $image
+                    'image'      => @$image['name'] ?: $image,
+                    'page_up'    => @$image['page_up'] ?: 1
+                ]);
+            }
+        }
+
+        if (!empty($imageSort)) {
+            foreach ($imageSort as $item) {
+                ProductImage::where('image', $item['name'])->update([
+                    'page_up' => $item['index']
                 ]);
             }
         }

@@ -38,7 +38,7 @@
                 <div class="mb-2">
                     <div class="border-bottom mb-3 pb-md-1 pb-3">
                         @if(isset($product->provider))
-                            <p class="mb-0"><strong>Поставшщик</strong>: <a href="{{ route('view_provider', ['lang' => 'ru', 'id' => $product->id_provider]) }}">{{ $product->provider->name }}</a></p>
+                            <p class="mb-0"><strong>Поставшщик</strong>: <a href="{{ route('view_provider', ['lang' => $lang, 'id' => $product->id_provider]) }}">{{ $product->provider->name }}</a></p>
                         @endif
                         <a href="{{ setUri("catalog/{$product->category->url}") }}" class="font-size-12 text-gray-5 mb-2 d-inline-block">
                             {{ $product->category["name_$lang"] }}

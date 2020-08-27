@@ -42,7 +42,7 @@ class CatalogController extends Controller
         return view('public/catalog/category', compact(['category', 'providers', 'catalog', 'filters', 'breads', 'moreCats', 'filterPrices']));
     }
 
-    public function viewProduct($lang, $url, Request $request)
+    public function viewProduct($lang, $url)
     {
         $product   = $this->repository->getProduct($url);
         $chars     = $this->repository->getProductChars($product->id);
@@ -63,7 +63,7 @@ class CatalogController extends Controller
                                              return $item['id']!=$product->id;
                                          });
 
-        return view('public/catalog/product', compact(['product', 'breads', 'chars', 'charsCart', 'sameProducts', 'request']));
+        return view('public/catalog/product', compact(['product', 'breads', 'chars', 'charsCart', 'sameProducts', 'lang']));
     }
 
     private function generateBreads($items)

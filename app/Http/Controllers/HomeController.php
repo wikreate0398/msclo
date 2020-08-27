@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
- 
+
 use App\Mail\Callback;
 use App\Models\Advantage;
 use App\Models\Banner;
@@ -35,10 +35,10 @@ class HomeController extends Controller
         $providersCats = $this->providerRepository->getCatsGroupedByProviders();
 
         return view('public/home', compact('sliders', 'banners', 'advantages', 'tags', 'cats', 'brands', 'providers', 'providersCats'));
-    } 
+    }
 
     public function page()
-    { 
+    {
         $data = \Pages::pageData();
         if (!$data) {
             abort('404');

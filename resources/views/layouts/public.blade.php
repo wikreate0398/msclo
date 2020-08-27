@@ -12,7 +12,7 @@
     <meta http-equiv="Pragma" content="no-cache" />
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="/favicon.png">
+    <link rel="shortcut icon" href="/img/favicon.ico">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap" rel="stylesheet">
@@ -32,6 +32,7 @@
     <!-- CSS Electro Template -->
     <link rel="stylesheet" href="/css/theme.css?v={{ time() }}">
     <link rel="stylesheet" href="/css/loader.css">
+    <link rel="stylesheet" href="/css/main.css">
     <script src="/vendor/jquery/dist/jquery.min.js"></script>
     <script>
         const CSRF_TOKEN      = $('meta[name="csrf-token"]').attr('content');
@@ -489,6 +490,21 @@
                                         </div>
                                     </div>
                                     <!-- End Input -->
+
+                                    <!-- Checkboxes -->
+                                    <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1 text-center">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" 
+                                                   class="custom-control-input" 
+                                                   id="acceptTerms" 
+                                                   value="1" 
+                                                   name="accept_terms"
+                                            >
+                                            <label class="custom-control-label" for="acceptTerms">Я принимаю условия <a href="javascript:void(0) target="_blank"">Пользовательского соглашения</a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <!-- End Checkboxes -->
 
                                     <div class="mb-2">
                                         <button type="submit" class="btn btn-block btn-sm btn-primary transition-3d-hover submit-btn">Зарегистрироваться</button>

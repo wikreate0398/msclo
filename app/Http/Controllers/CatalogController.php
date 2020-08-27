@@ -59,11 +59,11 @@ class CatalogController extends Controller
         );
 
         $sameProducts = $this->repository->getCategoryProducts([$product->id_category], 5)
-                                         ->filter(function ($item) use($product) {
-                                                return $item['id']!=$product->id;
-                                            });
+                                         ->filter(function ($item) use ($product) {
+                                             return $item['id']!=$product->id;
+                                         });
 
-        return view('public/catalog/product', compact(['product', 'breads', 'chars', 'charsCart', 'sameProducts']));
+        return view('public/catalog/product', compact(['product', 'breads', 'chars', 'charsCart', 'sameProducts', 'lang']));
     }
 
     private function generateBreads($items)
@@ -80,5 +80,4 @@ class CatalogController extends Controller
 
         return $crumb->toHtml();
     }
-
 }

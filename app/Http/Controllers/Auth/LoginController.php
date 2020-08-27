@@ -57,17 +57,15 @@ class LoginController extends Controller
                     'password' => $request->input('password'),
                     'active'   => 1,
                     'confirm'  => 1], false) == true) {
-
                 User::whereId(\Auth::id())->update([
-                    'last_entry' => date('Y-m-d H:i:s'), 
+                    'last_entry' => date('Y-m-d H:i:s'),
                     'user_agent' => request()->server('HTTP_USER_AGENT')
                 ]);
 
                 $route = $request->from_cart ? route('view_cart', ['lang' => lang()]) : route('home');
 
                 return \JsonResponse::success(['redirect' => $route], false);
-            }
-            else {
+            } else {
                 return \JsonResponse::error(['messages' => 'Ошибка авторизации']);
             }
         } catch (validationException $e) {

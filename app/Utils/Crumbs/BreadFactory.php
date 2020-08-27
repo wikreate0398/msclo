@@ -11,7 +11,9 @@ class BreadFactory
         return new self();
     }
 
-    public function __construct() {}
+    public function __construct()
+    {
+    }
 
     public function add(Crumb $crumb)
     {

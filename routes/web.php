@@ -183,6 +183,8 @@ Route::group(['prefix' => $adminPath, 'namespace' => 'Admin', 'middleware' => ['
 	Route::get('logout', 'LoginController@logout')->name('admin_logout');
 });
 
+
+
 Route::get('/', 'HomeController@index')->middleware(['lang', 'web', 'const'])->name('home');
 
 Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], function() {

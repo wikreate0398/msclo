@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => env('APP_NAME', 'Blackfridaytopup'),
+    'name' => env('APP_NAME', 'Massclo'),
 
     /*
     |--------------------------------------------------------------------------
@@ -175,6 +175,7 @@ return [
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        App\Services\ServicesProvider::class,
 
         /*
          * Application Service Providers...
@@ -252,8 +253,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'ValidationError' => App\Utils\Exceptions\ValidationError::class,
-        'Cart'            =>  App\Cart\CartFacade::class,
-        'CatalogCrud'     =>  App\Catalog\CatalogCrudFacade::class
+        'Cart'            =>  App\Cart\CartFacade::class
     ],
 
 ];

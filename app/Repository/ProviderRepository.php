@@ -13,12 +13,16 @@ class ProviderRepository implements ProviderRepositoryInterface
 {
     private $idsSubcat = [];
 
-    public function getProviderProducts($id_provider)
+    public function getProviderProducts($id_provider, $view = 1)
     {
-        $data = Product::withRelations()
-                        ->visible()
-                        ->where('id_provider', $id_provider)
-                        ->get();
+        $data = Product::withRelations();
+
+        if ($view) {
+            $data->visible();
+        }
+        $data = $data->where('id_provider', $id_provider)
+                     ->get();
+
         return $data;
     }
 

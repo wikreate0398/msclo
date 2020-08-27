@@ -19,42 +19,33 @@ class AjaxController extends Controller
   
     public function depthSort(Request $request)
     {
-
-        $input = $request->all(); 
-        $arr   = $input['arr']; 
-        $table = $input['table']; 
-        $depth = !empty($input['depth']) ? $input['depth'] : 1;
+        $arr   = $request->arr;
+        $table = $request->table;
+        $depth = !empty($request->depth) ? $request->depth : 1;
  
-        if ($depth > 1) 
-        { 
-            foreach ($arr as $key => $value) 
-            { 
+        if ($depth > 1) {
+            foreach ($arr as $key => $value) {
                $data[] = $value; 
                $this->sort($data, 0, $table);  
             }
-        } 
-        else
-        {
-            foreach ($arr as $key => $value) 
-            { 
+        } else {
+            foreach ($arr as $key => $value) {
                DB::table($table)->where('id', $value['id'])
                                 ->update(['page_up' => $key+1]);  
             }
         }
 
-        return \App\Utils\JsonResponse::success(['message' => trans('admin.ajax_true')]); 
+        return \JsonResponse::success(['message' => trans('admin.ajax_true')]);
     }
 
     private function sort($arr, $parent = 0, $table)
     {
-        $i     = 1;
-        foreach ($arr as $item) 
-        {
+        $i = 1;
+        foreach ($arr as $item) {
             DB::table($table)->where('id', $item['id'])
                               ->update(['parent_id' => $parent, 'page_up' => $i]);
 
-            if (!empty($item['children'])) 
-            { 
+            if (!empty($item['children'])) {
                 $this->sort($item['children'], $item['id'], $table, 1);
             }   
             $i++;
@@ -63,14 +54,14 @@ class AjaxController extends Controller
 
     public function viewElement(Request $request)
     {
-        $id    = $request->input('id');
-        $table = $request->input('table'); 
-        $row   = $request->has('row') ? $request->input('row') : 'view'; 
+        $id    = $request->id;
+        $table = $request->table;
+        $row   = $request->row ?: 'view';
         
         $query = DB::table($table)->where('id', $id)->first();  
         DB::table($table)->where('id', $id)
                          ->update(["{$row}" => !empty($query->$row) ? '0' : '1']); 
-        return \App\Utils\JsonResponse::success(['message' => trans('admin.ajax_true')]);  
+        return \JsonResponse::success(['message' => trans('admin.ajax_true')]);
     }     
 
     public function deleteElement(Request $request)

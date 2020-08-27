@@ -1,25 +1,23 @@
 <?php
 
-namespace App\Utils\Facades\Catalog;
+namespace App\Services;
 
 use App\Models\Catalog\CharProduct;
 use App\Models\Catalog\Product;
 use App\Models\Catalog\ProductImage;
 use App\Models\Catalog\ProductPrice;
 use App\Utils\UploadImage;
+use Illuminate\Http\Request;
 
-class CatalogCrud
+class CatalogService
 {
     private $request;
 
-    private $id_provider;
-
     private $returnDataFields = ['name', 'description', 'text', 'seo_title', 'seo_description', 'seo_keywords'];
 
-    public function __construct($id_provider, $request)
+    public function __construct(Request $request)
     {
-        $this->request     = $request;
-        $this->id_provider = $id_provider;
+        $this->request = $request;
     }
 
     public function response($status = true, $error = '')
@@ -30,12 +28,12 @@ class CatalogCrud
         ];
     }
 
-    public function create()
+    public function create($id_provider)
     {
         \DB::beginTransaction();
 
         try {
-            if (!$this->request->id_category or !$this->id_provider) {
+            if (!$this->request->id_category or !$id_provider) {
                 throw new \ValidationError('Заполните обязательные поля');
             }
 
@@ -44,7 +42,7 @@ class CatalogCrud
             $insertData = array_merge($transData, [
                 'code'        => $this->request->code,
                 'id_category' => $this->request->id_category,
-                'id_provider' => $this->id_provider,
+                'id_provider' => $id_provider,
             ]);
 
             $create      = Product::create($insertData);
@@ -63,13 +61,13 @@ class CatalogCrud
             return $this->response(false, $e->getMessage());
         }
     }
-    
-    public function update($id)
+
+    public function update($id, $id_provider)
     {
         \DB::beginTransaction();
 
         try {
-            if (!$this->request->id_category or !$this->id_provider) {
+            if (!$this->request->id_category or !$id_provider) {
                 throw new \ValidationError('Заполните обязательные поля');
             }
 
@@ -78,7 +76,7 @@ class CatalogCrud
             $insertData = array_merge(\Language::returnData($this->returnDataFields), [
                 'code'        => $this->request->code,
                 'id_category' => $this->request->id_category,
-                'id_provider' => $this->id_provider,
+                'id_provider' => $id_provider,
                 'url'         => $data->url ?: toUrl($this->request->name['ru']) . '-' . $id
             ]);
 
@@ -102,9 +100,9 @@ class CatalogCrud
         if (request()->files->count()) {
             $uploadImage = new UploadImage;
             $images      = $uploadImage->setExtensions('jpeg,jpg,png')
-                                       ->setSize(12000)
-                                       ->sort($imageSort)
-                                       ->multipleUpload('files', 'products');
+                ->setSize(12000)
+                ->sort($imageSort)
+                ->multipleUpload('files', 'products');
 
             foreach ($images as $key => $image) {
                 ProductImage::create([

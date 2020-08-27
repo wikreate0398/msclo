@@ -7,7 +7,7 @@ use App\Models\Catalog\CharProduct;
 use App\Models\Catalog\ProductImage;
 use App\Models\Catalog\ProductPrice;
 use App\Models\User;
-use App\Utils\Facades\Catalog\CatalogCrud;
+use App\Services\CatalogService;
 use App\Utils\UploadImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -56,9 +56,9 @@ class ProductsController extends Controller
         return view('admin.'.$this->folder.'.list', $data);
     }  
 
-    public function create(Request $request)
+    public function create(Request $request, CatalogService $catalogService)
     {
-        $response = (new CatalogCrud($request->id_provider, $request))->create();
+        $response = $catalogService->create($request->id_provider);
         if ($response->status) {
             return \JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
         } else {
@@ -78,9 +78,9 @@ class ProductsController extends Controller
         ]);
     }
 
-    public function update($id, Request $request)
+    public function update($id, Request $request, CatalogService $catalogService)
     {
-        $response = (new CatalogCrud($request->id_provider, $request))->update($id);
+        $response = $catalogService->update($id, $request->id_provider);
         if ($response->status) {
             return \JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
         } else {

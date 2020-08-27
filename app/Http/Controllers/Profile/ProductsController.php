@@ -8,7 +8,7 @@ use App\Models\Catalog\Product;
 use App\Models\Catalog\ProductImage;
 use App\Repository\Interfaces\CatalogRepositoryInterface;
 use App\Repository\Interfaces\ProviderRepositoryInterface;
-use App\Utils\Facades\Catalog\CatalogCrud;
+use App\Services\CatalogService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -28,7 +28,7 @@ class ProductsController extends Controller
 
     public function index()
     {
-        $products = $this->repository->getProviderProducts(user()->id);
+        $products = $this->repository->getProviderProducts(user()->id, false);
         return view('profile.products', compact('products'));
     }
 
@@ -66,9 +66,9 @@ class ProductsController extends Controller
                     ->delete();
     }
 
-    public function create($lang, Request $request)
+    public function create($lang, Request $request, CatalogService $catalogService)
     {
-        $response = (new CatalogCrud(user()->id, $request))->create();
+        $response = $catalogService->create(user()->id);
         if ($response->status) {
             return \JsonResponse::success(['redirect' => route('view_profile_product', ['lang' => $lang])], trans('admin.save'));
         } else {
@@ -76,9 +76,9 @@ class ProductsController extends Controller
         }
     }
 
-    public function update($lang, $id, Request $request)
+    public function update($lang, $id, Request $request, CatalogService $catalogService)
     {
-        $response = (new CatalogCrud(user()->id, $request))->update($id);
+        $response = $catalogService->update($id, user()->id);
         if ($response->status) {
             return \JsonResponse::success(['redirect' => route('view_profile_product', ['lang' => $lang])], trans('admin.save'));
         } else {

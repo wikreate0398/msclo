@@ -330,7 +330,6 @@ function adminMenu()
         ]
     ]; 
 }
- 
 
 //function auctionType($type){
 //    $types = [

@@ -10,7 +10,6 @@ use App\Models\Catalog\Category;
 use App\Models\Catalog\Tag;
 use App\Models\Slider;
 use App\Models\User;
-use App\Notifications\ConfirmRegistration;
 use App\Repository\Interfaces\ProviderRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;

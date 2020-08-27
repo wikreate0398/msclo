@@ -254,6 +254,10 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
             Route::get('/', 'PurchasesController@index')->name('purchases');
         });
 
+        Route::group(['prefix' => 'statistics'], function () {
+            Route::get('/', 'StatisticController@index')->name('statistics');
+        });
+
         Route::group(['prefix' => 'orders'], function () {
             Route::get('/', 'OrdersController@index')->name('orders');
         });

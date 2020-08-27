@@ -1,11 +1,11 @@
 <?php
 
 namespace App\Http\Controllers\Profile;
- 
-use Illuminate\Http\Request; 
+
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Notifications\UploadVerificationFile;
-use App\Notifications\ChangeInvitationStatus; 
+use App\Notifications\ChangeInvitationStatus;
 
 use App\Utils\UploadImage;
 use App\Utils\QrCodeGenerator;
@@ -18,25 +18,26 @@ use App\Models\LocationUser;
 use App\Models\QrCode;
 
 class AccountController extends Controller
-{ 
+{
     public function index()
     {
         return view('profile.account', []);
     }
 
-    public function edit(Request $request){
-    	if(!$request->name or !$request->email) {
+    public function edit(Request $request)
+    {
+        if (!$request->name or !$request->email) {
             return \JsonResponse::error(['messages' => 'Заполните все поля']);
         }
 
-        if(User::whereEmail($request->email)->where('id', '<>', \Auth::user()->id)->count()) {
+        if (User::whereEmail($request->email)->where('id', '<>', \Auth::user()->id)->count()) {
             return \JsonResponse::error(['messages' =>  'Пользователь с таким адресом почты уже существует']);
         }
 
         User::whereId(\Auth::user()->id)->update([
-        	'name'  => $request->name,
-        	'phone' => $request->phone,
-        	'email' => $request->email,
+            'name'  => $request->name,
+            'phone' => $request->phone,
+            'email' => $request->email,
             'description' => @$request->description ?: '',
             'text'        => @$request->text ?: ''
         ]);
@@ -50,19 +51,19 @@ class AccountController extends Controller
 
     public function changePassword(Request $request)
     {
-        if(!$request->old_password or !$request->new_password or !$request->repeat_password) {
+        if (!$request->old_password or !$request->new_password or !$request->repeat_password) {
             return \JsonResponse::error(['messages' => 'Заполните все поля']);
         }
 
         if (!\Hash::check($request->old_password, \Auth::user()->password)) {
-        	return \JsonResponse::error(['messages' => 'Старый пароль не верный']);
+            return \JsonResponse::error(['messages' => 'Старый пароль не верный']);
         }
 
-        if($request->new_password != $request->repeat_password) {
+        if ($request->new_password != $request->repeat_password) {
             return \JsonResponse::error(['messages' => 'Пароли не совпадают']);
         }
 
-        if(strlen($request->new_password) < 8) {
+        if (strlen($request->new_password) < 8) {
             return \JsonResponse::error(['messages' => 'Пароль должен состоять из 8 или более символов']);
         }
 
@@ -73,14 +74,15 @@ class AccountController extends Controller
         return \JsonResponse::success(['messages' => 'Пароль успешно изменен', 'reload' => true]);
     }
 
-    public function saveAvatar($avatar) {
+    public function saveAvatar($avatar)
+    {
         $filename = 'user-' . \Auth::user()->id . '-' . md5(microtime()) . '.png';
         $avatarImagePath = public_path() . '/uploads/users/' . $filename;
         uploadBase64($avatar, $avatarImagePath);
         
         User::where('id', \Auth::user()->id)->
-          update([ 
-            'image'  => $filename 
+          update([
+            'image'  => $filename
         ]);
     }
 }

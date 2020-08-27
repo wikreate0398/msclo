@@ -12,6 +12,18 @@ $(document).ready(function(){
         } 
     });
 
+    // increment and decrement buttons
+    let qty = $("[name='qty']");
+    $("#inc").click(function(){
+        qty.val( Number(qty.val()) + 1 );
+    });
+    $("#dec").click(function(){
+        if(qty.val() >1){
+            qty.val( Number(qty.val()) - 1 );
+        }
+    });
+    // End increment and decrement buttons
+
     $('[data-fancybox]').fancybox({
         buttons: ['close'],
     });

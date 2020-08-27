@@ -45,19 +45,19 @@
                                 <!-- Account Sidebar Toggle Button -->
                                 @if(!\Auth::check())
                                     <a id="sidebarNavToggler" href="javascript:;"
-                                    role="button"
-                                    class="u-header-topbar__nav-link text-light"
-                                    aria-controls="sidebarContent"
-                                    aria-haspopup="true"
-                                    aria-expanded="false"
-                                    data-unfold-event="click"
-                                    data-unfold-hide-on-scroll="false"
-                                    data-unfold-target="#sidebarContent"
-                                    data-unfold-type="css-animation"
-                                    data-unfold-animation-in="fadeInRight"
-                                    data-unfold-animation-out="fadeOutRight"
-                                    onclick="showSignup()"
-                                    data-unfold-duration="500">
+                                        role="button"
+                                        class="u-header-topbar__nav-link text-light"
+                                        aria-controls="sidebarContent"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                        data-unfold-event="click"
+                                        data-unfold-hide-on-scroll="false"
+                                        data-unfold-target="#sidebarContent"
+                                        data-unfold-type="css-animation"
+                                        data-unfold-animation-in="fadeInRight"
+                                        data-unfold-animation-out="fadeOutRight"
+                                        onclick="showSignup()"
+                                        data-unfold-duration="500">
                                     <i class="ec ec-user mr-1 text-light"></i> Зарегистрироваться</a>
                                     <a id="sidebarNavToggler" href="javascript:;"
                                        role="button"

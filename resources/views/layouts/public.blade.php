@@ -491,6 +491,21 @@
                                     </div>
                                     <!-- End Input -->
 
+                                    <!-- Checkboxes -->
+                                    <div class="form-group d-flex align-items-center justify-content-between mb-2 pb-1 text-center">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" 
+                                                   class="custom-control-input" 
+                                                   id="acceptTerms" 
+                                                   value="1" 
+                                                   name="accept_terms"
+                                            >
+                                            <label class="custom-control-label" for="acceptTerms">Я принимаю условия <a href="javascript:void(0) target="_blank"">Пользовательского соглашения</a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <!-- End Checkboxes -->
+
                                     <div class="mb-2">
                                         <button type="submit" class="btn btn-block btn-sm btn-primary transition-3d-hover submit-btn">Зарегистрироваться</button>
                                     </div>

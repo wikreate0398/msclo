@@ -9,10 +9,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
-use App\Notifications\ConfirmRegistration; 
+use App\Notifications\ConfirmRegistration;
 
 use App\Models\User;
-use App\Models\UserType; 
+use App\Models\UserType;
 use App\Models\LocationUser;
 
 class RegisterController extends Controller
@@ -50,7 +50,7 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         try {
-            if(!$request->type or !$request->name or !$request->email  or !$request->password or !$request->password_confirmation) {
+            if (!$request->type or !$request->name or !$request->email  or !$request->password or !$request->password_confirmation) {
                 throw new \ValidationError('Заполните все поля');
             }
 
@@ -61,7 +61,7 @@ class RegisterController extends Controller
             $this->checkPass($request->password, $request->password_confirmation);
 
 
-            if(User::where('email', $request->email)->count()) {
+            if (User::where('email', $request->email)->count()) {
                 throw new \ValidationError('Пользователь с таким e-mail адоресом уже существует');
             }
 
@@ -79,26 +79,26 @@ class RegisterController extends Controller
             $user->notify(new ConfirmRegistration($confirm_hash, lang()));
 
             return \JsonResponse::success([
-                'messages' => 'Вы успешно зарегистрировались. На вашу почту мы отправили ссылку для подтверждение регистрации'
+                'messages' => 'Мы отправили на Вашу почту письмо с подтверждением регистрации.'
             ]);
         } catch (\ValidationError $e) {
             return \JsonResponse::error(['messages' => $e->getMessage()]);
         }
-    }    
+    }
 
     private function checkPass($password, $password_confirmation)
     {
-        if($password != $password_confirmation) {
+        if ($password != $password_confirmation) {
             throw new \ValidationError('Пароль не совпадает');
         }
 
-        if(strlen($password) < 8) {
+        if (strlen($password) < 8) {
             throw new \ValidationError('Пароль должен состоять из 8 или более символов');
         }
     }
 
     public function confirmation($lang, $confirmation_hash)
-    { 
+    {
         $user = User::where('confirm_hash', $confirmation_hash)->firstOrFail();
 
         if (empty($user->active)) {

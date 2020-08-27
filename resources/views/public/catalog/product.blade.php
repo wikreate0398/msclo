@@ -149,20 +149,23 @@
                                     <div class="js-quantity row align-items-center">
                                         <div class="col">
                                             <input class="js-result bg-white form-control h-auto border-0 rounded p-0 shadow-none"
-                                                   type="number"
-                                                   min="1"
+                                                   type="text"
+                                                   onkeyup="this.value=this.value.replace(/[^\d]/,'')"
                                                    value="1"
                                                    name="qty"
-                                                   readonly
                                                    onchange="changePriceByQty(this, {{ $product->id }})">
                                         </div>
                                         <div class="col-auto pr-1">
-                                            <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
-                                               href="javascript:;">
+                                            <a class="btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
+                                               href="javascript:;"
+                                               id="dec"
+                                               >
                                                 <small class="fas fa-minus btn-icon__inner"></small>
                                             </a>
-                                            <a class="js-plus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
-                                               href="javascript:;">
+                                            <a class="btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
+                                               href="javascript:;"
+                                               id="inc"
+                                               >
                                                 <small class="fas fa-plus btn-icon__inner"></small>
                                             </a>
                                         </div>

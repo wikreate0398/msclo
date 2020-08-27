@@ -32,6 +32,7 @@
     <!-- CSS Electro Template -->
     <link rel="stylesheet" href="/css/theme.css?v={{ time() }}">
     <link rel="stylesheet" href="/css/loader.css">
+    <link rel="stylesheet" href="/css/main.css">
     <script src="/vendor/jquery/dist/jquery.min.js"></script>
     <script>
         const CSRF_TOKEN      = $('meta[name="csrf-token"]').attr('content');

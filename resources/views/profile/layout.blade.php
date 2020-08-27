@@ -33,6 +33,14 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="{{ route('statistics', compact('lang')) }}"
+                           class="{{ (uri(3) == 'statistics') ? 'font-weight-bold' : '' }} font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-0">
+                            <i class="mr-2 fas fa-angle-right"></i>
+                            Статистика
+                        </a>
+                    </li>
+
                     @if(user()->type == 'provider')
                         <li>
                             <a href=""

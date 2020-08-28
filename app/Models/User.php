@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Order\Order;
+use App\Models\Order\OrderProduct;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -104,6 +106,11 @@ class User extends Authenticatable
     public function products()
     {
         return $this->hasMany('App\Models\Catalog\Product', 'id_provider', 'id');
+    }
+
+    public function ordersProducts()
+    {
+        return $this->hasMany(OrderProduct::class, 'id_provider', 'id');
     }
 
     public function scopeWhereProdsInCats($query, $idsCats)

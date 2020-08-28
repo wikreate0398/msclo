@@ -8,15 +8,15 @@
 
         <!-- End Accordion -->
 
-        <div class="row">
-            <div class="col-lg-3">
+        <div class="row vertical-navBar">
+            <div class="col-lg-12">
                 <div class="border-bottom border-color-1 mb-5">
                     <h3 class="section-title section-title__sm mb-0 pb-2 font-size-18">
                         Мой профиль
                     </h3>
                 </div>
 
-                <ul class="list-group mb-10 sidebar-navbar account-navbar" id="sidebarNav">
+                <ul class="list-group mb-4 sidebar-navbar account-navbar" id="sidebarNav">
                     <li>
                         <a href="{{ route('account', compact('lang')) }}"
                            class="{{ (uri(3) == 'account') ? 'font-weight-bold' : '' }} font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-0">
@@ -32,16 +32,16 @@
                             Покупки
                         </a>
                     </li>
-
-                    <li>
-                        <a href="{{ route('statistics', compact('lang')) }}"
-                           class="{{ (uri(3) == 'statistics') ? 'font-weight-bold' : '' }} font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-0">
-                            <i class="mr-2 fas fa-angle-right"></i>
-                            Статистика
-                        </a>
-                    </li>
-
+                    
                     @if(user()->type == 'provider')
+                        <li>
+                            <a href="{{ route('statistics', compact('lang')) }}"
+                                class="{{ (uri(3) == 'statistics') ? 'font-weight-bold' : '' }} font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-0">
+                                <i class="mr-2 fas fa-angle-right"></i>
+                                Статистика
+                            </a>
+                        </li>
+                        
                         <li>
                             <a href=""
                                class="dropdown-toggle dropdown-toggle-collapse dropdown-title collapsed font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0"

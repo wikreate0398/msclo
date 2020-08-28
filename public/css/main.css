@@ -9,6 +9,22 @@
     border: 0.5px solid black;
 }
 
+.custom-card{
+    border: 1px solid  black;
+    border-radius: 20px;
+    padding: 20px;
+}
+
+.custom-button{
+    border: 1px solid  gray;
+    border-radius: 20px;
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
 /* a.text-sale:hover, a.text-sale:focus, .text-sale{
     color: #000000 !important;
 } */

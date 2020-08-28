@@ -74,7 +74,7 @@ class ProviderRepository implements ProviderRepositoryInterface
     {
         $lang = $lang ?: lang();
         $chars = ProviderService::orderByPageUp()
-                                ->with(['providerServiceIntersect' => function ($query) use($id) {
+                                ->with(['providerServiceIntersect' => function ($query) use ($id) {
                                     return $query->where('id_provider', $id)
                                                  ->with('optionValue');
                                 }])
@@ -83,10 +83,9 @@ class ProviderRepository implements ProviderRepositoryInterface
 
         $data = collect();
         foreach ($chars as $char) {
-
             if ($char->type == 'input') {
                 $value = @$char->providerServiceIntersect->first()['value'];
-            } else if($char->type == 'self_checkbox') {
+            } elseif ($char->type == 'self_checkbox') {
                 $value = collect();
                 foreach ($char->providerServiceIntersect as $item) {
                     $value->push([
@@ -115,16 +114,16 @@ class ProviderRepository implements ProviderRepositoryInterface
             }
         }
 
-        return $data->filter(function($item) {
+        return $data->filter(function ($item) {
             return ($item['type'] != 'input' && !$item['value']->count()) ? false : true;
         });
     }
 
     public function getProviderOrders($id_provider)
     {
-        return Order::whereHas('products', function($query) use($id_provider) {
+        return Order::whereHas('products', function ($query) use ($id_provider) {
             return $query->where('id_provider', $id_provider);
-        })->with(['products' => function($query) use($id_provider) {
+        })->with(['products' => function ($query) use ($id_provider) {
             return $query->where('id_provider', $id_provider)->with('product');
         }, 'user'])->get();
     }

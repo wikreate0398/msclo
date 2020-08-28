@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductPrice extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $table = 'catalog_prices';
+    protected $table = 'catalog_prices';
 
-	protected $fillable = [
-	    'id_product',
-	    'price',
+    protected $fillable = [
+        'id_product',
+        'price',
         'quantity'
     ];
 
-	protected $casts = [
-	  'quantity' => 'integer'
+    protected $casts = [
+      'quantity' => 'integer'
     ];
 
     public function product()

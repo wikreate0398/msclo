@@ -35,7 +35,7 @@
                 <div class="custom-card">
                     <h6 class="text-center"><strong>Статистика</strong></h6>
                     <section class=readonly-box">
-                        <p class="readonly-field"><strong>Кол-во продаж:</strong><span class="float-right">{{ $numberOfAllSales }}</span></p>
+                        <p class="readonly-field"><strong>Кол-во продаж:</strong><span class="float-right">{{ $quantityOfAllSales }}</span></p>
                     </section>
                     <section class="readonly-box">
                         <p class="readonly-field mb-1"><strong>Сумма продаж:</strong><span class="float-right">{{ $sumOfAllSales }}</span></p>

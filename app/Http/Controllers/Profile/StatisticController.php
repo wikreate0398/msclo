@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
+use App\Models\Catalog\ProductPrice;
 use App\Models\Order\Order;
 use App\Models\Order\OrderProduct;
 use App\Models\User;
@@ -25,20 +26,23 @@ class StatisticController extends Controller
         $id = Auth::user()->id;
         $provider = User::where('type', 'provider')->where('id', $id)->first();
 
-        $sumOfAllSales = $this->getSumOfAllSales($provider->id);
+        $sumOfAllSalesAndQuantity = $this->getSumOfAllSalesAndQuantity($provider->id);
+        $sumOfAllSales = $sumOfAllSalesAndQuantity['total_sum'];
 
         $sumOfAllSalesFromLastMonth = $this->getSumOfAllSalesFromLastMonth($provider->id);
         
-        $numberOfAllSales = $this->providerRepository->getProviderOrders($provider->id)->count();
-    
+        $quantityOfAllSales = $sumOfAllSalesAndQuantity['total_qty'];
+        
         $sumOfProducts = $this->providerRepository->getProviderProducts($provider->id)->count();
         $sumOfCategories = $this->providerRepository->getProviderFilterCats()->count();
+
+        $minProductPrice = $this->getMinProductsPrice($provider->id);
 
         $orders = $this->providerRepository->getProviderOrders($provider->id);
         return view('profile.statistics', compact(
             'id',
             'provider',
-            'numberOfAllSales',
+            'quantityOfAllSales',
             'sumOfProducts',
             'sumOfAllSales',
             'sumOfAllSalesFromLastMonth',
@@ -47,15 +51,19 @@ class StatisticController extends Controller
         ));
     }
 
-    public function getProviderProductCategories($id)
+    public function getMinProductsPrice($id)
     {
+        // $price = ProductPrice::whereHas('product', function ($query) {
+        //     return $query->where('id', 'id_product');
+        // })->where('id_provider', $id)->get()  ;
+        // dd($price);
     }
 
-    public function getSumOfAllSales($id)
+    public function getSumOfAllSalesAndQuantity($id)
     {
-        $orderProduct = OrderProduct::select(DB::raw('sum(qty*price) as total_sum'))->where('id_provider', $id)->get()->toArray();
+        $orderProduct = OrderProduct::select(DB::raw('sum(qty*price) as total_sum, sum(qty) as total_qty'))->where('id_provider', $id)->get()->toArray();
         foreach ($orderProduct as $k => $value) {
-            return $value['total_sum'];
+            return $value;
         }
     }
 

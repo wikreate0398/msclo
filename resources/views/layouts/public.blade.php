@@ -498,6 +498,7 @@
                                                    class="custom-control-input" 
                                                    id="acceptTerms" 
                                                    value="1" 
+                                                   required
                                                    name="accept_terms"
                                             >
                                             <label class="custom-control-label" for="acceptTerms">Я принимаю условия <a href="javascript:void(0) target="_blank"">Пользовательского соглашения</a>

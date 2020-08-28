@@ -74,7 +74,7 @@ class RegisterController extends Controller
                 'confirm_hash'     => $confirm_hash,
                 'password'         => bcrypt($request->password),
                 'lang'             => lang(),
-                'accept_terms'     => $request->accept_terms
+                // 'accept_terms'     => $request->accept_terms
             ]);
 
             $user->notify(new ConfirmRegistration($confirm_hash, lang()));

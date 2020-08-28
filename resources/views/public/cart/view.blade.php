@@ -60,17 +60,24 @@
                             <div class="border rounded-pill py-1 width-122 w-xl-80 px-3 border-color-1">
                                 <div class="js-quantity row align-items-center">
                                     <div class="col">
-                                        <input class="js-result form-control h-auto border-0 rounded p-0 shadow-none"
+                                        <input class="js-result cart-input-{{ $product['id'] }}-{{ $product['cart_id'] }} form-control h-auto border-0 rounded p-0 shadow-none"
                                                type="text"
-                                               readonly
+                                               min="1"
+                                               onkeyup="this.value=this.value.replace(/[^\d]/,'')"
                                                value="{{ $product['qty'] }}"
                                                onchange="changeCartQty(this, {{ $product['id'] }}, {{ $product['cart_id'] }})">
                                     </div>
                                     <div class="col-auto pr-1">
-                                        <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" href="javascript:;">
+                                        <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" 
+                                           href="javascript:;"
+                                           onclick="changeQuantityValueForCart('down',{{ $product['id'] }}, {{ $product['cart_id'] }})"
+                                           >
                                             <small class="fas fa-minus btn-icon__inner"></small>
                                         </a>
-                                        <a class="js-plus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" href="javascript:;">
+                                        <a class="js-plus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" 
+                                           href="javascript:;"
+                                           onclick="changeQuantityValueForCart('up',{{ $product['id'] }}, {{ $product['cart_id'] }})"
+                                           >
                                             <small class="fas fa-plus btn-icon__inner"></small>
                                         </a>
                                     </div>

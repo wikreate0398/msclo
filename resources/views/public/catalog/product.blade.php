@@ -149,6 +149,7 @@
                                         <div class="col">
                                             <input class="js-result bg-white form-control h-auto border-0 rounded p-0 shadow-none"
                                                    type="text"
+                                                   min="1"
                                                    onkeyup="this.value=this.value.replace(/[^\d]/,'')"
                                                    value="1"
                                                    name="qty"
@@ -157,13 +158,13 @@
                                         <div class="col-auto pr-1">
                                             <a class="btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
                                                href="javascript:;"
-                                               id="dec"
+                                               onclick="changeQuantityValue('down')"
                                                >
                                                 <small class="fas fa-minus btn-icon__inner"></small>
                                             </a>
                                             <a class="btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
                                                href="javascript:;"
-                                               id="inc"
+                                               onclick="changeQuantityValue('up')"
                                                >
                                                 <small class="fas fa-plus btn-icon__inner"></small>
                                             </a>

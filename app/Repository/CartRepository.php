@@ -16,7 +16,9 @@ class CartRepository implements CartRepositoryInterface
     public function getTotalQty($qty = 0)
     {
         foreach ($this->cartSess() as $key => $value) {
-            $qty += $value['qty'];
+            if ($value['qty'] > 0) {
+                $qty += $value['qty'];
+            }
         }
         return $qty;
     }
@@ -28,7 +30,8 @@ class CartRepository implements CartRepositoryInterface
 
         foreach ($this->cartSess() as $key => $value) {
             $productPrice = $this->getPriceFromRange(
-                $prices[$value['id']], $value['qty']
+                $prices[$value['id']],
+                $value['qty']
             );
             $price += $productPrice['price'] * $value['qty'];
         }
@@ -80,7 +83,7 @@ class CartRepository implements CartRepositoryInterface
 
     private function ids()
     {
-        return array_map(function($item) {
+        return array_map(function ($item) {
             return $item['id'];
         }, $this->cartSess());
     }
@@ -113,7 +116,6 @@ class CartRepository implements CartRepositoryInterface
         foreach ($dataPrices->groupBy('id_product') as $id_product => $items) {
             $items = $items->sortBy('quantity')->values();
             foreach ($items as $key => $item) {
-
                 $rangePrices->push([
                     'id'    => $id_product,
                     'from'  => $items->has($key-1) ? $item['quantity'] : 0,
@@ -150,7 +152,7 @@ class CartRepository implements CartRepositoryInterface
 
     public function getPriceFromRange($data, $qty)
     {
-        return $data->filter(function($item) use($qty){
+        return $data->filter(function ($item) use ($qty) {
             return ($qty <= $item['to']) ? true : false;
         })->first();
     }

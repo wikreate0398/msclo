@@ -19,7 +19,7 @@
                 <ul class="list-group mb-4 sidebar-navbar account-navbar" id="sidebarNav">
                     <li>
                         <a href="{{ route('account', compact('lang')) }}"
-                           class="{{ (uri(3) == 'account') ? 'font-weight-bold' : '' }} font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-0">
+                           class="{{ (uri(3) == 'account') ? 'font-weight-bold' : '' }} px-3 py-2 list-group-item list-group-item-action border-0">
                             <i class="mr-2 fas fa-angle-right"></i>
                             Личные данные
                         </a>
@@ -28,7 +28,7 @@
                     @if(user()->type == 'provider')
                     <li>
                         <a href="{{ route('statistics', compact('lang')) }}"
-                            class="{{ (uri(3) == 'statistics') ? 'font-weight-bold' : '' }} font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-0">
+                            class="{{ (uri(3) == 'statistics') ? 'font-weight-bold' : '' }} px-3 py-2 list-group-item list-group-item-action border-0">
                             <i class="mr-2 fas fa-angle-right"></i>
                             Статистика
                         </a>
@@ -37,7 +37,7 @@
                     
                     <li>
                         <a href="{{ route('purchases', compact('lang')) }}"
-                           class="{{ (uri(3) == 'purchases') ? 'font-weight-bold' : '' }} font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
+                           class="{{ (uri(3) == 'purchases') ? 'font-weight-bold' : '' }} px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
                             <i class="mr-2 fas fa-angle-right"></i>
                             Покупки
                         </a>
@@ -45,7 +45,7 @@
                     @if(user()->type == 'provider')
                         <li>
                             <a href=""
-                               class="dropdown-toggle dropdown-toggle-collapse dropdown-title collapsed font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0"
+                               class="dropdown-toggle dropdown-toggle-collapse dropdown-title collapsed px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0"
                                data-toggle="collapse"
                                aria-expanded="{{ (uri(3) == 'products') ? 'true' : 'false' }}"
                                aria-controls="prodSidebar"
@@ -66,28 +66,28 @@
                         </li>
 
                         <li>
-                            <a href="{{ route('orders', compact('lang')) }}" class="{{ (uri(3) == 'orders') ? 'font-weight-bold' : '' }} font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
+                            <a href="{{ route('orders', compact('lang')) }}" class="{{ (uri(3) == 'orders') ? 'font-weight-bold' : '' }} px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
                                 <i class="mr-2 fas fa-angle-right"></i>
                                 Заказы
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('services', compact('lang')) }}"
-                               class="{{ (uri(3) == 'services') ? 'font-weight-bold' : '' }} font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
+                               class="{{ (uri(3) == 'services') ? 'font-weight-bold' : '' }} px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
                                 <i class="mr-2 fas fa-angle-right"></i>
                                 Услуги
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('files', compact('lang')) }}"
-                               class="{{ (uri(3) == 'files') ? 'font-weight-bold' : '' }} font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
+                               class="{{ (uri(3) == 'files') ? 'font-weight-bold' : '' }} px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
                                 <i class="mr-2 fas fa-angle-right"></i>
                                 Файлы
                             </a>
                         </li>
                         <li>
                             <a href="{{ route('provider_contacts', compact('lang')) }}"
-                               class="{{ (uri(3) == 'contacts') ? 'font-weight-bold' : '' }} font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
+                               class="{{ (uri(3) == 'contacts') ? 'font-weight-bold' : '' }} px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
                                 <i class="mr-2 fas fa-angle-right"></i>
                                 Контакты
                             </a>
@@ -95,7 +95,7 @@
                     @endif
 
                     <li>
-                        <a href="{{ route('logout', compact('lang')) }}" class="font-bold-on-hover text-danger px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
+                        <a href="{{ route('logout', compact('lang')) }}" class="text-danger px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
                             <i class="mr-2 fas fa-angle-right"></i>
                             Выйти
                         </a>

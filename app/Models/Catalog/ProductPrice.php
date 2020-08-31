@@ -22,6 +22,6 @@ class ProductPrice extends Model
 
     public function product()
     {
-        return $this->hasOne('App\Models\Catalog\Product', 'id', 'id_product');
+        return $this->hasOne(Product::class, 'id', 'id_product');
     }
 }

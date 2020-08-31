@@ -24,7 +24,7 @@
                 <div class="custom-card">
                     <h6 class="text-center"><strong>Продажи за месяц</strong></h6>
                     <section class=readonly-box">
-                        <p class="readonly-field"><strong>Кол-во продаж:</strong><span class="float-right">0</span></p>
+                        <p class="readonly-field"><strong>Кол-во продаж:</strong><span class="float-right">{{ $quantityOfAllSalesFromLastMonth ?? '0' }}</span></p>
                     </section>
                     <section class="readonly-box">
                         <p class="readonly-field mb-1"><strong>Сумма продаж:</strong><span class="float-right">{{ $sumOfAllSalesFromLastMonth  ?? '0' }}</span></p>
@@ -53,7 +53,7 @@
                     <p class="readonly-field"><strong>Товаров:</strong><span class="float-right">{{ $sumOfProducts }}</span></p>
                 </section>
                 <section class="readonly-box">
-                    <p class="readonly-field"><strong>Цены:</strong><span class="float-right">217 - 63 548</span></p>
+                    <p class="readonly-field"><strong>Цены:</strong><span class="float-right">{{ $minProductPrice }} - {{ $maxProductPrice }}</span></p>
                 </section>
                 <a class="custom-button" href="{{ route('view_provider', ['lang' => $lang, 'id' => $id]) }}">В КАТАЛОГ</a>
             </div>

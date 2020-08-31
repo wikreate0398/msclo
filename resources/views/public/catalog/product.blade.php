@@ -37,9 +37,6 @@
             <div class="col-md-7 mb-md-6 mb-lg-0">
                 <div class="mb-2">
                     <div class="border-bottom mb-3 pb-md-1 pb-3">
-                        @if(isset($product->provider))
-                            <p class="mb-0"><strong>Поставшщик</strong>: <a href="{{ route('view_provider', ['lang' => $lang, 'id' => $product->id_provider]) }}">{{ $product->provider->name }}</a></p>
-                        @endif
                         <a href="{{ setUri("catalog/{$product->category->url}") }}" class="font-size-12 text-gray-5 mb-2 d-inline-block">
                             {{ $product->category["name_$lang"] }}
                         </a>
@@ -88,9 +85,11 @@
 {{--                    </div>--}}
                     <p>{{ $product["description_$lang"] }}</p>
                     @if($product["code"])
-                        <p><strong>Код</strong>: {{ $product["code"] }}</p>
+                        <p class="mb-2"><strong>Код</strong>: {{ $product["code"] }}</p>
                     @endif
-
+                    @if(isset($product->provider))
+                        <p class="mb-2"><strong>Поставщик</strong>: <a href="{{ route('view_provider', ['lang' => $lang, 'id' => $product->id_provider]) }}">{{ $product->provider->name }}</a></p>
+                    @endif
                     <form action="{{ route('add_to_cart', ['lang' => $lang]) }}"
                           onsubmit="addToCart(this); return false;"
                           class="add-cart-form">
@@ -150,6 +149,7 @@
                                         <div class="col">
                                             <input class="js-result bg-white form-control h-auto border-0 rounded p-0 shadow-none"
                                                    type="text"
+                                                   min="1"
                                                    onkeyup="this.value=this.value.replace(/[^\d]/,'')"
                                                    value="1"
                                                    name="qty"
@@ -158,13 +158,13 @@
                                         <div class="col-auto pr-1">
                                             <a class="btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
                                                href="javascript:;"
-                                               id="dec"
+                                               onclick="changeQuantityValue('down')"
                                                >
                                                 <small class="fas fa-minus btn-icon__inner"></small>
                                             </a>
                                             <a class="btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
                                                href="javascript:;"
-                                               id="inc"
+                                               onclick="changeQuantityValue('up')"
                                                >
                                                 <small class="fas fa-plus btn-icon__inner"></small>
                                             </a>

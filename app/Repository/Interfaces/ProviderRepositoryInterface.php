@@ -19,4 +19,12 @@ interface ProviderRepositoryInterface
     public function getProviderServices($id);
 
     public function getProviderOrders($id_provider);
+
+    public function getMinMaxProductsPrice($id_provider);
+    
+    public function getSumOfAllSalesAndQuantity($id_provider);
+
+    public function getSumOfAllSalesFromLastMonth($id_provider);
+    
+    public function getQuantityOfAllSalesFromLastMonth($id_provider);
 }

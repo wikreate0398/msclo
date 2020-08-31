@@ -52,7 +52,7 @@ class Product extends Model
 
     public function prices()
     {
-        return $this->hasMany('App\Models\Catalog\ProductPrice', 'id_product', 'id')->orderBy('price', 'asc');
+        return $this->hasMany(ProductPrice::class, 'id_product', 'id')->orderBy('price', 'asc');
     }
 
     public function tags()

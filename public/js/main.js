@@ -12,18 +12,6 @@ $(document).ready(function(){
         } 
     });
 
-    // increment and decrement buttons
-    let qty = $("[name='qty']");
-    $("#inc").click(function(){
-        qty.val( Number(qty.val()) + 1 );
-    });
-    $("#dec").click(function(){
-        if(qty.val() >1){
-            qty.val( Number(qty.val()) - 1 );
-        }
-    });
-    // End increment and decrement buttons
-
     $('[data-fancybox]').fancybox({
         buttons: ['close'],
     });
@@ -498,6 +486,30 @@ function showPurchaseProducts(item) {
         $(item).find('i').removeClass('fa-angle-right').addClass('fa-angle-down');
     }
 }
+
+// increment and decrement buttons
+function changeQuantityValue(button) {
+    let qty = $('.js-result');
+    if(button == 'up'){
+        qty.val( Number(qty.val()) + 1 );
+    } else {
+        if(qty.val() > 1){
+            qty.val( Number(qty.val()) - 1 );
+        }
+    }
+}
+
+function changeQuantityValueForCart(button, id, cart_id) {
+    let qty = $('.cart-input-' + id + '-' + cart_id );
+    if(button == 'up'){
+        qty.val( Number(qty.val()) + 1 );
+    } else {
+        if(qty.val() > 1){
+            qty.val( Number(qty.val()) - 1 );
+        }
+    }
+}
+// End increment and decrement buttons
 
 function fileUploader(){
     if($('input.file_uploader_input').length){

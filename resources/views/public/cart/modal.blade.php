@@ -66,7 +66,8 @@
                         <div class="js-quantity row align-items-center">
                             <div class="col">
                                 <input class="js-result bg-white form-control h-auto border-0 rounded p-0 shadow-none"
-                                       type="number"
+                                       type="text"
+                                       onkeyup="this.value=this.value.replace(/[^\d]/,'')"
                                        min="1"
                                        value="1"
                                        name="qty"
@@ -75,11 +76,15 @@
                             </div>
                             <div class="col-auto pr-1">
                                 <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
-                                   href="javascript:;">
+                                   href="javascript:;"
+                                   onclick="changeQuantityValue('down')"
+                                   >
                                     <small class="fas fa-minus btn-icon__inner"></small>
                                 </a>
                                 <a class="js-plus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
-                                   href="javascript:;">
+                                   href="javascript:;"
+                                   onclick="changeQuantityValue('up')"
+                                   >
                                     <small class="fas fa-plus btn-icon__inner"></small>
                                 </a>
                             </div>

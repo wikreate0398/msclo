@@ -44,25 +44,10 @@
                     </li>
                     @if(user()->type == 'provider')
                         <li>
-                            <a href=""
-                               class="dropdown-toggle dropdown-toggle-collapse dropdown-title collapsed px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0"
-                               data-toggle="collapse"
-                               aria-expanded="{{ (uri(3) == 'products') ? 'true' : 'false' }}"
-                               aria-controls="prodSidebar"
-                               data-target="#prodSidebar">
+                            <a href="{{ route('view_profile_product', compact('lang')) }}" class="{{ (uri(3) == 'products') ? 'font-weight-bold' : '' }} px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
                                 <i class="mr-2 fas fa-angle-right"></i>
                                 Товары
                             </a>
-                            <ul id="prodSidebar"
-                                class="list-unstyled dropdown-list {{ (uri(3) == 'products') ? 'show' : '' }} collapse"
-                                data-parent="#sidebarNav">
-                                <li>
-                                    <a href="{{ route('view_profile_product', compact('lang')) }}"
-                                       class="{{ (uri(3) == 'products') ? 'font-weight-bold' : '' }} dropdown-item">
-                                        Каталог
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
 
                         <li>

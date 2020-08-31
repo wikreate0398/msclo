@@ -25,6 +25,16 @@
                         </a>
                     </li>
 
+                    @if(user()->type == 'provider')
+                    <li>
+                        <a href="{{ route('statistics', compact('lang')) }}"
+                            class="{{ (uri(3) == 'statistics') ? 'font-weight-bold' : '' }} font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-0">
+                            <i class="mr-2 fas fa-angle-right"></i>
+                            Статистика
+                        </a>
+                    </li>
+                    @endif
+                    
                     <li>
                         <a href="{{ route('purchases', compact('lang')) }}"
                            class="{{ (uri(3) == 'purchases') ? 'font-weight-bold' : '' }} font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
@@ -32,16 +42,7 @@
                             Покупки
                         </a>
                     </li>
-                    
                     @if(user()->type == 'provider')
-                        <li>
-                            <a href="{{ route('statistics', compact('lang')) }}"
-                                class="{{ (uri(3) == 'statistics') ? 'font-weight-bold' : '' }} font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-0">
-                                <i class="mr-2 fas fa-angle-right"></i>
-                                Статистика
-                            </a>
-                        </li>
-                        
                         <li>
                             <a href=""
                                class="dropdown-toggle dropdown-toggle-collapse dropdown-title collapsed font-bold-on-hover px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0"

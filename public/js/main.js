@@ -488,17 +488,6 @@ function showPurchaseProducts(item) {
 }
 
 // increment and decrement buttons
-function changeQuantityValue(button) {
-    let qty = $('.js-result');
-    if(button == 'up'){
-        qty.val( Number(qty.val()) + 1 );
-    } else {
-        if(qty.val() > 1){
-            qty.val( Number(qty.val()) - 1 );
-        }
-    }
-}
-
 function changeQuantityValueForCart(button, id, cart_id) {
     let qty = $('.cart-input-' + id + '-' + cart_id );
     if(button == 'up'){

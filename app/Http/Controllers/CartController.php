@@ -24,6 +24,7 @@ class CartController extends Controller
 
     public function view()
     {
+        // request()->session()->forget('cart');
         $crumb   = BreadFactory::init();
         $crumb->add(Crumb::name('Корзина'));
         $breads  = $crumb->toHtml();

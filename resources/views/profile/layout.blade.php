@@ -10,11 +10,11 @@
 
         <div class="row vertical-navBar">
             <div class="col-lg-12">
-                <div class="border-bottom border-color-1 mb-5">
+                {{-- <div class="border-bottom border-color-1 mb-5">
                     <h3 class="section-title section-title__sm mb-0 pb-2 font-size-18">
                         Мой профиль
                     </h3>
-                </div>
+                </div> --}}
 
                 <ul class="list-group mb-4 sidebar-navbar account-navbar" id="sidebarNav">
                     <li>

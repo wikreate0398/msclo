@@ -6,13 +6,6 @@
 
 		<div class="row align-items-center">
 			<div class="col-md-12">
-
-				<!-- Title -->
-				<div class="border-bottom border-color-1 mb-5">
-					<h3 class="section-title mb-0 pb-2 font-size-25">Личные данные</h3>
-				</div>
-				<!-- End Title -->
-
 				<!-- Billing Form -->
 				<form action="{{ route('edit_userdata', ['lang' => $lang]) }}"
 					  class="ajax__submit profile__image_form" onsubmit="return false">

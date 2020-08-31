@@ -488,7 +488,7 @@ function showPurchaseProducts(item) {
 }
 
 // increment and decrement buttons
-function changeQuantityValueForCart(button, id, cart_id) {
+function changeQuantityValue(button, id, cart_id) {
     let qty = $('.cart-input-' + id + '-' + cart_id );
     if(button == 'up'){
         qty.val( Number(qty.val()) + 1 );

@@ -83,7 +83,9 @@
         </div>
     </div>
 
-    <h2 class="mt-3">Последние заказы</h2>
+    <div class="border-bottom border-color-1 mt-7 mb-2">
+        <h3 class="section-title mb-0 pb-2 font-size-25">Последние заказы</h3>
+    </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="mt-5 mb-10 cart-table">

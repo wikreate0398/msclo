@@ -10,7 +10,26 @@
     <div class="row">
         <div class="col-md-3">
             <div class="custom-card">
-                <img src="{{ $provider->image }}"  style="max-width: 250px;">
+                <div class="col-md-12">
+                    <div class="profile-photo">
+                        <div class="profile__img" style="background-image: url('{{ user()->image ? '/uploads/users/' . user()->image : '/uploads/no-avatar.png' }}');">
+                            <div class="actions__upload_photo" >
+                                <span class="btn-file">
+                                    <i class="fa fa-image" aria-hidden="true"></i>
+                                </span>
+                                <input type="file" class="avatar__fileimage" name="image" onchange="profilePhoto(this)">
+                                <input type="hidden" name="avatar" id="avatar">
+                            </div>
+                            <div class="preloader__image_content" style="display: none;">
+                                <div class="loader-inner ball-pulse">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <h4>{{ $provider->full_name }}</h4>
                 <p class="mb-0"><i class="fas fa-phone mr-1"></i>{{ $provider->phone }}7</p>
                 <p class="mb-0"><i class="fas fa-envelope mr-1"> </i>{{ $provider->email }}</p>

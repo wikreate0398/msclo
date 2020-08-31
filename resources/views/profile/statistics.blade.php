@@ -1,16 +1,30 @@
 @extends('profile.layout')
 
 @section('profile')
-<div class="col-lg-12">
-    <!-- Title -->
-    <div class="border-bottom border-color-1 mb-5">
-        <h3 class="section-title mb-0 pb-2 font-size-25">Статистика</h3>
-    </div>
-    <!-- End Title -->
+<div class="col-lg-12 statistic-page">
     <div class="row">
         <div class="col-md-3">
             <div class="custom-card">
-                <img src="{{ $provider->image }}"  style="max-width: 250px;">
+                <div class="col-md-12">
+                    <div class="profile-photo">
+                        <div class="profile__img" style="background-image: url('{{ user()->image ? '/uploads/users/' . user()->image : '/uploads/no-avatar.png' }}');">
+                            <div class="actions__upload_photo" >
+                                <span class="btn-file">
+                                    <i class="fa fa-image" aria-hidden="true"></i>
+                                </span>
+                                <input type="file" class="avatar__fileimage" name="image" onchange="profilePhoto(this)">
+                                <input type="hidden" name="avatar" id="avatar">
+                            </div>
+                            <div class="preloader__image_content" style="display: none;">
+                                <div class="loader-inner ball-pulse">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <h4>{{ $provider->full_name }}</h4>
                 <p class="mb-0"><i class="fas fa-phone mr-1"></i>{{ $provider->phone }}7</p>
                 <p class="mb-0"><i class="fas fa-envelope mr-1"> </i>{{ $provider->email }}</p>
@@ -45,15 +59,15 @@
         </div>
         <div class="col-md-3">
             <div class="custom-card">
-                <h6 class="text-center"><strong>Товары</strong></h6>
+                <h6 class="text-center mb-4"><strong>Товары</strong></h6>
                 <section class=readonly-box">
-                    <p class="readonly-field"><strong>Категорий:</strong><span class="float-right">{{ $sumOfCategories }}</span></p>
+                    <p class="readonly-field mb-3"><strong>Категорий:</strong><span class="float-right">{{ $sumOfCategories }}</span></p>
                 </section>
                 <section class="readonly-box">
-                    <p class="readonly-field"><strong>Товаров:</strong><span class="float-right">{{ $sumOfProducts }}</span></p>
+                    <p class="readonly-field mb-3"><strong>Товаров:</strong><span class="float-right">{{ $sumOfProducts }}</span></p>
                 </section>
                 <section class="readonly-box">
-                    <p class="readonly-field"><strong>Цены:</strong><span class="float-right">{{ $minProductPrice }} - {{ $maxProductPrice }}</span></p>
+                    <p class="readonly-field mb-3"><strong>Цены:</strong><span class="float-right">{{ $minProductPrice }} - {{ $maxProductPrice }}</span></p>
                 </section>
                 <a class="custom-button" href="{{ route('view_provider', ['lang' => $lang, 'id' => $id]) }}">В КАТАЛОГ</a>
             </div>
@@ -69,7 +83,9 @@
         </div>
     </div>
 
-    <h2 class="mt-3">Последние заказы</h2>
+    <div class="border-bottom border-color-1 mt-7 mb-2">
+        <h3 class="section-title mb-0 pb-2 font-size-25">Последние заказы</h3>
+    </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="mt-5 mb-10 cart-table">

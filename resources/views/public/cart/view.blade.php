@@ -68,13 +68,13 @@
                                                onchange="changeCartQty(this, {{ $product['id'] }}, {{ $product['cart_id'] }})">
                                     </div>
                                     <div class="col-auto pr-1">
-                                        <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" 
+                                        <a class="btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" 
                                            href="javascript:;"
                                            onclick="changeQuantityValueForCart('down',{{ $product['id'] }}, {{ $product['cart_id'] }})"
                                            >
                                             <small class="fas fa-minus btn-icon__inner"></small>
                                         </a>
-                                        <a class="js-plus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" 
+                                        <a class="btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0" 
                                            href="javascript:;"
                                            onclick="changeQuantityValueForCart('up',{{ $product['id'] }}, {{ $product['cart_id'] }})"
                                            >

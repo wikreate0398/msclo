@@ -106,7 +106,7 @@ class CatalogService
             foreach ($images as $key => $image) {
                 ProductImage::create([
                     'id_product' => $id,
-                    'image'      => @$image['name'] ?: $image,
+                    'image'      => $image,
                     'page_up'    => @$image['page_up'] ?: 1
                 ]);
             }

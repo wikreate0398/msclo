@@ -1,15 +1,8 @@
 @extends('profile.layout')
 
 @section('profile')
-<div class="col-lg-9 order-lg-1">
+<div class="col-lg-12 order-lg-1">
 	<div class="pb-7 mb-7">
-
-		<!-- Title -->
-		<div class="border-bottom border-color-1 mb-5">
-			<h3 class="section-title mb-0 pb-2 font-size-25">Заказы</h3>
-		</div
-		<!-- End Title -->
-
 		@if($orders->count())
 		<div class="mb-10 cart-table">
 			<table class="table table-bordered" cellspacing="0">

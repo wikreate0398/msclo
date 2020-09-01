@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ChatCallback;
 use App\Models\User;
 use App\Repository\Interfaces\ProviderRepositoryInterface;
+use App\Utils\Constants;
+use App\Utils\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class StatisticController extends Controller
 {
@@ -55,5 +60,18 @@ class StatisticController extends Controller
             'maxProductPrice',
             'orders'
         ));
+    }
+
+    public function callback($lang, Request $request)
+    {
+        if (!$request->text) {
+            return JsonResponse::error(['messages' => 'Введите текст']);
+        }
+
+        Mail::to(Constants::get('EMAIL'))->send(new ChatCallback($request->text));
+
+        return JsonResponse::success([
+            'messages' => 'Ваш тестовый текст отправлен'
+        ]);
     }
 }

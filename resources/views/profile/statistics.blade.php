@@ -69,7 +69,8 @@
                     <p class="readonly-field"><span> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore alias a incidunt. Ea, provident et dolor deserunt quibusdam quae. Tenetur commodi cum modi amet voluptatum praesentium quam magni fuga deserunt!</span></p>
                 </section>
                 <div class="text-center">
-                    <a href="javascript:;" class="btn btn-sm px-5 btn-primary-dark transition-3d-hover">В ЧАТ</a>
+                    <a href="#chatModal" data-toggle="modal" class="btn btn-sm px-5 btn-primary-dark transition-3d-hover">В ЧАТ</a>
+                    @include('profile.chat-modal')
                 </div>
             </div>
         </div>

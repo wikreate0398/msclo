@@ -6,19 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Constants extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $table = 'constants';
+    protected $table = 'constants';
 
-	protected $fillable = [
+    protected $fillable = [
         'name',
         'id_category',
         'description',
         'editor'
     ];
 
-	protected $casts = [
-	    'editor' => 'boolean'
+    protected $casts = [
+        'editor' => 'boolean'
     ];
 
     public function category()
@@ -34,7 +34,7 @@ class Constants extends Model
     public function scopeFilter($query)
     {
         $searchQuery = request()->q;
-        return $query->whereHas('constants_value', function($query) use($searchQuery){
+        return $query->whereHas('constants_value', function ($query) use ($searchQuery) {
             return $query->where('value', 'like', '%'.$searchQuery.'%');
         });
     }

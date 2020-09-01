@@ -23,8 +23,6 @@ interface ProviderRepositoryInterface
     public function getMinMaxProductsPrice($id_provider);
     
     public function getSumOfAllSalesAndQuantity($id_provider);
-
-    public function getSumOfAllSalesFromLastMonth($id_provider);
     
-    public function getQuantityOfAllSalesFromLastMonth($id_provider);
+    public function getSalesFromLastMonth($id_provider);
 }

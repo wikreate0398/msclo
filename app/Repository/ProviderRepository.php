@@ -11,6 +11,7 @@ use App\Models\Catalog\ProductPrice;
 use App\Models\Order\OrderProduct;
 use App\Repository\Interfaces\ProviderRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ProviderRepository implements ProviderRepositoryInterface
 {
@@ -146,13 +147,11 @@ class ProviderRepository implements ProviderRepositoryInterface
         ]);
     }
 
-    public function getQuantityOfAllSalesFromLastMonth($id)
+    public function getSalesFromLastMonth($id)
     {
-        $orderProduct = OrderProduct::whereHas('orders', function ($query) {
-            return $query->where('created_at', '>=', Carbon::now()->subMonth());
-        })->selectRaw('sum(qty) as total_qty')->where('id_provider', $id)->get()->toArray();
+        $orderProduct = OrderProduct::rightJoin('orders', 'orders_products.id_order', '=', 'orders.id')->select(DB::raw('sum(qty*price) as total_sum, sum(qty) as total_qty'))->where('created_at', '>=', Carbon::now()->subDays(30)->toDateTimeString())->where('id_provider', $id)->get()->toArray();
         foreach ($orderProduct as $k => $value) {
-            return $value['total_qty'];
+            return $value;
         }
     }
 
@@ -161,16 +160,6 @@ class ProviderRepository implements ProviderRepositoryInterface
         $orderProduct = OrderProduct::selectRaw('sum(qty*price) as total_sum, sum(qty) as total_qty')->where('id_provider', $id)->get()->toArray();
         foreach ($orderProduct as $k => $value) {
             return $value;
-        }
-    }
-
-    public function getSumOfAllSalesFromLastMonth($id)
-    {
-        $orderProduct = OrderProduct::whereHas('orders', function ($query) {
-            return $query->where('created_at', '>=', Carbon::now()->subMonth());
-        })->selectRaw('sum(qty*price) as total_sum')->where('id_provider', $id)->get()->toArray();
-        foreach ($orderProduct as $k => $value) {
-            return $value['total_sum'];
         }
     }
 }

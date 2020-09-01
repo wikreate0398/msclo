@@ -489,12 +489,14 @@ function showPurchaseProducts(item) {
 
 // increment and decrement buttons
 function changeQuantityValue(button, id, cart_id) {
-    let qty = $('.cart-input-' + id + '-' + cart_id );
+    let input = $('.cart-input-' + id + '-' + cart_id );
     if(button == 'up'){
-        qty.val( Number(qty.val()) + 1 );
+        input.val( Number(input.val()) + 1 );
+        input.change();
     } else {
-        if(qty.val() > 1){
-            qty.val( Number(qty.val()) - 1 );
+        if(input.val() > 1){
+            input.val( Number(input.val()) - 1 );
+            input.change();
         }
     }
 }

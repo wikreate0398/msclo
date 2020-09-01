@@ -200,12 +200,12 @@
                     <div class="col-md-auto align-self-center">
                         <div class="d-flex">
                             <ul class="d-flex list-unstyled mb-0">
-                                <li class="col">
-                                    <a href="{{ route('compare_list', ['lang' => $lang]) }}" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Сравнить">
-                                        <i class="font-size-22 ec ec-compare"></i>
-                                        <span style="left: 30px" class="{{ !sessArray('compare')->count() ? 'd-none' : '' }} qty_compare width-22 height-22 bg-dark position-absolute flex-content-center text-white rounded-circle left-12 top-8 font-weight-bold font-size-12">{{  sessArray('compare')->count() }}</span>
-                                    </a>
-                                </li>
+{{--                                <li class="col">--}}
+{{--                                    <a href="{{ route('compare_list', ['lang' => $lang]) }}" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Сравнить">--}}
+{{--                                        <i class="font-size-22 ec ec-compare"></i>--}}
+{{--                                        <span style="left: 30px" class="{{ !sessArray('compare')->count() ? 'd-none' : '' }} qty_compare width-22 height-22 bg-dark position-absolute flex-content-center text-white rounded-circle left-12 top-8 font-weight-bold font-size-12">{{  sessArray('compare')->count() }}</span>--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
                                 <li class="col">
                                     <a href="{{ route('fav_list', ['lang' => $lang]) }}" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Избранное">
                                         <i class="font-size-22 ec ec-favorites"></i>
@@ -281,13 +281,13 @@
                                     <!-- End Input -->
                                 </li>
                                 <!-- End Search -->
-                                <li class="col d-none d-xl-block">
-                                    <a href="{{ route('compare_list', ['lang' => $lang]) }}" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Сравнить">
-                                        <i class="font-size-22 ec ec-compare"></i>
-                                        <span class="qty_compare width-22 height-22 bg-dark position-absolute align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12 text-white {{ !sessArray('compare')->count() ? 'd-none' : 'd-flex' }}"
-                                              style="left: 30px">{{ sessArray('compare')->count() }}</span>
-                                    </a>
-                                </li>
+{{--                                <li class="col d-none d-xl-block">--}}
+{{--                                    <a href="{{ route('compare_list', ['lang' => $lang]) }}" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Сравнить">--}}
+{{--                                        <i class="font-size-22 ec ec-compare"></i>--}}
+{{--                                        <span class="qty_compare width-22 height-22 bg-dark position-absolute align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12 text-white {{ !sessArray('compare')->count() ? 'd-none' : 'd-flex' }}"--}}
+{{--                                              style="left: 30px">{{ sessArray('compare')->count() }}</span>--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
                                 <li class="col d-none d-xl-block">
                                     <a href="{{ route('fav_list', ['lang' => $lang]) }}" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Избранное">
                                         <i class="font-size-22 ec ec-favorites"></i>

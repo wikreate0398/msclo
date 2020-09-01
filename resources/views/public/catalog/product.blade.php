@@ -64,11 +64,11 @@
                         </div>
                     </div>
                     <div class="flex-horizontal-center flex-wrap mb-4">
-                        <a href="javascript:;"
-                           class="text-gray-6 compare-icon compare-icon-{{ $product->id }} font-size-13 mr-2 {{ sessArray('compare')->exist($product->id) ? 'active' : '' }}"
-                           onclick="addToCompare(this, {{ $product->id }}); return false;">
-                            <i class="ec ec-compare font-size-15"></i> Сравнить
-                        </a>
+{{--                        <a href="javascript:;"--}}
+{{--                           class="text-gray-6 compare-icon compare-icon-{{ $product->id }} font-size-13 mr-2 {{ sessArray('compare')->exist($product->id) ? 'active' : '' }}"--}}
+{{--                           onclick="addToCompare(this, {{ $product->id }}); return false;">--}}
+{{--                            <i class="ec ec-compare font-size-15"></i> Сравнить--}}
+{{--                        </a>--}}
                         <a href="javascript:;"
                            class="text-gray-6 fav-icon fav-icon-{{ $product->id }} font-size-13 mr-2 {{ sessArray('favorites')->exist($product->id) ? 'active' : '' }}"
                            onclick="addToFav(this, {{ $product->id }}); return false;">

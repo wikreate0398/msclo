@@ -36,23 +36,23 @@
         <div class="col-md-3">
             <div class="col-12 mb-5">
                 <div class="custom-card">
-                    <h6 class="text-center"><strong>Продажи за месяц</strong></h6>
+                    <h6 class="text-center mb-4"><strong>Продажи за месяц</strong></h6>
                     <section class=readonly-box">
-                        <p class="readonly-field"><strong>Кол-во продаж:</strong><span class="float-right">{{ $quantityOfAllSalesFromLastMonth ?? '0' }}</span></p>
+                        <p class="readonly-field mb-3"><strong>Кол-во продаж:</strong><span class="float-right">{{ $quantityOfAllSalesFromLastMonth ?? '0' }}</span></p>
                     </section>
                     <section class="readonly-box">
-                        <p class="readonly-field mb-1"><strong>Сумма продаж:</strong><span class="float-right">{{ $sumOfAllSalesFromLastMonth  ?? '0' }}</span></p>
+                        <p class="readonly-field mb-2"><strong>Сумма продаж:</strong><span class="float-right">{{ $sumOfAllSalesFromLastMonth  ?? '0' }}</span></p>
                     </section>
                 </div>
             </div>
             <div class="col-12 mb-3">
                 <div class="custom-card">
-                    <h6 class="text-center"><strong>Статистика</strong></h6>
+                    <h6 class="text-center mb-4"><strong>Статистика</strong></h6>
                     <section class=readonly-box">
-                        <p class="readonly-field"><strong>Кол-во продаж:</strong><span class="float-right">{{ $quantityOfAllSales }}</span></p>
+                        <p class="readonly-field mb-3"><strong>Кол-во продаж:</strong><span class="float-right">{{ $quantityOfAllSales }}</span></p>
                     </section>
                     <section class="readonly-box">
-                        <p class="readonly-field mb-1"><strong>Сумма продаж:</strong><span class="float-right">{{ $sumOfAllSales }}</span></p>
+                        <p class="readonly-field mb-2"><strong>Сумма продаж:</strong><span class="float-right">{{ $sumOfAllSales }}</span></p>
                     </section>
                 </div>
             </div>

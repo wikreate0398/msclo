@@ -65,25 +65,24 @@
                     <div class="border rounded-pill py-2 px-3 border-color-1">
                         <div class="js-quantity row align-items-center">
                             <div class="col">
-                                <input class="js-result cart-input-{{ $product->id }} bg-white form-control h-auto border-0 rounded p-0 shadow-none"
+                                <input class="js-result cart-input-{{ $product->id }}-1 bg-white form-control h-auto border-0 rounded p-0 shadow-none"
                                        type="text"
                                        onkeyup="this.value=this.value.replace(/[^\d]/,'')"
                                        min="1"
                                        value="1"
                                        name="qty"
-                                       readonly
                                        onchange="changePriceByQty(this, {{ $product->id }})">
                             </div>
                             <div class="col-auto pr-1">
-                                <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
+                                <a class="btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
                                    href="javascript:;"
-                                   onclick="changeQuantityValueForCart('down', {{ $product->id }})"
+                                   onclick="changeQuantityValue('down', {{ $product->id }},'1')"
                                    >
                                     <small class="fas fa-minus btn-icon__inner"></small>
                                 </a>
-                                <a class="js-plus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
+                                <a class="btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
                                    href="javascript:;"
-                                   onclick="changeQuantityValueForCart('up', {{ $product->id }})"
+                                   onclick="changeQuantityValue('up', {{ $product->id }},'1')"
                                    >
                                     <small class="fas fa-plus btn-icon__inner"></small>
                                 </a>

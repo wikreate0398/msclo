@@ -10,10 +10,21 @@
              </button>
           </div>
           <div class="modal-body">
-             <p class="modal-text"> Тестовое модальное окно. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum numquam quidem accusamus voluptatibus reiciendis corporis molestias ex sunt voluptate. Molestias modi necessitatibus voluptatem molestiae totam facere earum reprehenderit quibusdam cumque? </p>
+            <!-- Subscribe Form -->
+            <form class="js-form-message ajax__submit" action="{{ route('statistics.callback', compact('lang')) }}">
+               {{ csrf_field() }}
+               <label class="sr-only" for="subscribeSrEmail">Текст</label>
+               <div class="input-group input-group-pill">
+                     <input type="text" class="form-control border-0 height-40" name="text" id="subscribeSrEmail" placeholder="Текст" required>
+                     <div class="input-group-append">
+                        <button type="submit" class="btn btn-dark btn-sm-wide height-40 py-2 submit-btn" id="subscribeButton">Отправить</button>
+                     </div>
+               </div>
+            </form>
+            <!-- End Subscribe Form -->
+             <p class="modal-text mt-5"> Тестовое модальное окно. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum numquam quidem accusamus voluptatibus reiciendis corporis molestias ex sunt voluptate. Molestias modi necessitatibus voluptatem molestiae totam facere earum reprehenderit quibusdam cumque? </p>
           </div>
           <div class="modal-footer">
-            <button id="btn-add" class="btn">Добавить</button>
              <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Отмена</button>
           </div>
        </div>

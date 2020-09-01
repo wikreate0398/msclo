@@ -15,13 +15,13 @@
                     if($files->count()){
                       foreach($files as $image){
                         $realPath = public_path('uploads/provider_files') . '/' . $image->file;
-
+						$fag = file_exists($realPath);
                         $imgData[] = [
                           'name'  => $image->file,
 
-                          'size'  => filesize($realPath),
+                          'size'  => $fab ? filesize($realPath) : '',
                           'file'  => '/uploads/provider_files/' . $image->file,
-                          'type'  => mime_content_type($realPath),
+                          'type'  => $fab ? mime_content_type($realPath) : '',
                         ];
 
                         $imgInfo[] = [

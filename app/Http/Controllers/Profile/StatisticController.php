@@ -24,8 +24,9 @@ class StatisticController extends Controller
         $sumOfAllSalesAndQuantity = $this->providerRepository->getSumOfAllSalesAndQuantity($provider->id);
         $sumOfAllSales = $sumOfAllSalesAndQuantity['total_sum'];
 
-        $sumOfAllSalesFromLastMonth = $this->providerRepository->getSumOfAllSalesFromLastMonth($provider->id);
-        $quantityOfAllSalesFromLastMonth = $this->providerRepository->getQuantityOfAllSalesFromLastMonth($provider->id);
+        $salesFromLastMonth = $this->providerRepository->getSalesFromLastMonth($provider->id);
+        $sumOfAllSalesFromLastMonth = $salesFromLastMonth['total_sum'];
+        $quantityOfAllSalesFromLastMonth = $salesFromLastMonth['total_qty'];
         
         $quantityOfAllSales = $sumOfAllSalesAndQuantity['total_qty'];
         

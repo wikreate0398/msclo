@@ -10,13 +10,13 @@
 }
 
 .custom-card{
-    border: 1px solid  black;
+    border: 1px solid #eaeaea;
     border-radius: 20px;
     padding: 20px;
 }
 
 .statistic-page table, .statistic-page tr th{
-    border: 1px solid  black;
+    border: 1px solid #eaeaea;
 }
 
 .vertical-navBar .list-group{
@@ -38,6 +38,3 @@
     display: block;
     margin: 0 auto;
 }
-/* a.text-sale:hover, a.text-sale:focus, .text-sale{
-    color: #000000 !important;
-} */

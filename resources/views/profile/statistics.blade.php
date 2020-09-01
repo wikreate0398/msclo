@@ -8,20 +8,6 @@
                 <div class="col-md-12">
                     <div class="profile-photo">
                         <div class="profile__img" style="background-image: url('{{ user()->image ? '/uploads/users/' . user()->image : '/uploads/no-avatar.png' }}');">
-                            <div class="actions__upload_photo" >
-                                <span class="btn-file">
-                                    <i class="fa fa-image" aria-hidden="true"></i>
-                                </span>
-                                <input type="file" class="avatar__fileimage" name="image" onchange="profilePhoto(this)">
-                                <input type="hidden" name="avatar" id="avatar">
-                            </div>
-                            <div class="preloader__image_content" style="display: none;">
-                                <div class="loader-inner ball-pulse">
-                                    <div></div>
-                                    <div></div>
-                                    <div></div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -30,7 +16,9 @@
                 <p class="mb-0"><i class="fas fa-envelope mr-1"> </i>{{ $provider->email }}</p>
                 <p class="mb-0"><i class="fab fa-internet-explorer mr-1"> </i>{{ $provider->site }}</p>
                 <p class="mb-3"><i class="fab fa-skype mr-1"> </i>{{ $provider->skype }}</p>
-                <a class="custom-button" href="{{ route('account', ['lang' => $lang]) }}">РЕДАКТИРОВАТЬ</a>
+                <div class="text-center">
+                    <a href="{{ route('account', ['lang' => $lang]) }}" class="btn btn-sm px-5 btn-primary-dark transition-3d-hover">РЕДАКТИРОВАТЬ</a>
+                </div>
             </div>
         </div>
         <div class="col-md-3">
@@ -69,7 +57,9 @@
                 <section class="readonly-box">
                     <p class="readonly-field mb-3"><strong>Цены:</strong><span class="float-right">{{ $minProductPrice }} - {{ $maxProductPrice }}</span></p>
                 </section>
-                <a class="custom-button" href="{{ route('view_provider', ['lang' => $lang, 'id' => $id]) }}">В КАТАЛОГ</a>
+                <div class="text-center">
+                    <a href="{{ route('view_provider', ['lang' => $lang, 'id' => $id]) }}" class="btn btn-sm px-5 btn-primary-dark transition-3d-hover">В КАТАЛОГ</a>
+                </div>
             </div>
         </div>
         <div class="col-md-3">
@@ -78,7 +68,9 @@
                 <section class="readonly-box">
                     <p class="readonly-field"><span> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore alias a incidunt. Ea, provident et dolor deserunt quibusdam quae. Tenetur commodi cum modi amet voluptatum praesentium quam magni fuga deserunt!</span></p>
                 </section>
-                <a class="custom-button" href="">В ЧАТ</a>
+                <div class="text-center">
+                    <a href="javascript:;" class="btn btn-sm px-5 btn-primary-dark transition-3d-hover">В ЧАТ</a>
+                </div>
             </div>
         </div>
     </div>

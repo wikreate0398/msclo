@@ -59,7 +59,7 @@ class CatalogRepository implements CatalogRepositoryInterface
     {
         $lang = $lang ?: lang();
         $chars = Char::orderByPageUp()
-                      ->with(['charProducts' => function ($query) use($idProduct) {
+                      ->with(['charProducts' => function ($query) use ($idProduct) {
                           return $query->where('id_product', $idProduct)
                                        ->with('optionValue');
                       }])
@@ -69,7 +69,6 @@ class CatalogRepository implements CatalogRepositoryInterface
 
         $data = collect();
         foreach ($chars as $char) {
-
             if ($char->type == 'input') {
                 $value = @$char->charProducts->first()['value'];
             } else {
@@ -91,16 +90,16 @@ class CatalogRepository implements CatalogRepositoryInterface
             ]);
         }
 
-        return $data->filter(function($item) {
+        return $data->filter(function ($item) {
             return ($item['type'] != 'input' && !$item['value']->count()) ? false : true;
         });
     }
 
     public function getMinMaxPrices($idsCats = false)
     {
-        $prices = ProductPrice::whereHas('product', function($query) use($idsCats) {
+        $prices = ProductPrice::whereHas('product', function ($query) use ($idsCats) {
             if (!empty($idsCats)) {
-                $query->whereHas('category', function($query) use($idsCats) {
+                $query->whereHas('category', function ($query) use ($idsCats) {
                     return $query->whereIn('id_category', $idsCats);
                 });
             }
@@ -145,22 +144,26 @@ class CatalogRepository implements CatalogRepositoryInterface
 
     public function getBreads($allCats, $idCategory, $def = [], $breadcrumbs_array = [])
     {
-        if(!$idCategory) return false;
+        if (!$idCategory) {
+            return false;
+        }
 
         if ($def) {
             $breadcrumbs_array[] = (object) $def;
         }
 
         $lang = lang();
-        for($i = 0; $i < count($allCats); $i++){
-            if(isset($allCats[$idCategory])){
+        for ($i = 0; $i < count($allCats); $i++) {
+            if (isset($allCats[$idCategory])) {
                 $category = $allCats[$idCategory];
                 $breadcrumbs_array[$idCategory] = (object) [
                     'name' => $category["name_{$lang}"],
                     'url'  => $category['url']
                 ];
                 $idCategory = $allCats[$idCategory]['parent_id'];
-            }else break;
+            } else {
+                break;
+            }
         }
 
         return (object) array_reverse($breadcrumbs_array, true);

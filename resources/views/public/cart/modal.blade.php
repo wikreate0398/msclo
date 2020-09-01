@@ -93,7 +93,7 @@
                 </div>
                 <div class="ml-md-3">
                     <a href="javascript:;"
-                       class="btn btn-sm px-5 btn-primary-dark transition-3d-hover"
+                       class="btn px-5 btn-primary-dark transition-3d-hover"
                        onclick="$(this).closest('form').submit();">
                         <i class="ec ec-add-to-cart mr-2 font-size-20"></i> В корзину
                     </a>

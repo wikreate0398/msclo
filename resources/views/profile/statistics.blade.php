@@ -69,7 +69,7 @@
         </div>
     </div>
 
-    @if($orders)
+    @if($orders->count())
         <div class="border-bottom border-color-1 mt-7 mb-2">
             <h3 class="section-title mb-0 pb-2 font-size-25">Последние заказы</h3>
         </div>

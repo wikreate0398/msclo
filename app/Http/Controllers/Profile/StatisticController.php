@@ -42,11 +42,12 @@ class StatisticController extends Controller
             $sumOfCategories = count($sumOfCategory);
         }
 
-        $productPrices = $this->providerRepository->getMinMaxProductsPrice($provider->id);
+        $productPrices   = $this->providerRepository->getMinMaxProductsPrice($provider->id);
         $minProductPrice = $productPrices['min'];
         $maxProductPrice = $productPrices['max'];
 
         $orders = $this->providerRepository->getProviderOrders($provider->id);
+
         return view('profile.statistics', compact(
             'id',
             'provider',

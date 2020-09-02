@@ -11,11 +11,13 @@
                         </div>
                     </div>
                 </div>
-                <h4>{{ $provider->full_name }}</h4>
-                <p class="mb-0"><i class="fas fa-phone mr-1"></i>{{ $provider->phone }}7</p>
-                <p class="mb-0"><i class="fas fa-envelope mr-1"> </i>{{ $provider->email }}</p>
-                <p class="mb-0"><i class="fab fa-internet-explorer mr-1"> </i>{{ $provider->site }}</p>
-                <p class="mb-3"><i class="fab fa-skype mr-1"> </i>{{ $provider->skype }}</p>
+                <div class="text-center">
+                    <h5 class="mb-3">{{ $provider->full_name }}</h5>
+                    <p class="mb-2"><i class="fas fa-phone mr-1"></i>{{ $provider->phone }}7</p>
+                    <p class="mb-2"><i class="fas fa-envelope mr-1"> </i>{{ $provider->email }}</p>
+                    <p class="mb-2"><i class="fab fa-internet-explorer mr-1"> </i>{{ $provider->site }}</p>
+                    <p class="mb-3"><i class="fab fa-skype mr-1"> </i>{{ $provider->skype }}</p>
+                </div>
                 <div class="text-center">
                     <a href="{{ route('account', ['lang' => $lang]) }}" class="btn btn-sm px-5 btn-primary-dark transition-3d-hover">РЕДАКТИРОВАТЬ</a>
                 </div>
@@ -25,38 +27,24 @@
             <div class="col-12 mb-5">
                 <div class="custom-card">
                     <h6 class="text-center mb-4"><strong>Продажи за месяц</strong></h6>
-                    <section class=readonly-box">
-                        <p class="readonly-field mb-3"><strong>Кол-во продаж:</strong><span class="float-right">{{ $quantityOfAllSalesFromLastMonth ?? '0' }}</span></p>
-                    </section>
-                    <section class="readonly-box">
-                        <p class="readonly-field mb-2"><strong>Сумма продаж:</strong><span class="float-right">{{ $sumOfAllSalesFromLastMonth  ?? '0' }}</span></p>
-                    </section>
+                    <p class="readonly-field"><strong>Кол-во продаж:</strong><span class="float-right">{{ $quantityOfAllSalesFromLastMonth ?? '0' }}</span></p>
+                    <p class="readonly-field"><strong>Сумма продаж, {{ RUB }}</strong><span class="float-right">{{ priceString($sumOfAllSalesFromLastMonth)  ?? '0' }}</span></p>
                 </div>
             </div>
             <div class="col-12 mb-3">
                 <div class="custom-card">
                     <h6 class="text-center mb-4"><strong>Статистика</strong></h6>
-                    <section class=readonly-box">
-                        <p class="readonly-field mb-3"><strong>Кол-во продаж:</strong><span class="float-right">{{ $quantityOfAllSales }}</span></p>
-                    </section>
-                    <section class="readonly-box">
-                        <p class="readonly-field mb-2"><strong>Сумма продаж:</strong><span class="float-right">{{ $sumOfAllSales }}</span></p>
-                    </section>
+                    <p class="readonly-field"><strong>Кол-во продаж, {{ RUB }}</strong><span class="float-right">{{ $quantityOfAllSales }}</span></p>
+                    <p class="readonly-field"><strong>Сумма продаж, {{ RUB }}</strong><span class="float-right">{{ priceString($sumOfAllSales) }}</span></p>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="custom-card">
                 <h6 class="text-center mb-4"><strong>Товары</strong></h6>
-                <section class=readonly-box">
-                    <p class="readonly-field mb-3"><strong>Категорий:</strong><span class="float-right">{{ $sumOfCategories }}</span></p>
-                </section>
-                <section class="readonly-box">
-                    <p class="readonly-field mb-3"><strong>Товаров:</strong><span class="float-right">{{ $sumOfProducts }}</span></p>
-                </section>
-                <section class="readonly-box">
-                    <p class="readonly-field mb-3"><strong>Цены:</strong><span class="float-right">{{ $minProductPrice }} - {{ $maxProductPrice }}</span></p>
-                </section>
+                <p class="readonly-field"><strong>Категорий:</strong><span class="float-right">{{ $sumOfCategories }}</span></p>
+                <p class="readonly-field"><strong>Товаров:</strong><span class="float-right">{{ $sumOfProducts }}</span></p>
+                <p class="readonly-field"><strong>Цены, {{ RUB }}</strong><span class="float-right">{{ priceString($minProductPrice) }} - {{ priceString($maxProductPrice) }}</span></p>
                 <div class="text-center">
                     <a href="{{ route('view_provider', ['lang' => $lang, 'id' => $id]) }}" class="btn btn-sm px-5 btn-primary-dark transition-3d-hover">В КАТАЛОГ</a>
                 </div>
@@ -65,9 +53,7 @@
         <div class="col-md-3">
             <div class="custom-card">
                 <h6 class="text-center"><strong>Служба поддержки</strong></h6>
-                <section class="readonly-box">
-                    <p class="readonly-field"><span> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore alias a incidunt. Ea, provident et dolor deserunt quibusdam quae. Tenetur commodi cum modi amet voluptatum praesentium quam magni fuga deserunt!</span></p>
-                </section>
+                <p class="readonly-field text-center" style="border-bottom: none">{{ SUPPORT_DESC }}</p>
                 <div class="text-center">
                     <a href="#chatModal" data-toggle="modal" class="btn btn-sm px-5 btn-primary-dark transition-3d-hover">В ЧАТ</a>
                     @include('profile.chat-modal')

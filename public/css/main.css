@@ -11,8 +11,21 @@
 
 .custom-card{
     border: 1px solid #eaeaea;
-    border-radius: 20px;
-    padding: 20px;
+    border-radius: 5px;
+    padding: 20px 0 ;
+    background: #fefefe;
+}
+
+.custom-card p {
+    color: #333e48 !important;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ededed;
+    padding: 0 20px;
+    padding-bottom: 10px;
+}
+
+.custom-card p:last-child {
+    border-bottom: none;
 }
 
 .statistic-page table, .statistic-page tr th{

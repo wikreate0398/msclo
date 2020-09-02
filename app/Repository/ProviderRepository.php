@@ -157,9 +157,9 @@ class ProviderRepository implements ProviderRepositoryInterface
 
     public function getSumOfAllSalesAndQuantity($id)
     {
-        $orderProduct = OrderProduct::selectRaw('sum(qty*price) as total_sum, sum(qty) as total_qty')->where('id_provider', $id)->get()->toArray();
-        foreach ($orderProduct as $k => $value) {
-            return $value;
-        }
+        return OrderProduct::selectRaw('sum(qty*price) as total_sum, sum(qty) as total_qty')
+                                    ->where('id_provider', $id)
+                                    ->first()
+                                    ->toArray();
     }
 }

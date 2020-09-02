@@ -149,17 +149,26 @@ class ProviderRepository implements ProviderRepositoryInterface
 
     public function getSalesFromLastMonth($id)
     {
-        $orderProduct = OrderProduct::rightJoin('orders', 'orders_products.id_order', '=', 'orders.id')->select(DB::raw('sum(qty*price) as total_sum, sum(qty) as total_qty'))->where('created_at', '>=', Carbon::now()->subDays(30)->toDateTimeString())->where('id_provider', $id)->get()->toArray();
-        foreach ($orderProduct as $k => $value) {
-            return $value;
-        }
+        $data = OrderProduct::rightJoin('orders', 'orders_products.id_order', '=', 'orders.id')
+                            ->select(DB::raw('sum(qty*price) as total_sum, sum(qty) as total_qty'))
+                            ->where('created_at', '>=', Carbon::now()->subDays(30)->toDateTimeString())
+                            ->where('id_provider', $id)->first();
+
+        return [
+            'total_sum' => @$data->total_sum ?: 0,
+            'total_qty' => @$data->total_qty ?: 0,
+        ];
     }
 
     public function getSumOfAllSalesAndQuantity($id)
     {
-        return OrderProduct::selectRaw('sum(qty*price) as total_sum, sum(qty) as total_qty')
+        $data = OrderProduct::selectRaw('sum(qty*price) as total_sum, sum(qty) as total_qty')
                                     ->where('id_provider', $id)
-                                    ->first()
-                                    ->toArray();
+                                    ->first();
+
+        return [
+            'total_sum' => @$data->total_sum ?: 0,
+            'total_qty' => @$data->total_qty ?: 0,
+        ];
     }
 }

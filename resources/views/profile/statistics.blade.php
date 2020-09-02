@@ -15,8 +15,13 @@
                     <h5 class="mb-3">{{ $provider->full_name }}</h5>
                     <p class="mb-2"><i class="fas fa-phone mr-1"></i>{{ $provider->phone }}7</p>
                     <p class="mb-2"><i class="fas fa-envelope mr-1"> </i>{{ $provider->email }}</p>
-                    <p class="mb-2"><i class="fab fa-internet-explorer mr-1"> </i>{{ $provider->site }}</p>
-                    <p class="mb-3"><i class="fab fa-skype mr-1"> </i>{{ $provider->skype }}</p>
+                    @if($provider->site)
+                        <p class="mb-2"><i class="fab fa-internet-explorer mr-1"> </i>{{ $provider->site }}</p>
+                    @endif
+
+                    @if($provider->skype)
+                        <p class="mb-3"><i class="fab fa-skype mr-1"> </i>{{ $provider->skype }}</p>
+                    @endif
                 </div>
                 <div class="text-center">
                     <a href="{{ route('account', ['lang' => $lang]) }}" class="btn btn-sm px-5 btn-primary-dark transition-3d-hover">РЕДАКТИРОВАТЬ</a>
@@ -44,7 +49,9 @@
                 <h6 class="text-center mb-4"><strong>Товары</strong></h6>
                 <p class="readonly-field"><strong>Категорий:</strong><span class="float-right">{{ $sumOfCategories }}</span></p>
                 <p class="readonly-field"><strong>Товаров:</strong><span class="float-right">{{ $sumOfProducts }}</span></p>
-                <p class="readonly-field"><strong>Цены, {{ RUB }}</strong><span class="float-right">{{ priceString($minProductPrice) }} - {{ priceString($maxProductPrice) }}</span></p>
+                @if($minProductPrice or $maxProductPrice)
+                    <p class="readonly-field"><strong>Цены, {{ RUB }}</strong><span class="float-right">{{ priceString($minProductPrice) }} - {{ priceString($maxProductPrice) }}</span></p>
+                @endif
                 <div class="text-center">
                     <a href="{{ route('view_provider', ['lang' => $lang, 'id' => $id]) }}" class="btn btn-sm px-5 btn-primary-dark transition-3d-hover">В КАТАЛОГ</a>
                 </div>

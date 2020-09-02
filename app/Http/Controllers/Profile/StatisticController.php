@@ -37,10 +37,8 @@ class StatisticController extends Controller
         
         $sumOfProducts = $this->providerRepository->getProviderProducts($provider->id)->count();
         
-        $sumOfCategories = $this->providerRepository->getCatsGroupedByProviders($provider->id)->toArray();
-        foreach ($sumOfCategories as $sumOfCategory) {
-            $sumOfCategories = count($sumOfCategory);
-        }
+        $sumOfCategories = $this->providerRepository->getCatsGroupedByProviders($provider->id);
+        $sumOfCategories = $sumOfCategories->first() ? $sumOfCategories->first()->count() : 0;
 
         $productPrices   = $this->providerRepository->getMinMaxProductsPrice($provider->id);
         $minProductPrice = $productPrices['min'];

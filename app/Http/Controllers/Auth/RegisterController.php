@@ -60,7 +60,6 @@ class RegisterController extends Controller
 
             $this->checkPass($request->password, $request->password_confirmation);
 
-
             if (User::where('email', $request->email)->count()) {
                 throw new \ValidationError('Пользователь с таким e-mail адоресом уже существует');
             }

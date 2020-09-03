@@ -98,15 +98,18 @@ class CatalogService
         $imageSort   = $this->request->image_sort ? collect(json_decode($this->request->image_sort, true)) : false;
         if (request()->files->count()) {
             $uploadImage = new UploadImage;
+
             $images      = $uploadImage->setExtensions('jpeg,jpg,png')
-                ->setSize(12000)
-                ->sort($imageSort)
-                ->multipleUpload('files', 'products');
+                                       ->setSize(12000)
+                                       ->sort($imageSort)
+                                       ->multipleUpload('files', 'products');
+
+            //exit(print_arr($images));
 
             foreach ($images as $key => $image) {
                 ProductImage::create([
                     'id_product' => $id,
-                    'image'      => $image,
+                    'image'      => $image['name'],
                     'page_up'    => @$image['page_up'] ?: 1
                 ]);
             }

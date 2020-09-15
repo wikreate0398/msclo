@@ -17,15 +17,15 @@
                 </div> --}}
 
                 <ul class="list-group mb-4 sidebar-navbar account-navbar" id="sidebarNav">
-                    <li>
-                        <a href="{{ route('account', compact('lang')) }}"
-                           class="{{ (uri(3) == 'account') ? 'font-weight-bold' : '' }} px-3 py-2 list-group-item list-group-item-action border-0">
-                            <i class="mr-2 fas fa-angle-right"></i>
-                            Личные данные
-                        </a>
-                    </li>
 
                     @if(user()->type == 'provider')
+                    <li>
+                        <a href="{{ route('dashboard', compact('lang')) }}"
+                            class="{{ (uri(3) == 'dashboard') ? 'font-weight-bold' : '' }} px-3 py-2 list-group-item list-group-item-action border-0">
+                            <i class="mr-2 fas fa-angle-right"></i>
+                            Dashboard
+                        </a>
+                    </li>
                     <li>
                         <a href="{{ route('statistics', compact('lang')) }}"
                             class="{{ (uri(3) == 'statistics') ? 'font-weight-bold' : '' }} px-3 py-2 list-group-item list-group-item-action border-0">
@@ -34,7 +34,7 @@
                         </a>
                     </li>
                     @endif
-                    
+
                     <li>
                         <a href="{{ route('purchases', compact('lang')) }}"
                            class="{{ (uri(3) == 'purchases') ? 'font-weight-bold' : '' }} px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
@@ -80,11 +80,13 @@
                     @endif
 
                     <li>
-                        <a href="{{ route('logout', compact('lang')) }}" class="text-danger px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
+                        <a href="{{ route('account', compact('lang')) }}"
+                           class="{{ (uri(3) == 'account') ? 'font-weight-bold' : '' }} px-3 py-2 list-group-item list-group-item-action border-0">
                             <i class="mr-2 fas fa-angle-right"></i>
-                            Выйти
+                            Личные данные
                         </a>
                     </li>
+
                 </ul>
             </div>
 

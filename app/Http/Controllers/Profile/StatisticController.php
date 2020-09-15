@@ -45,8 +45,8 @@ class StatisticController extends Controller
         $maxProductPrice = $productPrices['max'];
 
         $orders = $this->providerRepository->getProviderOrders($provider->id);
-
-        return view('profile.statistics', compact(
+        
+        $data = compact(
             'id',
             'provider',
             'quantityOfAllSales',
@@ -58,7 +58,12 @@ class StatisticController extends Controller
             'minProductPrice',
             'maxProductPrice',
             'orders'
-        ));
+        );
+        if (url()->current() == route('statistics', ['lang' => $lang])) {
+            return view('profile.statistics', $data);
+        } elseif (url()->current() == route('dashboard', ['lang' => $lang])) {
+            return view('profile.dashboard', $data);
+        }
     }
 
     public function callback($lang, Request $request)

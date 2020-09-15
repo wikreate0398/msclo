@@ -1,34 +1,85 @@
 @extends('profile.layout')
 
 @section('profile')
-<div class="col-lg-12 statistic-page">
-    <div class="row mb-7">
-        <div class="col-md-3">
+<div class="col-lg-12 dashboard-page">
+    <div class="row">
+        <div class="col-md-12 mb-6">
             <div class="custom-card">
-                <div class="col-md-12">
-                    <div class="profile-photo">
-                        <div class="profile__img" style="background-image: url('{{ user()->image ? '/uploads/users/' . user()->image : '/uploads/no-avatar.png' }}');">
+                <div class="row align-items-center p-2">
+                    <div class="col-xs-12 col-xl-1 ml-7 text-center">
+                        <div class="profile-photo">
+                            <div class="profile__img" style="background-image: url('{{ user()->image ? '/uploads/users/' . user()->image : '/uploads/no-avatar.png' }}');">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-xl-8 ml-3">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h5 class="mb-1 ml-3">{{ $provider->full_name }}</h5>
+                            </div>
+                            <div class="col-md-12">
+                                <p class="mb-1 description">{{ $provider->description }}</p>
+                            </div>
+                            <div class="col-md-12">
+                                <p class="mb-1">{{ $provider->phone }} <span class="ml-3 mr-3">|</span> {{ $provider->email }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-xl-2">
+                        <div class="row">
+                            <div class="col-md-5 d-none d-xl-block"></div>
+                            <div class="col-md-3">
+                                <a href="{{ route('account', ['lang' => $lang]) }}"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                            </div>
+                            <div class="text-center align-self-center col-md-3">
+                                <a href="{{ route('logout', compact('lang')) }}" class="px-3 py-2 ">Выйти</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="text-center">
-                    <h5 class="mb-3">{{ $provider->full_name }}</h5>
-                    <p class="mb-2"><i class="fas fa-phone mr-1"></i>{{ $provider->phone }}7</p>
-                    <p class="mb-2"><i class="fas fa-envelope mr-1"> </i>{{ $provider->email }}</p>
-                    @if($provider->site)
-                        <p class="mb-2"><i class="fab fa-internet-explorer mr-1"> </i>{{ $provider->site }}</p>
-                    @endif
-
-                    @if($provider->skype)
-                        <p class="mb-3"><i class="fab fa-skype mr-1"> </i>{{ $provider->skype }}</p>
-                    @endif
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h4>Недавно добавленные твоары</h4>
+        </div>
+        <div class="col-md-4 mb-12">
+            <h4>Статистика</h4>
+            <img class="mb-3" style="max-width: 445px" src="{{ asset('img/dashboard_frame.png') }}">
+            <div class="custom-card mb-4">
+                <div class="row">
+                    <div class="col-md-3 py-3 px-7 text-center">
+                        <div class="rounded-icon cart rounded-circle"><i class="fas fa-shopping-cart fa-lg"></i></div>
+                    </div>
+                    <div class="col-md-7 px-3 align-self-center">
+                        <h6>Всего продаж</h6>
+                        <span>{{ $quantityOfAllSales }}</span>
+                    </div>
                 </div>
-                <div class="text-center">
-                    <a href="{{ route('account', ['lang' => $lang]) }}" class="btn btn-sm px-5 btn-primary-dark transition-3d-hover">РЕДАКТИРОВАТЬ</a>
+            </div>
+            <div class="custom-card mb-4">
+                <div class="row">
+                    <div class="col-md-3 py-3 px-7 text-center">
+                        <div class="rounded-icon dollar rounded-circle"><i class="fas fa-dollar-sign fa-lg"></i></div>
+                    </div>
+                    <div class="col-md-7 px-3 align-self-center">
+                        <h6>Всего доходов</h6>
+                        <span>{{ priceString($sumOfAllSales) }} {{ RUB }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="custom-card mb-4">
+                <div class="row">
+                    <div class="col-md-3 py-3 px-7 text-center">
+                        <div class="rounded-icon box rounded-circle"><i class="fas fa-box fa-lg"></i></div>
+                    </div>
+                    <div class="col-md-7 px-3 align-self-center">
+                        <h6>Всего доходов</h6>
+                        <span>{{ $sumOfProducts }}</span>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        {{-- <div class="col-md-3">
             <div class="col-12 mb-5">
                 <div class="custom-card">
                     <h6 class="text-center mb-4"><strong>Продажи за месяц</strong></h6>
@@ -60,16 +111,16 @@
         <div class="col-md-3">
             <div class="custom-card">
                 <h6 class="text-center"><strong>Служба поддержки</strong></h6>
-                <p class="readonly-field text-center" style="border-bottom: none">{{-- SUPPORT_DESC --}}</p>
+                <p class="readonly-field text-center" style="border-bottom: none"></p> 
                 <div class="text-center">
                     <a href="#chatModal" data-toggle="modal" class="btn btn-sm px-5 btn-primary-dark transition-3d-hover">В ЧАТ</a>
                     @include('profile.chat-modal')
                 </div>
             </div>
-        </div>
-    </div>
+        </div> 
+    </div> --}}
 
-    @if($orders->count())
+    @if(false)
         <div class="border-bottom border-color-1 mb-2">
             <h3 class="section-title mb-0 pb-2 font-size-25">Последние заказы</h3>
         </div>

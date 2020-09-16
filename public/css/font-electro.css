@@ -11,7 +11,36 @@
   font-style: normal;
 
 }
+@font-face {
+  font-family: 'Avenir Next Cyr Thin';
+  src: url('../fonts/avenir/AvenirNextCyr-Thin.eot');
+  src: url('../fonts/avenir/AvenirNextCyr-Thin.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/avenir/AvenirNextCyr-Thin.woff') format('woff'),
+       url('../fonts/avenir/AvenirNextCyr-Thin.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
+@font-face {
+  font-family: 'Avenir Next Cyr Bold';
+  src: url('../fonts/avenir/AvenirNextCyr-Bold.eot');
+  src: url('../fonts/avenir/AvenirNextCyr-Bold.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/avenir/AvenirNextCyr-Bold.woff') format('woff'),
+       url('../fonts/avenir/AvenirNextCyr-Bold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir Next Cyr Regular';
+  src: url('../fonts/avenir/AvenirNextCyr-Regular.eot');
+  src: url('../fonts/avenir/AvenirNextCyr-Regular.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/avenir/AvenirNextCyr-Regular.woff') format('woff'),
+       url('../fonts/avenir/AvenirNextCyr-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+  
 [data-icon]:before {
     font-family: "font-electro" !important;
     content: attr(data-icon);

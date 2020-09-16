@@ -8,6 +8,8 @@ interface ProviderRepositoryInterface
 
     public function getProviderProducts($id_provider);
 
+    public function getProviderProduct($id_provider);
+
     public function getCatsGroupedByProviders($id_provider = false);
 
     public function getProvidersList();
@@ -19,4 +21,10 @@ interface ProviderRepositoryInterface
     public function getProviderServices($id);
 
     public function getProviderOrders($id_provider);
+
+    public function getMinMaxProductsPrice($id_provider);
+    
+    public function getSumOfAllSalesAndQuantity($id_provider);
+    
+    public function getSalesFromLastMonth($id_provider);
 }

@@ -1,16 +1,18 @@
 <?php
 
-function setScript($js_folder, $path){
+function setScript($js_folder, $path)
+{
     if (strpos($path, 'full:') !== false) {
-        $path = str_replace('full:', '', $path); 
-    }else{
+        $path = str_replace('full:', '', $path);
+    } else {
         $path = $js_folder.$path.'?v='.time();
     }
     return "<script src='{$path}'></script>";
 }
 
 if (!function_exists('key_to_id')) {
-    function key_to_id($array) {
+    function key_to_id($array)
+    {
         if (empty($array)) {
             return array();
         }
@@ -22,12 +24,13 @@ if (!function_exists('key_to_id')) {
     }
 }
 
-function getIp(){
-    foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
-        if (array_key_exists($key, $_SERVER) === true){
-            foreach (explode(',', $_SERVER[$key]) as $ip){
+function getIp()
+{
+    foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key) {
+        if (array_key_exists($key, $_SERVER) === true) {
+            foreach (explode(',', $_SERVER[$key]) as $ip) {
                 $ip = trim($ip); // just to be safe
-                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
+                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false) {
                     return $ip;
                 }
             }
@@ -48,42 +51,49 @@ function savePercent($retail, $price)
 
 function withdrawFee($price, $percent)
 {
-    if(empty($percent)) return $price;
+    if (empty($percent)) {
+        return $price;
+    }
     return $price - (($percent/100)*$price);
 }
 
 function priceToPercent($price, $priceCommision)
 {
-    if(empty($priceCommision)) return 0;
+    if (empty($priceCommision)) {
+        return 0;
+    }
     return (100/$price)*$priceCommision;
 }
 
 function percent($price, $percent = null)
 {
-    if(empty($percent)) return 0;
+    if (empty($percent)) {
+        return 0;
+    }
     return ($percent/100)*$price;
 }
 
-function prepareCode($code) {   
-    if (!strpos($code, '-') && strlen($code) >= 4) 
-    {
+function prepareCode($code)
+{
+    if (!strpos($code, '-') && strlen($code) >= 4) {
         $code = substr($code, 0, 3) . '-' . substr($code, 3, 4);
     }
     return $code;
 }
 
-function prepareExpiryDate($str, $exp = false){
-    if (!strpos($str, '/') && strlen($str) >= 4) 
-    {
+function prepareExpiryDate($str, $exp = false)
+{
+    if (!strpos($str, '/') && strlen($str) >= 4) {
         $str = substr($str, 0, 2) . '/' . substr($str, 2, 4);
     }
     return $exp ? explode('/', $str) : $str;
 }
 
-function getAppUrl($subdomain = false, $path = ''){
+function getAppUrl($subdomain = false, $path = '')
+{
     $pre = 'http://';
-    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') { 
-      $pre = 'https://';
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+        $pre = 'https://';
     }
     $domain = config('app.base_domain');
     if (!empty($subdomain)) {
@@ -93,16 +103,19 @@ function getAppUrl($subdomain = false, $path = ''){
     if ($path) {
         $url .= '/' . trim(rtrim($path, '/'), '/');
     }
-    return $url; 
+    return $url;
 }
 
-function offLink(){
+function offLink()
+{
     return 'style="cursor:default !important;" onclick="return false;"';
 }
 
 function percentFormat($percent=null, $zecimals = 1)
 {
-    if (empty($percent)) return '0'; 
+    if (empty($percent)) {
+        return '0';
+    }
     return number_format($percent, $zecimals, '.', ' ');
 }
 
@@ -110,10 +123,10 @@ function generate_id($length=6)
 {
     $number = '';
     for ($i=$length; $i--; $i>0) {
-        $number .= mt_rand(0,9);
+        $number .= mt_rand(0, 9);
     }
     return $number;
-} 
+}
 
 function random_str(
     $length=6,
@@ -130,15 +143,16 @@ function random_str(
     return $str;
 }
 
-function sortValue($arr){
-    if (empty($arr)) return;
+function sortValue($arr)
+{
+    if (empty($arr)) {
+        return;
+    }
 
     $data = array();
-    foreach ($arr as $l_key => $l_value)
-    {
+    foreach ($arr as $l_key => $l_value) {
         $i=0;
-        foreach ($l_value as $key => $value)
-        {
+        foreach ($l_value as $key => $value) {
             $data[$key][$l_key] = $arr[$l_key][$key];
             $i++;
         }
@@ -189,13 +203,13 @@ function prepareArrayForJson($array)
 }
 
 function userRoute($route)
-{ 
+{
     $define = Auth::user()->userType->define;
     return $define . '_' . $route;
 }
 
 function isActive($route, $domain='')
-{   
+{
     return (request()->url() == $route) ? true :  false;
 }
 
@@ -302,7 +316,7 @@ function adminMenu()
             'link' => '/'.config('admin.path').'/email-templates/',
             'view' => true,
             'edit' => 'Редактировать'
-        ],  
+        ],
 
         'settings' => [
             'name' => 'Настройки',
@@ -328,7 +342,7 @@ function adminMenu()
             'view' => false,
             'edit' => 'Редактировать'
         ]
-    ]; 
+    ];
 }
 
 //function auctionType($type){
@@ -342,7 +356,8 @@ function setting($key)
     return \App\Utils\Settings::get($key);
 }
 
-function key_to_id($array) {
+function key_to_id($array)
+{
     if (empty($array)) {
         return array();
     }
@@ -357,7 +372,7 @@ function key_to_id($array) {
 
 function tree($dataset)
 {
-    if($dataset instanceof Illuminate\Database\Eloquent\Collection){
+    if ($dataset instanceof Illuminate\Database\Eloquent\Collection) {
         $dataset = $dataset->toArray();
     }
     $dataset = key_to_id($dataset);
@@ -379,8 +394,7 @@ function uri($segment)
 
 function isActiveLink($route)
 {
-    if($route == \Request::url())
-    {
+    if ($route == \Request::url()) {
         return true;
     }
 }
@@ -390,11 +404,13 @@ function lang()
     return \App::getLocale();
 }
 
-function setUri($uri){
+function setUri($uri)
+{
     return '/' . lang() . '/' . trim($uri, '/');
 }
 
-function sepByNum($num) {
+function sepByNum($num)
+{
     if ($num > 0) {
         $sep = '';
         for ($i = $num; $i > 0; $i--) {
@@ -404,12 +420,16 @@ function sepByNum($num) {
     }
 }
 
-function sessArray($name) {
+function sessArray($name)
+{
     return \App\Utils\ArraySess::init($name);
 }
 
-function priceString($price = null, $zecimals = 0, $space = ' '){
-    if (empty($price)) return '0'; 
+function priceString($price = null, $zecimals = 0, $space = ' ')
+{
+    if (empty($price)) {
+        return '0';
+    }
     return number_format($price, $zecimals, '.', $space);
 }
 
@@ -418,7 +438,8 @@ function bigNumberFormat($number)
     return number_format($number, '0', ',', ',');
 }
 
-function toFloat($s) {
+function toFloat($s)
+{
     // convert "," to "."
     $s = str_replace(',', '.', $s);
 
@@ -426,21 +447,23 @@ function toFloat($s) {
     $s = preg_replace("/[^0-9\.]/", "", $s);
 
     // remove all seperators from first part and keep the end
-   // $s = str_replace('.', '',substr($s, 0, -3)) . substr($s, -3);
+    // $s = str_replace('.', '',substr($s, 0, -3)) . substr($s, -3);
 
     // return float
     return (float) $s;
-}  
+}
 
-function uploadBase64($base64, $path){
+function uploadBase64($base64, $path)
+{
     $data = $base64;
     $data = str_replace('data:image/png;base64,', '', $data);
     $data = str_replace(' ', '+', $data);
-    $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data));    
-    file_put_contents($path, $data); 
+    $data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $data));
+    file_put_contents($path, $data);
 }
 
-function setLangUri($lang){
+function setLangUri($lang)
+{
     $url  = \Request::path();
 
     $a    = array_slice(explode('/', $url), 1);
@@ -455,19 +478,16 @@ function imageThumb($image = false, $path, $width, $height=null, $v)
 {
 //    if (empty($image)) return '';
     $height = empty($height) ? null : $height;
-    $path = str_replace('.', '/', $path); 
+    $path = str_replace('.', '/', $path);
 
     $thumbPath = '/thumb';
-    if (!is_dir(public_path($path . "/thumb"))) 
-    {  
+    if (!is_dir(public_path($path . "/thumb"))) {
         mkdir(public_path($path . "/thumb"), 0777);
         chmod(public_path($path . "/thumb"), 0777);
     }
 
-    if (!empty($v)) 
-    {
-        if (!is_dir(public_path($path . "/thumb/version_$v"))) 
-        { 
+    if (!empty($v)) {
+        if (!is_dir(public_path($path . "/thumb/version_$v"))) {
             mkdir(public_path($path . "/thumb/version_$v"), 0777);
             chmod(public_path($path . "/thumb/version_$v"), 0777);
         }
@@ -480,53 +500,48 @@ function imageThumb($image = false, $path, $width, $height=null, $v)
     if (empty($image)) {
         $explodePath = explode('/', $path);
         $defImg = 'no-image.png';
-        if (end($explodePath) == 'users')
-        {
+        if (end($explodePath) == 'users') {
             $defImg = 'no-avatar.png';
-        }  
+        }
 
         $filePath = public_path('uploads/' . $defImg);
     }
 
-    if ((!file_exists($imgeThumbnailPath) && file_exists($filePath)) or empty($image)) 
-    {     
-        if (!empty($height) && !empty($width)) 
-        {
+    if ((!file_exists($imgeThumbnailPath) && file_exists($filePath)) or empty($image)) {
+        if (!empty($height) && !empty($width)) {
             $img = Image::make($filePath)->fit($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
-        }
-        else
-        {
+        } else {
             $img = Image::make($filePath)->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
-            });  
+            });
         }
 
-        if (empty($image)) { 
+        if (empty($image)) {
             $img->save(public_path($path . $thumbPath . "/" . $defImg));
             return '/' . $path . $thumbPath . "/" . $defImg;
         }
-        $img->save($imgeThumbnailPath); 
-    }     
-    return env('APP_URL') . '/' . $path . $thumbPath . "/$image"; 
+        $img->save($imgeThumbnailPath);
+    }
+    return env('APP_URL') . '/' . $path . $thumbPath . "/$image";
 }
 
 function getDiffYears($date)
 {
     $d1 = new DateTime(date('Y-m-d'));
-    $d2 = new DateTime($date); 
-    $diff = $d2->diff($d1);  
+    $d2 = new DateTime($date);
+    $diff = $d2->diff($d1);
     return $diff->y;
 }
 
 function getDiffDateTime($date)
 {
     $d1 = new DateTime(date('Y-m-d H:i:s'));
-    $d2 = new DateTime($date); 
-    $diff = $d2->diff($d1);  
+    $d2 = new DateTime($date);
+    $diff = $d2->diff($d1);
     return $diff;
 }
 
@@ -582,18 +597,23 @@ function format_by_count($count, $form1, $form2, $form3)
 {
     $count = abs($count) % 100;
     $lcount = $count % 10;
-    if ($count >= 11 && $count <= 19) return($form3);
-    if ($lcount >= 2 && $lcount <= 4) return($form2);
-    if ($lcount == 1) return($form1);
+    if ($count >= 11 && $count <= 19) {
+        return($form3);
+    }
+    if ($lcount >= 2 && $lcount <= 4) {
+        return($form2);
+    }
+    if ($lcount == 1) {
+        return($form1);
+    }
     return $form3;
 }
 
 function strFormat($field, $lang=false)
 {
-
     if (empty($lang)) {
         $lang = lang();
-    }  
+    }
 
     $arr = [
         'days' => [
@@ -680,66 +700,66 @@ function strFormat($field, $lang=false)
     return $arr[$field][$lang];
 }
 
-function field($key, $lang = false){
-    
+function field($key, $lang = false)
+{
     if (empty($lang)) {
         $lang = lang();
-    }  
+    }
 
-    $translate = array(  
+    $translate = array(
         'name' => array(
             'ru' => 'Имя',
             'ro' => 'Numele',
             'en' => 'Name'
-        ), 
+        ),
 
         'surname' => array(
             'ru' => 'Фамилия',
             'ro' => 'Prenume',
             'en' => 'Surname'
-        ), 
+        ),
 
         'denom' => array(
             'ru' => 'Название',
             'ro' => 'Denumire',
             'en' => 'Name'
-        ),  
+        ),
 
         'lasts' => array(
             'ru' => 'Длится',
             'ro' => 'Dureaza',
             'en' => 'Lasts'
-        ), 
+        ),
 
         'type' => array(
             'ru' => 'Тип',
             'ro' => 'Tipul',
             'en' => 'Type'
-        ), 
+        ),
 
         'select' => array(
             'ru' => 'Выбрать',
             'ro' => 'Alege',
             'en' => 'Select'
-        ),  
+        ),
   
         'comment' => array(
             'ru' => 'Комментарий',
             'ro' => 'Mesaj',
             'en' => 'Comment'
-        ),  
+        ),
 
         'pass' => array(
             'ru' => 'пароль',
             'ro' => 'Parola',
             'en' => 'Password'
-        ),   
+        ),
 
         'repeat_pass' => array(
             'ru' => 'Подтверждение пароля',
             'ro' => 'Parola din nou',
             'en' => 'Repeat password'
-        ),   
+        ),
  
         'ph_nr' => array(
             'ru' => 'Номер телефона',
@@ -752,56 +772,59 @@ function field($key, $lang = false){
             'ru' => 'Сообщение',
             'ro' => 'Mesaj',
             'en' => 'Message'
-        ),  
+        ),
 
         'title' => array(
             'ru' => 'Заголовок',
             'ro' => 'Subiect',
             'en' => 'Title'
-        ),  
+        ),
   
         'close' => array(
             'ru' => 'Закрыть',
             'ro' => 'închide',
             'en' => 'Close'
-        ),  
+        ),
 
         'avatar' => array(
             'ru' => 'Аватар',
             'ro' => 'Avatar',
             'en' => 'Avatar'
-        ),  
+        ),
          
  
-    );  
+    );
 
     if (!empty($translate[$key][$lang])) {
         return $translate[$key][$lang];
     }
-} 
+}
 
 function generateAccountNumber()
 {
-    $accountNumber = (int) \App\Models\User::select('account_number')->get()->pluck('account_number')->map(function($account_number){
-        return (int) str_replace( '0', '', $account_number);
+    $accountNumber = (int) \App\Models\User::select('account_number')->get()->pluck('account_number')->map(function ($account_number) {
+        return (int) str_replace('0', '', $account_number);
     })->max()+1;
 
     $zeros='';
-    for ($i=0; $i < (12-strlen($accountNumber)); $i++ ){
+    for ($i=0; $i < (12-strlen($accountNumber)); $i++) {
         $zeros .= 0;
     }
     return $zeros.$accountNumber;
 }
 
-function user(){
+function user()
+{
     return \Auth::user();
 }
 
-function isAuth() {
+function isAuth()
+{
     return \Auth::check();
 }
 
-function cart() {
+function cart()
+{
     return app('cart');
 }
 
@@ -898,7 +921,7 @@ if (!function_exists('toUrl')) {
         foreach ($trans as $key => $val) {
             $str = preg_replace("#" . $key . "#i", $val, $str);
         }
-        if ($lowercase === TRUE) {
+        if ($lowercase === true) {
             $str = strtolower($str);
         }
         return trim(stripslashes($str));

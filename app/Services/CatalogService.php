@@ -55,7 +55,6 @@ class CatalogService
             \DB::commit();
 
             return $this->response(true);
-
         } catch (\ValidationError $e) {
             \DB::rollback();
             return $this->response(false, $e->getMessage());
@@ -99,15 +98,18 @@ class CatalogService
         $imageSort   = $this->request->image_sort ? collect(json_decode($this->request->image_sort, true)) : false;
         if (request()->files->count()) {
             $uploadImage = new UploadImage;
+
             $images      = $uploadImage->setExtensions('jpeg,jpg,png')
-                ->setSize(12000)
-                ->sort($imageSort)
-                ->multipleUpload('files', 'products');
+                                       ->setSize(12000)
+                                       ->sort($imageSort)
+                                       ->multipleUpload('files', 'products');
+
+            //exit(print_arr($images));
 
             foreach ($images as $key => $image) {
                 ProductImage::create([
                     'id_product' => $id,
-                    'image'      => @$image['name'] ?: $image,
+                    'image'      => $image['name'],
                     'page_up'    => @$image['page_up'] ?: 1
                 ]);
             }
@@ -125,7 +127,9 @@ class CatalogService
     private function savePrices($id, $prices = [], $insert = [])
     {
         ProductPrice::where('id_product', $id)->delete();
-        if (empty($prices)) return;
+        if (empty($prices)) {
+            return;
+        }
         foreach (sortValue($prices) as $type => $item) {
             $insert[] = [
                 'id_product' => $id,
@@ -144,7 +148,7 @@ class CatalogService
         CharProduct::where('id_product', $id_product)->delete();
         foreach ($chars as $type => $chars) {
             if ($type == 'input') {
-                foreach ( $chars as $id_char => $value) {
+                foreach ($chars as $id_char => $value) {
                     $insert[] = [
                         'id_char'    => $id_char,
                         'value'      => $value,
@@ -152,7 +156,7 @@ class CatalogService
                     ];
                 }
             } else {
-                foreach ( $chars as $id_char => $values) {
+                foreach ($chars as $id_char => $values) {
                     foreach ($values as $key => $id_value) {
                         $insert[] = [
                             'id_char'    => $id_char,

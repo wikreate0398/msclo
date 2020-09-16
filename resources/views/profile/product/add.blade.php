@@ -1,7 +1,7 @@
 @extends('profile.layout')
 
 @section('profile')
-    <div class="col-lg-9 order-lg-1">
+    <div class="col-lg-12 order-lg-1">
         <div class="pb-7 mb-7">
 
             <!-- Title -->

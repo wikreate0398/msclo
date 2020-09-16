@@ -1,7 +1,7 @@
 <header id="header" class="u-header u-header-left-aligned-nav">
     <div class="u-header__section">
         <!-- Topbar -->
-        <div class="u-header-topbar py-2 d-none d-xl-block">
+        <div class="u-header-topbar py-2 d-none d-xl-block bg-dark">
             <div class="container">
                 <div class="d-flex align-items-center">
                     {{--                    <div class="topbar-left">--}}
@@ -11,7 +11,7 @@
                         <ul class="list-inline mb-0">
 
                             <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
-                                <a href="{{ setUri(\Pages::getUriByType('delivery_payment')) }}" class="u-header-topbar__nav-link"><i class="ec ec-transport mr-1"></i> Доставка и оплата</a>
+                                <a href="{{ setUri(\Pages::getUriByType('delivery_payment')) }}" class="u-header-topbar__nav-link text-light"><i class="ec ec-transport mr-1"></i> Доставка и оплата</a>
                             </li>
 {{--                            <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border u-header-topbar__nav-item-no-border u-header-topbar__nav-item-border-single">--}}
 {{--                                <div class="d-flex align-items-center">--}}
@@ -45,8 +45,23 @@
                                 <!-- Account Sidebar Toggle Button -->
                                 @if(!\Auth::check())
                                     <a id="sidebarNavToggler" href="javascript:;"
+                                        role="button"
+                                        class="u-header-topbar__nav-link text-light"
+                                        aria-controls="sidebarContent"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                        data-unfold-event="click"
+                                        data-unfold-hide-on-scroll="false"
+                                        data-unfold-target="#sidebarContent"
+                                        data-unfold-type="css-animation"
+                                        data-unfold-animation-in="fadeInRight"
+                                        data-unfold-animation-out="fadeOutRight"
+                                        onclick="showSignup()"
+                                        data-unfold-duration="500">
+                                    <i class="ec ec-user mr-1 text-light"></i> Зарегистрироваться</a>
+                                    <a id="sidebarNavToggler" href="javascript:;"
                                        role="button"
-                                       class="u-header-topbar__nav-link"
+                                       class="u-header-topbar__nav-link text-light"
                                        aria-controls="sidebarContent"
                                        aria-haspopup="true"
                                        aria-expanded="false"
@@ -58,10 +73,9 @@
                                        data-unfold-animation-out="fadeOutRight"
                                        onclick="showLogin()"
                                        data-unfold-duration="500">
-                                        <i class="ec ec-user mr-1"></i> Зарегистрироваться <span class="text-gray-50">или</span> Войти в ЛК
-                                    </a>
+                                         <span class="text-gray-50">или</span> Войти в ЛК</a>
                                 @else
-                                    <a href="{{ route('account', compact('lang')) }}" class="u-header-topbar__nav-link">
+                                    <a href="{{ route('statistics', compact('lang')) }}" class="u-header-topbar__nav-link text-light">
                                         <i class="ec ec-user mr-1"></i> {{ user()->name }}
                                     </a>
                                 @endif
@@ -165,47 +179,57 @@
                     </div>
                     <!-- End Logo-offcanvas-menu -->
                     <!-- Primary Menu -->
-                    <div class="col d-none d-xl-block">
-                        <!-- Nav -->
-                        <nav class="js-mega-menu navbar navbar-expand-md u-header__navbar u-header__navbar--no-space">
-                            <!-- Navigation -->
-                            <div id="navBar" class="collapse navbar-collapse u-header__navbar-collapse">
-                                <ul class="navbar-nav u-header__navbar-nav">
-                                    @foreach($menu as $item)
-                                        @if($item->view_top)
-                                            <li class="nav-item u-header__nav-item">
-                                                <a class="nav-link u-header__nav-link {{ $item->page_type == @$page_data->page_type ? 'text-sale' : '' }}"
-                                                   href="{{ setUri($item->url) }}" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">
-                                                    {{ $item["name_$lang"] }}
-                                                </a>
-                                            </li>
-                                        @endif
-                                    @endforeach
-                                    @if(!\Auth::check())
-                                        <li class="nav-item u-header__nav-last-item">
-
-                                            <a id="sidebarNavToggler" href="javascript:;" role="button" class="btn-round transition-3d-hover"
-                                               aria-controls="sidebarContent"
-                                               aria-haspopup="true"
-                                               aria-expanded="false"
-                                               data-unfold-event="click"
-                                               data-unfold-hide-on-scroll="false"
-                                               data-unfold-target="#sidebarContent"
-                                               data-unfold-type="css-animation"
-                                               data-unfold-animation-in="fadeInRight"
-                                               data-unfold-animation-out="fadeOutRight"
-                                               onclick="showSignup()"
-                                               data-unfold-duration="500">
-                                                <i class="ec ec-user"></i> Стать поставщиком
-                                            </a>
-                                        </li>
-                                    @endif
-                                </ul>
+                    <!-- Search bar -->
+                    <div class="col align-self-center">
+                    <!-- Search-Form -->
+                    <form class="js-focus-state">
+                        <label class="sr-only" for="searchProduct">Поиск</label>
+                        <div class="input-group">
+                            <input type="email" class="form-control py-2 pl-5 font-size-15 height-40 rounded-left-pill" name="email" id="searchProduct" placeholder="Найти товар" aria-label="Найти товар" aria-describedby="searchProduct1" required>
+                            <div class="input-group-append">
+                                <button class="btn btn-dark height-40 py-2 px-3 rounded-right-pill" type="button" id="searchProduct1">
+                                    <span class="ec ec-search font-size-24"></span>
+                                </button>
                             </div>
-                            <!-- End Navigation -->
-                        </nav>
-                        <!-- End Nav -->
+                        </div>
+                    </form>
+                    <!-- End Search-Form -->
                     </div>
+                    <!-- End Search bar -->
+                    <!-- Header Icons -->
+                    <div class="col-md-auto align-self-center">
+                        <div class="d-flex">
+                            <ul class="d-flex list-unstyled mb-0">
+{{--                                <li class="col">--}}
+{{--                                    <a href="{{ route('compare_list', ['lang' => $lang]) }}" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Сравнить">--}}
+{{--                                        <i class="font-size-22 ec ec-compare"></i>--}}
+{{--                                        <span style="left: 30px" class="{{ !sessArray('compare')->count() ? 'd-none' : '' }} qty_compare width-22 height-22 bg-dark position-absolute flex-content-center text-white rounded-circle left-12 top-8 font-weight-bold font-size-12">{{  sessArray('compare')->count() }}</span>--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
+                                <li class="col">
+                                    <a href="{{ route('fav_list', ['lang' => $lang]) }}" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Избранное">
+                                        <i class="font-size-22 ec ec-favorites"></i>
+                                        <span style="left: 25px" class="{{ !sessArray('favorites')->count() ? 'd-none' : '' }} qty_fav width-22 height-22 bg-dark position-absolute flex-content-center text-white rounded-circle left-12 top-8 font-weight-bold font-size-12">{{  sessArray('favorites')->count() }}</span>
+                                    </a>
+                                </li>
+
+                                <li class="col pr-0">
+                                    <a href="{{ route('view_cart', compact('lang')) }}"
+                                        class="text-gray-90 position-relative d-flex" data-toggle="tooltip" data-placement="top" title="Корзина">
+                                        <i class="font-size-22 ec ec-shopping-bag"></i>
+
+                                        <span class="width-22 height-22 bg-dark {{ cart()->has() ? '' : 'd-none' }} position-absolute flex-content-center text-white rounded-circle left-12 top-8 font-weight-bold font-size-12 cart-qty">
+                                            {{ cart()->getTotalQty() }}
+                                        </span>
+{{--                                        <span class="font-weight-bold font-size-16 text-gray-90 ml-3">--}}
+{{--                                            {{ RUB }} {{ priceString(cart()->getTotalPrice()) }}--}}
+{{--                                        </span>--}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Header Icons -->
                     <!-- End Primary Menu -->
                     <!-- Customer Care -->
 {{--                    <div class="d-none d-xl-block col-md-auto">--}}
@@ -257,13 +281,13 @@
                                     <!-- End Input -->
                                 </li>
                                 <!-- End Search -->
-                                <li class="col d-none d-xl-block">
-                                    <a href="{{ route('compare_list', ['lang' => $lang]) }}" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Сравнить">
-                                        <i class="font-size-22 ec ec-compare"></i>
-                                        <span class="qty_compare width-22 height-22 bg-dark position-absolute align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12 text-white {{ !sessArray('compare')->count() ? 'd-none' : 'd-flex' }}"
-                                              style="left: 30px">{{ sessArray('compare')->count() }}</span>
-                                    </a>
-                                </li>
+{{--                                <li class="col d-none d-xl-block">--}}
+{{--                                    <a href="{{ route('compare_list', ['lang' => $lang]) }}" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Сравнить">--}}
+{{--                                        <i class="font-size-22 ec ec-compare"></i>--}}
+{{--                                        <span class="qty_compare width-22 height-22 bg-dark position-absolute align-items-center justify-content-center rounded-circle left-12 top-8 font-weight-bold font-size-12 text-white {{ !sessArray('compare')->count() ? 'd-none' : 'd-flex' }}"--}}
+{{--                                              style="left: 30px">{{ sessArray('compare')->count() }}</span>--}}
+{{--                                    </a>--}}
+{{--                                </li>--}}
                                 <li class="col d-none d-xl-block">
                                     <a href="{{ route('fav_list', ['lang' => $lang]) }}" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Избранное">
                                         <i class="font-size-22 ec ec-favorites"></i>
@@ -310,7 +334,7 @@
         <!-- End Logo and Menu -->
 
         <!-- Vertical-and-Search-Bar -->
-        <div class="d-none d-xl-block bg-primary">
+        <div class="d-none d-xl-block">
             <div class="container">
                 <div class="row align-items-stretch min-height-50">
                     <!-- Vertical Menu -->
@@ -319,14 +343,14 @@
                             <!-- Basics Accordion -->
                             <div id="basicsAccordion">
                                 <!-- Card -->
-                                <div class="card border-0 rounded-0">
-                                    <div class="card-header bg-primary rounded-0 card-collapse border-0" id="basicsHeadingOne">
-                                        <button type="button" class="btn-link btn-remove-focus btn-block d-flex card-btn py-3 text-lh-1 px-4 shadow-none btn-primary rounded-top-lg border-0 font-weight-bold text-gray-90"
+                                <div class="card">
+                                    <div class="card-header bg-primary card-collapse border-0" id="basicsHeadingOne">
+                                        <button type="button" class="btn-link btn-remove-focus btn-block d-flex card-btn py-3 text-lh-1 px-4 shadow-none btn-primary border-0 font-weight-bold text-gray-90"
                                                 data-toggle="collapse"
                                                 data-target="#basicsCollapseOne"
                                                 aria-expanded="true"
                                                 aria-controls="basicsCollapseOne">
-                                            <span class="pl-1 text-gray-90">Категории</span>
+                                            <span class="pl-1 text-gray-90"><i class="fas fa-bars fa-lg"></i>  Все категории</span>
                                             <span class="text-gray-90 ml-3">
                                                         <span class="ec ec-arrow-down-search"></span>
                                                     </span>
@@ -420,57 +444,47 @@
                         </div>
                     </div>
                     <!-- End Vertical Menu -->
-                    <!-- Search bar -->
-                    <div class="col align-self-center">
-                        <!-- Search-Form -->
-                        <form class="js-focus-state">
-                            <label class="sr-only" for="searchProduct">Поиск</label>
-                            <div class="input-group">
-                                <input type="email" class="form-control py-2 pl-5 font-size-15 border-0 height-40 rounded-left-pill" name="email" id="searchProduct" placeholder="Найти товар" aria-label="Найти товар" aria-describedby="searchProduct1" required>
-                                <div class="input-group-append">
-                                    <button class="btn btn-dark height-40 py-2 px-3 rounded-right-pill" type="button" id="searchProduct1">
-                                        <span class="ec ec-search font-size-24"></span>
-                                    </button>
-                                </div>
+                    <div class="col d-none d-xl-block">
+                        <!-- Nav -->
+                        <nav class="js-mega-menu navbar navbar-expand-md u-header__navbar u-header__navbar--no-space">
+                            <!-- Navigation -->
+                            <div id="navBar" class="collapse navbar-collapse u-header__navbar-collapse">
+                                <ul class="navbar-nav u-header__navbar-nav">
+                                    @foreach($menu as $item)
+                                        @if($item->view_top)
+                                            <li class="nav-item u-header__nav-item">
+                                                <a class="nav-link u-header__nav-link {{ $item->page_type == @$page_data->page_type ? 'text-sale' : '' }}"
+                                                   href="{{ setUri($item->url) }}" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">
+                                                    {{ $item["name_$lang"] }}
+                                                </a>
+                                            </li>
+                                        @endif
+                                    @endforeach
+                                    {{-- @if(!\Auth::check())
+                                        <li class="nav-item u-header__nav-last-item">
+
+                                            <a id="sidebarNavToggler" href="javascript:;" role="button" class="btn-round transition-3d-hover"
+                                               aria-controls="sidebarContent"
+                                               aria-haspopup="true"
+                                               aria-expanded="false"
+                                               data-unfold-event="click"
+                                               data-unfold-hide-on-scroll="false"
+                                               data-unfold-target="#sidebarContent"
+                                               data-unfold-type="css-animation"
+                                               data-unfold-animation-in="fadeInRight"
+                                               data-unfold-animation-out="fadeOutRight"
+                                               onclick="showSignup()"
+                                               data-unfold-duration="500">
+                                                <i class="ec ec-user"></i> Стать поставщиком
+                                            </a>
+                                        </li>
+                                    @endif --}}
+                                </ul>
                             </div>
-                        </form>
-                        <!-- End Search-Form -->
+                            <!-- End Navigation -->
+                        </nav>
+                        <!-- End Nav -->
                     </div>
-                    <!-- End Search bar -->
-                    <!-- Header Icons -->
-                    <div class="col-md-auto align-self-center">
-                        <div class="d-flex">
-                            <ul class="d-flex list-unstyled mb-0">
-                                <li class="col">
-                                    <a href="{{ route('compare_list', ['lang' => $lang]) }}" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Сравнить">
-                                        <i class="font-size-22 ec ec-compare"></i>
-                                        <span style="left: 30px" class="{{ !sessArray('compare')->count() ? 'd-none' : '' }} qty_compare width-22 height-22 bg-dark position-absolute flex-content-center text-white rounded-circle left-12 top-8 font-weight-bold font-size-12">{{  sessArray('compare')->count() }}</span>
-                                    </a>
-                                </li>
-                                <li class="col">
-                                    <a href="{{ route('fav_list', ['lang' => $lang]) }}" class="text-gray-90" data-toggle="tooltip" data-placement="top" title="Избранное">
-                                        <i class="font-size-22 ec ec-favorites"></i>
-                                        <span style="left: 25px" class="{{ !sessArray('favorites')->count() ? 'd-none' : '' }} qty_fav width-22 height-22 bg-dark position-absolute flex-content-center text-white rounded-circle left-12 top-8 font-weight-bold font-size-12">{{  sessArray('favorites')->count() }}</span>
-                                    </a>
-                                </li>
-
-                                <li class="col pr-0">
-                                    <a href="{{ route('view_cart', compact('lang')) }}"
-                                       class="text-gray-90 position-relative d-flex" data-toggle="tooltip" data-placement="top" title="Корзина">
-                                        <i class="font-size-22 ec ec-shopping-bag"></i>
-
-                                        <span class="width-22 height-22 bg-dark {{ cart()->has() ? '' : 'd-none' }} position-absolute flex-content-center text-white rounded-circle left-12 top-8 font-weight-bold font-size-12 cart-qty">
-                                            {{ cart()->getTotalQty() }}
-                                        </span>
-{{--                                        <span class="font-weight-bold font-size-16 text-gray-90 ml-3">--}}
-{{--                                            {{ RUB }} {{ priceString(cart()->getTotalPrice()) }}--}}
-{{--                                        </span>--}}
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- End Header Icons -->
                 </div>
             </div>
         </div>

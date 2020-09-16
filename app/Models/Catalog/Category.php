@@ -8,14 +8,14 @@ use App\Models\Traits\PermisionTrait;
 
 class Category extends Model
 {
-	use OrderingTrait, PermisionTrait;
-	
-	public $timestamps = false;
+    use OrderingTrait, PermisionTrait;
+    
+    public $timestamps = false;
 
-	protected $table = 'categories';
+    protected $table = 'categories';
 
-	protected $fillable = [
-        'name_ru', 
+    protected $fillable = [
+        'name_ru',
         'name_en',
         'parent_id'
     ];
@@ -30,7 +30,7 @@ class Category extends Model
         return $this->hasMany('App\Models\Catalog\Category', 'parent_id', 'id')->orderByPageUp()->withCount('products');
     }
 
-	public function scopeGetWithProducts($query)
+    public function scopeGetWithProducts($query)
     {
         return $query->with('products')->has('products.prices')->orderByPageUp()->visible()->get();
     }

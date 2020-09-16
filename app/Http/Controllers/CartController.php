@@ -24,6 +24,7 @@ class CartController extends Controller
 
     public function view()
     {
+        // request()->session()->forget('cart');
         $crumb   = BreadFactory::init();
         $crumb->add(Crumb::name('Корзина'));
         $breads  = $crumb->toHtml();
@@ -46,11 +47,12 @@ class CartController extends Controller
     public function checkout($lang, Request $request)
     {
         try {
-
-            if (!isAuth() or !cart()->has()) return;
+            if (!isAuth() or !cart()->has()) {
+                return;
+            }
 
             $req = collect(['name', 'lastname', 'agree', 'payment_type', 'city', 'street', 'house', 'phone']);
-            $req->each(function($v){
+            $req->each(function ($v) {
                 if (!request($v)) {
                     throw new \ValidationError('Заполните все обязательные поля');
                 }
@@ -103,7 +105,6 @@ class CartController extends Controller
         $product = $this->catalogRepository->getProductById($request->id);
 
         try {
-
             if (isAuth() && $product->id_provider == user()->id) {
                 throw new \ValidationError('Вы не можете покупать свои товары');
             }
@@ -125,7 +126,6 @@ class CartController extends Controller
                 'totalQty'   => $this->cartRepository->getTotalQty(),
                 'totalPrice' => $this->cartRepository->getTotalPrice()
             ]);
-
         } catch (\ValidationError $e) {
             return \JsonResponse::error(['message' => $e->getMessage()]);
         }
@@ -208,7 +208,8 @@ class CartController extends Controller
 
     private function checkRequiredChars($product, $request)
     {
-        $chars = $this->catalogRepository->getProductChars($product->id, true)->keyBy('id');;
+        $chars = $this->catalogRepository->getProductChars($product->id, true)->keyBy('id');
+        ;
         foreach ($request->char as $id_char => $id_value) {
             if (empty($chars[$id_char]) or !in_array($id_value, $chars[$id_char]['value']->pluck('id')->toArray())) {
                 throw new \ValidationError('Укажите все параметры');

@@ -60,7 +60,7 @@ class ProductsController extends Controller
     public function deleteImage($lang, Request $request)
     {
         ProductImage::where('image', $request->value)
-                    ->whereHas('product', function($query) {
+                    ->whereHas('product', function ($query) {
                         return $query->where('id_provider', user()->id);
                     })
                     ->delete();

@@ -1,7 +1,7 @@
 @extends('profile.layout')
 
 @section('profile')
-    <div class="col-lg-9 order-lg-1">
+    <div class="col-lg-12 order-lg-1">
         <div class="pb-7 mb-7">
 
             <!-- Title -->
@@ -114,12 +114,12 @@
                         if($data->images->count()){
                           foreach($data->images as $image){
                             $realPath = public_path('uploads/products') . '/' . $image->image;
-
+                            $fag = file_exists($realPath);
                             $imgData[] = [
                               'name' => $image->image,
-                              'size' => filesize($realPath),
+                              'size' => $fag ? filesize($realPath) : '',
                               'file' => '/uploads/products/' . $image->image,
-                              'type' => mime_content_type($realPath),
+                              'type' => $fag ? mime_content_type($realPath) : '',
                               'data' => [
                                   'thumbnail' => imageThumb($image->image, 'uploads/products', 500, 500, 1)
                               ]

@@ -24,8 +24,7 @@ class ConfirmRegistration extends Notification
     public function __construct($confirm_hash, $lang)
     {
         $this->confirmation_link = url(route('registration_confirm', ['lang' => \App::getLocale(), 'confirmation_hash' => $confirm_hash]));
-
-        $this->lang = $lang;
+        $this->lang              = $lang;
     }
 
     /**
@@ -48,7 +47,7 @@ class ConfirmRegistration extends Notification
     public function toMail($notifiable)
     { 
         $emailTemplate = EmailTemplates::where('var', 'confirm_registration')->first();
-        $message = str_replace(['{CONFIRMATION_LINK}', '{USERNAME}'], [$this->confirmation_link, $notifiable->name], $emailTemplate["message_{$this->lang}"]);
+        $message       = str_replace(['{CONFIRMATION_LINK}', '{USERNAME}'], [$this->confirmation_link, $notifiable->name], $emailTemplate["message_{$this->lang}"]);
         return (new MailMessage) 
                     ->subject($emailTemplate["theme_{$this->lang}"])
                     ->from(setting('mailbox')) 

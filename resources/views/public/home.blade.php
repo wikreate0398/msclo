@@ -42,7 +42,7 @@
                                         <div class="col-xl-5 col-6  d-flex align-items-center"
                                              data-scs-animation-in="zoomIn"
                                              data-scs-animation-delay="500">
-                                            <img class="img-fluid" src="{{ imageThumb($slider->product->image, 'uploads/slider', 416, 420, 1) }}" alt="">
+                                            <img class="img-fluid" src="{{ imageThumb($slider->product->images->first()->image, 'uploads/products', 416, 420, 1) }}" alt="">
                                         </div>
                                     @endif
                                 </div>

@@ -1,5 +1,5 @@
 <?php
 
 return [
-	'path' => 'cp'
+    'path' => 'cp'
 ];

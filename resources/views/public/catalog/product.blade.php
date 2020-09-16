@@ -64,11 +64,11 @@
                         </div>
                     </div>
                     <div class="flex-horizontal-center flex-wrap mb-4">
-                        <a href="javascript:;"
-                           class="text-gray-6 compare-icon compare-icon-{{ $product->id }} font-size-13 mr-2 {{ sessArray('compare')->exist($product->id) ? 'active' : '' }}"
-                           onclick="addToCompare(this, {{ $product->id }}); return false;">
-                            <i class="ec ec-compare font-size-15"></i> Сравнить
-                        </a>
+{{--                        <a href="javascript:;"--}}
+{{--                           class="text-gray-6 compare-icon compare-icon-{{ $product->id }} font-size-13 mr-2 {{ sessArray('compare')->exist($product->id) ? 'active' : '' }}"--}}
+{{--                           onclick="addToCompare(this, {{ $product->id }}); return false;">--}}
+{{--                            <i class="ec ec-compare font-size-15"></i> Сравнить--}}
+{{--                        </a>--}}
                         <a href="javascript:;"
                            class="text-gray-6 fav-icon fav-icon-{{ $product->id }} font-size-13 mr-2 {{ sessArray('favorites')->exist($product->id) ? 'active' : '' }}"
                            onclick="addToFav(this, {{ $product->id }}); return false;">
@@ -85,9 +85,11 @@
 {{--                    </div>--}}
                     <p>{{ $product["description_$lang"] }}</p>
                     @if($product["code"])
-                        <p><strong>Код</strong>: {{ $product["code"] }}</p>
+                        <p class="mb-2"><strong>Код</strong>: {{ $product["code"] }}</p>
                     @endif
-
+                    @if(isset($product->provider))
+                        <p class="mb-2"><strong>Поставщик</strong>: <a href="{{ route('view_provider', ['lang' => $lang, 'id' => $product->id_provider]) }}">{{ $product->provider->name }}</a></p>
+                    @endif
                     <form action="{{ route('add_to_cart', ['lang' => $lang]) }}"
                           onsubmit="addToCart(this); return false;"
                           class="add-cart-form">
@@ -145,21 +147,25 @@
                                 <div class="border rounded-pill py-2 px-3 border-color-1">
                                     <div class="js-quantity row align-items-center">
                                         <div class="col">
-                                            <input class="js-result bg-white form-control h-auto border-0 rounded p-0 shadow-none"
-                                                   type="number"
+                                            <input class="js-result cart-input-{{ $product->id }}-1 bg-white form-control h-auto border-0 rounded p-0 shadow-none"
+                                                   type="text"
                                                    min="1"
+                                                   onkeyup="this.value=this.value.replace(/[^\d]/,'')"
                                                    value="1"
                                                    name="qty"
-                                                   readonly
                                                    onchange="changePriceByQty(this, {{ $product->id }})">
                                         </div>
                                         <div class="col-auto pr-1">
-                                            <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
-                                               href="javascript:;">
+                                            <a class="btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
+                                               href="javascript:;"
+                                               onclick="changeQuantityValue('down', {{ $product->id }},'1')"
+                                               >
                                                 <small class="fas fa-minus btn-icon__inner"></small>
                                             </a>
-                                            <a class="js-plus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
-                                               href="javascript:;">
+                                            <a class="btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
+                                               href="javascript:;"
+                                               onclick="changeQuantityValue('up', {{ $product->id }},'1')"
+                                               >
                                                 <small class="fas fa-plus btn-icon__inner"></small>
                                             </a>
                                         </div>

@@ -9,18 +9,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-	use OrderingTrait, PermisionTrait, SoftDeletes;
-	
-	public $timestamps = true;
+    use OrderingTrait, PermisionTrait, SoftDeletes;
+    
+    public $timestamps = true;
 
-	protected $table = 'catalog';
+    protected $table = 'catalog';
 
-	protected $fillable = [
-	    'code',
-	    'url',
-	    'id_provider',
-	    'id_category',
-        'name_ru', 
+    protected $fillable = [
+        'code',
+        'url',
+        'id_provider',
+        'id_category',
+        'name_ru',
         'name_en',
         'description_ru',
         'description_en',
@@ -31,16 +31,16 @@ class Product extends Model
         'is_new'
     ];
 
-	protected $casts = [
-	  'is_new' => 'integer',
+    protected $casts = [
+      'is_new' => 'integer',
       'view'   => 'integer'
     ];
 
-	public function scopeVisible($query)
+    public function scopeVisible($query)
     {
         return $query->where('view', 1)
                      ->has('prices')
-                     ->whereHas('provider', function($query) {
+                     ->whereHas('provider', function ($query) {
                          return $query->active();
                      })->has('category');
     }
@@ -52,7 +52,7 @@ class Product extends Model
 
     public function prices()
     {
-        return $this->hasMany('App\Models\Catalog\ProductPrice', 'id_product', 'id')->orderBy('price', 'asc');
+        return $this->hasMany(ProductPrice::class, 'id_product', 'id')->orderBy('price', 'asc');
     }
 
     public function tags()
@@ -78,7 +78,7 @@ class Product extends Model
     public function scopeFilter($query)
     {
         if (request()->params) {
-            $query->whereHas('chars', function($query) {
+            $query->whereHas('chars', function ($query) {
                 return $query->whereIn('value', explode(',', request()->params));
             });
         }
@@ -88,7 +88,6 @@ class Product extends Model
         }
 
         if (request()->id_provider && request()->id_provider != 'all') {
-
             $query->where('id_provider', request()->id_provider);
         }
 
@@ -96,7 +95,7 @@ class Product extends Model
 
         $query->selectRaw("$priceQuery as price");
 
-        switch (request()->sort_by){
+        switch (request()->sort_by) {
             case ('price_asc'):
                 $query->orderByRaw("price asc");
                 break;

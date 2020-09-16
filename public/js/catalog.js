@@ -304,9 +304,11 @@ function changePriceByQty(input, id, cart_id = null) {
         dataType: 'json',
         success: function(jsonData){
             if (jsonData.msg == false) {
+                console.log(jsonData.msg);
                 Notify.setStatus('danger').setMessage(jsonData.message);
             }else{
                 if (jsonData.price) {
+                    console.log(jsonData.price);
                     $(input).closest('form').find(`.product-price-${id}`).text(priceString(jsonData.price));
                     if (cart_id != null) {
                         $(input).closest('tr').find(`.product-price-${id}-${cart_id}`).text(`${RUB} ${priceString(jsonData.price)}`);
@@ -325,9 +327,11 @@ function changeCartQty(input, id, cart_id) {
         dataType: 'json',
         success: function(jsonData){
             if (jsonData.msg == false) {
+                console.log(jsonData.msg);
                 Notify.setStatus('danger').setMessage(jsonData.message);
             }else{
                 if (jsonData.price) {
+                    console.log(jsonData.price);
                     $(input).closest('tr').find(`.product-price-${id}-${cart_id}`).text(`${RUB} ${priceString(jsonData.price)}`);
                     $(input).closest('tr').find(`.total-product-price-${id}-${cart_id}`).text(`${RUB} ${priceString(jsonData.price*parseFloat(jsonData.qty))}`);
                 }

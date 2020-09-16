@@ -24,8 +24,13 @@ class OrderProduct extends Model
         return $this->hasOne('App\Models\User', 'id', 'id_provider')->withTrashed();
     }
 
+    public function orders()
+    {
+        return $this->hasOne(Order::class, 'id', 'id_provider')->withTrashed();
+    }
+
     public function product()
     {
-        return $this->hasOne('App\Models\Catalog\Product', 'id', 'id_product')->with('images')->withTrashed();
+        return $this->hasOne('App\Models\Catalog\Product', 'id', 'id_product')->with('images', 'category', 'prices')->withTrashed();
     }
 }

@@ -64,7 +64,7 @@ class ProviderController extends Controller
     public function downloadFile($lang, $id)
     {
         $file = ProviderFile::whereId($id)->with('provider')->has('provider')->firstOrFail();
-        return response()->streamDownload(function () use($file) {
+        return response()->streamDownload(function () use ($file) {
             echo file_get_contents(url('uploads/provider_files/' . $file->file));
         }, 'provider-' . str_replace(' ', '_', $file->name_ru) . '.' . explode('.', $file->file)[1]);
     }

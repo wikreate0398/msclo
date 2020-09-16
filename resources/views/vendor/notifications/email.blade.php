@@ -38,8 +38,11 @@
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-С уважением,<br>
-{{ config('app.name') }}
+<small style="color: #ccc">
+    С наилучшими пожеланиями,<br>
+    команда Massclo. <br>
+    <a href="mailto:info@massclo.com">info@massclo.com</a>
+</small>
 @endif
 
 {{-- Subcopy --}}

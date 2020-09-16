@@ -65,21 +65,25 @@
                     <div class="border rounded-pill py-2 px-3 border-color-1">
                         <div class="js-quantity row align-items-center">
                             <div class="col">
-                                <input class="js-result bg-white form-control h-auto border-0 rounded p-0 shadow-none"
-                                       type="number"
+                                <input class="js-result cart-input-{{ $product->id }}-1 bg-white form-control h-auto border-0 rounded p-0 shadow-none"
+                                       type="text"
+                                       onkeyup="this.value=this.value.replace(/[^\d]/,'')"
                                        min="1"
                                        value="1"
                                        name="qty"
-                                       readonly
                                        onchange="changePriceByQty(this, {{ $product->id }})">
                             </div>
                             <div class="col-auto pr-1">
-                                <a class="js-minus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
-                                   href="javascript:;">
+                                <a class="btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
+                                   href="javascript:;"
+                                   onclick="changeQuantityValue('down', {{ $product->id }},'1')"
+                                   >
                                     <small class="fas fa-minus btn-icon__inner"></small>
                                 </a>
-                                <a class="js-plus btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
-                                   href="javascript:;">
+                                <a class="btn btn-icon btn-xs btn-outline-secondary rounded-circle border-0"
+                                   href="javascript:;"
+                                   onclick="changeQuantityValue('up', {{ $product->id }},'1')"
+                                   >
                                     <small class="fas fa-plus btn-icon__inner"></small>
                                 </a>
                             </div>
@@ -89,7 +93,7 @@
                 </div>
                 <div class="ml-md-3">
                     <a href="javascript:;"
-                       class="btn btn-sm px-5 btn-primary-dark transition-3d-hover"
+                       class="btn px-5 btn-primary-dark transition-3d-hover"
                        onclick="$(this).closest('form').submit();">
                         <i class="ec ec-add-to-cart mr-2 font-size-20"></i> В корзину
                     </a>

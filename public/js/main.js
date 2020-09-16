@@ -487,6 +487,21 @@ function showPurchaseProducts(item) {
     }
 }
 
+// increment and decrement buttons
+function changeQuantityValue(button, id, cart_id) {
+    let input = $('.cart-input-' + id + '-' + cart_id );
+    if(button == 'up'){
+        input.val( Number(input.val()) + 1 );
+        input.change();
+    } else {
+        if(input.val() > 1){
+            input.val( Number(input.val()) - 1 );
+            input.change();
+        }
+    }
+}
+// End increment and decrement buttons
+
 function fileUploader(){
     if($('input.file_uploader_input').length){
 

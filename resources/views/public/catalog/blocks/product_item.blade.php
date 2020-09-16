@@ -25,11 +25,11 @@
         </div>
         <div class="product-item__footer">
             <div class="border-top pt-2 flex-center-between flex-wrap">
-                <a href="javascript:;"
-                   class="text-gray-6 compare-icon compare-icon-{{ $product->id }} font-size-13 {{ sessArray('compare')->exist($product->id) ? 'active' : '' }}"
-                   onclick="addToCompare(this, {{ $product->id }}); return false;">
-                    <i class="ec ec-compare font-size-15"></i> Сравнить
-                </a>
+{{--                <a href="javascript:;"--}}
+{{--                   class="text-gray-6 compare-icon compare-icon-{{ $product->id }} font-size-13 {{ sessArray('compare')->exist($product->id) ? 'active' : '' }}"--}}
+{{--                   onclick="addToCompare(this, {{ $product->id }}); return false;">--}}
+{{--                    <i class="ec ec-compare font-size-15"></i> Сравнить--}}
+{{--                </a>--}}
                 <a href="javascript:;"
                    class="text-gray-6 fav-icon fav-icon-{{ $product->id }} font-size-13 {{ sessArray('favorites')->exist($product->id) ? 'active' : '' }}"
                    onclick="addToFav(this, {{ $product->id }}); return false;">

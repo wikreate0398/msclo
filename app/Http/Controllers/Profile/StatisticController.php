@@ -84,4 +84,8 @@ class StatisticController extends Controller
             'messages' => 'Ваш тестовый текст отправлен'
         ]);
     }
+
+    public function chartApi()
+    {
+    }
 }

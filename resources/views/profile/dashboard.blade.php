@@ -111,7 +111,7 @@
         </div>
         <div class="col-md-4 mb-12">
             <h4>Статистика</h4>
-            <img class="mb-3" style="max-width: 445px" src="{{ asset('img/dashboard_frame.png') }}">
+            {{-- <img class="mb-3" style="max-width: 445px" src="{{ asset('img/dashboard_frame.png') }}"> --}}
             <div class="custom-card mb-4">
                 <div class="row">
                     <div class="col-md-3 py-3 px-7 text-center">

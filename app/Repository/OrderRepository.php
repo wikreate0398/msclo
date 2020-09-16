@@ -11,6 +11,7 @@ class OrderRepository implements OrderRepositoryInterface
     {
         $data = OrderProduct::with(['provider', 'product'])
                               ->orderBy('qty', 'desc')
+                              ->take(5)
                               ->get();
 
         return $data;

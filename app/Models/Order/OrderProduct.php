@@ -31,6 +31,6 @@ class OrderProduct extends Model
 
     public function product()
     {
-        return $this->hasOne('App\Models\Catalog\Product', 'id', 'id_product')->with('images')->withTrashed();
+        return $this->hasOne('App\Models\Catalog\Product', 'id', 'id_product')->with('images', 'category', 'prices')->withTrashed();
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Profile;
 use App\Http\Controllers\Controller;
 use App\Mail\ChatCallback;
 use App\Models\User;
+use App\Repository\Interfaces\OrderRepositoryInterface;
 use App\Repository\Interfaces\ProviderRepositoryInterface;
 use App\Utils\Constants;
 use App\Utils\JsonResponse;
@@ -16,9 +17,10 @@ class StatisticController extends Controller
 {
     private $providerRepository;
 
-    public function __construct(ProviderRepositoryInterface $providerRepository)
+    public function __construct(ProviderRepositoryInterface $providerRepository, OrderRepositoryInterface $orderRepository)
     {
         $this->providerRepository = $providerRepository;
+        $this->orderRepository = $orderRepository;
     }
 
     public function index($lang)
@@ -36,6 +38,7 @@ class StatisticController extends Controller
         $quantityOfAllSales = $sumOfAllSalesAndQuantity['total_qty'];
         
         $sumOfProducts = $this->providerRepository->getProviderProducts($provider->id)->count();
+        $products = $this->providerRepository->getProviderProduct(user()->id, false);
         
         $sumOfCategories = $this->providerRepository->getCatsGroupedByProviders($provider->id);
         $sumOfCategories = $sumOfCategories->first() ? $sumOfCategories->first()->count() : 0;
@@ -45,8 +48,9 @@ class StatisticController extends Controller
         $maxProductPrice = $productPrices['max'];
 
         $orders = $this->providerRepository->getProviderOrders($provider->id);
-
-        return view('profile.statistics', compact(
+        $getOrders = $this->orderRepository->getOrders();
+        
+        $data = compact(
             'id',
             'provider',
             'quantityOfAllSales',
@@ -57,8 +61,15 @@ class StatisticController extends Controller
             'sumOfCategories',
             'minProductPrice',
             'maxProductPrice',
-            'orders'
-        ));
+            'orders',
+            'getOrders',
+            'products'
+        );
+        if (url()->current() == route('statistics', ['lang' => $lang])) {
+            return view('profile.statistics', $data);
+        } elseif (url()->current() == route('dashboard', ['lang' => $lang])) {
+            return view('profile.dashboard', $data);
+        }
     }
 
     public function callback($lang, Request $request)

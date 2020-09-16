@@ -60,7 +60,7 @@
         <div class="col-md-3">
             <div class="custom-card">
                 <h6 class="text-center"><strong>Служба поддержки</strong></h6>
-                <p class="readonly-field text-center" style="border-bottom: none">{{ SUPPORT_DESC }}</p>
+                <p class="readonly-field text-center" style="border-bottom: none">{{-- SUPPORT_DESC --}}</p>
                 <div class="text-center">
                     <a href="#chatModal" data-toggle="modal" class="btn btn-sm px-5 btn-primary-dark transition-3d-hover">В ЧАТ</a>
                     @include('profile.chat-modal')

@@ -30,6 +30,21 @@ class ProviderRepository implements ProviderRepositoryInterface
         return $data;
     }
 
+    public function getProviderProduct($id_provider, $view = 1)
+    {
+        $data = Product::withRelations();
+
+        if ($view) {
+            $data->visible();
+        }
+        $data = $data->where('id_provider', $id_provider)
+                     ->orderBy('created_at', 'desc')
+                     ->take(1)
+                     ->get();
+
+        return $data;
+    }
+
     public function getProvidersFilter($idsCats = [])
     {
         return User::provider()->whereProdsInCats($idsCats)->get();

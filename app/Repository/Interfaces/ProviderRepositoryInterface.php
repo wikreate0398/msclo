@@ -8,6 +8,8 @@ interface ProviderRepositoryInterface
 
     public function getProviderProducts($id_provider);
 
+    public function getProviderProduct($id_provider);
+
     public function getCatsGroupedByProviders($id_provider = false);
 
     public function getProvidersList();

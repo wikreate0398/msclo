@@ -1,3 +1,7 @@
+body{
+    font-family: 'Avenir Next Cyr Regular';
+}
+
 #basicsHeadingOne span:first-child{
     color: #fff;
 }
@@ -9,6 +13,120 @@
     border: 0.5px solid black;
 }
 
+.dashboard-page .custom-card{
+    background: #F2F2F2;
+}
+.dashboard-page .custom-card:first-child p.description{
+    font-family: 'Avenir Next Cyr Thin';
+}
+.dashboard-page .custom-card:first-child p{
+    font-family: 'Avenir Next Cyr Regular';
+    font-style: normal;
+    font-weight: normal;
+}
+.dashboard-page .custom-card:first-child i{
+    color: #2F80ED;
+    font-size: 35px;
+}
+.dashboard-page .custom-card:first-child a:last-child{
+    color: #2F80ED;
+}
+.dashboard-page .custom-card:first-child h5:first-child{
+    color: #000000;
+    font-size: 24px;
+    font-weight: 750;
+    font-family: 'Avenir Next Cyr Bold';
+}
+.dashboard-page .custom-card:first-child .profile-photo{
+    width: 110px;
+    height: 110px;
+}
+.dashboard-page .custom-card h6{
+    font-size: 12px;
+    font-family: 'Avenir Next Cyr Regular';
+    line-height: 15px;
+    font-style: normal;
+    font-weight: normal;
+}
+.dashboard-page .custom-card span{
+    font-family: 'Avenir Next Cyr Regular';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 29px;
+}
+.dashboard-page .custom-card span p{
+    color: #219653;
+    font-family: 'Avenir Next Cyr Regular';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+}
+.dashboard-page .col-md-4.mb-12{
+    border-left: 1px solid #E0E0E0;
+    padding-left: 37px;
+}
+.rounded-icon.cart{
+    background-color: #6FCF97;
+}
+.rounded-icon.dollar{
+    background-color: #F2C94C;
+}
+.rounded-icon.box{
+    background-color: #56CCF2;
+}
+.rounded-icon{
+    width: 58px;
+    height: 58px;
+}
+.rounded-icon i{
+    top: calc(50% - 10px);
+    position:relative;
+}
+.add_product_block i{
+    top: calc(50% - 30px);
+    position: relative;
+    color: black;
+}
+.popular_orders strong, .dashboard.product_card p{
+    font-family: "Avenir Next Cyr Bold";
+    font-style: normal;
+    font-weight: 750;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+}
+.link-blue{
+    color: #56CCF2;
+}
+.popular_orders .custom-green{
+    color: #219653;
+}
+.popular_orders table th,.popular_orders table td:nth-child(3),.dashboard.product_card span{
+    color: #828282;
+}
+
+.popular_orders table span{
+    font-size: 12px;
+    color: #BDBDBD;
+}
+.popular_orders table p{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+}
+.dashboard.product_card{
+    border: 1px dashed #E0E0E0;
+    border-radius: 9px;
+}
+.dashboard.product_card h5 a{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+}
 .custom-card{
     border: 1px solid #eaeaea;
     border-radius: 5px;

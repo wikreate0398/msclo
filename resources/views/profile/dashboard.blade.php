@@ -21,7 +21,7 @@
                                 <p class="mb-1 description">{{ $provider->description }}</p>
                             </div>
                             <div class="col-md-12">
-                                <p class="mb-1">{{ $provider->phone }} <span class="ml-3 mr-3">@if(isset($provider->phone) && isset($provider->email)) | @endif</span> {{ $provider->email }}</p>
+                                <p class="mb-1">{{ $provider->phone }} <span class="ml-3 mr-3">@if(isset($provider->phone) && isset($provider->email)) | @else @endif</span> {{ $provider->email }}</p>
                             </div>
                         </div>
                     </div>

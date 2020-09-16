@@ -83,6 +83,50 @@ body{
     top: calc(50% - 10px);
     position:relative;
 }
+.add_product_block i{
+    top: calc(50% - 30px);
+    position: relative;
+    color: black;
+}
+.popular_orders strong, .dashboard.product_card p{
+    font-family: "Avenir Next Cyr Bold";
+    font-style: normal;
+    font-weight: 750;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+}
+.link-blue{
+    color: #56CCF2;
+}
+.popular_orders .custom-green{
+    color: #219653;
+}
+.popular_orders table th,.popular_orders table td:nth-child(3),.dashboard.product_card span{
+    color: #828282;
+}
+
+.popular_orders table span{
+    font-size: 12px;
+    color: #BDBDBD;
+}
+.popular_orders table p{
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    text-overflow: ellipsis;
+}
+.dashboard.product_card{
+    border: 1px dashed #E0E0E0;
+    border-radius: 9px;
+}
+.dashboard.product_card h5 a{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #000000;
+}
 .custom-card{
     border: 1px solid #eaeaea;
     border-radius: 5px;

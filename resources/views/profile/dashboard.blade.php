@@ -40,7 +40,74 @@
             </div>
         </div>
         <div class="col-md-8">
-            <h4>Недавно добавленные твоары</h4>
+            <h4>Недавно добавленные товары</h4>
+            <ul class="row list-unstyled products-group no-gutters">
+                @foreach($products as $product)
+                    <li class="col-md-6 h-100 dashboard product_card">
+                        <div class="p-5 row">
+                            <div class="col-md-5">
+                                <a target="_blank" href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}" class="d-block text-center">
+                                    <img class="img-fluid" src="{{ imageThumb($product->images->first()->image, 'uploads/products', 212, 200, 'list') }}">
+                                </a>
+                            </div>
+                            <div class="col-md-7 align-self-center">
+                                <h5 class="mb-0 mt-2 product-item__title">
+                                    <a target="_blank" href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}">{{ $product["name_$lang"] }}</a>
+                                </h5>
+                                <span>{{ $product->category->name_ru }}</span>
+                                <p class="mt-3 mb-n1">{{ $product->prices->first()->price . ' ' . RUB }}</p>
+                            </div>
+                           
+                        </div>
+                    </li>
+                @endforeach
+                <li class="col-md-5 mx-5 add_product_block dashboard product_card">
+                    <div class="h-100 text-center align-self-center">
+                        <a href="{{ route('profile_add_product', compact('lang')) }}"
+                        class="pb-10" style="font-size: 45px"><i class="fa fa-plus"></i></a>
+                    </div>
+                </li>
+            </ul>
+            <a class="link-blue" href="{{ route('view_profile_product', ['lang' => $lang]) }}">Все добавленные товары</a>
+            <h4 class="mt-8 mb-n1 font-weight-bold">Наиболее популярные продажи</h4>
+            <div class="row popular_orders">
+                <div class="col-lg-12">
+                    <div class="mt-5 mb-10 cart-table">
+                        <table class="table" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th style="width:8%">Фото</th>
+                                    <th style="width:32%">Товар</th>
+                                    <th style="width:16%">Категория</th>
+                                    <th style="width:16%">Стоимость</th>
+                                    <th style="width:16%">Поставщик</th>
+                                    <th style="width:12%">Продаж</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($getOrders as $order)
+                                <tr>
+                                    <td>
+                                        @if(isset($order->product['images']))
+                                        <img src="{{ imageThumb($order->product['images']->first()['image'], 'uploads/products', 50, 50, 'list') }}" alt="">
+                                        @else @endif
+                                    </td>
+                                    <td>
+                                        <p class="mb-n1 text-dark"><a class="text-dark" href="{{ route('view_product', ['lang' => lang(), 'url' => $order->product['url']]) }}">{{ $order->product['name_ru']}}</a></p>
+                                        <span>Код: {{ $order->product['code'] }}</span>
+                                    </td>
+                                    <td>{{ $order->product['category']['name_ru']}}</td>
+                                    <td class="custom-green">{{ isset($order->product['prices']) ? $order->product['prices']->first()['price'] . ' ' . RUB : ''}}</td>
+                                    <td><a class="link-blue" href="{{ route('view_provider', ['lang' => $lang, 'id' => $order->provider['id']]) }}">{{ $order->provider['name']}}</a></td>
+                                    <td><strong>{{ $order->qty}}</strong></td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        <a class="link-blue" href="javascript:;">Все продажи</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-md-4 mb-12">
             <h4>Статистика</h4>

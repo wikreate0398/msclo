@@ -108,27 +108,34 @@ class StatisticController extends Controller
         
        
         $orders = OrderProduct::with('orders')
-                            ->where('id_provider', $provider->id)->get()->groupBy(function ($item) {
+                              ->where('id_provider', $provider->id)->get()->groupBy(function ($item) {
                                 return $item->orders->created_at->format('d.m');
-                            });
-
+                              });
             
         $totalQty = collect();
         foreach ($orders as $date => $orders) {
-            foreach ($orders as $order) {
-                if ($order->orders->count()) {
-                    $qty = $order->qty;
-                    $sum = $order->price*$qty;
-                    $orders = $order->orders;
-                    $ordersTotal = $order->orders ? $order->orders->count() : '';
-                    $totalQty->push([
-                        'date' => $date,
-                        'qty'  => $qty,
-                        'sum'  => $sum,
-                        'ordersTotal'  => '1'
-                    ]);
-                }
-            }
+
+            $totalQty->push([
+                'date'         => $date,
+                'qty'          => $orders->sum('qty'),
+                'sum'          => $orders->sum(function ($order) { return $order->qty*$order->price; }),
+                'ordersTotal'  => $orders->groupBy('id_order')->count()
+            ]);
+
+//            foreach ($orders as $order) {
+//                if ($order->orders->count()) {
+//                    $qty = $order->qty;
+//                    $sum = $order->price*$qty;
+//                    $orders = $order->orders;
+//                    $ordersTotal = $order->orders ? $order->orders->count() : '';
+//                    $totalQty->push([
+//                        'date' => $date,
+//                        'qty'  => $qty,
+//                        'sum'  => $sum,
+//                        'ordersTotal'  => '1'
+//                    ]);
+//                }
+//            }
         }
         
         return response()->json(compact('orders', 'totalQty'));

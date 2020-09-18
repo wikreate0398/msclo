@@ -2,6 +2,7 @@
 
 namespace App\Models\Order;
 
+use App\Models\Catalog\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -31,6 +32,6 @@ class OrderProduct extends Model
 
     public function product()
     {
-        return $this->hasOne('App\Models\Catalog\Product', 'id', 'id_product')->with('images', 'category', 'prices')->withTrashed();
+        return $this->hasOne(Product::class, 'id', 'id_product')->with('images', 'category', 'prices')->withTrashed();
     }
 }

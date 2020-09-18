@@ -115,7 +115,7 @@
                 <div class="col-md-12">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <canvas id="chLine" height="100"></canvas>
+                            <canvas id="myChart" height="200"></canvas>
                         </div>
                     </div>
                 </div>
@@ -157,51 +157,66 @@
     
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script>
-    /* chart.js chart examples */
-    var products = {!! json_encode($products) !!};
-    // chart colors
-    var colors = ['#007bff','#28a745','#333333','#c3e6cb','#dc3545','#6c757d'];
-
-    /* large line chart */
-    var chLine = document.getElementById("chLine");
-    var chartData = {
-        labels: ["S", "M", "T", "W", "T", "F", "S"],
-        datasets: [{
-            data: [589, 445, 483, 503, 689, 692, 634],
-            backgroundColor: 'transparent',
-            borderColor: colors[0],
-            borderWidth: 4,
-            pointBackgroundColor: colors[0]
+  var ctx = document.getElementById("myChart");
+  var labels = {!! json_encode($labels) !!}
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: labels,
+        datasets: 
+        [{
+            label: 'Заказы',
+            data: [],
+            borderWidth: 1
         },
         {
-            data: [639, 465, 493, 478, 589, 632, 674],
-            backgroundColor: colors[3],
-            borderColor: colors[1],
-            borderWidth: 4,
-            pointBackgroundColor: colors[1]
+            label: 'Продукты',
+            data: [],
+            borderWidth: 2
+        },
+        {
+            label: 'Сумма',
+            data: [],
+            borderWidth: 1
+        },
+
+        ]},
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero:true
+          }
         }]
-    };
-
-    if (chLine) {
-        new Chart(chLine, {
-        type: 'line',
-        data: chartData,
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: false
-                    }
-                }]
-            },
-            legend: {
-                display: false
-            }
-        }});
+      }
     }
-
+  });
+  var updateChart = function() {
+    $.ajax({
+      url: "{{ route('api.chart') }}",
+      type: 'GET',
+      dataType: 'json',
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      success: function(data) {
+        console.log(data.totalQty);
+        myChart.data.labels = data.totalQty.date;
+        myChart.data.datasets[0].data = data.totalQty.ordersTotal;
+        myChart.data.datasets[1].data = data.totalQty.qty;
+        myChart.data.datasets[2].data = data.totalQty.sum;
+        myChart.update();
+      },
+      error: function(data){
+        console.log(data);
+      }
+    });
+  }
+  
+  updateChart();
+  
 
 </script>
 

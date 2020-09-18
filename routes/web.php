@@ -189,6 +189,7 @@ Route::group(['prefix' => $adminPath, 'namespace' => 'Admin', 'middleware' => ['
 
 
 Route::get('/', 'HomeController@index')->middleware(['lang', 'web', 'const'])->name('home');
+Route::get('chart', 'Profile\StatisticController@chartApi')->name('api.chart');
 
 Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], function () {
     Route::get('/', 'HomeController@index');

@@ -63,29 +63,7 @@ class StatisticController extends Controller
         foreach ($period as $date) {
             $labels[] = $date->format('d.m');
         }
-        $orders = OrderProduct::with('orders', 'product')
-        ->where('id_provider', $provider->id)->get()->groupBy(function ($item) {
-            return $item->orders->created_at->format('d.m');
-        });
-
-        dd($orders);
-        $totalQty = collect();
-        foreach ($orders as $date => $orders) {
-            foreach ($orders as $order) {
-                if ($order->product->count()) {
-                    $qty = $order->qty;
-                    $sum = $order->price*$qty;
-                    $orders = $order->orders;
-                    $ordersTotal = $order->orders ? $order->orders->count() : '';
-                    $totalQty->push([
-                        'date' => $date,
-                        'qty'  => $qty,
-                        'sum'  => $sum,
-                        'ordersTotal'  => '1'
-                    ]);
-                }
-            }
-        }
+      
 
         $data = compact(
             'id',
@@ -102,7 +80,6 @@ class StatisticController extends Controller
             'getOrders',
             'products',
             'labels',
-            'totalQty'
         );
         if (url()->current() == route('statistics', ['lang' => $lang])) {
             return view('profile.statistics', $data);

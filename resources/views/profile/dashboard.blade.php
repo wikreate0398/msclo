@@ -3,21 +3,21 @@
 @section('profile')
 <div class="col-lg-12 dashboard-page">
     <div class="row">
-        <div class="col-md-12 mb-6">
+        <div class="col-md-12 mb-6 mt-3">
             <div class="custom-card">
                 <div class="row align-items-center p-2">
-                    <div class="col-xs-12 col-xl-1 ml-7 text-center">
+                    <div class="col-sm-12 col-md-1 ml-7 text-center">
                         <div class="profile-photo">
                             <div class="profile__img" style="background-image: url('{{ user()->image ? '/uploads/users/' . user()->image : '/uploads/no-avatar.png' }}');">
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-xl-8 ml-3">
+                    <div class="col-sm-12 col-md-8 ml-3">
                         <div class="row">
                             <div class="col-md-12">
                                 <h5 class="mb-1 ml-3">{{ $provider->full_name }}</h5>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-10">
                                 <p class="mb-1 description">{{ $provider->description }}</p>
                             </div>
                             <div class="col-md-12">
@@ -25,13 +25,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12 col-xl-2">
+                    <div class="col-sm-12 col-md-2">
                         <div class="row">
-                            <div class="col-md-5 d-none d-xl-block"></div>
-                            <div class="col-md-3">
+                            <div class="resizble-block col-md-5 d-none d-xl-block"></div>
+                            <div class="col-md-3 col-sm-12 text-center">
                                 <a href="{{ route('account', ['lang' => $lang]) }}"><i class="fa fa-cog" aria-hidden="true"></i></a>
                             </div>
-                            <div class="text-center align-self-center col-md-3">
+                            <div class="text-center align-self-center col-md-3 col-sm-12">
                                 <a href="{{ route('logout', compact('lang')) }}" class="px-3 py-2 ">Выйти</a>
                             </div>
                         </div>
@@ -40,8 +40,8 @@
             </div>
         </div>
         <div class="col-md-8">
-            <h4>Недавно добавленные товары</h4>
-            <ul class="row list-unstyled products-group no-gutters">
+            <h4 class="mb-5 font-weight-bold">Недавно добавленные товары</h4>
+            <ul class="row mb-4 list-unstyled products-group no-gutters">
                 @foreach($products as $product)
                     <li class="col-md-6 h-100 dashboard product_card">
                         <div class="p-5 row">
@@ -73,7 +73,7 @@
             <div class="row popular_orders">
                 <div class="col-lg-12">
                     <div class="mt-5 mb-10 cart-table">
-                        <table class="table" cellspacing="0">
+                        <table class="table mb-3" cellspacing="0">
                             <thead>
                                 <tr>
                                     <th style="width:8%">Фото</th>
@@ -97,7 +97,7 @@
                                         <span>Код: {{ $order->product['code'] }}</span>
                                     </td>
                                     <td>{{ $order->product['category']['name_ru']}}</td>
-                                    <td class="custom-green">{{ isset($order->product['prices']) ? $order->product['prices']->first()['price'] . ' ' . RUB : ''}}</td>
+                                    <td class="custom-green">{{ isset($order->product['prices']) ? priceString($order->product['prices']->first()['price']) . ' ' . RUB : ''}}</td>
                                     <td><a class="link-blue" href="{{ route('view_provider', ['lang' => $lang, 'id' => $order->provider['id']]) }}">{{ $order->provider['name']}}</a></td>
                                     <td><strong>{{ $order->qty}}</strong></td>
                                 </tr>
@@ -110,12 +110,12 @@
             </div>
         </div>
         <div class="col-md-4 mb-12">
-            <h4>Статистика</h4>
-            <div class="row my-2">
+            <h4 class="mb-5 font-weight-bold">Статистика</h4>
+            <div class="row my-2 mb-4">
                 <div class="col-md-12">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <canvas id="myChart" height="200"></canvas>
+                            <canvas id="myChart" height="129"></canvas>
                         </div>
                     </div>
                 </div>
@@ -185,6 +185,7 @@
         ]},
     options: {
       scales: {
+        xAxes: [],
         yAxes: [{
           ticks: {
             beginAtZero:true
@@ -202,11 +203,9 @@
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       success: function(data) {
-        console.log(data.totalQty);
-        myChart.data.labels = data.totalQty.date;
-        myChart.data.datasets[0].data = data.totalQty.ordersTotal;
-        myChart.data.datasets[1].data = data.totalQty.qty;
-        myChart.data.datasets[2].data = data.totalQty.sum;
+        myChart.data.datasets[0].data = data.totalQty[0].ordersTotal;
+        myChart.data.datasets[1].data = data.totalQty[0].qty;
+        myChart.data.datasets[2].data = data.totalQty[0].sum;
         myChart.update();
       },
       error: function(data){

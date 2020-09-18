@@ -54,7 +54,6 @@ class StatisticController extends Controller
 
         $orders = $this->providerRepository->getProviderOrders($provider->id);
         $getOrders = $this->orderRepository->getOrders();
-        // ->where([['created_at', '>=', $startDate],['created_at', '<=', $endDate]]) . 'А если создать на карбоне интервал и заполнить полученными данными?'
 
         $from = Carbon::now()->subDays(7);
         $to = Carbon::now();
@@ -63,8 +62,7 @@ class StatisticController extends Controller
         foreach ($period as $date) {
             $labels[] = $date->format('d.m');
         }
-      
-
+ 
         $data = compact(
             'id',
             'provider',
@@ -79,7 +77,7 @@ class StatisticController extends Controller
             'orders',
             'getOrders',
             'products',
-            'labels',
+            'labels'
         );
         if (url()->current() == route('statistics', ['lang' => $lang])) {
             return view('profile.statistics', $data);
@@ -106,38 +104,23 @@ class StatisticController extends Controller
         $id = Auth::user()->id;
         $provider = User::where('type', 'provider')->where('id', $id)->first();
         
-       
         $orders = OrderProduct::with('orders')
                               ->where('id_provider', $provider->id)->get()->groupBy(function ($item) {
-                                return $item->orders->created_at->format('d.m');
+                                  return $item->orders->created_at->format('d.m');
                               });
             
         $totalQty = collect();
         foreach ($orders as $date => $orders) {
-
             $totalQty->push([
                 'date'         => $date,
                 'qty'          => $orders->sum('qty'),
-                'sum'          => $orders->sum(function ($order) { return $order->qty*$order->price; }),
+                'sum'          => $orders->sum(function ($order) {
+                    return $order->qty*$order->price;
+                }),
                 'ordersTotal'  => $orders->groupBy('id_order')->count()
             ]);
-
-//            foreach ($orders as $order) {
-//                if ($order->orders->count()) {
-//                    $qty = $order->qty;
-//                    $sum = $order->price*$qty;
-//                    $orders = $order->orders;
-//                    $ordersTotal = $order->orders ? $order->orders->count() : '';
-//                    $totalQty->push([
-//                        'date' => $date,
-//                        'qty'  => $qty,
-//                        'sum'  => $sum,
-//                        'ordersTotal'  => '1'
-//                    ]);
-//                }
-//            }
         }
-        
-        return response()->json(compact('orders', 'totalQty'));
+
+        return response()->json(compact('totalQty'));
     }
 }

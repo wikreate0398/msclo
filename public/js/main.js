@@ -12,6 +12,14 @@ $(document).ready(function(){
         } 
     });
 
+    // dashboard card 
+    var w = $(this).width();
+    if(w < 1470){
+        $('.resizble-block').removeClass('col-md-5');
+        $('.resizble-block').addClass('col-md-3');
+    }
+    // end dashboard card
+
     $('[data-fancybox]').fancybox({
         buttons: ['close'],
     });

@@ -87,6 +87,13 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a href="{{ route('logout', compact('lang')) }}" class="text-danger px-3 py-2 list-group-item list-group-item-action border-right-0 border-left-0 border-bottom-0">
+                            <i class="mr-2 fas fa-angle-right"></i>
+                            Выйти
+                        </a>
+                    </li>
+
                 </ul>
             </div>
 

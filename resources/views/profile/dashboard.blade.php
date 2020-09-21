@@ -1,4 +1,7 @@
-@extends('profile.layout')
+@extends('profile.dashboard_layout', [
+    'productsNumber' => $sumOfProducts,
+    'ordersNumber' => $orders->count()
+])
 
 @section('profile')
 <div class="col-lg-12 dashboard-page">
@@ -31,7 +34,7 @@
                             <div class="col-md-3 col-sm-12 text-center">
                                 <a href="{{ route('account', ['lang' => $lang]) }}"><i class="fa fa-cog" aria-hidden="true"></i></a>
                             </div>
-                            <div class="text-center align-self-center col-md-3 col-sm-12">
+                            <div class="text-center align-self-center col-md-2 col-sm-12">
                                 <a href="{{ route('logout', compact('lang')) }}" class="px-3 py-2 ">Выйти</a>
                             </div>
                         </div>
@@ -72,9 +75,9 @@
             <h4 class="mt-8 mb-n1 font-weight-bold">Наиболее популярные продажи</h4>
             <div class="row popular_orders">
                 <div class="col-lg-12">
-                    <div class="mt-5 mb-10 cart-table">
+                    <div class="mt-5 mb-0 cart-table">
                         <table class="table mb-3" cellspacing="0">
-                            <thead>
+                        <thead>
                                 <tr>
                                     <th style="width:8%">Фото</th>
                                     <th style="width:32%">Товар</th>
@@ -104,8 +107,9 @@
                             @endforeach
                             </tbody>
                         </table>
-                        <a class="link-blue" href="javascript:;">Все продажи</a>
                     </div>
+                    
+                    <a class="link-blue" href="javascript:;">Все продажи</a>
                 </div>
             </div>
         </div>

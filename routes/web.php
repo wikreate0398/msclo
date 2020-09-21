@@ -262,7 +262,6 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
 
         Route::group(['prefix' => 'dashboard'], function () {
             Route::get('/', 'StatisticController@index')->name('dashboard');
-            Route::post('callback', 'StatisticController@callback')->name('dashboard.callback');
         });
 
         Route::group(['prefix' => 'orders'], function () {

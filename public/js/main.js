@@ -12,6 +12,20 @@ $(document).ready(function(){
         } 
     });
 
+    // dashboard card 
+    var w = $(this).width();
+    if(w < 1470){
+        $('.resizble-block').removeClass('col-md-5');
+        $('.resizble-block').addClass('col-md-3');
+    }
+    if(w < 1050){
+        $('.head_image').removeClass('col-md-9')
+        $('.head_image').addClass('col-auto')
+        $('.head_profile_settings').removeClass('col-md-3 pl-13')
+        $('.head_profile_settings').addClass('col align-self-center')
+    }
+    // end dashboard card
+
     $('[data-fancybox]').fancybox({
         buttons: ['close'],
     });

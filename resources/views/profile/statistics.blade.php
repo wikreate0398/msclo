@@ -13,7 +13,9 @@
                 </div>
                 <div class="text-center">
                     <h5 class="mb-3">{{ $provider->full_name }}</h5>
-                    <p class="mb-2"><i class="fas fa-phone mr-1"></i>{{ $provider->phone }}7</p>
+                    @if($provider->phone)
+                        <p class="mb-2"><i class="fas fa-phone mr-1"></i>{{ $provider->phone }}</p>
+                    @endif
                     <p class="mb-2"><i class="fas fa-envelope mr-1"> </i>{{ $provider->email }}</p>
                     @if($provider->site)
                         <p class="mb-2"><i class="fab fa-internet-explorer mr-1"> </i>{{ $provider->site }}</p>

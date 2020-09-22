@@ -1,4 +1,4 @@
-@extends('profile.dashboard_layout', [
+@extends('profile.profile_layout', [
     'productsNumber' => $sumOfProducts,
     'ordersNumber' => $orders->count()
 ])

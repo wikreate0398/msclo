@@ -1,7 +1,7 @@
 <header id="header" class="u-header u-header-left-aligned-nav">
     <div class="u-header__section">
         <!-- Topbar -->
-        <div class="u-header-topbar py-2 d-none d-xl-block bg-dark @if(url()->current() == route('dashboard', ['lang' => lang()])) dashboard-area @endif">
+        <div class="u-header-topbar py-2 d-none d-xl-block bg-dark @if(uri(2) == 'profile') dashboard-area @endif">
             <div class="container">
                 <div class="d-flex align-items-center">
                     {{--                    <div class="topbar-left">--}}
@@ -93,7 +93,7 @@
             <div class="container my-0dot5 my-xl-0">
                 <div class="row align-items-center">
                     <!-- Logo-offcanvas-menu -->
-                    <div class="head_image @if(url()->current() == route('dashboard', ['lang' => lang()])) col-md-7 @else col-auto @endif">
+                    <div class="head_image @if(uri(2) == 'profile') col-md-7 @else col-auto @endif">
                         <!-- Nav -->
                         <nav class="navbar navbar-expand u-header__navbar py-0 justify-content-xl-between max-width-270 min-width-270">
                             <!-- Logo -->
@@ -177,7 +177,7 @@
                         </aside>
                         <!-- ========== END HEADER SIDEBAR ========== -->
                     </div>
-                    @if(url()->current() == route('dashboard', ['lang' => lang()]))
+                    @if(uri(2) == 'profile')
                     <div class="head_profile_settings col">
                         <ul class="list-inline mb-0 float-right">
                             <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
@@ -229,7 +229,7 @@
                     <!-- End Logo-offcanvas-menu -->
                     <!-- Primary Menu -->
                     <!-- Search bar -->
-                    <div class="col align-self-center @if(url()->current() == route('dashboard', ['lang' => lang()])) dashboard-area @endif">
+                    <div class="col align-self-center @if(uri(2) == 'profile') dashboard-area @endif">
                         <!-- Search-Form -->
                         <form class="js-focus-state">
                             <label class="sr-only" for="searchProduct">Поиск</label>
@@ -246,7 +246,7 @@
                     </div>
                     <!-- End Search bar -->
                     <!-- Header Icons -->
-                    <div class="col-md-auto align-self-center @if(url()->current() == route('dashboard', ['lang' => lang()])) dashboard-area @endif">
+                    <div class="col-md-auto align-self-center @if(uri(2) == 'profile') dashboard-area @endif">
                         <div class="d-flex">
                             <ul class="d-flex list-unstyled mb-0">
 {{--                                <li class="col">--}}
@@ -383,7 +383,7 @@
         <!-- End Logo and Menu -->
 
         <!-- Vertical-and-Search-Bar -->
-        <div class="d-none d-xl-block @if(url()->current() == route('dashboard', ['lang' => lang()])) dashboard-area @endif">
+        <div class="d-none d-xl-block @if(uri(2) == 'profile') dashboard-area @endif">
             <div class="container">
                 <div class="row align-items-stretch min-height-50">
                     <!-- Vertical Menu -->

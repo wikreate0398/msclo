@@ -74,7 +74,7 @@
             <a class="link-blue" href="{{ route('view_profile_product', ['lang' => $lang]) }}">Все добавленные товары</a>
             <h4 class="mt-8 mb-n1 font-weight-bold">Наиболее популярные продажи</h4>
             <div class="row popular_orders">
-                <div class="col-lg-12">
+                <div class="col-lg-12 mb-10">
                     <div class="mt-5 mb-0 cart-table">
                         <table class="table mb-3" cellspacing="0">
                         <thead>

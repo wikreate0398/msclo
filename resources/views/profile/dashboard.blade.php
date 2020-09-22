@@ -93,7 +93,9 @@
                                         @else @endif
                                     </td>
                                     <td>
-                                        <p class="mb-n1 text-dark"><a class="text-dark" href="{{ route('view_product', ['lang' => lang(), 'url' => $order->product['url']]) }}">{{ $order->product['name_ru']}}</a></p>
+                                        <p class="mb-n1 text-dark">
+                                            <a class="text-dark" href="@if($order->product['deleted_at'] != null) {{ route('view_product', ['lang' => lang(), 'url' => $order->product['url']]) }} @else javascript:; @endif">{{ $order->product['name_ru']}}</a>
+                                        </p>
                                         <span>Код: {{ $order->product['code'] }}</span>
                                     </td>
                                     <td>{{ $order->product['category']['name_ru']}}</td>

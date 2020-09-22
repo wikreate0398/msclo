@@ -115,12 +115,11 @@
         <div class="col-md-4 mb-12">
             <div class="row mb-5">
                 <h4 class="col-auto mr-auto font-weight-bold">Статистика</h4>
-                <select class="col-auto js-select selectpicker dropdown-select custom-search-categories-select"
-                        data-style="btn height-40 text-gray-60 font-weight-normal border-0 rounded-0 bg-white px-5 py-2"> 
-                    <option data-icon="fa fa-calendar" value="one" selected>за 1 неделю</option>
-                    <option data-icon="fa fa-calendar" value="two">за 1 месяц</option>
-                    <option data-icon="fa fa-calendar" value="three">за 3 месяца</option>
-                    <option data-icon="fa fa-calendar" value="four">за 6 месяцев</option>
+                <select class="col-auto js-select selectpicker dropdown-select custom-search-categories-select" data-style="btn height-40 text-gray-60 font-weight-normal border-0 rounded-0 bg-white px-5 py-2" onchange="getChartDays(this.value)"> 
+                    <option data-icon="fa fa-calendar" value="7" selected>за 1 неделю</option>
+                    <option data-icon="fa fa-calendar" value="31">за 1 месяц</option>
+                    <option data-icon="fa fa-calendar" value="92">за 3 месяца</option>
+                    <option data-icon="fa fa-calendar" value="183">за 6 месяцев</option>
                 </select>
             </div>
             <div class="row my-2 mb-4">

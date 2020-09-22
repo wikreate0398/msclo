@@ -116,4 +116,9 @@ class StatisticController extends Controller
             'messages' => 'Ваш тестовый текст отправлен'
         ]);
     }
+
+    public function getChartData($value = 7)
+    {
+        return $value
+    }
 }

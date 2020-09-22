@@ -206,10 +206,12 @@
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       success: function(data) {
-        myChart.data.datasets[0].data = data.totalQty[0].ordersTotal;
-        myChart.data.datasets[1].data = data.totalQty[0].qty;
-        myChart.data.datasets[2].data = data.totalQty[0].sum;
-        myChart.update();
+          data.map(function (value, key){
+              myChart.data.datasets[0].data = value.ordersTotal;
+              myChart.data.datasets[1].data = value.qty;
+              myChart.data.datasets[2].data = value.sum;
+            })
+            myChart.update();
       },
       error: function(data){
         console.log(data);

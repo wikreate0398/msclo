@@ -121,6 +121,6 @@ class StatisticController extends Controller
             ]);
         }
 
-        return response()->json(compact('totalQty'));
+        return response()->json($totalQty);
     }
 }

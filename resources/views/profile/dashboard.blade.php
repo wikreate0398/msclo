@@ -1,7 +1,4 @@
-@extends('profile.dashboard_layout', [
-    'productsNumber' => $sumOfProducts,
-    'ordersNumber' => $orders->count()
-])
+@extends('profile.layout')
 
 @section('profile')
 <div class="col-lg-12 dashboard-page">
@@ -50,7 +47,7 @@
                         <div class="p-5 row">
                             <div class="col-md-5">
                                 <a target="_blank" href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}" class="d-block text-center">
-                                    <img class="img-fluid" src="{{ imageThumb($product->images->first()->image, 'uploads/products', 50, 50, 'list') }}">
+                                    <img class="img-fluid" src="{{ imageThumb($product->images->count() ? $product->images->first()->image : '', 'uploads/products', 50, 50, 'list') }}">
                                 </a>
                             </div>
                             <div class="col-md-7 align-self-center">
@@ -58,7 +55,7 @@
                                     <a target="_blank" href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}">{{ $product["name_$lang"] }}</a>
                                 </h5>
                                 <span>{{ $product->category->name_ru }}</span>
-                                <p class="mt-3 mb-n1">{{ $product->prices->first()->price . ' ' . RUB }}</p>
+                                <p class="mt-3 mb-n1">{{ @$product->prices->first()->price . ' ' . RUB }}</p>
                             </div>
                            
                         </div>
@@ -91,12 +88,14 @@
                             @foreach($getOrders as $order)
                                 <tr>
                                     <td>
-                                        @if(isset($order->product['images']))
+                                        @if($order->product['images']->count())
                                         <img src="{{ imageThumb($order->product['images']->first()['image'], 'uploads/products', 50, 50, 'list') }}" alt="">
                                         @else @endif
                                     </td>
                                     <td>
-                                        <p class="mb-n1 text-dark"><a class="text-dark" href="{{ route('view_product', ['lang' => lang(), 'url' => $order->product['url']]) }}">{{ $order->product['name_ru']}}</a></p>
+                                        <p class="mb-n1 text-dark">
+                                            <a class="text-dark" href="@if($order->product['deleted_at'] != null) {{ route('view_product', ['lang' => lang(), 'url' => $order->product['url']]) }} @else javascript:; @endif">{{ $order->product['name_ru']}}</a>
+                                        </p>
                                         <span>Код: {{ $order->product['code'] }}</span>
                                     </td>
                                     <td>{{ $order->product['category']['name_ru']}}</td>
@@ -114,7 +113,15 @@
             </div>
         </div>
         <div class="col-md-4 mb-12">
-            <h4 class="mb-5 font-weight-bold">Статистика</h4>
+            <div class="row mb-5">
+                <h4 class="col-auto mr-auto font-weight-bold">Статистика</h4>
+                <select class="col-auto js-select selectpicker dropdown-select custom-search-categories-select" data-style="btn height-40 text-gray-60 font-weight-normal border-0 rounded-0 bg-white px-5 py-2" onchange="getChartDays(this.value)"> 
+                    <option data-icon="fa fa-calendar" value="7" selected>за 1 неделю</option>
+                    <option data-icon="fa fa-calendar" value="31">за 1 месяц</option>
+                    <option data-icon="fa fa-calendar" value="92">за 3 месяца</option>
+                    <option data-icon="fa fa-calendar" value="183">за 6 месяцев</option>
+                </select>
+            </div>
             <div class="row my-2 mb-4">
                 <div class="col-md-12">
                     <div class="card shadow-sm">
@@ -165,6 +172,8 @@
 <script>
   var ctx = document.getElementById("myChart");
   var labels = {!! json_encode($labels) !!}
+  var diagramData = {!! json_encode($diagramData) !!}
+
   var myChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -172,20 +181,25 @@
         datasets: 
         [{
             label: 'Заказы',
-            data: [],
+            data: {!! $diagramData->pluck('ordersTotal')->toJson() !!},
+            borderColor: 'rgba(31, 120, 180, 1)',
+            backgroundColor: 'rgba(31, 120, 180, 0.2)',
             borderWidth: 1
         },
         {
             label: 'Продукты',
-            data: [],
+            data: {!! $diagramData->pluck('qty')->toJson() !!},
+            borderColor: 'rgba(178, 223, 138, 1)',
+            backgroundColor: 'rgba(178, 223, 138, 0.2)',
             borderWidth: 2
         },
         {
             label: 'Сумма',
-            data: [],
+            data: {!! $diagramData->pluck('sum')->toJson() !!},
+            borderColor: 'rgba(166, 206, 227, 1)',
+            backgroundColor: 'rgba(166, 206, 227, 0.2)',
             borderWidth: 1
         },
-
         ]},
     options: {
       scales: {
@@ -198,29 +212,6 @@
       }
     }
   });
-  var updateChart = function() {
-    $.ajax({
-      url: "{{ route('api.chart') }}",
-      type: 'GET',
-      dataType: 'json',
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      success: function(data) {
-        myChart.data.datasets[0].data = data.totalQty[0].ordersTotal;
-        myChart.data.datasets[1].data = data.totalQty[0].qty;
-        myChart.data.datasets[2].data = data.totalQty[0].sum;
-        myChart.update();
-      },
-      error: function(data){
-        console.log(data);
-      }
-    });
-  }
-  
-  updateChart();
-  
-
 </script>
 
 @stop

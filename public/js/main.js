@@ -306,6 +306,10 @@ $(window).load(function () {
     initEqHeight();
 });
 
+function getChartDays(value) {
+    console.log(value);
+}
+
 function initEqHeight() {
     fixHeight('.products-group-4-1-4');
     fixHeight('.catalog-product');

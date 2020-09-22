@@ -9,7 +9,8 @@ class OrderRepository implements OrderRepositoryInterface
 {
     public function getOrders()
     {
-        $data = OrderProduct::with(['provider', 'product'])
+        $data = OrderProduct::with(['provider', 'product.images'])
+                              ->has('product')
                               ->orderBy('qty', 'desc')
                               ->take(5)
                               ->get();

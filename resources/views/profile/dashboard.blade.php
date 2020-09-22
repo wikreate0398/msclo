@@ -1,7 +1,4 @@
-@extends('profile.profile_layout', [
-    'productsNumber' => $sumOfProducts,
-    'ordersNumber' => $orders->count()
-])
+@extends('profile.layout')
 
 @section('profile')
 <div class="col-lg-12 dashboard-page">

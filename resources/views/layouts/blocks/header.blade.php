@@ -75,9 +75,15 @@
                                        data-unfold-duration="500">
                                          <span class="text-gray-50">или</span> Войти в ЛК</a>
                                 @else
-                                    <a href="{{ route('statistics', compact('lang')) }}" class="u-header-topbar__nav-link text-light">
-                                        <i class="ec ec-user mr-1"></i> {{ user()->name }}
-                                    </a>
+                                    @if(user()->type == 'provider')
+                                        <a href="{{ route('dashboard', compact('lang')) }}" class="u-header-topbar__nav-link text-light">
+                                            <i class="ec ec-user mr-1"></i> {{ user()->name }}
+                                        </a>
+                                    @elseif(user()->type == 'user')
+                                        <a href="{{ route('purchases', compact('lang')) }}" class="u-header-topbar__nav-link text-light">
+                                            <i class="ec ec-user mr-1"></i> {{ user()->name }}
+                                        </a>
+                                    @endif
                                 @endif
                                 <!-- End Account Sidebar Toggle Button -->
                             </li>

@@ -56,7 +56,7 @@
 
 <!-- ========== MAIN CONTENT ========== -->
 <main id="content" role="main">
-    <div class="bg-gray-13 bg-md-transparent @if(url()->current() == route('dashboard', ['lang' => lang()])) dashboard-area @endif">
+    <div class="bg-gray-13 bg-md-transparent @if(uri(2) == 'profile') dashboard-area @endif">
         <div class="container">
             <!-- breadcrumb -->
             @if(@$page_data['page_type'] != 'home')

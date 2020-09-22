@@ -2,9 +2,6 @@
 
 namespace App\Providers;
 
-use App\Models\Brand;
-use App\Models\Menu;
-use App\Repository\Interfaces\CatalogRepositoryInterface;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,17 +22,13 @@ class ViewServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot(CatalogRepositoryInterface $repository)
+    public function boot()
     {
         View::composer(
-            ['layouts.public', 'public.*', 'profile.*'], 'App\Http\View\Composers\PublicComposer'
+            ['layouts.public', 'public.*', 'profile.*'],
+            'App\Http\View\Composers\PublicComposer'
         );
 
-        View::composer(['profile.dashboard_layout'], function ($view) use($repository) {
-            $view->with([
-                'productsNumber' => 123123213123,
-                'ordersNumber'   => 122,
-            ]);
-        });
+        View::composer('profile.layout', 'App\Http\View\Composers\ProfileComposer');
     }
 }

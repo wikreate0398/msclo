@@ -58,7 +58,7 @@
                                     <a target="_blank" href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}">{{ $product["name_$lang"] }}</a>
                                 </h5>
                                 <span>{{ $product->category->name_ru }}</span>
-                                <p class="mt-3 mb-n1">{{ $product->prices->first()->price . ' ' . RUB }}</p>
+                                <p class="mt-3 mb-n1">{{ @$product->prices->first()->price . ' ' . RUB }}</p>
                             </div>
                            
                         </div>

@@ -27,13 +27,14 @@ class ViewServiceProvider extends ServiceProvider
      */
     public function boot(CatalogRepositoryInterface $repository)
     {
-        View::composer(['layouts.public', 'public.*', 'profile.*'], function ($view) use($repository) {
+        View::composer(
+            ['layouts.public', 'public.*', 'profile.*'], 'App\Http\View\Composers\PublicComposer'
+        );
+
+        View::composer(['profile.dashboard_layout'], function ($view) use($repository) {
             $view->with([
-                'lang'       => lang(),
-                'page_data'  => \Pages::pageData(),
-                'categories' => $repository->getCats(),
-                'menu'       => Menu::getAll(),
-                'brands'     => Brand::getAll()
+                'productsNumber' => 123123213123,
+                'ordersNumber'   => 122,
             ]);
         });
     }

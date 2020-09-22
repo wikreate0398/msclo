@@ -18,12 +18,12 @@
                                     Dashboard
                                 </a>
                             </li>
-                            <li>
+                            {{-- <li>
                                 <a href="{{ route('statistics', compact('lang')) }}"
                                     class="{{ (uri(3) == 'statistics') ? 'active-navbar' : '' }} px-3 py-2 list-group-item list-group-item-action border-0">
                                     Статистика
                                 </a>
-                            </li>
+                            </li> --}}
                             @endif
                             <li>
                                 <a href="{{ route('purchases', compact('lang')) }}"

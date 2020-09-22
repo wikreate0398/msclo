@@ -262,6 +262,7 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
 
         Route::group(['prefix' => 'dashboard'], function () {
             Route::get('/', 'StatisticController@index')->name('dashboard');
+            Route::get('/chart-data', 'StatisticController@getChartData')->name('chart_data');
         });
 
         Route::group(['prefix' => 'orders'], function () {

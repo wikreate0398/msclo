@@ -223,7 +223,7 @@
                                        data-unfold-duration="500">
                                          <span class="text-gray-50">или</span> Войти в ЛК</a>
                                 @else
-                                    <a href="{{ route('statistics', compact('lang')) }}" class="u-header-topbar__nav-link">
+                                    <a href="{{ route('dashboard', compact('lang')) }}" class="u-header-topbar__nav-link">
                                         <i class="ec ec-user mr-1"></i> {{ user()->name }}
                                     </a>
                                 @endif

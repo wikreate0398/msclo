@@ -2,6 +2,7 @@
 
 namespace App\Http\View\Composers;
 
+use App\Models\Brand;
 use App\Models\Menu;
 use App\Repository\Interfaces\CatalogRepositoryInterface;
 use Illuminate\View\View;
@@ -28,6 +29,7 @@ class PublicComposer
             'page_data'  => \Pages::pageData(),
             'categories' => $this->catalogRepository->getCats(),
             'menu'       => Menu::getAll(),
+            'brands'     => Brand::getAll()
         ]);
     }
 }

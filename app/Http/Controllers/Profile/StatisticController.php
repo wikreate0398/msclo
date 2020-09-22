@@ -119,6 +119,6 @@ class StatisticController extends Controller
 
     public function getChartData($value = 7)
     {
-        return $value
+        return $value;
     }
 }

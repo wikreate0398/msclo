@@ -93,7 +93,7 @@
             <div class="container my-0dot5 my-xl-0">
                 <div class="row align-items-center">
                     <!-- Logo-offcanvas-menu -->
-                    <div class="head_image @if(url()->current() == route('dashboard', ['lang' => lang()])) col-md-9 @else col-auto @endif">
+                    <div class="head_image @if(url()->current() == route('dashboard', ['lang' => lang()])) col-md-7 @else col-auto @endif">
                         <!-- Nav -->
                         <nav class="navbar navbar-expand u-header__navbar py-0 justify-content-xl-between max-width-270 min-width-270">
                             <!-- Logo -->
@@ -178,8 +178,8 @@
                         <!-- ========== END HEADER SIDEBAR ========== -->
                     </div>
                     @if(url()->current() == route('dashboard', ['lang' => lang()]))
-                    <div class="head_profile_settings col-md-3 pl-13 align-items-center">
-                        <ul class="list-inline mb-0">
+                    <div class="head_profile_settings col">
+                        <ul class="list-inline mb-0 float-right">
                             <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
                                 <a href="{{ setUri(\Pages::getUriByType('delivery_payment')) }}" class="u-header-topbar__nav-link"><i class="ec ec-transport mr-1"></i> Доставка и оплата</a>
                             </li>

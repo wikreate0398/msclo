@@ -47,7 +47,7 @@
                         <div class="p-5 row">
                             <div class="col-md-5">
                                 <a target="_blank" href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}" class="d-block text-center">
-                                    <img class="img-fluid" src="{{ imageThumb($product->images->first()->image, 'uploads/products', 50, 50, 'list') }}">
+                                    <img class="img-fluid" src="{{ imageThumb($product->images->count() ? $product->images->first()->image : '', 'uploads/products', 50, 50, 'list') }}">
                                 </a>
                             </div>
                             <div class="col-md-7 align-self-center">
@@ -88,7 +88,7 @@
                             @foreach($getOrders as $order)
                                 <tr>
                                     <td>
-                                        @if(isset($order->product['images']))
+                                        @if($order->product['images']->count())
                                         <img src="{{ imageThumb($order->product['images']->first()['image'], 'uploads/products', 50, 50, 'list') }}" alt="">
                                         @else @endif
                                     </td>
@@ -164,6 +164,8 @@
 <script>
   var ctx = document.getElementById("myChart");
   var labels = {!! json_encode($labels) !!}
+  var diagramData = {!! json_encode($diagramData) !!}
+
   var myChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -171,20 +173,19 @@
         datasets: 
         [{
             label: 'Заказы',
-            data: [],
+            data: {!! $diagramData->pluck('ordersTotal')->toJson() !!},
             borderWidth: 1
         },
         {
             label: 'Продукты',
-            data: [],
+            data: {!! $diagramData->pluck('qty')->toJson() !!},
             borderWidth: 2
         },
         {
             label: 'Сумма',
-            data: [],
+            data: {!! $diagramData->pluck('sum')->toJson() !!},
             borderWidth: 1
         },
-
         ]},
     options: {
       scales: {
@@ -197,31 +198,6 @@
       }
     }
   });
-  var updateChart = function() {
-    $.ajax({
-      url: "{{ route('api.chart') }}",
-      type: 'GET',
-      dataType: 'json',
-      headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-      },
-      success: function(data) {
-          data.map(function (value, key){
-              myChart.data.datasets[0].data = value.ordersTotal;
-              myChart.data.datasets[1].data = value.qty;
-              myChart.data.datasets[2].data = value.sum;
-            })
-            myChart.update();
-      },
-      error: function(data){
-        console.log(data);
-      }
-    });
-  }
-  
-  updateChart();
-  
-
 </script>
 
 @stop

@@ -27,7 +27,7 @@ class OrderProduct extends Model
 
     public function orders()
     {
-        return $this->hasOne(Order::class, 'id', 'id_provider')->withTrashed();
+        return $this->hasOne(Order::class, 'id', 'id_order')->withTrashed();
     }
 
     public function product()

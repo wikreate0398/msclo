@@ -55,14 +55,29 @@ class StatisticController extends Controller
         $orders = $this->providerRepository->getProviderOrders($provider->id);
         $getOrders = $this->orderRepository->getOrders();
 
-        $from = Carbon::now()->subDays(7);
-        $to = Carbon::now();
-        $period = CarbonPeriod::create($from, $to);
-        $labels = [];
-        foreach ($period as $date) {
-            $labels[] = $date->format('d.m');
+        $orders = OrderProduct::with(['orders' => function($query) {
+            return $query->where('created_at', '>=', Carbon::now()->subDays(7));
+        }])->whereHas('orders', function($query) {
+            return $query->where('created_at', '>=', Carbon::now()->subDays(7));
+        })->where('id_provider', user()->id)->get();
+
+        $labels      = collect();
+        $diagramData = collect();
+        if ($orders->count()) {
+            foreach ($orders->groupBy(function($item) { return $item->orders->created_at->format('d.m'); }) as $date => $orders) {
+                $labels->push($date);
+
+                $diagramData->push([
+                    'date'         => $date,
+                    'qty'          => $orders->sum('qty'),
+                    'sum'          => $orders->sum(function ($order) {
+                        return $order->qty*$order->price;
+                    }),
+                    'ordersTotal'  => $orders->groupBy('id_order')->count()
+                ]);
+            }
         }
- 
+
         $data = compact(
             'id',
             'provider',
@@ -77,7 +92,9 @@ class StatisticController extends Controller
             'orders',
             'getOrders',
             'products',
-            'labels'
+
+            'labels',
+            'diagramData'
         );
         if (url()->current() == route('statistics', ['lang' => $lang])) {
             return view('profile.statistics', $data);
@@ -97,30 +114,5 @@ class StatisticController extends Controller
         return JsonResponse::success([
             'messages' => 'Ваш тестовый текст отправлен'
         ]);
-    }
-
-    public function chartApi()
-    {
-        $id = Auth::user()->id;
-        $provider = User::where('type', 'provider')->where('id', $id)->first();
-        
-        $orders = OrderProduct::with('orders')
-                              ->where('id_provider', $provider->id)->get()->groupBy(function ($item) {
-                                  return $item->orders->created_at->format('d.m');
-                              });
-            
-        $totalQty = collect();
-        foreach ($orders as $date => $orders) {
-            $totalQty->push([
-                'date'         => $date,
-                'qty'          => $orders->sum('qty'),
-                'sum'          => $orders->sum(function ($order) {
-                    return $order->qty*$order->price;
-                }),
-                'ordersTotal'  => $orders->groupBy('id_order')->count()
-            ]);
-        }
-
-        return response()->json($totalQty);
     }
 }

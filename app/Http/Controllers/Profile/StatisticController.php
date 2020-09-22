@@ -55,16 +55,18 @@ class StatisticController extends Controller
         $orders = $this->providerRepository->getProviderOrders($provider->id);
         $getOrders = $this->orderRepository->getOrders();
 
-        $orders = OrderProduct::with(['orders' => function($query) {
+        $orders = OrderProduct::with(['orders' => function ($query) {
             return $query->where('created_at', '>=', Carbon::now()->subDays(7));
-        }])->whereHas('orders', function($query) {
+        }])->whereHas('orders', function ($query) {
             return $query->where('created_at', '>=', Carbon::now()->subDays(7));
         })->where('id_provider', user()->id)->get();
-
+        
         $labels      = collect();
         $diagramData = collect();
         if ($orders->count()) {
-            foreach ($orders->groupBy(function($item) { return $item->orders->created_at->format('d.m'); }) as $date => $orders) {
+            foreach ($orders->groupBy(function ($item) {
+                return $item->orders->created_at->format('d.m');
+            }) as $date => $orders) {
                 $labels->push($date);
 
                 $diagramData->push([
@@ -92,7 +94,6 @@ class StatisticController extends Controller
             'orders',
             'getOrders',
             'products',
-
             'labels',
             'diagramData'
         );

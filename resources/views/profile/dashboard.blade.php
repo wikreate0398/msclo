@@ -113,7 +113,16 @@
             </div>
         </div>
         <div class="col-md-4 mb-12">
-            <h4 class="mb-5 font-weight-bold">Статистика</h4>
+            <div class="row mb-5">
+                <h4 class="col-auto mr-auto font-weight-bold">Статистика</h4>
+                <select class="col-auto js-select selectpicker dropdown-select custom-search-categories-select"
+                        data-style="btn height-40 text-gray-60 font-weight-normal border-0 rounded-0 bg-white px-5 py-2"> 
+                    <option data-icon="fa fa-calendar" value="one" selected>за 1 неделю</option>
+                    <option data-icon="fa fa-calendar" value="two">за 1 месяц</option>
+                    <option data-icon="fa fa-calendar" value="three">за 3 месяца</option>
+                    <option data-icon="fa fa-calendar" value="four">за 6 месяцев</option>
+                </select>
+            </div>
             <div class="row my-2 mb-4">
                 <div class="col-md-12">
                     <div class="card shadow-sm">
@@ -174,16 +183,22 @@
         [{
             label: 'Заказы',
             data: {!! $diagramData->pluck('ordersTotal')->toJson() !!},
+            borderColor: 'rgba(31, 120, 180, 1)',
+            backgroundColor: 'rgba(31, 120, 180, 0.2)',
             borderWidth: 1
         },
         {
             label: 'Продукты',
             data: {!! $diagramData->pluck('qty')->toJson() !!},
+            borderColor: 'rgba(178, 223, 138, 1)',
+            backgroundColor: 'rgba(178, 223, 138, 0.2)',
             borderWidth: 2
         },
         {
             label: 'Сумма',
             data: {!! $diagramData->pluck('sum')->toJson() !!},
+            borderColor: 'rgba(166, 206, 227, 1)',
+            backgroundColor: 'rgba(166, 206, 227, 0.2)',
             borderWidth: 1
         },
         ]},

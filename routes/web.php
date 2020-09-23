@@ -189,7 +189,7 @@ Route::group(['prefix' => $adminPath, 'namespace' => 'Admin', 'middleware' => ['
 
 
 Route::get('/', 'HomeController@index')->middleware(['lang', 'web', 'const'])->name('home');
-Route::post('/chart-data/{value}', 'Profile\StatisticController@getChartData')->name('chart_data');
+Route::post('/chart-data/{value}', 'Profile\DashboardController@getChartDays')->name('chart_data');
 
 Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], function () {
     Route::get('/', 'HomeController@index');
@@ -256,12 +256,12 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
         });
 
         Route::group(['prefix' => 'statistics'], function () {
-            Route::get('/', 'StatisticController@index')->name('statistics');
-            Route::post('callback', 'StatisticController@callback')->name('statistics.callback');
+            Route::get('/', 'DashboardController@index')->name('statistics');
+            Route::post('callback', 'DashboardController@callback')->name('statistics.callback');
         });
 
         Route::group(['prefix' => 'dashboard'], function () {
-            Route::get('/', 'StatisticController@index')->name('dashboard');
+            Route::get('/', 'DashboardController@index')->name('dashboard');
         });
 
         Route::group(['prefix' => 'orders'], function () {

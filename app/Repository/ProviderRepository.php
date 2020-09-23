@@ -3,15 +3,10 @@
 namespace App\Repository;
 
 use App\Models\Catalog\Product;
-use App\Models\Order\Order;
 use App\Models\Provider\ProviderService;
 use App\Models\User;
 use App\Models\Catalog\Category;
-use App\Models\Catalog\ProductPrice;
-use App\Models\Order\OrderProduct;
 use App\Repository\Interfaces\ProviderRepositoryInterface;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 
 class ProviderRepository implements ProviderRepositoryInterface
 {
@@ -136,118 +131,5 @@ class ProviderRepository implements ProviderRepositoryInterface
         return $data->filter(function ($item) {
             return ($item['type'] != 'input' && !$item['value']->count()) ? false : true;
         });
-    }
-
-    public function getProviderOrders($id_provider)
-    {
-        return Order::whereHas('products', function ($query) use ($id_provider) {
-            return $query->where('id_provider', $id_provider);
-        })->with(['products' => function ($query) use ($id_provider) {
-            return $query->where('id_provider', $id_provider)->with('product');
-        }, 'user'])->get();
-    }
-
-    public function getMinMaxProductsPrice($id)
-    {
-        $prices = ProductPrice::whereHas('product', function ($query) use ($id) {
-            $query->whereHas('provider', function ($query) use ($id) {
-                return $query->where('id_provider', $id);
-            });
-            return $query->visible();
-        })->orderBy('price', 'asc')->groupBy('id_product')->get();
-
-        return collect([
-            'min' => $prices->min('price'),
-            'max' => $prices->max('price')
-        ]);
-    }
-
-    public function getSalesFromLastMonth($id)
-    {
-        $data = OrderProduct::rightJoin('orders', 'orders_products.id_order', '=', 'orders.id')
-                            ->select(DB::raw('sum(qty*price) as total_sum, sum(qty) as total_qty'))
-                            ->where('created_at', '>=', Carbon::now()->subDays(30)->toDateTimeString())
-                            ->where('id_provider', $id)->first();
-
-        return [
-            'total_sum' => @$data->total_sum ?: 0,
-            'total_qty' => @$data->total_qty ?: 0,
-        ];
-    }
-
-    public function getSumOfAllSalesAndQuantity($id)
-    {
-        $data = OrderProduct::selectRaw('sum(qty*price) as total_sum, sum(qty) as total_qty')
-                                    ->where('id_provider', $id)
-                                    ->first();
-
-        return [
-            'total_sum' => @$data->total_sum ?: 0,
-            'total_qty' => @$data->total_qty ?: 0,
-        ];
-    }
-
-    public function chartData()
-    {
-        $orders = OrderProduct::with(['orders' => function ($query) {
-            return $query->where('created_at', '>=', Carbon::now()->subDays($this->getChartData()));
-        }])->whereHas('orders', function ($query) {
-            return $query->where('created_at', '>=', Carbon::now()->subDays($this->getChartData()));
-        })->where('id_provider', user()->id)->get();
-        
-        $labels      = collect();
-        $diagramData = collect();
-        if ($orders->count()) {
-            foreach ($orders->groupBy(function ($item) {
-                return $item->orders->created_at->format('d.m');
-            }) as $date => $orders) {
-                $labels->push($date);
-
-                $diagramData->push([
-                    'date'         => $date,
-                    'qty'          => $orders->sum('qty'),
-                    'sum'          => $orders->sum(function ($order) {
-                        return $order->qty*$order->price;
-                    }),
-                    'ordersTotal'  => $orders->groupBy('id_order')->count()
-                ]);
-            }
-        }
-
-        return [
-            'labels' => $labels,
-            'diagramData' => $diagramData
-        ];
-    }
-
-    public function getChartData($value = 7)
-    {
-        return $value;
-    }
-
-    public function dashboardData($id)
-    {
-        $sumOfAllSalesAndQuantity = $this->getSumOfAllSalesAndQuantity($id);
-        $salesFromLastMonth = $this->getSalesFromLastMonth($id);
-        $chartData = $this->chartData();
-        $labels = $chartData['labels'];
-        $diagramData = $chartData['diagramData'];
-        return [
-            'id' => '',
-            'provider' => '',
-            'quantityOfAllSales' => $sumOfAllSalesAndQuantity['total_qty'],
-            'sumOfProducts' => $this->getProviderProducts($id)->count(),
-            'sumOfAllSales' => $sumOfAllSalesAndQuantity['total_sum'],
-            'sumOfAllSalesFromLastMonth' => $salesFromLastMonth['total_sum'],
-            'quantityOfAllSalesFromLastMonth' => $salesFromLastMonth['total_qty'],
-            'sumOfCategories' => '',
-            'minProductPrice' => '',
-            'maxProductPrice' => '',
-            'orders' => '',
-            'getOrders' => '',
-            'products' => '',
-            'labels' => $labels,
-            'diagramData' => $diagramData,
-        ];
     }
 }

@@ -13,4 +13,8 @@ interface OrderRepositoryInterface
     public function getProviderOrders($id_provider);
 
     public function getMinMaxProductsPrice($id_provider);
+
+    public function dashboardData();
+
+    public function getChartDays($value = 7);
 }

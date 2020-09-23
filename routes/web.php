@@ -189,7 +189,7 @@ Route::group(['prefix' => $adminPath, 'namespace' => 'Admin', 'middleware' => ['
 
 
 Route::get('/', 'HomeController@index')->middleware(['lang', 'web', 'const'])->name('home');
-Route::get('chart', 'Profile\StatisticController@chartApi')->name('api.chart');
+Route::post('/chart-data/{value}', 'Profile\StatisticController@getChartData')->name('chart_data');
 
 Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], function () {
     Route::get('/', 'HomeController@index');
@@ -262,7 +262,6 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
 
         Route::group(['prefix' => 'dashboard'], function () {
             Route::get('/', 'StatisticController@index')->name('dashboard');
-            Route::get('/chart-data', 'StatisticController@getChartData')->name('chart_data');
         });
 
         Route::group(['prefix' => 'orders'], function () {

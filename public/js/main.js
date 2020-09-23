@@ -307,7 +307,17 @@ $(window).load(function () {
 });
 
 function getChartDays(value) {
-    console.log(value);
+    $.ajax({
+        type: 'POST',
+        url: '/chart-data/' + value,
+        data: value,
+        headers: {'X-CSRF-TOKEN': CSRF_TOKEN},
+        success: function(data){
+            console.log(data);
+            myChart.update();
+            console.log('chart updated');
+        }
+    });
 }
 
 function initEqHeight() {

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ChatCallback;
-use App\Models\Order\Order;
 use App\Models\Order\OrderProduct;
 use App\Models\User;
 use App\Repository\Interfaces\OrderRepositoryInterface;
@@ -12,10 +11,8 @@ use App\Repository\Interfaces\ProviderRepositoryInterface;
 use App\Utils\Constants;
 use App\Utils\JsonResponse;
 use Carbon\Carbon;
-use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class StatisticController extends Controller
@@ -56,9 +53,9 @@ class StatisticController extends Controller
         $getOrders = $this->orderRepository->getOrders();
 
         $orders = OrderProduct::with(['orders' => function ($query) {
-            return $query->where('created_at', '>=', Carbon::now()->subDays(7));
+            return $query->where('created_at', '>=', Carbon::now()->subDays($this->getChartData()));
         }])->whereHas('orders', function ($query) {
-            return $query->where('created_at', '>=', Carbon::now()->subDays(7));
+            return $query->where('created_at', '>=', Carbon::now()->subDays($this->getChartData()));
         })->where('id_provider', user()->id)->get();
         
         $labels      = collect();

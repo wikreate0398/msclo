@@ -191,7 +191,7 @@
             data: {!! $diagramData->pluck('qty')->toJson() !!},
             borderColor: 'rgba(178, 223, 138, 1)',
             backgroundColor: 'rgba(178, 223, 138, 0.2)',
-            borderWidth: 2
+            borderWidth: 1
         },
         {
             label: 'Сумма',

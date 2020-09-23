@@ -186,4 +186,68 @@ class ProviderRepository implements ProviderRepositoryInterface
             'total_qty' => @$data->total_qty ?: 0,
         ];
     }
+
+    public function chartData()
+    {
+        $orders = OrderProduct::with(['orders' => function ($query) {
+            return $query->where('created_at', '>=', Carbon::now()->subDays($this->getChartData()));
+        }])->whereHas('orders', function ($query) {
+            return $query->where('created_at', '>=', Carbon::now()->subDays($this->getChartData()));
+        })->where('id_provider', user()->id)->get();
+        
+        $labels      = collect();
+        $diagramData = collect();
+        if ($orders->count()) {
+            foreach ($orders->groupBy(function ($item) {
+                return $item->orders->created_at->format('d.m');
+            }) as $date => $orders) {
+                $labels->push($date);
+
+                $diagramData->push([
+                    'date'         => $date,
+                    'qty'          => $orders->sum('qty'),
+                    'sum'          => $orders->sum(function ($order) {
+                        return $order->qty*$order->price;
+                    }),
+                    'ordersTotal'  => $orders->groupBy('id_order')->count()
+                ]);
+            }
+        }
+
+        return [
+            'labels' => $labels,
+            'diagramData' => $diagramData
+        ];
+    }
+
+    public function getChartData($value = 7)
+    {
+        return $value;
+    }
+
+    public function dashboardData($id)
+    {
+        $sumOfAllSalesAndQuantity = $this->getSumOfAllSalesAndQuantity($id);
+        $salesFromLastMonth = $this->getSalesFromLastMonth($id);
+        $chartData = $this->chartData();
+        $labels = $chartData['labels'];
+        $diagramData = $chartData['diagramData'];
+        return [
+            'id' => '',
+            'provider' => '',
+            'quantityOfAllSales' => $sumOfAllSalesAndQuantity['total_qty'],
+            'sumOfProducts' => $this->getProviderProducts($id)->count(),
+            'sumOfAllSales' => $sumOfAllSalesAndQuantity['total_sum'],
+            'sumOfAllSalesFromLastMonth' => $salesFromLastMonth['total_sum'],
+            'quantityOfAllSalesFromLastMonth' => $salesFromLastMonth['total_qty'],
+            'sumOfCategories' => '',
+            'minProductPrice' => '',
+            'maxProductPrice' => '',
+            'orders' => '',
+            'getOrders' => '',
+            'products' => '',
+            'labels' => $labels,
+            'diagramData' => $diagramData,
+        ];
+    }
 }

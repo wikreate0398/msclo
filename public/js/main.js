@@ -312,8 +312,8 @@ function getChartDays(value) {
         url: '/chart-data/' + value,
         data: value,
         headers: {'X-CSRF-TOKEN': CSRF_TOKEN},
-        success: function(data){
-            console.log(data);
+        success: function(data, jsonResponce){
+            console.log(jsonResponce);
             myChart.update();
             console.log('chart updated');
         }

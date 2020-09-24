@@ -80,12 +80,12 @@ class OrderRepository implements OrderRepositoryInterface
         ];
     }
     
-    public function chartData()
+    public function chartData($value)
     {
-        $orders = OrderProduct::with(['orders' => function ($query) {
-            return $query->where('created_at', '>=', Carbon::now()->subDays($this->getChartDays()));
-        }])->whereHas('orders', function ($query) {
-            return $query->where('created_at', '>=', Carbon::now()->subDays($this->getChartDays()));
+        $orders = OrderProduct::with(['orders' => function ($query) use ($value) {
+            return $query->where('created_at', '>=', Carbon::now()->subDays($this->getChartDays($value)));
+        }])->whereHas('orders', function ($query) use ($value) {
+            return $query->where('created_at', '>=', Carbon::now()->subDays($this->getChartDays($value)));
         })->where('id_provider', user()->id)->get();
         
         $labels      = collect();
@@ -123,7 +123,7 @@ class OrderRepository implements OrderRepositoryInterface
         $sumOfAllSalesAndQuantity = $this->getSumOfAllSalesAndQuantity(user()->id);
         $salesFromLastMonth = $this->getSalesFromLastMonth(user()->id);
 
-        $chartData = $this->chartData();
+        $chartData = $this->chartData($value = 7);
         $labels = $chartData['labels'];
         $diagramData = $chartData['diagramData'];
         

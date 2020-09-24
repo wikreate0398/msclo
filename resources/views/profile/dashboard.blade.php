@@ -126,7 +126,9 @@
                 <div class="col-md-12">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <canvas id="myChart" height="129"></canvas>
+                            <div id="canvas_father">
+                                <canvas id="myChart" height="129"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>

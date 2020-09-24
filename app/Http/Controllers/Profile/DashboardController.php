@@ -38,6 +38,7 @@ class DashboardController extends Controller
             'messages' => 'Ваш тестовый текст отправлен'
         ]);
     }
+    
     public function getChartDays($value = 7)
     {
         return $this->orderRepository->getChartDays($value);

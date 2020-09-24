@@ -15,13 +15,13 @@
                     <div class="col-sm-12 col-md-8 ml-3">
                         <div class="row">
                             <div class="col-md-12">
-                                <h5 class="mb-1 ml-3">{{ $dashboardData['provider']['full_name'] }}</h5>
+                                <h5 class="mb-1 ml-3">{{ $provider['full_name'] }}</h5>
                             </div>
                             <div class="col-md-10">
-                                <p class="mb-1 description">{{ $dashboardData['provider']['description'] }}</p>
+                                <p class="mb-1 description">{{ $provider['description'] }}</p>
                             </div>
                             <div class="col-md-12">
-                                <p class="mb-1">{{ $dashboardData['provider']['phone'] }} @if($dashboardData['provider']['phone'] != "" && $dashboardData['provider']['email'] != "") <span class="ml-3 mr-3"> | </span>@else  @endif {{ $dashboardData['provider']['email'] }}</p>
+                                <p class="mb-1">{{ $provider['phone'] }} @if($provider['phone'] != "" && $provider['email'] != "") <span class="ml-3 mr-3"> | </span>@else  @endif {{ $provider['email'] }}</p>
                             </div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
         <div class="col-md-8">
             <h4 class="mb-5 font-weight-bold">Недавно добавленные товары</h4>
             <ul class="row mb-4 list-unstyled products-group no-gutters">
-                @foreach($dashboardData['products'] as $product)
+                @foreach($products as $product)
                     <li class="col-md-6 h-100 dashboard product_card">
                         <div class="p-5 row">
                             <div class="col-md-5">
@@ -85,7 +85,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            @foreach($dashboardData['getOrders'] as $order)
+                            @foreach($getOrders as $order)
                                 <tr>
                                     <td>
                                         @if($order->product['images']->count())
@@ -115,7 +115,7 @@
         <div class="col-md-4 mb-12">
             <div class="row mb-5">
                 <h4 class="col-auto mr-auto font-weight-bold">Статистика</h4>
-                <select class="col-auto js-select selectpicker dropdown-select custom-search-categories-select" data-style="btn height-40 text-gray-60 font-weight-normal border-0 rounded-0 bg-white px-5 py-2" onchange="getChartDays(this.value)">
+                <select class="col-auto js-select selectpicker dropdown-select custom-search-categories-select" data-style="btn height-40 text-gray-60 font-weight-normal border-0 rounded-0 bg-white" onchange="getChartDays(this.value)">
                     <option data-icon="fa fa-calendar" value="7" selected>за 1 неделю</option>
                     <option data-icon="fa fa-calendar" value="31">за 1 месяц</option>
                     <option data-icon="fa fa-calendar" value="92">за 3 месяца</option>
@@ -140,7 +140,7 @@
                     </div>
                     <div class="col-md-7 px-3 align-self-center">
                         <h6>Всего продаж</h6>
-                        <span>{{ $dashboardData['quantityOfAllSales'] }}</span>
+                        <span>{{ $quantityOfAllSales }}</span>
                     </div>
                 </div>
             </div>
@@ -151,7 +151,7 @@
                     </div>
                     <div class="col-md-7 px-3 align-self-center">
                         <h6>Всего доходов</h6>
-                        <span>{{ priceString($dashboardData['sumOfAllSales']) }} {{ RUB }}</span>
+                        <span>{{ priceString($sumOfAllSales) }} {{ RUB }}</span>
                     </div>
                 </div>
             </div>
@@ -162,7 +162,7 @@
                     </div>
                     <div class="col-md-7 px-3 align-self-center">
                         <h6>Добавлено товаров</h6>
-                        <span>{{ $dashboardData['sumOfProducts'] }}</span>
+                        <span>{{ $sumOfProducts }}</span>
                     </div>
                 </div>
             </div>
@@ -172,11 +172,11 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script>
-    var labels        = {!! json_encode($dashboardData['labels']) !!}
-    var diagramData   = {!! json_encode($dashboardData['diagramData']) !!}
-    var chartOrders   = {!! $dashboardData['diagramData']->pluck('ordersTotal')->toJson() !!};
-    var chartProducts = {!! $dashboardData['diagramData']->pluck('qty')->toJson() !!};
-    var chartSum      = {!! $dashboardData['diagramData']->pluck('sum')->toJson() !!};
+    var labels        = {!! json_encode($labels) !!}
+    var diagramData   = {!! json_encode($diagramData) !!}
+    var chartOrders   = {!! $diagramData->pluck('ordersTotal')->toJson() !!};
+    var chartProducts = {!! $diagramData->pluck('qty')->toJson() !!};
+    var chartSum      = {!! $diagramData->pluck('sum')->toJson() !!};
 </script>
 
 

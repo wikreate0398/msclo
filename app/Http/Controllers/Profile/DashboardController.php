@@ -21,9 +21,7 @@ class DashboardController extends Controller
 
     public function index($lang)
     {
-        $dashboardData = $this->orderRepository->dashboardData();
-
-        return view('profile.dashboard', compact('dashboardData'));
+        return view('profile.dashboard', $this->orderRepository->dashboardData());
     }
 
     public function callback($lang, Request $request)

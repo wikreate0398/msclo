@@ -16,36 +16,36 @@ function initChart() {
                     label: 'Заказы',
                     data: chartOrders,
                     borderColor: 'rgba(31, 120, 180, 1)',
-        backgroundColor: 'rgba(31, 120, 180, 0.2)',
-        borderWidth: 1
-},
-    {
-        label: 'Продукты',
-            data: chartProducts,
-        borderColor: 'rgba(178, 223, 138, 1)',
-            backgroundColor: 'rgba(178, 223, 138, 0.2)',
-        borderWidth: 1
-    },
-    {
-        label: 'Сумма',
-            data: chartSum,
-        borderColor: 'rgba(166, 206, 227, 1)',
-            backgroundColor: 'rgba(166, 206, 227, 0.2)',
-        borderWidth: 1
-    },
-]},
-    options: {
-        scales: {
-            xAxes: [],
-                yAxes: [{
-                ticks: {
-                    beginAtZero:true
+                    backgroundColor: 'rgba(31, 120, 180, 0.2)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Продукты',
+                    data: chartProducts,
+                    borderColor: 'rgba(178, 223, 138, 1)',
+                    backgroundColor: 'rgba(178, 223, 138, 0.2)',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Сумма',
+                    data: chartSum,
+                    borderColor: 'rgba(166, 206, 227, 1)',
+                    backgroundColor: 'rgba(166, 206, 227, 0.2)',
+                    borderWidth: 1
+                },
+            ]},
+            options: {
+                scales: {
+                    xAxes: [],
+                        yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
                 }
-            }]
-        }
+            }
+        });
     }
-});
-}
 
 function getChartDays(value) {
     $.ajax({

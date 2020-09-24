@@ -15,13 +15,13 @@
                     <div class="col-sm-12 col-md-8 ml-3">
                         <div class="row">
                             <div class="col-md-12">
-                                <h5 class="mb-1 ml-3">{{ $provider->full_name }}</h5>
+                                <h5 class="mb-1 ml-3">{{ $provider['full_name'] }}</h5>
                             </div>
                             <div class="col-md-10">
-                                <p class="mb-1 description">{{ $provider->description }}</p>
+                                <p class="mb-1 description">{{ $provider['description'] }}</p>
                             </div>
                             <div class="col-md-12">
-                                <p class="mb-1">{{ $provider->phone }} @if($provider->phone != "" && $provider->email != "") <span class="ml-3 mr-3"> | </span>@else  @endif {{ $provider->email }}</p>
+                                <p class="mb-1">{{ $provider['phone'] }} @if($provider['phone'] != "" && $provider['email'] != "") <span class="ml-3 mr-3"> | </span>@else  @endif {{ $provider['email'] }}</p>
                             </div>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
         <div class="col-md-4 mb-12">
             <div class="row mb-5">
                 <h4 class="col-auto mr-auto font-weight-bold">Статистика</h4>
-                <select class="col-auto js-select selectpicker dropdown-select custom-search-categories-select" data-style="btn height-40 text-gray-60 font-weight-normal border-0 rounded-0 bg-white px-5 py-2" onchange="getChartDays(this.value)">
+                <select class="col-auto js-select selectpicker dropdown-select custom-search-categories-select" data-style="btn height-40 text-gray-60 font-weight-normal border-0 rounded-0 bg-white" onchange="getChartDays(this.value)">
                     <option data-icon="fa fa-calendar" value="7" selected>за 1 неделю</option>
                     <option data-icon="fa fa-calendar" value="31">за 1 месяц</option>
                     <option data-icon="fa fa-calendar" value="92">за 3 месяца</option>
@@ -126,7 +126,9 @@
                 <div class="col-md-12">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <canvas id="myChart" height="129"></canvas>
+                            <div id="canvas_father">
+                                <canvas id="myChart" height="129"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -170,48 +172,12 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script>
-  var ctx = document.getElementById("myChart");
-  var labels = {!! json_encode($labels) !!}
-  var diagramData = {!! json_encode($diagramData) !!}
-
-  var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: labels,
-        datasets: 
-        [{
-            label: 'Заказы',
-            data: {!! $diagramData->pluck('ordersTotal')->toJson() !!},
-            borderColor: 'rgba(31, 120, 180, 1)',
-            backgroundColor: 'rgba(31, 120, 180, 0.2)',
-            borderWidth: 1
-        },
-        {
-            label: 'Продукты',
-            data: {!! $diagramData->pluck('qty')->toJson() !!},
-            borderColor: 'rgba(178, 223, 138, 1)',
-            backgroundColor: 'rgba(178, 223, 138, 0.2)',
-            borderWidth: 2
-        },
-        {
-            label: 'Сумма',
-            data: {!! $diagramData->pluck('sum')->toJson() !!},
-            borderColor: 'rgba(166, 206, 227, 1)',
-            backgroundColor: 'rgba(166, 206, 227, 0.2)',
-            borderWidth: 1
-        },
-        ]},
-    options: {
-      scales: {
-        xAxes: [],
-        yAxes: [{
-          ticks: {
-            beginAtZero:true
-          }
-        }]
-      }
-    }
-  });
+    var labels        = {!! json_encode($labels) !!}
+    var diagramData   = {!! json_encode($diagramData) !!}
+    var chartOrders   = {!! $diagramData->pluck('ordersTotal')->toJson() !!};
+    var chartProducts = {!! $diagramData->pluck('qty')->toJson() !!};
+    var chartSum      = {!! $diagramData->pluck('sum')->toJson() !!};
 </script>
+
 
 @stop

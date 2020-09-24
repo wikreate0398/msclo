@@ -13,5 +13,3 @@
 */
 
 use Illuminate\Support\Facades\Route;
-
-// Route::get('chart', 'Profile\StatisticController@chartApi')->name('api.chart');

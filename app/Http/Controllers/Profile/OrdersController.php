@@ -1,19 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Profile;
- 
-use App\Models\Order\Order;
-use App\Repository\Interfaces\ProviderRepositoryInterface;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-use App\Models\User;
+use App\Http\Controllers\Controller;
+use App\Repository\Interfaces\OrderRepositoryInterface;
 
 class OrdersController extends Controller
 {
     private $repository;
 
-    public function __construct(ProviderRepositoryInterface $repository)
+    public function __construct(OrderRepositoryInterface $repository)
     {
         $this->repository = $repository;
     }

@@ -1,16 +1,30 @@
-$(document).ready(function(){
-    $(window).scroll(function(e){
-        var body = e.target.body, scrollT = $(this).scrollTop(); 
+$(document).ready(function () {
+    $(window).scroll(function (e) {
+        var body = e.target.body, scrollT = $(this).scrollTop();
         if (scrollT > 200) {
-            $('.navbar').addClass('fixed-header');  
+            $('.navbar').addClass('fixed-header');
             $('.fixed-header').css({
                 'top': "0",
                 'opacity': '1'
-            }); 
-        }else{ 
+            });
+        } else {
             $('.navbar').removeClass('fixed-header');
-        } 
+        }
     });
+
+    // dashboard card 
+    var w = $(this).width();
+    if (w < 1470) {
+        $('.resizble-block').removeClass('col-md-5');
+        $('.resizble-block').addClass('col-md-3');
+    }
+    if (w < 1050) {
+        $('.head_image').removeClass('col-md-9')
+        $('.head_image').addClass('col-auto')
+        $('.head_profile_settings').removeClass('col-md-3 pl-13')
+        $('.head_profile_settings').addClass('col align-self-center')
+    }
+    // end dashboard card
 
     $('[data-fancybox]').fancybox({
         buttons: ['close'],
@@ -18,26 +32,26 @@ $(document).ready(function(){
 
     $('.reg-btn-tabs button.active').click();
 
-    $('.toggle-link').click(function(e){
-        e.preventDefault(); 
-        scrollToBlock($(this).attr('href')); 
+    $('.toggle-link').click(function (e) {
+        e.preventDefault();
+        scrollToBlock($(this).attr('href'));
     });
 
     fileUploader();
 
     changeByKeyup();
 
-    $('a.confirm_link').on('click', function(e){
+    $('a.confirm_link').on('click', function (e) {
         if (!confirm($(this).attr('data-confirm'))) {
             e.preventDefault();
         }
     });
 
-    $('.number').keypress(function(event) {
+    $('.number').keypress(function (event) {
         if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
             event.preventDefault();
         }
-    });  
+    });
 
     // $('.rating-stars').each(function(){
     //     var currentRating = $(this).data('current-rating');
@@ -111,7 +125,7 @@ $(document).ready(function(){
                 itemPrepend: true,
                 startImageRenderer: true,
                 canvasImage: false,
-                onItemShow: function(item, listEl, parentEl, newInputEl, inputEl) {
+                onItemShow: function (item, listEl, parentEl, newInputEl, inputEl) {
                     var api = $.fileuploader.getInstance(inputEl),
                         color = api.assets.textToColor(item.format),
                         $plusInput = listEl.find('.fileuploader-input'),
@@ -124,7 +138,7 @@ $(document).ready(function(){
                     item.html.find('.type-holder .fileuploader-item-icon')[api.assets.isBrightColor(color) ? 'addClass' : 'removeClass']('is-bright-color').css('backgroundColor', color);
                     $progressBar.css('backgroundColor', color);
                 },
-                onImageLoaded: function(item, listEl, parentEl, newInputEl, inputEl) {
+                onImageLoaded: function (item, listEl, parentEl, newInputEl, inputEl) {
                     var api = $.fileuploader.getInstance(inputEl);
 
                     // add icon
@@ -144,7 +158,7 @@ $(document).ready(function(){
                     }
 
                 },
-                onItemRemove: function(html) {
+                onItemRemove: function (html) {
                     html.fadeOut(250);
                 }
             },
@@ -152,13 +166,13 @@ $(document).ready(function(){
                 container: '.fileuploader-theme-gallery .fileuploader-input'
             },
             sorter: {
-                onSort: function(list, listEl, parentEl, newInputEl, inputEl) {
+                onSort: function (list, listEl, parentEl, newInputEl, inputEl) {
                     var api = $.fileuploader.getInstance(inputEl),
                         fileList = api.getFiles(),
                         list = [];
 
                     // prepare the sorted list
-                    api.getFiles().forEach(function(item) {
+                    api.getFiles().forEach(function (item) {
                         list.push({
                             name: item.name,
                             index: item.index
@@ -167,17 +181,17 @@ $(document).ready(function(){
                     $('#img-sort').val(JSON.stringify(list));
                 }
             },
-            afterRender: function(listEl, parentEl, newInputEl, inputEl) {
+            afterRender: function (listEl, parentEl, newInputEl, inputEl) {
                 var api = $.fileuploader.getInstance(inputEl),
                     $plusInput = listEl.find('.fileuploader-input');
 
                 // bind input click
-                $plusInput.on('click', function() {
+                $plusInput.on('click', function () {
                     api.open();
                 });
 
                 // bind dropdown buttons
-                $('body').on('click', function(e) {
+                $('body').on('click', function (e) {
                     var $target = $(e.target),
                         $item = $target.closest('.fileuploader-item'),
                         item = api.findFile($item);
@@ -190,7 +204,7 @@ $(document).ready(function(){
 
                 });
             },
-            onRemove: function(item, listEl, parentEl, newInputEl, inputEl) {
+            onRemove: function (item, listEl, parentEl, newInputEl, inputEl) {
                 if (!$(inputEl).attr('data-json')) return;
                 var data = JSON.parse($(inputEl).attr('data-json'));
                 jQuery.ajax({
@@ -200,10 +214,10 @@ $(document).ready(function(){
                         value: item.name,
                         _token: CSRF_TOKEN
                     },
-                    headers: {'X-CSRF-TOKEN': CSRF_TOKEN},
+                    headers: { 'X-CSRF-TOKEN': CSRF_TOKEN },
                     dataType: 'json',
-                    beforeSend: function() {},
-                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    beforeSend: function () { },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
                         if (XMLHttpRequest.status === 401) document.location.reload(true);
                     },
                 });
@@ -245,7 +259,7 @@ $(document).ready(function(){
 
                 $(listEl).find('li').each(function () {
                     if (!$(this).find('.column-inputs').length) {
-                        $inputs = $('<div\>', {'class': 'column-inputs d-flex align-items-center'});
+                        $inputs = $('<div\>', { 'class': 'column-inputs d-flex align-items-center' });
                         $inputs.html(`
 							<input type="text" placeholder="Заголовок" class="form-control" name="title[]">
 							<textarea name="text[]" placeholder="Описание" rows="3" class="form-control"></textarea>
@@ -275,7 +289,7 @@ $(document).ready(function(){
                         name: item.name,
                         _token: CSRF_TOKEN
                     },
-                    headers: {'X-CSRF-TOKEN': CSRF_TOKEN},
+                    headers: { 'X-CSRF-TOKEN': CSRF_TOKEN },
                     dataType: 'json',
                     beforeSend: function () {
                     },
@@ -299,39 +313,39 @@ function initEqHeight() {
 }
 
 function setEqualHeight(columns, parent) {
-    if (!$(columns).length ) {
+    if (!$(columns).length) {
         return false;
     }
     if (parent) {
-        var width       = $(parent).width();
-        var item_width  = $(columns).closest('.js_list__item').outerWidth();
-        var itemInRow = parseInt(width/item_width, 10);
-    }else{
+        var width = $(parent).width();
+        var item_width = $(columns).closest('.js_list__item').outerWidth();
+        var itemInRow = parseInt(width / item_width, 10);
+    } else {
         var itemInRow = 3;
     }
 
-    cloudHeight    = 0;
+    cloudHeight = 0;
     var totalItems = $(columns).length
     if (totalItems < itemInRow) itemInRow = totalItems;
 
-    $(columns).each(function(index){
-        index=index+1;
+    $(columns).each(function (index) {
+        index = index + 1;
         currentHeight = $(this).outerHeight();
-        if(currentHeight > cloudHeight) {
+        if (currentHeight > cloudHeight) {
             cloudHeight = currentHeight;
         }
         rest = 0;
-        if (totalItems%itemInRow!=0) rest = totalItems%itemInRow;
-        if (index%itemInRow==0) {
-            for (var i = index - 1; i >= index-itemInRow; i--) {
+        if (totalItems % itemInRow != 0) rest = totalItems % itemInRow;
+        if (index % itemInRow == 0) {
+            for (var i = index - 1; i >= index - itemInRow; i--) {
                 $(columns).eq(i).height(cloudHeight);
             }
-            if ((totalItems-index-1) == rest) {
-                for (var i = totalItems; i >=  totalItems-rest; i--) {
+            if ((totalItems - index - 1) == rest) {
+                for (var i = totalItems; i >= totalItems - rest; i--) {
                     $(columns).eq(i).height(cloudHeight);
                 }
             }
-            cloudHeight=0;
+            cloudHeight = 0;
         }
     });
     return;
@@ -342,58 +356,58 @@ function fixHeight(item) {
     $(item).height($(item).height());
 }
 
-function scrollToBlock(id){
+function scrollToBlock(id) {
     $('html, body').animate({
-        scrollTop: $(id).offset().top-75
+        scrollTop: $(id).offset().top - 75
     }, 1000);
 }
 
-function toggleBlocks(from, to){
+function toggleBlocks(from, to) {
     $(from).hide();
     $(to).show();
 }
- 
-function inputMask(){
+
+function inputMask() {
     $("input.code-mask").inputmask("999-9");
-    $("input.price-mask, input.home-price-mask").inputmask("decimal",{
+    $("input.price-mask, input.home-price-mask").inputmask("decimal", {
         alias: 'numeric',
-        radixPoint:".", 
-        groupSeparator: "", 
+        radixPoint: ".",
+        groupSeparator: "",
         digits: 2,
         autoGroup: true,
-        allowMinus: false, 
-        placeholder: '', 
+        allowMinus: false,
+        placeholder: '',
     });
- 
+
     $('#ExpiryDate').inputmask('99/99');
     $('#CreditCardNumber').inputmask('9999 9999 9999 9999');
-    $('#SecurityCode').inputmask('999'); 
+    $('#SecurityCode').inputmask('999');
 }
 
-function changeByKeyup(){
-    var delay = (function(){
-      var timer = 0;
-      return function(callback, ms){
-        clearTimeout (timer);
-        timer = setTimeout(callback, ms);
-      };
+function changeByKeyup() {
+    var delay = (function () {
+        var timer = 0;
+        return function (callback, ms) {
+            clearTimeout(timer);
+            timer = setTimeout(callback, ms);
+        };
     })();
- 
-    $('body').find('.change_keyup').each(function(){ 
-        var area = $(this);
-        $(this).keyup(function() {
-            delay(function(){  
-                $(area).change()
-            }, 200 );
-        });
-    }); 
-} 
 
-function changeRegType(btn, type){
-    $('.reg-fields .form-group').each(function(){
+    $('body').find('.change_keyup').each(function () {
+        var area = $(this);
+        $(this).keyup(function () {
+            delay(function () {
+                $(area).change()
+            }, 200);
+        });
+    });
+}
+
+function changeRegType(btn, type) {
+    $('.reg-fields .form-group').each(function () {
         var access = $(this).attr('data-access');
-        if (access != '*') { 
-            if($.inArray(type, access.split('|')) == -1){
+        if (access != '*') {
+            if ($.inArray(type, access.split('|')) == -1) {
                 $(this).hide();
             } else {
                 $(this).show();
@@ -402,7 +416,7 @@ function changeRegType(btn, type){
     });
 }
 
-function profilePhoto(fileName){
+function profilePhoto(fileName) {
 
     var file = fileName.files[0];
 
@@ -460,7 +474,7 @@ function profilePhoto(fileName){
             base64 = cropper.getCroppedCanvas().toDataURL();
 
             $('input#avatar').val(base64);
-            $('.profile__img').css('background-image', 'url('+base64+')');
+            $('.profile__img').css('background-image', 'url(' + base64 + ')');
             $('.save__cropped_image').show();
 
             $.fancybox.close();
@@ -489,33 +503,33 @@ function showPurchaseProducts(item) {
 
 // increment and decrement buttons
 function changeQuantityValue(button, id, cart_id) {
-    let input = $('.cart-input-' + id + '-' + cart_id );
-    if(button == 'up'){
-        input.val( Number(input.val()) + 1 );
+    let input = $('.cart-input-' + id + '-' + cart_id);
+    if (button == 'up') {
+        input.val(Number(input.val()) + 1);
         input.change();
     } else {
-        if(input.val() > 1){
-            input.val( Number(input.val()) - 1 );
+        if (input.val() > 1) {
+            input.val(Number(input.val()) - 1);
             input.change();
         }
     }
 }
 // End increment and decrement buttons
 
-function fileUploader(){
-    if($('input.file_uploader_input').length){
+function fileUploader() {
+    if ($('input.file_uploader_input').length) {
 
-        $('input.file_uploader_input').each(function(){
+        $('input.file_uploader_input').each(function () {
             //console.log(jQuery.parseJSON(JSON.stringify($(this).data('fileuploader-files'))));
-            if(!$(this).closest('.fileuploader').length){
+            if (!$(this).closest('.fileuploader').length) {
                 $(this).fileuploader({
                     extensions: ['image/*'],
                     addMore: true,
                     limit: 5,
-                    maxSize:2,
+                    maxSize: 2,
                     enableApi: true,
                     captions: {
-                        button: function(options) { return 'Выбрать ' + (options.limit == 1 ? 'file' : 'файлы');},
+                        button: function (options) { return 'Выбрать ' + (options.limit == 1 ? 'file' : 'файлы'); },
                         feedback2: function (options) {
                             return options.length + ' файл(ов) выбрано';
                         },
@@ -527,7 +541,7 @@ function fileUploader(){
                             fileSize: '${name} is too large! Please choose a file up to ${fileMaxSize}MB.',
                         }
                     },
-                    onRemove: function(item, listEl, parentEl, newInputEl, inputEl) {
+                    onRemove: function (item, listEl, parentEl, newInputEl, inputEl) {
                         if (!$(inputEl).attr('data-json')) return;
                         var data = JSON.parse($(inputEl).attr('data-json'));
                         jQuery.ajax({
@@ -537,10 +551,10 @@ function fileUploader(){
                                 value: item.name,
                                 _token: CSRF_TOKEN
                             },
-                            headers: {'X-CSRF-TOKEN': CSRF_TOKEN},
+                            headers: { 'X-CSRF-TOKEN': CSRF_TOKEN },
                             dataType: 'json',
-                            beforeSend: function() {},
-                            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            beforeSend: function () { },
+                            error: function (XMLHttpRequest, textStatus, errorThrown) {
                                 if (XMLHttpRequest.status === 401) document.location.reload(true);
                             },
                         });

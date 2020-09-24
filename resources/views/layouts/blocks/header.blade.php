@@ -1,7 +1,7 @@
 <header id="header" class="u-header u-header-left-aligned-nav">
     <div class="u-header__section">
         <!-- Topbar -->
-        <div class="u-header-topbar py-2 d-none d-xl-block bg-dark">
+        <div class="u-header-topbar py-2 d-none d-xl-block bg-dark @if(uri(2) == 'profile') dashboard-area @endif">
             <div class="container">
                 <div class="d-flex align-items-center">
                     {{--                    <div class="topbar-left">--}}
@@ -75,9 +75,15 @@
                                        data-unfold-duration="500">
                                          <span class="text-gray-50">или</span> Войти в ЛК</a>
                                 @else
-                                    <a href="{{ route('statistics', compact('lang')) }}" class="u-header-topbar__nav-link text-light">
-                                        <i class="ec ec-user mr-1"></i> {{ user()->name }}
-                                    </a>
+                                    @if(user()->type == 'provider')
+                                        <a href="{{ route('dashboard', compact('lang')) }}" class="u-header-topbar__nav-link text-light">
+                                            <i class="ec ec-user mr-1"></i> {{ user()->name }}
+                                        </a>
+                                    @elseif(user()->type == 'user')
+                                        <a href="{{ route('purchases', compact('lang')) }}" class="u-header-topbar__nav-link text-light">
+                                            <i class="ec ec-user mr-1"></i> {{ user()->name }}
+                                        </a>
+                                    @endif
                                 @endif
                                 <!-- End Account Sidebar Toggle Button -->
                             </li>
@@ -93,7 +99,7 @@
             <div class="container my-0dot5 my-xl-0">
                 <div class="row align-items-center">
                     <!-- Logo-offcanvas-menu -->
-                    <div class="col-auto">
+                    <div class="head_image @if(uri(2) == 'profile') col-md-7 @else col-auto @endif">
                         <!-- Nav -->
                         <nav class="navbar navbar-expand u-header__navbar py-0 justify-content-xl-between max-width-270 min-width-270">
                             <!-- Logo -->
@@ -177,27 +183,76 @@
                         </aside>
                         <!-- ========== END HEADER SIDEBAR ========== -->
                     </div>
+                    @if(uri(2) == 'profile')
+                    <div class="head_profile_settings col">
+                        <ul class="list-inline mb-0 float-right">
+                            <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
+                                <a href="{{ setUri(\Pages::getUriByType('delivery_payment')) }}" class="u-header-topbar__nav-link"><i class="ec ec-transport mr-1"></i> Доставка и оплата</a>
+                            </li>
+                            <li class="list-inline-item mr-0 u-header-topbar__nav-item u-header-topbar__nav-item-border">
+                                <!-- Account Sidebar Toggle Button -->
+                                @if(!\Auth::check())
+                                    <a id="sidebarNavToggler" href="javascript:;"
+                                        role="button"
+                                        class="u-header-topbar__nav-link"
+                                        aria-controls="sidebarContent"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"
+                                        data-unfold-event="click"
+                                        data-unfold-hide-on-scroll="false"
+                                        data-unfold-target="#sidebarContent"
+                                        data-unfold-type="css-animation"
+                                        data-unfold-animation-in="fadeInRight"
+                                        data-unfold-animation-out="fadeOutRight"
+                                        onclick="showSignup()"
+                                        data-unfold-duration="500">
+                                    <i class="ec ec-user mr-1"></i> Зарегистрироваться</a>
+                                    <a id="sidebarNavToggler" href="javascript:;"
+                                       role="button"
+                                       class="u-header-topbar__nav-link"
+                                       aria-controls="sidebarContent"
+                                       aria-haspopup="true"
+                                       aria-expanded="false"
+                                       data-unfold-event="click"
+                                       data-unfold-hide-on-scroll="false"
+                                       data-unfold-target="#sidebarContent"
+                                       data-unfold-type="css-animation"
+                                       data-unfold-animation-in="fadeInRight"
+                                       data-unfold-animation-out="fadeOutRight"
+                                       onclick="showLogin()"
+                                       data-unfold-duration="500">
+                                         <span class="text-gray-50">или</span> Войти в ЛК</a>
+                                @else
+                                    <a href="{{ route('dashboard', compact('lang')) }}" class="u-header-topbar__nav-link">
+                                        <i class="ec ec-user mr-1"></i> {{ user()->name }}
+                                    </a>
+                                @endif
+                                <!-- End Account Sidebar Toggle Button -->
+                            </li>
+                        </ul>
+                    </div>
+                    @endif
                     <!-- End Logo-offcanvas-menu -->
                     <!-- Primary Menu -->
                     <!-- Search bar -->
-                    <div class="col align-self-center">
-                    <!-- Search-Form -->
-                    <form class="js-focus-state">
-                        <label class="sr-only" for="searchProduct">Поиск</label>
-                        <div class="input-group">
-                            <input type="email" class="form-control py-2 pl-5 font-size-15 height-40 rounded-left-pill" name="email" id="searchProduct" placeholder="Найти товар" aria-label="Найти товар" aria-describedby="searchProduct1" required>
-                            <div class="input-group-append">
-                                <button class="btn btn-dark height-40 py-2 px-3 rounded-right-pill" type="button" id="searchProduct1">
-                                    <span class="ec ec-search font-size-24"></span>
-                                </button>
+                    <div class="col align-self-center @if(uri(2) == 'profile') dashboard-area @endif">
+                        <!-- Search-Form -->
+                        <form class="js-focus-state">
+                            <label class="sr-only" for="searchProduct">Поиск</label>
+                            <div class="input-group">
+                                <input type="email" class="form-control py-2 pl-5 font-size-15 height-40 rounded-left-pill" name="email" id="searchProduct" placeholder="Найти товар" aria-label="Найти товар" aria-describedby="searchProduct1" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-dark height-40 py-2 px-3 rounded-right-pill" type="button" id="searchProduct1">
+                                        <span class="ec ec-search font-size-24"></span>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
-                    <!-- End Search-Form -->
+                        </form>
+                        <!-- End Search-Form -->
                     </div>
                     <!-- End Search bar -->
                     <!-- Header Icons -->
-                    <div class="col-md-auto align-self-center">
+                    <div class="col-md-auto align-self-center @if(uri(2) == 'profile') dashboard-area @endif">
                         <div class="d-flex">
                             <ul class="d-flex list-unstyled mb-0">
 {{--                                <li class="col">--}}
@@ -247,6 +302,7 @@
 {{--                    </div>--}}
                     <!-- End Customer Care -->
                     <!-- Header Icons -->
+                    @if(uri(2) != 'profile')
                     <div class="d-xl-none col col-xl-auto text-right text-xl-left pl-0 pl-xl-3 position-static">
                         <div class="d-inline-flex">
                             <ul class="d-flex list-unstyled mb-0 align-items-center">
@@ -328,13 +384,14 @@
                         </div>
                     </div>
                     <!-- End Header Icons -->
+                    @endif
                 </div>
             </div>
         </div>
         <!-- End Logo and Menu -->
 
         <!-- Vertical-and-Search-Bar -->
-        <div class="d-none d-xl-block">
+        <div class="d-none d-xl-block @if(uri(2) == 'profile') dashboard-area @endif">
             <div class="container">
                 <div class="row align-items-stretch min-height-50">
                     <!-- Vertical Menu -->

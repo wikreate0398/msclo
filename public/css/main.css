@@ -2,6 +2,21 @@ body{
     font-family: 'Avenir Next Cyr Regular';
 }
 
+@media only screen and (max-width: 768px){
+    .dashboard.product_card:last-child{
+        margin-top: 25px;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        height: 169px;
+    }
+    .dashboard-page .custom-card:not(:first-child){
+        text-align: center;
+    }
+    .dashboard-page .rounded-icon{
+        display: inline-block;
+        margin: 0 auto;
+    }
+}
 #basicsHeadingOne span:first-child{
     color: #fff;
 }
@@ -49,16 +64,12 @@ body{
     font-weight: normal;
 }
 .dashboard-page .custom-card span{
-    font-family: 'Avenir Next Cyr Regular';
-    font-style: normal;
     font-weight: 600;
     font-size: 24px;
     line-height: 29px;
 }
 .dashboard-page .custom-card span p{
     color: #219653;
-    font-family: 'Avenir Next Cyr Regular';
-    font-style: normal;
     font-weight: normal;
     font-size: 14px;
 }
@@ -114,6 +125,23 @@ body{
     font-size: 12px;
     color: #BDBDBD;
 }
+.dashboard-page .cart-table .table thead th, .wishlist-table .table thead th{
+    border-bottom: 0 !important;
+}
+.dashboard-page .cart-table .table th, .cart-table .table td, .wishlist-table .table th, .wishlist-table .table td{
+    padding-left: 0.4rem;
+    padding-bottom: 0;
+}
+.dashboard-page .cart-table .table tbody tr:first-child td, .wishlist-table .table tbody tr:first-child td{
+    padding-top: 15px;
+}
+.dashboard-page .cart-table .table tbody tr td, .wishlist-table .table tbody tr td {
+    padding: 7px;
+    padding-top: 15px;
+}
+.dashboard-page .filter-option-inner-inner i {
+    margin-right: 10px;
+}
 .popular_orders table p{
     font-weight: 600;
     font-size: 16px;
@@ -131,6 +159,12 @@ body{
     line-height: 20px;
     color: #000000;
 }
+.dashboard.product_card i:last-child{
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+}
+
 .custom-card{
     border: 1px solid #eaeaea;
     border-radius: 5px;
@@ -154,6 +188,20 @@ body{
     border: 1px solid #eaeaea;
 }
 
+.bg-primary .vertical-navBar .list-group{
+    border-bottom: 0;
+}
+.list-group-item{
+    background-color: inherit;
+}
+.active-navbar{
+    border-bottom: 6px solid white !important;
+    border-radius: 0 !important;
+    color: white;
+}
+.dashboard-area{
+    display: none !important;
+}
 .vertical-navBar .list-group{
     flex-direction: inherit;
     border-bottom: 1px solid black;

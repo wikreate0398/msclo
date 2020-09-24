@@ -56,7 +56,7 @@
 
 <!-- ========== MAIN CONTENT ========== -->
 <main id="content" role="main">
-    <div class="bg-gray-13 bg-md-transparent">
+    <div class="bg-gray-13 bg-md-transparent @if(uri(2) == 'profile') dashboard-area @endif">
         <div class="container">
             <!-- breadcrumb -->
             @if(@$page_data['page_type'] != 'home')
@@ -104,7 +104,7 @@
                 <div class="col-lg-5">
                     <!-- Subscribe Form -->
                     <form class="js-form-message ajax__submit" action="{{ route('callback', compact('lang')) }}">
-                        {{ csrf_field() }}
+                        @csrf
                         <label class="sr-only" for="subscribeSrEmail">Телефон</label>
                         <div class="input-group input-group-pill">
                             <input type="text" class="form-control border-0 height-40" name="phone" id="subscribeSrEmail" placeholder="Телефон" required>
@@ -650,6 +650,7 @@
 <script src="/js/main.js?v={{ time() }}"></script>
 <script src="/js/notify.js"></script>
 <script src="/js/ajax.js?v={{ time() }}"></script>
+<script src="/js/profile.js?v={{ time() }}"></script>
 
 <div class="popup" id="cart-popup" style="display: none">
     <div class="popup-content"></div>

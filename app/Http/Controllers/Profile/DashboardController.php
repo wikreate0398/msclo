@@ -41,6 +41,6 @@ class DashboardController extends Controller
     
     public function getChartDays($value = 7)
     {
-        return $this->orderRepository->getChartDays($value);
+        return $this->orderRepository->chartData($value);
     }
 }

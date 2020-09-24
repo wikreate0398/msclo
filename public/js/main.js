@@ -306,45 +306,6 @@ $(window).load(function () {
     initEqHeight();
 });
 
-function getChartDays(value) {
-    $.ajax({
-        type: 'POST',
-        url: '/chart-data/' + value,
-        data: value,
-        headers: { 'X-CSRF-TOKEN': CSRF_TOKEN },
-        success: function (jsonResponse) {
-            // $('#myChart').remove();
-            // $('#canvas_father').append('<canvas id="myChart" height="129></canvas>');
-            removeData(myChart);
-            myChart.data.labels = jsonResponse.labels;
-            let diagramData = jsonResponse.diagramData;
-            diagramData.map((diagramData) => {
-                console.log(diagramData);
-                    myChart.data.datasets[0].data.push(diagramData.ordersTotal) ;
-                    myChart.data.datasets[1].data.push(diagramData.qty); 
-                    myChart.data.datasets[2].data.push(diagramData.sum);
-            });
-            myChart.update();
-        }
-    });
-}
-
-function addData(chart, label, data) {
-    chart.data.labels.push(label);
-    chart.data.datasets.forEach((dataset) => {
-        dataset.data.push(data);
-    });
-    chart.update();
-}
-
-function removeData(chart) {
-    chart.data.labels.pop();
-    chart.data.datasets.forEach((dataset) => {
-        dataset.data.pop();
-    });
-    chart.update();
-}
-
 function initEqHeight() {
     fixHeight('.products-group-4-1-4');
     fixHeight('.catalog-product');

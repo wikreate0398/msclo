@@ -83,9 +83,9 @@ class OrderRepository implements OrderRepositoryInterface
     public function chartData($value)
     {
         $orders = OrderProduct::with(['orders' => function ($query) use ($value) {
-            return $query->where('created_at', '>=', Carbon::now()->subDays($this->getChartDays($value)));
+            return $query->where('created_at', '>=', Carbon::now()->subDays($value));
         }])->whereHas('orders', function ($query) use ($value) {
-            return $query->where('created_at', '>=', Carbon::now()->subDays($this->getChartDays($value)));
+            return $query->where('created_at', '>=', Carbon::now()->subDays($value));
         })->where('id_provider', user()->id)->get();
         
         $labels      = collect();
@@ -113,39 +113,34 @@ class OrderRepository implements OrderRepositoryInterface
         ];
     }
 
-    public function getChartDays($value = 7)
-    {
-        return $value;
-    }
-
     public function dashboardData()
     {
         $sumOfAllSalesAndQuantity = $this->getSumOfAllSalesAndQuantity(user()->id);
         $salesFromLastMonth = $this->getSalesFromLastMonth(user()->id);
 
-        $chartData = $this->chartData($value = 7);
-        $labels = $chartData['labels'];
+        $chartData   = $this->chartData($value = 7);
+        $labels      = $chartData['labels'];
         $diagramData = $chartData['diagramData'];
         
         $productPrices = $this->getMinMaxProductsPrice(user()->id);
         $sumOfCategories = $this->providerRepository->getCatsGroupedByProviders(user()->id);
 
         return [
-            'id' => Auth::user()->id,
-            'provider' => User::where('type', 'provider')->where('id', user()->id)->first(),
-            'quantityOfAllSales' => $sumOfAllSalesAndQuantity['total_qty'],
-            'sumOfProducts' => $this->providerRepository->getProviderProducts(user()->id)->count(),
-            'sumOfAllSales' => $sumOfAllSalesAndQuantity['total_sum'],
-            'sumOfAllSalesFromLastMonth' => $salesFromLastMonth['total_sum'],
+            'id'                              => Auth::user()->id,
+            'provider'                        => User::where('type', 'provider')->where('id', user()->id)->first(),
+            'quantityOfAllSales'              => $sumOfAllSalesAndQuantity['total_qty'],
+            'sumOfProducts'                   => $this->providerRepository->getProviderProducts(user()->id)->count(),
+            'sumOfAllSales'                   => $sumOfAllSalesAndQuantity['total_sum'],
+            'sumOfAllSalesFromLastMonth'      => $salesFromLastMonth['total_sum'],
             'quantityOfAllSalesFromLastMonth' => $salesFromLastMonth['total_qty'],
-            'sumOfCategories' => $sumOfCategories->first() ? $sumOfCategories->first()->count() : 0,
-            'minProductPrice' => $productPrices['min'],
-            'maxProductPrice' => $productPrices['max'],
-            'orders' => $this->getProviderOrders(user()->id),
-            'getOrders' => $this->getOrders(),
-            'products' => $this->providerRepository->getProviderProduct(user()->id, false),
-            'labels' => $labels,
-            'diagramData' => $diagramData,
+            'sumOfCategories'                 => $sumOfCategories->first() ? $sumOfCategories->first()->count() : 0,
+            'minProductPrice'                 => $productPrices['min'],
+            'maxProductPrice'                 => $productPrices['max'],
+            'orders'                          => $this->getProviderOrders(user()->id),
+            'getOrders'                       => $this->getOrders(),
+            'products'                        => $this->providerRepository->getProviderProduct(user()->id, false),
+            'labels'                          => $labels,
+            'diagramData'                     => $diagramData,
         ];
     }
 }

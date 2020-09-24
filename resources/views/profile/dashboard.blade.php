@@ -172,48 +172,12 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 <script>
-  var ctx = document.getElementById("myChart");
-  var labels = {!! json_encode($dashboardData['labels']) !!}
-  var diagramData = {!! json_encode($dashboardData['diagramData']) !!}
-
-  var myChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: labels,
-        datasets: 
-        [{
-            label: 'Заказы',
-            data: {!! $dashboardData['diagramData']->pluck('ordersTotal')->toJson() !!},
-            borderColor: 'rgba(31, 120, 180, 1)',
-            backgroundColor: 'rgba(31, 120, 180, 0.2)',
-            borderWidth: 1
-        },
-        {
-            label: 'Продукты',
-            data: {!! $dashboardData['diagramData']->pluck('qty')->toJson() !!},
-            borderColor: 'rgba(178, 223, 138, 1)',
-            backgroundColor: 'rgba(178, 223, 138, 0.2)',
-            borderWidth: 1
-        },
-        {
-            label: 'Сумма',
-            data: {!! $dashboardData['diagramData']->pluck('sum')->toJson() !!},
-            borderColor: 'rgba(166, 206, 227, 1)',
-            backgroundColor: 'rgba(166, 206, 227, 0.2)',
-            borderWidth: 1
-        },
-        ]},
-    options: {
-      scales: {
-        xAxes: [],
-        yAxes: [{
-          ticks: {
-            beginAtZero:true
-          }
-        }]
-      }
-    }
-  });
+    var labels        = {!! json_encode($dashboardData['labels']) !!}
+    var diagramData   = {!! json_encode($dashboardData['diagramData']) !!}
+    var chartOrders   = {!! $dashboardData['diagramData']->pluck('ordersTotal')->toJson() !!};
+    var chartProducts = {!! $dashboardData['diagramData']->pluck('qty')->toJson() !!};
+    var chartSum      = {!! $dashboardData['diagramData']->pluck('sum')->toJson() !!};
 </script>
+
 
 @stop

@@ -110,8 +110,19 @@
             </div>
         </div>
         <div class="col-md-4 mb-12">
-            <h4>Статистика</h4>
-            <div class="row my-2">
+            <div class="row mb-5">
+                <h4 class="col-auto mr-auto font-weight-bold">Статистика</h4>
+                @if($labels->count() > 1)
+                <select class="col-auto js-select selectpicker dropdown-select custom-search-categories-select" data-style="btn height-40 text-gray-60 font-weight-normal border-0 rounded-0 bg-white" onchange="getChartDays(this.value)">
+                    <option data-icon="fa fa-calendar" value="7" selected>за 1 неделю</option>
+                    <option data-icon="fa fa-calendar" value="31">за 1 месяц</option>
+                    <option data-icon="fa fa-calendar" value="92">за 3 месяца</option>
+                    <option data-icon="fa fa-calendar" value="183">за 6 месяцев</option>
+                </select>
+                @endif
+            </div>
+            @if($labels->count() > 1)
+            <div class="row my-2 mb-4">
                 <div class="col-md-12">
                     <div class="card shadow-sm">
                         <div class="card-body">
@@ -120,6 +131,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="custom-card mb-4">
                 <div class="row">
                     <div class="col-md-3 py-3 px-7 text-center">

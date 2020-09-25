@@ -45,7 +45,7 @@
 								<div class="form-group">
 									<label>Поставщик <span class="req">*</span></label>
 									<div>
-										<select name="id_provider" class="form-control">
+										<select name="provider_id" class="form-control">
 											<option value="0">Выбрать</option>
 											@foreach($providers as $provider)
 												<option value="{{ $provider->id }}">{{ $provider->name }}</option>
@@ -167,10 +167,10 @@
 
 					<div class="filter-item">
 						<h6>Поставщик</h6>
-						<select name="id_provider" id="id_provider" class="form-control" onchange="filterCatalog()">
+						<select name="provider_id" id="provider_id" class="form-control" onchange="filterCatalog()">
 							<option value="all">Все</option>
 							@foreach($providers as $provider)
-								<option {{ (request()->id_provider == $provider->id) ? 'selected' : '' }} value="{{ $provider->id }}">{{ $provider->name }}</option>
+								<option {{ (request()->provider_id == $provider->id) ? 'selected' : '' }} value="{{ $provider->id }}">{{ $provider->name }}</option>
 							@endforeach
 						</select>
 					</div>
@@ -210,7 +210,7 @@
 	<script>
 		function filterCatalog() {
 			olink='/{{ $method }}/';
-			const id_provider = $('#id_provider').val();
+			const provider_id = $('#provider_id').val();
 
 			params='';
 			pluser='';
@@ -223,7 +223,7 @@
 
 			flt='?filter=1';
 			if (params!='') flt+='&params='+params;
-			if (id_provider) flt+= '&id_provider=' + id_provider;
+			if (provider_id) flt+= '&provider_id=' + provider_id;
 			window.location.href = olink+flt;
 		}
 	</script>

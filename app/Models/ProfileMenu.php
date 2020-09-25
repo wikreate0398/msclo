@@ -8,28 +8,31 @@ use App\Models\Traits\PermisionTrait;
 
 class ProfileMenu extends Model
 {
-	use OrderingTrait, PermisionTrait;
-	
-	public $timestamps = false;
+    use OrderingTrait, PermisionTrait;
+    
+    public $timestamps = false;
 
-	protected $table = 'profile_menu';
+    protected $table = 'profile_menu';
 
-	protected $fillable = [
-        'name_ru', 
-        'name_en', 
+    protected $fillable = [
+        'name_ru',
+        'name_en',
+        'description',
+        'icon',
         'route',
-        'description'
-    ]; 
+        'page_up',
+        'view'
+    ];
 
     public function access()
     {
-    	return $this->hasMany('App\Models\ProfileMenuGuard', 'id_menu', 'id');
+        return $this->hasMany(ProfileMenuGuard::class, 'menu_id', 'id');
     }
 
     public function scopeAccessType($query, $type)
     {
-    	return $query->whereHas('access', function($query) use($type){
-    		return $query->where('type', $type);
-    	});
+        return $query->whereHas('access', function ($query) use ($type) {
+            return $query->where('type', $type);
+        });
     }
 }

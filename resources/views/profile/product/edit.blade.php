@@ -43,7 +43,7 @@
                     <div class="w-100" style="margin-bottom: 15px;"></div>
 
                     <div class="col-md-12">
-                        @include('admin.catalog.products.utils.categories', ['categories' => $categories, 'selected_category' => $data->id_category])
+                        @include('admin.catalog.products.utils.categories', ['categories' => $categories, 'selected_category' => $data->category_id])
                     </div>
 
                     <div class="w-100" style="margin-bottom: 15px;"></div>
@@ -54,7 +54,7 @@
                         </label>
                         <table class="table table-bordered">
                             @php
-                                $productChars = $data->chars ? $data->chars->groupBy('id_char') : collect();
+                                $productChars = $data->chars ? $data->chars->groupBy('char_id') : collect();
                             @endphp
                             @foreach($chars as $char)
                                 <tr>
@@ -131,7 +131,7 @@
                            name="files"
                            class="gallery_media"
                            data-fileuploader-theme="gallery"
-                           data-json='{"table": "catalog_images", "field": "image"}'
+                           data-json='{"table": "product_images", "field": "image"}'
                            data-fileuploader-files='<?=json_encode($imgData)?>'>
 
                     <input type="hidden" name="image_sort" value="" id="img-sort">

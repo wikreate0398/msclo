@@ -22,7 +22,7 @@
 <div class="form-group">
     <label class="form-label">Категория <span class="req">*</span></label>
     <div>
-        <select name="id_category" class="form-control">
+        <select name="category_id" class="form-control">
             <option value="0">Выбрать</option>
             @catOptions(map_tree($categories->toArray()), 0, @$selected_category)
         </select>

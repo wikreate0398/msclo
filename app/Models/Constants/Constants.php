@@ -3,6 +3,8 @@
 namespace App\Models\Constants;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Constants\ConstantsCategory;
+use App\Models\Constants\ConstantsValue;
 
 class Constants extends Model
 {
@@ -12,7 +14,7 @@ class Constants extends Model
 
     protected $fillable = [
         'name',
-        'id_category',
+        'category_id',
         'description',
         'editor'
     ];
@@ -23,12 +25,12 @@ class Constants extends Model
 
     public function category()
     {
-        return $this->hasOne('App\Models\Constants\ConstantsCategory', 'id', 'id_category');
+        return $this->hasOne(ConstantsCategory::class, 'id', 'category_id');
     }
 
     public function constants_value()
     {
-        return $this->hasMany('App\Models\Constants\ConstantsValue', 'id_const', 'id');
+        return $this->hasMany(ConstantsValue::class, 'const_id', 'id');
     }
 
     public function scopeFilter($query)

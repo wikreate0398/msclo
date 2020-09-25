@@ -8,10 +8,10 @@ class ProductPrice extends Model
 {
     public $timestamps = false;
 
-    protected $table = 'catalog_prices';
+    protected $table = 'product_prices';
 
     protected $fillable = [
-        'id_product',
+        'product_id',
         'price',
         'quantity'
     ];
@@ -22,6 +22,6 @@ class ProductPrice extends Model
 
     public function product()
     {
-        return $this->hasOne(Product::class, 'id', 'id_product');
+        return $this->hasOne(Product::class, 'id', 'product_id');
     }
 }

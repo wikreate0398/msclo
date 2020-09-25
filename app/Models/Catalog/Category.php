@@ -4,6 +4,7 @@ namespace App\Models\Catalog;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\OrderingTrait;
+use App\Models\Catalog\Product;
 use App\Models\Traits\PermisionTrait;
 
 class Category extends Model
@@ -22,12 +23,12 @@ class Category extends Model
 
     public function products()
     {
-        return $this->hasMany('App\Models\Catalog\Product', 'id_category', 'id')->orderByPageUp()->visible();
+        return $this->hasMany(Product::class, 'category_id', 'id')->orderByPageUp()->visible();
     }
 
     public function childs()
     {
-        return $this->hasMany('App\Models\Catalog\Category', 'parent_id', 'id')->orderByPageUp()->withCount('products');
+        return $this->hasMany(Category::class, 'parent_id', 'id')->orderByPageUp()->withCount('products');
     }
 
     public function scopeGetWithProducts($query)

@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Languages extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $table = 'languages';
+    protected $table = 'languages';
 
-	protected $fillable = [
+    protected $fillable = [
         'name',
-        'short' 
+        'short',
+        'page_up',
+        'view'
     ];
 }

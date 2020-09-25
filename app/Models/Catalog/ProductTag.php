@@ -8,10 +8,10 @@ class ProductTag extends Model
 {
     public $timestamps = false;
 
-    protected $table = 'catalog_tags';
+    protected $table = 'product_tags';
 
     protected $fillable = [
-        'id_product',
-        'id_tag'
+        'product_id',
+        'tag_id'
     ];
 }

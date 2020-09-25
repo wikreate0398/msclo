@@ -10,13 +10,15 @@ interface CatalogRepositoryInterface
 
     public function getCategoryProducts($ids);
 
+    public function getProductChars($provider_id, $usedCart = false, $lang = false);
+    
     public function getFilters($idsCats = []);
 
-    public function getSubcatsIds($allCats, $id_category);
+    public function getSubcatsIds($allCats, $category_id);
 
-    public function getSameCats($id_parent);
+    public function getSameCats($parent_id);
 
-    public function getBreads($allCats, $id_category, $def = []);
+    public function getBreads($allCats, $category_id, $def = []);
 
     public function getMinMaxPrices($idsCats = []);
 
@@ -24,5 +26,5 @@ interface CatalogRepositoryInterface
 
     public function getProductById($id);
 
-    public function deleteProduct($id, $id_provider);
+    public function deleteProduct($id, $provider_id);
 }

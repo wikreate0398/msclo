@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ProviderFile;
 
 class FilesController extends Controller
-{ 
+{
     public function index()
     {
         $files = ProviderFile::getProviderFiles(user()->id);
@@ -31,13 +31,13 @@ class FilesController extends Controller
             foreach ($images as $key => $file) {
                 $fileNames->push($file);
                 ProviderFile::create([
-                    'id_provider'    => user()->id,
+                    'provider_id'    => user()->id,
                     'file'           => $file,
                     'name_ru'        => @$request->title[$key] ?: '',
                     'description_ru' => @$request->text[$key] ?: ''
                 ]);
             }
-        } else if($request->title && $request['fileuploader-list-files']) {
+        } elseif ($request->title && $request['fileuploader-list-files']) {
             $filesNames = json_decode($request['fileuploader-list-files'], true);
 
             foreach ($filesNames as $key => $path) {

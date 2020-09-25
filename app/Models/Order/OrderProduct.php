@@ -3,8 +3,8 @@
 namespace App\Models\Order;
 
 use App\Models\Catalog\Product;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderProduct extends Model
 {
@@ -13,25 +13,25 @@ class OrderProduct extends Model
     protected $table = 'orders_products';
 
     protected $fillable = [
-        'id_order',
-        'id_provider',
-        'id_product',
+        'order_id',
+        'provider_id',
+        'product_id',
         'qty',
         'price'
     ];
 
     public function provider()
     {
-        return $this->hasOne('App\Models\User', 'id', 'id_provider')->withTrashed();
+        return $this->hasOne(User::class, 'id', 'provider_id')->withTrashed();
     }
 
     public function orders()
     {
-        return $this->hasOne(Order::class, 'id', 'id_order')->withTrashed();
+        return $this->hasOne(Order::class, 'id', 'order_id')->withTrashed();
     }
 
     public function product()
     {
-        return $this->hasOne(Product::class, 'id', 'id_product')->with('images', 'category', 'prices')->withTrashed();
+        return $this->hasOne(Product::class, 'id', 'product_id')->with('images', 'category', 'prices')->withTrashed();
     }
 }

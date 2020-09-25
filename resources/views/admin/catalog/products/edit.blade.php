@@ -39,23 +39,23 @@
 							<div class="form-group">
 								<label>Поставщик <span class="req">*</span></label>
 								<div>
-									<select name="id_provider" class="form-control">
+									<select name="provider_id" class="form-control">
 										<option value="0">Выбрать</option>
 										@foreach($providers as $provider)
-											<option {{ ($data->id_provider == $provider->id) ? 'selected' : '' }} value="{{ $provider->id }}">{{ $provider->name }}</option>
+											<option {{ ($data->provider_id == $provider->id) ? 'selected' : '' }} value="{{ $provider->id }}">{{ $provider->name }}</option>
 										@endforeach
 									</select>
 								</div>
 							</div>
 
-							@include('admin.catalog.products.utils.categories', ['categories' => $categories, 'selected_category' => $data->id_category])
+							@include('admin.catalog.products.utils.categories', ['categories' => $categories, 'selected_category' => $data->category_id])
 
 							<div class="form-group">
 								<label>Характеристики</label>
 								<div>
 									<table class="table table-bordered">
 										@php
-											$productChars = $data->chars ? $data->chars->groupBy('id_char') : collect();
+											$productChars = $data->chars ? $data->chars->groupBy('char_id') : collect();
 								        @endphp
 										@foreach($chars as $char)
 											<tr>
@@ -122,7 +122,7 @@
 								   name="files"
 								   class="file_uploader_input"
 								   data-fileuploader-theme="default"
-								   data-json='{"table": "catalog_images", "field": "image"}'
+								   data-json='{"table": "product_images", "field": "image"}'
 								   data-fileuploader-files='<?=json_encode($imgData)?>'>
 						</div>
 

@@ -4,6 +4,10 @@ namespace App\Models\Catalog;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Traits\OrderingTrait;
+use App\Models\Catalog\CharProduct;
+use App\Models\Catalog\ProductImage;
+use App\Models\Catalog\Tag;
+use App\Models\User;
 use App\Models\Traits\PermisionTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -13,13 +17,13 @@ class Product extends Model
     
     public $timestamps = true;
 
-    protected $table = 'catalog';
+    protected $table = 'products';
 
     protected $fillable = [
         'code',
         'url',
-        'id_provider',
-        'id_category',
+        'provider_id',
+        'category_id',
         'name_ru',
         'name_en',
         'description_ru',
@@ -47,32 +51,32 @@ class Product extends Model
 
     public function chars()
     {
-        return $this->hasMany('App\Models\Catalog\CharProduct', 'id_product', 'id');
+        return $this->hasMany(CharProduct::class, 'product_id', 'id');
     }
 
     public function prices()
     {
-        return $this->hasMany(ProductPrice::class, 'id_product', 'id')->orderBy('price', 'asc');
+        return $this->hasMany(ProductPrice::class, 'product_id', 'id')->orderBy('price', 'asc');
     }
 
     public function tags()
     {
-        return $this->belongsToMany('App\Models\Catalog\Tag', 'catalog_tags', 'id_product', 'id_tag')->orderBy('page_up', 'asc');
+        return $this->belongsToMany(Tag::class, 'product_tags', 'product_id', 'tag_id')->orderBy('page_up', 'asc');
     }
 
     public function category()
     {
-        return $this->hasOne('App\Models\Catalog\Category', 'id', 'id_category');
+        return $this->hasOne(Category::class, 'id', 'category_id');
     }
 
     public function provider()
     {
-        return $this->hasOne('App\Models\User', 'id', 'id_provider');
+        return $this->hasOne(User::class, 'id', 'provider_id');
     }
 
     public function images()
     {
-        return $this->hasMany('App\Models\Catalog\ProductImage', 'id_product', 'id')->orderByPageUp();
+        return $this->hasMany(ProductImage::class, 'product_id', 'id')->orderByPageUp();
     }
 
     public function scopeFilter($query)
@@ -84,14 +88,14 @@ class Product extends Model
         }
 
         if (request()->providers) {
-            $query->whereIn('id_provider', explode(',', request()->providers));
+            $query->whereIn('provider_id', explode(',', request()->providers));
         }
 
-        if (request()->id_provider && request()->id_provider != 'all') {
-            $query->where('id_provider', request()->id_provider);
+        if (request()->provider_id && request()->provider_id != 'all') {
+            $query->where('provider_id', request()->provider_id);
         }
 
-        $priceQuery = '(SELECT price FROM catalog_prices WHERE catalog_prices.id_product = catalog.id ORDER BY price asc LIMIT 1)';
+        $priceQuery = '(SELECT price FROM product_prices WHERE product_prices.product_id = products.id ORDER BY price asc LIMIT 1)';
 
         $query->selectRaw("$priceQuery as price");
 
@@ -127,8 +131,8 @@ class Product extends Model
 
     public function scopeCatalog($query, $catIds)
     {
-        return $query->select('catalog.*')
-                     ->whereIn('id_category', $catIds)
+        return $query->select('products.*')
+                     ->whereIn('category_id', $catIds)
                      ->withRelations()
                      ->visible();
     }

@@ -7,9 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class AdminUser extends Authenticatable
 {
-    use Notifiable; 
+    use Notifiable;
     
-	protected $guard = 'admin';
+    protected $guard = 'admin';
 
     protected $table = 'admin_users';
 
@@ -21,12 +21,17 @@ class AdminUser extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 
-        'email', 
+        'name',
+        'email',
         'password',
-        'type'
+        'type',
+        'active'
     ];
-
+    
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -34,5 +39,5 @@ class AdminUser extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
-    ]; 
+    ];
 }

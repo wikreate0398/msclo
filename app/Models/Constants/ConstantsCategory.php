@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class ConstantsCategory extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $table = 'constants_category';
+    protected $table = 'constants_category';
 
-	protected $fillable = [
-        'name'
+    protected $fillable = [
+        'name',
+        'page_up'
     ];
 }

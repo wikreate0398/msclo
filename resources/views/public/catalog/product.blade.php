@@ -88,7 +88,7 @@
                         <p class="mb-2"><strong>Код</strong>: {{ $product["code"] }}</p>
                     @endif
                     @if(isset($product->provider))
-                        <p class="mb-2"><strong>Поставщик</strong>: <a href="{{ route('view_provider', ['lang' => $lang, 'id' => $product->id_provider]) }}">{{ $product->provider->name }}</a></p>
+                        <p class="mb-2"><strong>Поставщик</strong>: <a href="{{ route('view_provider', ['lang' => $lang, 'id' => $product->provider_id]) }}">{{ $product->provider->name }}</a></p>
                     @endif
                     <form action="{{ route('add_to_cart', ['lang' => $lang]) }}"
                           onsubmit="addToCart(this); return false;"

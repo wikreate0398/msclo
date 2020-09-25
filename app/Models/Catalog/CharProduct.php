@@ -2,32 +2,34 @@
 
 namespace App\Models\Catalog;
 
+use App\Models\Catalog\Char;
+use App\Models\Catalog\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class CharProduct extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $table = 'chars_catalog';
+    protected $table = 'chars_products';
 
-	protected $fillable = [
-        'id_product',
-        'id_char',
+    protected $fillable = [
+        'char_id',
+        'product_id',
         'value'
     ];
 
     public function char()
     {
-        return $this->hasOne('App\Models\Catalog\Char', 'id', 'id_char');
+        return $this->hasOne(Char::class, 'id', 'char_id');
     }
 
     public function optionValue()
     {
-        return $this->hasOne('App\Models\Catalog\Char', 'id', 'value');
+        return $this->hasOne(Char::class, 'id', 'value');
     }
 
     public function product()
     {
-        return $this->hasOne('App\Models\Catalog\Product', 'id', 'id_product');
+        return $this->hasOne(Product::class, 'id', 'product_id');
     }
 }

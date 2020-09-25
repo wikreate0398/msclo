@@ -4,6 +4,7 @@ namespace App\Models\Catalog;
 
 use App\Models\Traits\OrderingTrait;
 use App\Models\Traits\PermisionTrait;
+use App\Models\Catalog\Product;
 use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
@@ -16,12 +17,14 @@ class Tag extends Model
 
     protected $fillable = [
         'name_ru',
-        'name_en'
+        'name_en',
+        'view',
+        'page_up'
     ];
 
     public function products()
     {
-        return $this->belongsToMany('App\Models\Catalog\Product', 'catalog_tags', 'id_tag', 'id_product')->visible()->orderBy('page_up', 'asc');
+        return $this->belongsToMany(Product::class, 'product_tags', 'tag_id', 'product_id')->visible()->orderBy('page_up', 'asc');
     }
 
     public function scopeGetHome($query)

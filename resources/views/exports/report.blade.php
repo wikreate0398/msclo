@@ -16,17 +16,17 @@
 	<tbody>
 		@foreach($orders as $item)
 			@php
-				$tipPercents = $item->percents->keyBy('id_percent');
+				$tipPercents = $item->percents->keyBy('percent_id');
 			@endphp
 			<tr> 
 				<td>
 					{{ $item->created_at->format('d.m.Y H:i:s') }}
 				</td>
 				<td>
-					{{ $item->id_transaction }}
+					{{ $item->transaction_id }}
 				</td>  
 				<td>
-					@if(!$item->id_location)
+					@if(!$item->location_id)
 						{{ $item->user->name }} {{ $item->user->lastname }} ({{ $item->user->rand }})
 					@else
 						{{ $item->location->institution_name }} ({{ $item->location->rand }})
@@ -34,9 +34,9 @@
 				</td>
 				<td>{{ $item->payment_service_data->name }}</td>
 				<td>
-					@if(!$item->id_location && @$item->user->agent_code)
+					@if(!$item->location_id && @$item->user->agent_code)
 						{{ $item->user->agent->name }} {{ $item->user->agent->lastname }}
-					@elseif($item->id_location && @$item->location->agent_code)
+					@elseif($item->location_id && @$item->location->agent_code)
 						{{ $item->location->agent->name }} {{ $item->location->agent->lastname }}
 					@endif  
 				</td> 

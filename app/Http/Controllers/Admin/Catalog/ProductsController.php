@@ -30,7 +30,7 @@ class ProductsController extends Controller
      *
      * @return void
      */
-    public function __construct() 
+    public function __construct()
     {
         $this->model  = new Product;
         $this->method = config('admin.path') . '/' . $this->method;
@@ -42,9 +42,9 @@ class ProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show()
-    {  
+    {
         $data = [
-            'data'       => $this->model->select('catalog.*')->filter()->orderByRaw('page_up asc, id desc')->get(),
+            'data'       => $this->model->select('products.*')->filter()->orderByRaw('page_up asc, id desc')->get(),
             'categories' => Category::orderByPageUp()->get(),
             'providers'  => User::provider()->get(),
             'chars'      => Char::orderByPageUp()->where('parent_id', 0)->with('childs')->get(),
@@ -54,11 +54,11 @@ class ProductsController extends Controller
         ];
 
         return view('admin.'.$this->folder.'.list', $data);
-    }  
+    }
 
     public function create(Request $request, CatalogService $catalogService)
     {
-        $response = $catalogService->create($request->id_provider);
+        $response = $catalogService->create($request->provider_id);
         if ($response->status) {
             return \JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
         } else {
@@ -67,7 +67,7 @@ class ProductsController extends Controller
     }
 
     public function showeditForm($id)
-    { 
+    {
         return view('admin.'.$this->folder.'.edit', [
             'method'     => $this->method,
             'table'      => $this->model->getTable(),
@@ -80,7 +80,7 @@ class ProductsController extends Controller
 
     public function update($id, Request $request, CatalogService $catalogService)
     {
-        $response = $catalogService->update($id, $request->id_provider);
+        $response = $catalogService->update($id, $request->provider_id);
         if ($response->status) {
             return \JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
         } else {

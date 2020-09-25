@@ -8,18 +8,20 @@ use App\Models\Traits\PermisionTrait;
 
 class Brand extends Model
 {
-	use OrderingTrait, PermisionTrait;
-	
-	public $timestamps = false;
+    use OrderingTrait, PermisionTrait;
+    
+    public $timestamps = false;
 
-	protected $table = 'brands';
+    protected $table = 'brands';
 
-	protected $fillable = [
+    protected $fillable = [
         'name',
-        'image'
+        'image',
+        'view',
+        'page_up'
     ];
 
-	public function scopeGetAll($query)
+    public function scopeGetAll($query)
     {
         return $query->visible()->orderByPageUp()->get();
     }

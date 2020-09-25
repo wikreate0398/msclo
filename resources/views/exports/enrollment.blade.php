@@ -19,10 +19,10 @@
 				{{ $item->rand }}
 			</td> 
 			<td>
-				{{ $item->id_qrcode ? $item->qr_code->code : '' }}
+				{{ $item->qrcode_id ? $item->qr_code->code : '' }}
 			</td> 
 			<td>
-				@if(!$item->id_location)
+				@if(!$item->location_id)
 					{{ $item->user->name }} {{ $item->user->lastname }} ({{ $item->user->rand }})
 				@else
 					{{ $item->location->institution_name }} ({{ $item->location->rand }})
@@ -48,7 +48,7 @@
                 @endif
 			</td> 
 			<td class="nw" align="center">
-				@if(@$item->id_payment == 1)
+				@if(@$item->payment_id == 1)
 					<img src="{{ public_path('/img/visa_pay.png') }}" height="39" alt=""> 
 				@else
 					<img src="{{ public_path('/img/apple_google_pay.png') }}" height="39" alt=""> 

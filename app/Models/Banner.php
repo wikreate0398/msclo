@@ -8,20 +8,22 @@ use App\Models\Traits\PermisionTrait;
 
 class Banner extends Model
 {
-	use OrderingTrait, PermisionTrait;
-	
-	public $timestamps = false;
+    use OrderingTrait, PermisionTrait;
+    
+    public $timestamps = false;
 
-	protected $table = 'banners';
+    protected $table = 'banners';
 
-	protected $fillable = [
+    protected $fillable = [
         'name_ru',
         'name_en',
         'image',
-        'link'
+        'link',
+        'view',
+        'page_up',
     ];
 
-	public function scopeGetAll($query)
+    public function scopeGetAll($query)
     {
         return $query->visible()->orderByPageUp()->get();
     }

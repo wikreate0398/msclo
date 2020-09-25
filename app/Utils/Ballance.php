@@ -7,6 +7,7 @@
  */
 
 namespace App\Utils;
+
 use App\Models\Transactions;
 use App\Models\Tips;
 use App\Models\User;
@@ -16,34 +17,35 @@ class Ballance
 {
     protected $user;
 
-    protected $id_sender;
+    protected $sender_id;
 
-    private $ballance; 
+    private $ballance;
 
     private $type;
 
     private $price;
 
-    private $orderId; 
+    private $orderId;
 
-    private $withdrawId;  
+    private $withdrawId;
 
     private $currentBallance;
 
-    function __construct() {}
+    public function __construct()
+    {
+    }
 
     public static function getUserBallance($idUser, $userType, $days = false)
     {
-
-        $senderMoneys = Transactions::where('id_user', $idUser)
-                                    ->where('id_sender', '!=', '')
+        $senderMoneys = Transactions::where('user_id', $idUser)
+                                    ->where('sender_id', '!=', '')
                                     ->forLast($days)
                                     ->where('type', 'replenish')
                                     ->sum('price');
 
         $tipsMoney = self::sumTipAmount(\App\Models\Tips::confirmed($days)
-                                                     ->selectRaw('amount, status, created_at, location_work_type, id_location, location_amount')
-                                                     ->where((($userType == 'admin') ? 'id_location' : 'id_user'), $idUser)
+                                                     ->selectRaw('amount, status, created_at, location_work_type, location_id, location_amount')
+                                                     ->where((($userType == 'admin') ? 'location_id' : 'user_id'), $idUser)
                                                      ->get(), $userType, $idUser);
         return $tipsMoney+$senderMoneys;
     }
@@ -53,8 +55,8 @@ class Ballance
         $data = User::where('id', $idPartner)->with('referrals.locationUsers')->first();
 
         $ids = [];
-        foreach ($data->referrals as $referral){
-            foreach ($referral->locationUsers as $user){
+        foreach ($data->referrals as $referral) {
+            foreach ($referral->locationUsers as $user) {
                 $ids[$user->id] = $user->id;
             }
             $ids[$referral->id] = $referral->id;
@@ -64,9 +66,9 @@ class Ballance
                     ->selectRaw('id, total_amount')
                     ->withPartnerPercent()
                     ->hasPartnerPercents()
-                    ->whereIn('id_user', $ids)
+                    ->whereIn('user_id', $ids)
                     ->get()
-                    ->sum(function($item){
+                    ->sum(function ($item) {
                         return percent($item->total_amount, @$item['percents'][0]->percent);
                     });
 
@@ -75,21 +77,15 @@ class Ballance
 
     private static function sumTipAmount($tips, $userType, $userId)
     {
-        return $tips->sum(function($tip) use($userType, $userId){
-            if(empty($tip->id_location))
-            {
+        return $tips->sum(function ($tip) use ($userType, $userId) {
+            if (empty($tip->location_id)) {
                 return $tip->amount;
-            }
-            else
-            { 
-                if($tip->location_work_type == 'percent')
-                { 
-                    return ($tip->id_location == $userId) ? $tip->location_amount : $tip->amount;
+            } else {
+                if ($tip->location_work_type == 'percent') {
+                    return ($tip->location_id == $userId) ? $tip->location_amount : $tip->amount;
+                } else {
+                    return ($tip->location_id == $userId) ? $tip->amount : 0;
                 }
-                else
-                {
-                    return ($tip->id_location == $userId) ? $tip->amount : 0;
-                } 
             }
         });
     }
@@ -104,13 +100,13 @@ class Ballance
     {
         $this->price = $price;
         return $this;
-    } 
+    }
 
-    public function setSender($id_sender)
+    public function setSender($sender_id)
     {
-        $this->id_sender = $id_sender;
+        $this->sender_id = $sender_id;
         return $this;
-    }  
+    }
 
     public function setOrderId($orderId)
     {
@@ -122,10 +118,10 @@ class Ballance
     {
         $this->withdrawId = $withdrawId;
         return $this;
-    } 
+    }
 
     public function replenish()
-    { 
+    {
         $this->ballance = $this->user->ballance + $this->price;
         $this->type     = 'replenish';
         $this->makeTransaction();
@@ -133,15 +129,12 @@ class Ballance
 
     public function off()
     {
-        if($this->user->ballance <= $this->price)
-        {
+        if ($this->user->ballance <= $this->price) {
             $this->ballance = 0;
-        }
-        else
-        {
+        } else {
             $this->ballance = $this->user->ballance - $this->price;
         }
-        $this->type = 'off'; 
+        $this->type = 'off';
         $this->makeTransaction();
     }
 
@@ -150,18 +143,18 @@ class Ballance
         $this->user->ballance = $this->ballance;
         $this->user->save();
         $this->saveTransaction();
-    } 
+    }
 
     private function saveTransaction()
     {
         Transactions::create([
-            'id_user'          => $this->user->id, 
-            'id_sender'        => $this->id_sender ?: 0,
+            'user_id'          => $this->user->id,
+            'sender_id'        => $this->sender_id ?: 0,
             'type'             => $this->type,
-            'price'            => $this->price, 
+            'price'            => $this->price,
             'ballance'         => $this->user->ballance,
-            'id_order'         => $this->orderId ?: '',
-            'id_withdraw'      => $this->withdrawId ?: '',
+            'order_id'         => $this->orderId ?: '',
+            'withdraw_id'      => $this->withdrawId ?: '',
         ]);
     }
 }

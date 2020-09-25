@@ -68,7 +68,7 @@ class CartController extends Controller
                 'phone'        => $request->phone,
                 'comment'      => $request->comment,
                 'company'      => $request->company,
-                'id_user'      => user()->id,
+                'user_id'      => user()->id,
                 'rand'         => generate_id(6),
                 'total_price'  => cart()->getTotalPrice()
             ]);
@@ -76,9 +76,9 @@ class CartController extends Controller
             $products = $this->cartRepository->getProducts();
             foreach ($products as $product) {
                 OrderProduct::create([
-                    'id_order'    => $order->id,
-                    'id_provider' => $product['id_provider'],
-                    'id_product'  => $product['id'],
+                    'order_id'    => $order->id,
+                    'provider_id' => $product['provider_id'],
+                    'product_id'  => $product['id'],
                     'qty'         => $product['qty'],
                     'price'       => $product['price']
                 ]);
@@ -105,7 +105,7 @@ class CartController extends Controller
         $product = $this->catalogRepository->getProductById($request->id);
 
         try {
-            if (isAuth() && $product->id_provider == user()->id) {
+            if (isAuth() && $product->provider_id == user()->id) {
                 throw new \ValidationError('Вы не можете покупать свои товары');
             }
 
@@ -210,8 +210,8 @@ class CartController extends Controller
     {
         $chars = $this->catalogRepository->getProductChars($product->id, true)->keyBy('id');
         ;
-        foreach ($request->char as $id_char => $id_value) {
-            if (empty($chars[$id_char]) or !in_array($id_value, $chars[$id_char]['value']->pluck('id')->toArray())) {
+        foreach ($request->char as $char_id => $value_id) {
+            if (empty($chars[$char_id]) or !in_array($value_id, $chars[$char_id]['value']->pluck('id')->toArray())) {
                 throw new \ValidationError('Укажите все параметры');
             }
         }

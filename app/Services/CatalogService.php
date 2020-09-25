@@ -28,12 +28,12 @@ class CatalogService
         ];
     }
 
-    public function create($id_provider)
+    public function create($provider_id)
     {
         \DB::beginTransaction();
 
         try {
-            if (!$this->request->id_category or !$id_provider) {
+            if (!$this->request->category_id or !$provider_id) {
                 throw new \ValidationError('Заполните обязательные поля');
             }
 
@@ -41,8 +41,8 @@ class CatalogService
 
             $insertData = array_merge($transData, [
                 'code'        => $this->request->code,
-                'id_category' => $this->request->id_category,
-                'id_provider' => $id_provider,
+                'category_id' => $this->request->category_id,
+                'provider_id' => $provider_id,
             ]);
 
             $create      = Product::create($insertData);
@@ -61,12 +61,12 @@ class CatalogService
         }
     }
 
-    public function update($id, $id_provider)
+    public function update($id, $provider_id)
     {
         \DB::beginTransaction();
 
         try {
-            if (!$this->request->id_category or !$id_provider) {
+            if (!$this->request->category_id or !$provider_id) {
                 throw new \ValidationError('Заполните обязательные поля');
             }
 
@@ -74,8 +74,8 @@ class CatalogService
 
             $insertData = array_merge(\Language::returnData($this->returnDataFields), [
                 'code'        => $this->request->code,
-                'id_category' => $this->request->id_category,
-                'id_provider' => $id_provider,
+                'category_id' => $this->request->category_id,
+                'provider_id' => $provider_id,
                 'url'         => $data->url ?: toUrl($this->request->name['ru']) . '-' . $id
             ]);
 
@@ -108,7 +108,7 @@ class CatalogService
 
             foreach ($images as $key => $image) {
                 ProductImage::create([
-                    'id_product' => $id,
+                    'product_id' => $id,
                     'image'      => $image['name'],
                     'page_up'    => @$image['page_up'] ?: 1
                 ]);
@@ -126,13 +126,13 @@ class CatalogService
 
     private function savePrices($id, $prices = [], $insert = [])
     {
-        ProductPrice::where('id_product', $id)->delete();
+        ProductPrice::where('product_id', $id)->delete();
         if (empty($prices)) {
             return;
         }
         foreach (sortValue($prices) as $type => $item) {
             $insert[] = [
-                'id_product' => $id,
+                'product_id' => $id,
                 'price'      => toFloat($item['price']),
                 'quantity'   => toFloat($item['quantity'])
             ];
@@ -143,25 +143,25 @@ class CatalogService
         }
     }
 
-    private function saveChars($id_product, $chars = [], $insert = [])
+    private function saveChars($product_id, $chars = [], $insert = [])
     {
-        CharProduct::where('id_product', $id_product)->delete();
+        CharProduct::where('product_id', $product_id)->delete();
         foreach ($chars as $type => $chars) {
             if ($type == 'input') {
-                foreach ($chars as $id_char => $value) {
+                foreach ($chars as $char_id => $value) {
                     $insert[] = [
-                        'id_char'    => $id_char,
+                        'char_id'    => $char_id,
                         'value'      => $value,
-                        'id_product' => $id_product
+                        'product_id' => $product_id
                     ];
                 }
             } else {
-                foreach ($chars as $id_char => $values) {
-                    foreach ($values as $key => $id_value) {
+                foreach ($chars as $char_id => $values) {
+                    foreach ($values as $key => $value_id) {
                         $insert[] = [
-                            'id_char'    => $id_char,
-                            'value'      => $id_value,
-                            'id_product' => $id_product
+                            'char_id'    => $char_id,
+                            'value'      => $value_id,
+                            'product_id' => $product_id
                         ];
                     }
                 }

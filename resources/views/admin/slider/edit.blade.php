@@ -23,10 +23,10 @@
 				<div class="form-group">
 					<label> Товар </label>
 					<div>
-						<select name="id_product" class="form-control basic-select2">
+						<select name="product_id" class="form-control basic-select2">
 							<option value="0">Выбрать</option>
 							@foreach($products as $product)
-								<option {{ ($data->id_product == $product->id) ? 'selected' : '' }} value="{{ $product->id }}">{{ $product->name_ru }}</option>
+								<option {{ ($data->product_id == $product->id) ? 'selected' : '' }} value="{{ $product->id }}">{{ $product->name_ru }}</option>
 							@endforeach
 						</select>
 					</div>

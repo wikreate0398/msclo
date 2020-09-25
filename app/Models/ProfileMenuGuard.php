@@ -11,7 +11,7 @@ class ProfileMenuGuard extends Model
 	protected $table = 'profile_menu_guard';
 
 	protected $fillable = [
-        'id_menu', 
+        'menu_id', 
         'type', 
     ]; 
 }

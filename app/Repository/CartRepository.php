@@ -25,7 +25,7 @@ class CartRepository implements CartRepositoryInterface
 
     public function getTotalPrice($price = 0)
     {
-        $getPrices = ProductPrice::whereIn('id_product', $this->ids())->get();
+        $getPrices = ProductPrice::whereIn('product_id', $this->ids())->get();
         $prices    = $this->getPricesRange($getPrices);
 
         foreach ($this->cartSess() as $key => $value) {
@@ -57,10 +57,10 @@ class CartRepository implements CartRepositoryInterface
 
             $chars = collect();
             if ($charsData->count()) {
-                foreach ($item['chars'] as $id_char => $id_value) {
+                foreach ($item['chars'] as $char_id => $value_id) {
                     $chars->push([
-                        'name'  => @$charsData[$id_char]["name_$lang"],
-                        'value' => @$charsData[$id_value]["name_$lang"],
+                        'name'  => @$charsData[$char_id]["name_$lang"],
+                        'value' => @$charsData[$value_id]["name_$lang"],
                     ]);
                 }
             }
@@ -69,7 +69,7 @@ class CartRepository implements CartRepositoryInterface
                 'cart_id'     => $cartId,
                 'url'         => $product->url,
                 'id'          => $item['id'],
-                'id_provider' => $product->id_provider,
+                'provider_id' => $product->provider_id,
                 'name'        => $product["name_$lang"],
                 'image'       => imageThumb(@$product->images->first()->image, 'uploads/products', 300, 300, '300X300'),
                 'price'       => $this->getPriceByQty($product->prices, $item['qty']),
@@ -113,11 +113,11 @@ class CartRepository implements CartRepositoryInterface
 
         $rangePrices = collect();
 
-        foreach ($dataPrices->groupBy('id_product') as $id_product => $items) {
+        foreach ($dataPrices->groupBy('product_id') as $product_id => $items) {
             $items = $items->sortBy('quantity')->values();
             foreach ($items as $key => $item) {
                 $rangePrices->push([
-                    'id'    => $id_product,
+                    'id'    => $product_id,
                     'from'  => $items->has($key-1) ? $item['quantity'] : 0,
                     'to'    => $items->has($key+1) ? $items[$key+1]['quantity']-1 : '∞',
                     'price' => $item->price
@@ -138,7 +138,7 @@ class CartRepository implements CartRepositoryInterface
         $dataPrices  = $dataPrices->sortBy('quantity')->values();
         foreach ($dataPrices as $key => $item) {
             $rangePrices->push([
-                'id'    => $item->id_product,
+                'id'    => $item->product_id,
                 'from'  => $dataPrices->has($key-1) ? $item->quantity : 0,
                 'to'    => $dataPrices->has($key+1) ? $dataPrices[$key+1]->quantity-1 : '∞',
                 'price' => $item->price

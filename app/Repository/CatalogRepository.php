@@ -23,9 +23,9 @@ class CatalogRepository implements CatalogRepositoryInterface
         return Category::whereUrl($url)->with('childs')->visible()->firstOrFail();
     }
 
-    public function getSameCats($id_parent)
+    public function getSameCats($parent_id)
     {
-        return Category::where('parent_id', $id_parent)->withCount('products')->visible()->get();
+        return Category::where('parent_id', $parent_id)->withCount('products')->visible()->get();
     }
 
     public function getCategoryProducts($ids, $per_page = 20)
@@ -36,9 +36,9 @@ class CatalogRepository implements CatalogRepositoryInterface
         return $data;
     }
 
-    public function deleteProduct($id, $id_provider)
+    public function deleteProduct($id, $provider_id)
     {
-        $product = Product::whereId($id)->where('id_provider', $id_provider)->firstOrFail();
+        $product = Product::whereId($id)->where('provider_id', $provider_id)->firstOrFail();
         $product->delete();
     }
 
@@ -60,7 +60,7 @@ class CatalogRepository implements CatalogRepositoryInterface
         $lang = $lang ?: lang();
         $chars = Char::orderByPageUp()
                       ->with(['charProducts' => function ($query) use ($idProduct) {
-                          return $query->where('id_product', $idProduct)
+                          return $query->where('product_id', $idProduct)
                                        ->with('optionValue');
                       }])
                       ->usedCart($usedCart)
@@ -100,11 +100,11 @@ class CatalogRepository implements CatalogRepositoryInterface
         $prices = ProductPrice::whereHas('product', function ($query) use ($idsCats) {
             if (!empty($idsCats)) {
                 $query->whereHas('category', function ($query) use ($idsCats) {
-                    return $query->whereIn('id_category', $idsCats);
+                    return $query->whereIn('category_id', $idsCats);
                 });
             }
             return $query->visible();
-        })->orderBy('price', 'asc')->groupBy('id_product')->get();
+        })->orderBy('price', 'asc')->groupBy('product_id')->get();
 
         return collect([
             'min' => $prices->min('price'),
@@ -119,25 +119,25 @@ class CatalogRepository implements CatalogRepositoryInterface
         });
     }
 
-    public function getSubcatsIds($dataset, $id_parent)
+    public function getSubcatsIds($dataset, $parent_id)
     {
         foreach (map_tree($dataset) as $id => $item) {
             if (!empty($item['childs'])) {
-                $this->extractTreeIds($id_parent, $item['childs']);
+                $this->extractTreeIds($parent_id, $item['childs']);
             }
         }
         return $this->idsSubcat;
     }
 
-    private function extractTreeIds($id_parent, $items)
+    private function extractTreeIds($parent_id, $items)
     {
         foreach ($items as $item) {
-            if ($id_parent == $item['parent_id']) {
+            if ($parent_id == $item['parent_id']) {
                 $this->idsSubcat[] = $item['id'];
             }
 
             if (!empty($item['childs'])) {
-                $this->extractTreeIds(($id_parent == $item['parent_id']) ? $item['id'] : $id_parent, $item['childs']);
+                $this->extractTreeIds(($parent_id == $item['parent_id']) ? $item['id'] : $parent_id, $item['childs']);
             }
         }
     }

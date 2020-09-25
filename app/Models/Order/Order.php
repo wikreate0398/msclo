@@ -4,6 +4,7 @@ namespace App\Models\Order;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Order\OrderProduct;
 
 class Order extends Model
 {
@@ -24,23 +25,23 @@ class Order extends Model
         'comment',
         'payment_type',
         'rand',
-        'id_user',
+        'user_id',
         'total_price'
     ];
 
     public function user()
     {
-        return $this->hasOne('App\Models\User', 'id', 'id_user')->withTrashed();
+        return $this->hasOne(User::class, 'id', 'user_id')->withTrashed();
     }
 
     public function products()
     {
-        return $this->hasMany('App\Models\Order\OrderProduct', 'id_order', 'id');
+        return $this->hasMany(OrderProduct::class, 'order_id', 'id');
     }
 
     public function scopeGetPurchase($query)
     {
-        return $query->where('id_user', user()->id)
+        return $query->where('user_id', user()->id)
                      ->with(['products'])
                      ->get();
     }

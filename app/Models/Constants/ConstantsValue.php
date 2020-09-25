@@ -3,26 +3,27 @@
 namespace App\Models\Constants;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Constants\Constants;
 
 class ConstantsValue extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $table = 'constants_value';
+    protected $table = 'constants_value';
 
-	protected $fillable = [
+    protected $fillable = [
         'lang',
-        'id_const',
+        'constant_id',
         'value'
     ];
 
-	protected $casts = [
-        'id_const' => 'integer',
+    protected $casts = [
+        'constant_id' => 'integer',
         'value'    => 'content'
     ];
 
     public function constant()
     {
-        return $this->hasOne('App\Models\Constants\Constants', 'id', 'id_const');
+        return $this->hasOne(Constants::class, 'id', 'constant_id');
     }
 }

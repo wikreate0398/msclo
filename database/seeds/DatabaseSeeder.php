@@ -11,6 +11,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $this->call(ConstantCategorySeeder::class);
+        $this->call(ConstantSeeder::class);
+        $this->call(ConstantValueSeeder::class);
+        $this->call(LanguageSeeder::class);
+        $this->call(EmailTemplatesSeeder::class);
+        $this->call(ProfileMenuSeeder::class);
+        $this->call(ProfileMenuGuardSeeder::class);
     }
 }

@@ -6,24 +6,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProviderFile extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $table = 'providers_files';
+    protected $table = 'provider_files';
 
-	protected $fillable = [
-	    'id_provider',
+    protected $fillable = [
+        'provider_id',
         'name_ru',
         'description_ru',
         'file'
     ];
 
-	public function scopeGetProviderFiles($query, $id_provider)
+    public function scopeGetProviderFiles($query, $provider_id)
     {
-        return $query->where('id_provider', $id_provider)->get();
+        return $query->where('provider_id', $provider_id)->get();
     }
 
     public function provider()
     {
-        return $this->hasOne('App\Models\User', 'id', 'id_provider');
+        return $this->hasOne(User::class, 'id', 'provider_id');
     }
 }

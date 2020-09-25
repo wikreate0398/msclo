@@ -4,6 +4,7 @@ namespace App\Models\Catalog;
 
 use App\Models\Traits\OrderingTrait;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Catalog\Product;
 
 class ProductImage extends Model
 {
@@ -11,10 +12,10 @@ class ProductImage extends Model
 
     public $timestamps = false;
 
-    protected $table = 'catalog_images';
+    protected $table = 'product_images';
 
     protected $fillable = [
-        'id_product',
+        'product_id',
         'image',
         'page_up'
     ];
@@ -25,6 +26,6 @@ class ProductImage extends Model
 
     public function product()
     {
-        return $this->hasOne('App\Models\Catalog\Product', 'id', 'id_product');
+        return $this->hasOne(Product::class, 'id', 'product_id');
     }
 }

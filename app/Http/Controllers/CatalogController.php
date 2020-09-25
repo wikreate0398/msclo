@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Catalog\Category;
-use App\Models\Catalog\Char;
-use App\Models\Catalog\Product;
 use App\Repository\Interfaces\CatalogRepositoryInterface;
 use App\Repository\Interfaces\ProviderRepositoryInterface;
-use App\Utils\ArraySess;
 use App\Utils\Crumbs\BreadFactory;
 use App\Utils\Crumbs\Crumb;
-use Illuminate\Http\Request;
 
 class CatalogController extends Controller
 {
@@ -58,7 +53,7 @@ class CatalogController extends Controller
             )
         );
 
-        $sameProducts = $this->repository->getCategoryProducts([$product->id_category], 5)
+        $sameProducts = $this->repository->getCategoryProducts([$product->category_id], 5)
                                          ->filter(function ($item) use ($product) {
                                              return $item['id']!=$product->id;
                                          });

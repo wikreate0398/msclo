@@ -9,7 +9,6 @@ use App\Models\Catalog\ProductImage;
 use App\Repository\Interfaces\CatalogRepositoryInterface;
 use App\Repository\Interfaces\ProviderRepositoryInterface;
 use App\Services\CatalogService;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\User;
@@ -51,22 +50,22 @@ class ProductsController extends Controller
         ]);
     }
 
-    public function delete($lang, $id, Request $request)
+    public function delete($lang, $id)
     {
         $this->catalogRepository->deleteProduct($id, user()->id);
         return redirect()->back();
     }
 
-    public function deleteImage($lang, Request $request)
+    public function deleteImage($lang)
     {
         ProductImage::where('image', $request->value)
                     ->whereHas('product', function ($query) {
-                        return $query->where('id_provider', user()->id);
+                        return $query->where('provider_id', user()->id);
                     })
                     ->delete();
     }
 
-    public function create($lang, Request $request, CatalogService $catalogService)
+    public function create($lang, CatalogService $catalogService)
     {
         $response = $catalogService->create(user()->id);
         if ($response->status) {
@@ -76,7 +75,7 @@ class ProductsController extends Controller
         }
     }
 
-    public function update($lang, $id, Request $request, CatalogService $catalogService)
+    public function update($lang, $id, CatalogService $catalogService)
     {
         $response = $catalogService->update($id, user()->id);
         if ($response->status) {

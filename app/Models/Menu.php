@@ -10,25 +10,31 @@ class Menu extends Model
 {
     use OrderingTrait, PermisionTrait;
     
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $table = 'menu';
+    protected $table = 'menu';
 
-	protected $fillable = [
-        'name_ru', 
+    protected $fillable = [
+        'name_ru',
         'name_en',
-        'text_ru', 
-        'text_en',
         'url',
-        'seo_title_ru', 
+        'text_ru',
+        'text_en',
+        'text_ro',
+        'seo_title_ru',
         'seo_title_en',
-        'seo_description_ru', 
+        'seo_description_ru',
         'seo_description_en',
-        'seo_keywords_ru', 
-        'seo_keywords_en'
+        'seo_keywords_ru',
+        'seo_keywords_en',
+        'image',
+        'view_top',
+        'view_bottom',
+        'toggle',
+        'page_up'
     ];
 
-	public function scopeGetAll($query)
+    public function scopeGetAll($query)
     {
         return $query->where('view_top', 1)->orWhere('view_bottom', 1)->orderByPageUp()->get();
     }

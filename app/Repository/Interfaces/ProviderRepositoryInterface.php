@@ -6,11 +6,11 @@ interface ProviderRepositoryInterface
 {
     public function getProvidersFilter($idsCats = []);
 
-    public function getProviderProducts($id_provider);
+    public function getProviderProducts($provider_id);
 
-    public function getProviderProduct($id_provider);
+    public function getProviderProduct($provider_id);
 
-    public function getCatsGroupedByProviders($id_provider = false);
+    public function getCatsGroupedByProviders($provider_id = false);
 
     public function getProvidersList();
 

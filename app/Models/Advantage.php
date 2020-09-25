@@ -8,13 +8,13 @@ use App\Models\Traits\PermisionTrait;
 
 class Advantage extends Model
 {
-	use OrderingTrait, PermisionTrait;
-	
-	public $timestamps = false;
+    use OrderingTrait, PermisionTrait;
+    
+    public $timestamps = false;
 
-	protected $table = 'advantages';
+    protected $table = 'advantages';
 
-	protected $fillable = [
+    protected $fillable = [
         'name_ru',
         'name_en',
         'description_ru',
@@ -22,7 +22,7 @@ class Advantage extends Model
         'image'
     ];
 
-	public function scopeGetAll($query)
+    public function scopeGetAll($query)
     {
         return $query->visible()->orderByPageUp()->get();
     }

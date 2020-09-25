@@ -171,7 +171,7 @@ Route::group(['prefix' => $adminPath, 'namespace' => 'Admin', 'middleware' => ['
         Route::post('{id}/update-admin-user', 'ProfileController@updateAdminUser');
         Route::post('edit', 'ProfileController@edit');
         Route::post('addNewUser', 'ProfileController@addNewUser');
-        Route::get('/logs-report/{id_user}', 'ProfileController@showLogsReport');
+        Route::get('/logs-report/{user_id}', 'ProfileController@showLogsReport');
     });
 
     Route::group(['prefix' => 'ajax'], function () {
@@ -214,7 +214,7 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
     Route::group(['prefix' => 'suppliers'], function () {
         Route::get('/', 'ProviderController@list')->name('view_providers');
         Route::get('view/{id}', 'ProviderController@viewProvider')->name('view_provider');
-        Route::get('download-file/{id_file}', 'ProviderController@downloadFile')->name('provider_dwn_file');
+        Route::get('download-file/{file_id}', 'ProviderController@downloadFile')->name('provider_dwn_file');
 
         Route::post('leave-message/{id}', 'ProviderController@leaveMessage')->name('provider_send_contact');
     });

@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Catalog\Category;
-use App\Models\Catalog\Char;
-use App\Models\Catalog\Product;
-use App\Models\Provider\ProviderServiceIntersect;
 use App\Models\ProviderFile;
 use App\Models\User;
-use App\Notifications\ConfirmRegistration;
 use App\Notifications\SendContactToProvider;
 use App\Repository\Interfaces\CatalogRepositoryInterface;
 use App\Repository\Interfaces\ProviderRepositoryInterface;
-use App\Utils\ArraySess;
 use App\Utils\Crumbs\BreadFactory;
 use App\Utils\Crumbs\Crumb;
 use Illuminate\Http\Request;
@@ -69,9 +63,9 @@ class ProviderController extends Controller
         }, 'provider-' . str_replace(' ', '_', $file->name_ru) . '.' . explode('.', $file->file)[1]);
     }
 
-    public function leaveMessage($lang, $id_provider, Request $request)
+    public function leaveMessage($lang, $provider_id, Request $request)
     {
-        $provider = User::provider()->whereId($id_provider)->firstOrFail();
+        $provider = User::provider()->whereId($provider_id)->firstOrFail();
         $provider->notify(new SendContactToProvider($request->all()));
         return \JsonResponse::success([
             'messages' => 'Ваше сообщение успешно оправлено поставщику. В скором он с вами свяжется'

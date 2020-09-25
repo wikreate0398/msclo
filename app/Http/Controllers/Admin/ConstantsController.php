@@ -10,7 +10,6 @@ use App\Models\Constants\ConstantsCategory;
 
 class ConstantsController extends Controller
 {
-
     private $method = 'constants';
 
     private $folder = 'constants';
@@ -24,7 +23,7 @@ class ConstantsController extends Controller
      *
      * @return void
      */
-    public function __construct() 
+    public function __construct()
     {
         $this->method = config('admin.path') . '/' . $this->method;
 
@@ -40,7 +39,7 @@ class ConstantsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show()
-    { 
+    {
         $data = [
             'data'       => Constants::with('constants_value')->filter()->get()->groupBy('category.name')->sortBy('category.page_up'),
             'method'     => $this->method,
@@ -51,53 +50,50 @@ class ConstantsController extends Controller
         //exit(print_arr($data['data']));
 
         return view('admin.'.$this->folder.'.list', $data);
-    } 
+    }
 
 
     public function create(Request $request)
     {
         ConstantsValue::truncate();
 
-        if(!empty($request->data))
-        {
+        if (!empty($request->data)) {
             $insertData = [];
-            foreach ($request->data as $idConstant => $values)
-            {
-                foreach ($values as $lang => $value)
-                {
+            foreach ($request->data as $idConstant => $values) {
+                foreach ($values as $lang => $value) {
                     $insertData[] = [
                         'lang'     => $lang,
-                        'id_const' => $idConstant,
+                        'const_id' => $idConstant,
                         'value'    => htmlspecialchars(trim($value))
                     ];
                 }
             }
 
-            if(!empty($insertData)) ConstantsValue::insert($insertData);
+            if (!empty($insertData)) {
+                ConstantsValue::insert($insertData);
+            }
         }
 
-        return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save')); 
+        return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
     }
 
     public function createConstant(Request $request)
     {
-
         $editor = !empty($request->editor) ? true : false;
 
         $dataInsert = array(
             'name'        => $request->name,
             'description' => $request->description,
             'editor'      => $editor,
-            'id_category' => $request->id_category
+            'category_id' => $request->category_id
         );
 
         $id = Constants::create($dataInsert)->id;
 
-        foreach ($request->value as $key => $value)
-        {
-            ConstantsValue::create(['lang' => $key, 'value' => $value, 'id_const' => $id]);
+        foreach ($request->value as $key => $value) {
+            ConstantsValue::create(['lang' => $key, 'value' => $value, 'const_id' => $id]);
         }
-       // exit(print_arr($request->all()));
+        // exit(print_arr($request->all()));
         return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
     }
 }

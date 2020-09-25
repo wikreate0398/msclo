@@ -21,7 +21,7 @@ class TagsController extends Controller
      *
      * @return void
      */
-    public function __construct() 
+    public function __construct()
     {
         $this->model  = new Tag;
         $this->method = config('admin.path') . '/' . $this->method;
@@ -33,7 +33,7 @@ class TagsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show()
-    {  
+    {
         $data = [
             'data'     => $this->model->orderByRaw('page_up asc, id desc')->get(),
             'table'    => $this->model->getTable(),
@@ -42,7 +42,7 @@ class TagsController extends Controller
         ];
 
         return view('admin.'.$this->folder.'.list', $data);
-    }  
+    }
 
     public function create(Request $request)
     {
@@ -52,7 +52,7 @@ class TagsController extends Controller
     }
 
     public function showeditForm($id)
-    { 
+    {
         return view('admin.'.$this->folder.'.edit', [
             'method'   => $this->method,
             'table'    => $this->model->getTable(),
@@ -71,12 +71,12 @@ class TagsController extends Controller
 
     private function saveProducts($id, $products)
     {
-        ProductTag::where('id_tag', $id)->delete();
+        ProductTag::where('tag_id', $id)->delete();
         if (!empty($products)) {
-            foreach ($products as $key => $id_product) {
+            foreach ($products as $key => $product_id) {
                 ProductTag::insert([
-                    'id_tag'     => $id,
-                    'id_product' => $id_product
+                    'tag_id'     => $id,
+                    'product_id' => $product_id
                 ]);
             }
         }

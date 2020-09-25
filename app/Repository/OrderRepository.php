@@ -31,12 +31,12 @@ class OrderRepository implements OrderRepositoryInterface
         return $data;
     }
     
-    public function getProviderOrders($id_provider)
+    public function getProviderOrders($provider_id)
     {
-        return Order::whereHas('products', function ($query) use ($id_provider) {
-            return $query->where('id_provider', $id_provider);
-        })->with(['products' => function ($query) use ($id_provider) {
-            return $query->where('id_provider', $id_provider)->with('product');
+        return Order::whereHas('products', function ($query) use ($provider_id) {
+            return $query->where('provider_id', $provider_id);
+        })->with(['products' => function ($query) use ($provider_id) {
+            return $query->where('provider_id', $provider_id)->with('product');
         }, 'user'])->get();
     }
 
@@ -44,10 +44,10 @@ class OrderRepository implements OrderRepositoryInterface
     {
         $prices = ProductPrice::whereHas('product', function ($query) use ($id) {
             $query->whereHas('provider', function ($query) use ($id) {
-                return $query->where('id_provider', $id);
+                return $query->where('provider_id', $id);
             });
             return $query->visible();
-        })->orderBy('price', 'asc')->groupBy('id_product')->get();
+        })->orderBy('price', 'asc')->groupBy('product_id')->get();
 
         return collect([
             'min' => $prices->min('price'),
@@ -57,10 +57,10 @@ class OrderRepository implements OrderRepositoryInterface
 
     public function getSalesFromLastMonth($id)
     {
-        $data = OrderProduct::rightJoin('orders', 'orders_products.id_order', '=', 'orders.id')
+        $data = OrderProduct::rightJoin('orders', 'orders_products.order_id', '=', 'orders.id')
                             ->select(DB::raw('sum(qty*price) as total_sum, sum(qty) as total_qty'))
                             ->where('created_at', '>=', Carbon::now()->subDays(30)->toDateTimeString())
-                            ->where('id_provider', $id)->first();
+                            ->where('provider_id', $id)->first();
 
         return [
             'total_sum' => @$data->total_sum ?: 0,
@@ -71,7 +71,7 @@ class OrderRepository implements OrderRepositoryInterface
     public function getSumOfAllSalesAndQuantity($id)
     {
         $data = OrderProduct::selectRaw('sum(qty*price) as total_sum, sum(qty) as total_qty')
-                                    ->where('id_provider', $id)
+                                    ->where('provider_id', $id)
                                     ->first();
 
         return [
@@ -86,7 +86,7 @@ class OrderRepository implements OrderRepositoryInterface
             return $query->where('created_at', '>=', Carbon::now()->subDays($value));
         }])->whereHas('orders', function ($query) use ($value) {
             return $query->where('created_at', '>=', Carbon::now()->subDays($value));
-        })->where('id_provider', user()->id)->get();
+        })->where('provider_id', user()->id)->get();
         
         $labels      = collect();
         $diagramData = collect();
@@ -102,7 +102,7 @@ class OrderRepository implements OrderRepositoryInterface
                     'sum'          => $orders->sum(function ($order) {
                         return $order->qty*$order->price;
                     }),
-                    'ordersTotal'  => $orders->groupBy('id_order')->count()
+                    'ordersTotal'  => $orders->groupBy('order_id')->count()
                 ]);
             }
         }

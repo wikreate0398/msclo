@@ -3,19 +3,21 @@
 namespace App\Models\Catalog;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Catalog\CharProduct;
+use App\Models\Catalog\Product;
 use App\Models\Traits\OrderingTrait;
 use App\Models\Traits\PermisionTrait;
 
 class Char extends Model
 {
-	use OrderingTrait, PermisionTrait;
-	
-	public $timestamps = false;
+    use OrderingTrait, PermisionTrait;
+    
+    public $timestamps = false;
 
-	protected $table = 'chars';
+    protected $table = 'chars';
 
-	protected $fillable = [
-        'name_ru', 
+    protected $fillable = [
+        'name_ru',
         'name_en',
         'parent_id',
         'view_filter',
@@ -24,25 +26,25 @@ class Char extends Model
         'type'
     ];
 
-	protected $casts = [
-	    'view_filter' => 'integer',
+    protected $casts = [
+        'view_filter' => 'integer',
         'used_cart'   => 'integer',
         'view'        => 'integer'
     ];
 
-	public function childs()
+    public function childs()
     {
-        return $this->hasMany('App\Models\Catalog\Char', 'parent_id', 'id')->orderByPageUp();
+        return $this->hasMany(Char::class, 'parent_id', 'id')->orderByPageUp();
     }
 
     public function charProducts()
     {
-        return $this->hasMany('App\Models\Catalog\CharProduct', 'id_char', 'id');
+        return $this->hasMany(CharProduct::class, 'char_id', 'id');
     }
 
     public function valuesProducts()
     {
-        return $this->belongsToMany('App\Models\Catalog\Product', 'chars_catalog', 'value', 'id_product');
+        return $this->belongsToMany(Product::class, 'chars_products', 'value', 'product_id');
     }
 
     public function scopeFilters($query, $idsCats = [])
@@ -50,14 +52,14 @@ class Char extends Model
         return $query->where('view_filter', 1)
                      ->where('parent_id', 0)
                      ->whereIn('type', ['checkbox', 'radio'])
-                     ->with(['childs' => function($query) use($idsCats) {
+                     ->with(['childs' => function ($query) use ($idsCats) {
                          if ($idsCats) {
-                             $query->whereHas('valuesProducts', function ($query) use($idsCats) {
-                                return $query->whereIn('id_category', $idsCats);
+                             $query->whereHas('valuesProducts', function ($query) use ($idsCats) {
+                                 return $query->whereIn('category_id', $idsCats);
                              });
                          }
-                         return $query->withCount(['valuesProducts' => function ($query) use($idsCats) {
-                             return $query->whereIn('id_category', $idsCats);
+                         return $query->withCount(['valuesProducts' => function ($query) use ($idsCats) {
+                             return $query->whereIn('category_id', $idsCats);
                          }]);
                      }])
                      ->has('childs');

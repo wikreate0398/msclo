@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use App\Models\Order\Order;
 use App\Models\Order\OrderProduct;
+use App\Models\Catalog\Product;
+use App\Models\Catalog\CharProduct;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -30,7 +31,7 @@ class User extends Authenticatable
         'image',
         'user_agent',
         'last_entry',
-        'type',
+        'type_id',
         'work_from',
         'work_to',
         'phone',
@@ -87,36 +88,36 @@ class User extends Authenticatable
 
         return $query;
     }
-
+ 
     public function typeData()
     {
-        return $this->hasOne('App\Models\UserType', 'type', 'type');
+        return $this->hasOne(UserType::class, 'type_id', 'id');
     }
 
     public function provider_options()
     {
-        return $this->hasMany('App\Models\Provider\CharProduct', 'id_provider', 'id');
+        return $this->hasMany(CharProduct::class, 'provider_id', 'id');
     }
 
     public function files()
     {
-        return $this->hasMany('App\Models\ProviderFile', 'id_provider', 'id');
+        return $this->hasMany(ProviderFile::class, 'provider_id', 'id');
     }
 
     public function products()
     {
-        return $this->hasMany('App\Models\Catalog\Product', 'id_provider', 'id');
+        return $this->hasMany(Product::class, 'provider_id', 'id');
     }
 
     public function ordersProducts()
     {
-        return $this->hasMany(OrderProduct::class, 'id_provider', 'id');
+        return $this->hasMany(OrderProduct::class, 'provider_id', 'id');
     }
 
     public function scopeWhereProdsInCats($query, $idsCats)
     {
         return $query->whereHas('products', function ($query) use ($idsCats) {
-            return $query->whereIn('id_category', $idsCats);
+            return $query->whereIn('category_id', $idsCats);
         });
     }
 
@@ -137,14 +138,14 @@ class User extends Authenticatable
         return $query->withCount('products')->orderBy('products_count', 'desc');
     }
 
-    public function scopeGetProvidersCats($query, $id_provider = false)
+    public function scopeGetProvidersCats($query, $provider_id = false)
     {
-        if (!empty($id_provider)) {
-            $query->where('id', $id_provider);
+        if (!empty($provider_id)) {
+            $query->where('id', $provider_id);
         }
         return $query->provider()->hasVisibleProducts()->with(['products' => function ($query) {
             return $query->visible()
-                         ->select('id', 'id_provider', 'id_category')
+                         ->select('id', 'provider_id', 'category_id')
                          ->with('category');
         }])->get();
     }
@@ -163,14 +164,14 @@ class User extends Authenticatable
     public function scopeFilterProviders($query)
     {
         $query->whereHas('products', function ($query) {
-            $priceQuery = '(SELECT price FROM catalog_prices WHERE catalog_prices.id_product = catalog.id ORDER BY price asc LIMIT 1)';
+            $priceQuery = '(SELECT price FROM product_prices WHERE product_prices.product_id = products.id ORDER BY price asc LIMIT 1)';
 
             if (request('price_from') && request('price_to')) {
                 $query->whereBetween(\DB::Raw($priceQuery), [request('price_from'), request('price_to')]);
             }
 
             if (request()->cats) {
-                $query->whereIn('id_category', explode(',', request()->cats));
+                $query->whereIn('category_id', explode(',', request()->cats));
             }
             return $query;
         });
@@ -191,7 +192,7 @@ class User extends Authenticatable
 
     public function scopeProvider($query)
     {
-        return $query->where('type', 'provider')->active();
+        return $query->where('type_id', 'provider')->active();
     }
 
     public function getFullNameAttribute()

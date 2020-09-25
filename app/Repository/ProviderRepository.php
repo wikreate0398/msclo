@@ -12,27 +12,27 @@ class ProviderRepository implements ProviderRepositoryInterface
 {
     private $idsSubcat = [];
 
-    public function getProviderProducts($id_provider, $view = 1)
+    public function getProviderProducts($provider_id, $view = 1)
     {
         $data = Product::withRelations();
 
         if ($view) {
             $data->visible();
         }
-        $data = $data->where('id_provider', $id_provider)
+        $data = $data->where('provider_id', $provider_id)
                      ->get();
 
         return $data;
     }
 
-    public function getProviderProduct($id_provider, $view = 1)
+    public function getProviderProduct($provider_id, $view = 1)
     {
         $data = Product::withRelations();
 
         if ($view) {
             $data->visible();
         }
-        $data = $data->where('id_provider', $id_provider)
+        $data = $data->where('provider_id', $provider_id)
                      ->orderBy('created_at', 'desc')
                      ->take(1)
                      ->get();
@@ -45,21 +45,21 @@ class ProviderRepository implements ProviderRepositoryInterface
         return User::provider()->whereProdsInCats($idsCats)->get();
     }
 
-    public function getCatsGroupedByProviders($id_provider = false)
+    public function getCatsGroupedByProviders($provider_id = false)
     {
-        $providers = User::getProvidersCats($id_provider);
+        $providers = User::getProvidersCats($provider_id);
         $cats      = collect();
         foreach ($providers as $provider) {
-            foreach ($provider->products->groupBy('id_category') as $id_category => $products) {
+            foreach ($provider->products->groupBy('category_id') as $category_id => $products) {
                 $cats->push([
-                    'id_provider'   => $provider->id,
-                    'id_category'   => $id_category,
+                    'provider_id'   => $provider->id,
+                    'category_id'   => $category_id,
                     'countProducts' => $products->count(),
                     'category_data' => $products->first()->category
                 ]);
             }
         }
-        return $cats->groupBy('id_provider');
+        return $cats->groupBy('provider_id');
     }
 
     public function getProviderFilterCats()
@@ -89,7 +89,7 @@ class ProviderRepository implements ProviderRepositoryInterface
         $lang = $lang ?: lang();
         $chars = ProviderService::orderByPageUp()
                                 ->with(['providerServiceIntersect' => function ($query) use ($id) {
-                                    return $query->where('id_provider', $id)
+                                    return $query->where('provider_id', $id)
                                                  ->with('optionValue');
                                 }])
                                 ->where('parent_id', 0)
@@ -103,7 +103,7 @@ class ProviderRepository implements ProviderRepositoryInterface
                 $value = collect();
                 foreach ($char->providerServiceIntersect as $item) {
                     $value->push([
-                        'id'   => $item->id_service,
+                        'id'   => $item->service_id,
                         'name' => $item->value,
                     ]);
                 }

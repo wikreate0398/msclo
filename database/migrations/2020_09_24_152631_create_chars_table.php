@@ -20,6 +20,7 @@ class CreateCharsTable extends Migration
             $table->string('name_ru');
             $table->string('name_en');
             $table->boolean('used_cart');
+            $table->boolean('view_filter')->default(true);
             $table->boolean('view')->default(true);
             $table->integer('page_up')->default(1);
         });

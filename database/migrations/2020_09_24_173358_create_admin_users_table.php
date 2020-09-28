@@ -15,7 +15,7 @@ class CreateAdminUsersTable extends Migration
     {
         Schema::create('admin_users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->enum('type', ['admin','manager'])->default('admin');
+            $table->string('type');
             $table->string('name');
             $table->string('email');
             $table->string('password');

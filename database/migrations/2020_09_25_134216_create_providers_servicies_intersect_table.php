@@ -13,12 +13,12 @@ class CreateProvidersServiciesIntersectTable extends Migration
      */
     public function up()
     {
-        Schema::create('providers_servicies_intersect', function (Blueprint $table) {
+        Schema::create('providers_services_intersect', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('provider_id')->unsigned();
             $table->foreign('provider_id')->references('id')->on('users');
             $table->bigInteger('service_id')->unsigned();
-            $table->foreign('service_id')->references('id')->on('provider_servicies')->onDelet('cascade');
+            $table->foreign('service_id')->references('id')->on('providers_services')->onDelet('cascade');
             $table->text('value');
         });
     }
@@ -30,6 +30,6 @@ class CreateProvidersServiciesIntersectTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('providers_servicies_intersect');
+        Schema::dropIfExists('providers_services_intersect');
     }
 }

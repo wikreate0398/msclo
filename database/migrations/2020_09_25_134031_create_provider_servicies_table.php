@@ -13,7 +13,7 @@ class CreateProviderServiciesTable extends Migration
      */
     public function up()
     {
-        Schema::create('provider_servicies', function (Blueprint $table) {
+        Schema::create('providers_services', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('parent_id');
             $table->string('type');
@@ -33,6 +33,6 @@ class CreateProviderServiciesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('provider_servicies');
+        Schema::dropIfExists('providers_services');
     }
 }

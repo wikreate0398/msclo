@@ -18,5 +18,8 @@ class DatabaseSeeder extends Seeder
         $this->call(EmailTemplatesSeeder::class);
         $this->call(ProfileMenuSeeder::class);
         $this->call(ProfileMenuGuardSeeder::class);
+        $this->call(UserTypesSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(MenuDataSeeder::class);
     }
 }

@@ -6,7 +6,7 @@ use App\Notifications\SendBill;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Utils\Payments\PaymentCenterService\VisaPayment;
-use App\Utils\UploadImage;  
+use App\Utils\UploadImage;
 use App\Utils\Encryption;
 use App\Utils\Order;
 use App\Notifications\SendLetter;
@@ -35,7 +35,7 @@ class UsersController extends Controller
      *
      * @return void
      */
-    public function __construct() 
+    public function __construct()
     {
         $this->model  = new User;
         $this->method = config('admin.path') . '/' . $this->method;
@@ -47,7 +47,7 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show()
-    {  
+    {
         $data = [
             'data'      => $this->model->orderByRaw('id desc')->with('typeData')->filter()->get()->sortBy('typeData.page_up'),
             'table'     => $this->model->getTable(),
@@ -56,13 +56,13 @@ class UsersController extends Controller
             'week_reg'  => $this->model->registered('week')->count(),
             'total_reg' => $this->model->registered()->count(),
             'userTypes' => UserType::all()
-        ]; 
+        ];
 
         return view('admin.'.$this->folder.'.list', $data);
-    } 
+    }
 
     public function showAddForm()
-    {  
+    {
         return view('admin.'.$this->folder.'.add', [
             'method'        => $this->method
         ]);
@@ -72,13 +72,11 @@ class UsersController extends Controller
     {
         $this->input = $this->prepareData(false, $request->all());
 
-        if(!is_array($this->input))
-        {
+        if (!is_array($this->input)) {
             return \JsonResponse::error(['messages' => $this->input]);
         }
 
-        if (User::whereEmail($request->email)->count()) 
-        {
+        if (User::whereEmail($request->email)->count()) {
             return \JsonResponse::error(['messages' => 'Пользователь с таким имейлом уже существует']);
         }
 
@@ -86,7 +84,7 @@ class UsersController extends Controller
         $this->input['confirm'] = 1;
         $this->input['type']    = $request->type;
 
-        $this->model->create($this->input)->id; 
+        $this->model->create($this->input)->id;
 
         return \JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
     }
@@ -117,8 +115,7 @@ class UsersController extends Controller
         $data        = $this->model->findOrFail($id);
         $this->input = $this->prepareData($data, $request->all());
  
-        if(!is_array($this->input))
-        {
+        if (!is_array($this->input)) {
             return \JsonResponse::error(['messages' => $this->input]);
         }
 
@@ -127,32 +124,30 @@ class UsersController extends Controller
     }
 
     public function sendLetter($id, Request $request)
-    { 
+    {
         $user = $this->model->findOrFail($id);
         $user->notify(new SendLetter($request->theme, $request->message));
-        return \App\Utils\JsonResponse::success(['reload' => true], 'Сообщение успешно отправлено'); 
+        return \App\Utils\JsonResponse::success(['reload' => true], 'Сообщение успешно отправлено');
     }
 
     private function validation($input)
     {
-        foreach($this->requiredFields as $key => $field)
-        {
-            if(empty($input[$field])) return false;
+        foreach ($this->requiredFields as $key => $field) {
+            if (empty($input[$field])) {
+                return false;
+            }
         }
         return true;
     }
 
     private function prepareData($data = false, $input)
     {
-        if($this->validation($input) != true)
-        {
+        if ($this->validation($input) != true) {
             return trans('admin.req_fields');
-        } 
+        }
 
-        if(!empty($input['password']) or !empty($input['repeat_password']))
-        {
-            if($input['password'] != $input['repeat_password'])
-            {
+        if (!empty($input['password']) or !empty($input['repeat_password'])) {
+            if ($input['password'] != $input['repeat_password']) {
                 return 'Пароль не совпадает';
             }
 
@@ -164,7 +159,7 @@ class UsersController extends Controller
 
         if (!empty($image)) {
             $input['image'] = $image;
-        } 
+        }
 
         return $input;
     }

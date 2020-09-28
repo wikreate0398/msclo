@@ -30,7 +30,7 @@ class Constants extends Model
 
     public function constants_value()
     {
-        return $this->hasMany(ConstantsValue::class, 'const_id', 'id');
+        return $this->hasMany(ConstantsValue::class, 'constant_id', 'id');
     }
 
     public function scopeFilter($query)

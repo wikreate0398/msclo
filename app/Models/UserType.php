@@ -13,6 +13,9 @@ class UserType extends Model
     protected $fillable = [
         'type',
         'name_ru',
-        'name_en'
+        'name_en',
+        'description_ru',
+        'description_en',
+        'page_up'
     ];
 }

@@ -31,7 +31,7 @@ class User extends Authenticatable
         'image',
         'user_agent',
         'last_entry',
-        'type_id',
+        'type',
         'work_from',
         'work_to',
         'phone',
@@ -91,7 +91,7 @@ class User extends Authenticatable
  
     public function typeData()
     {
-        return $this->hasOne(UserType::class, 'type_id', 'id');
+        return $this->hasOne(UserType::class, 'type', 'type');
     }
 
     public function provider_options()
@@ -192,7 +192,7 @@ class User extends Authenticatable
 
     public function scopeProvider($query)
     {
-        return $query->where('type_id', 'provider')->active();
+        return $query->where('type', 'provider')->active();
     }
 
     public function getFullNameAttribute()

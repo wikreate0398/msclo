@@ -22,7 +22,7 @@ class FilesController extends Controller
             try {
                 $uploadImage = new UploadImage;
                 $images      = $uploadImage->setExtensions('pdf,doc,docx,word')
-                    ->setSize(120000)
+                    ->setSize(525000)
                     ->multipleUpload('files', 'provider_files');
             } catch (\ValidationError $e) {
                 return \JsonResponse::error(['message' => $e->getMessage()]);

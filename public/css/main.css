@@ -221,3 +221,19 @@ body{
     display: block;
     margin: 0 auto;
 }
+.product-card{
+    border: 1px solid #7FD9CF;
+}
+.product-card h5{
+    padding: 10px;
+    background-color: #7FD9CF;
+    font-family: 'Avenir Next Cyr Regular';
+    font-weight: 700;
+    font-size: 18px;
+}
+.product-form-control{
+    background: #F2F2F2;
+    padding: 17px;
+    border: none !important;
+    width: 100%;
+}

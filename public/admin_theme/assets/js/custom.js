@@ -446,7 +446,7 @@ function fileUploader(){
                     extensions: ['image/*'],
                     addMore: true,
                     limit: 10,
-                    maxSize:3,
+                    // maxSize:3,
                     enableApi: true,
                     captions: {
                         button: function(options) { return 'Выбрать ' + (options.limit == 1 ? 'file' : 'файлы');},

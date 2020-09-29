@@ -81,7 +81,7 @@ $(document).ready(function () {
     if ($('input.gallery_media').length) {
         var $fileuploader = $('input.gallery_media').fileuploader({
             limit: 10,
-            // fileMaxSize: 3,
+            fileMaxSize: 120000,
             extensions: ['image/*'],
             changeInput: ' ',
             theme: 'gallery',
@@ -238,7 +238,7 @@ $(document).ready(function () {
             extensions: ['application/pdf', 'application/x-download', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'application/octet-stream'],
             addMore: true,
             limit: 5,
-            maxSize: 2,
+            maxSize: 120000,
             enableApi: true,
             captions: {
                 button: function (options) {
@@ -526,7 +526,7 @@ function fileUploader() {
                     extensions: ['image/*'],
                     addMore: true,
                     limit: 5,
-                    // maxSize: 2,
+                    maxSize: 120000,
                     enableApi: true,
                     captions: {
                         button: function (options) { return 'Выбрать ' + (options.limit == 1 ? 'file' : 'файлы'); },

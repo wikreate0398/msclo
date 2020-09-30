@@ -21,7 +21,7 @@ class CharsController extends Controller
      *
      * @return void
      */
-    public function __construct() 
+    public function __construct()
     {
         $this->model  = new Char;
         $this->method = config('admin.path') . '/' . $this->method;
@@ -33,15 +33,15 @@ class CharsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show()
-    {  
+    {
         $data = [
             'data'   => $this->model->orderByRaw('page_up asc, id desc')->get(),
             'table'  => $this->model->getTable(),
             'method' => $this->method
-        ]; 
+        ];
 
         return view('admin.'.$this->folder.'.list', $data);
-    }  
+    }
 
     public function create(Request $request)
     {
@@ -49,18 +49,20 @@ class CharsController extends Controller
             return \JsonResponse::error(['messages' => 'Укажите тип']);
         }
 
-        $data = array_merge(\Language::returnData($this->returnDataFields),
-        [
+        $data = array_merge(
+            \Language::returnData($this->returnDataFields),
+            [
            'type' => $request->type
-        ]);
+        ]
+        );
 
         $id = $this->model->create($data)->id;
         $this->saveValues($id, $request->value, $request->type);
-        return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save')); 
+        return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
     }
 
     public function showeditForm($id)
-    { 
+    {
         return view('admin.'.$this->folder.'.edit', [
             'method'        => $this->method,
             'table'         => $this->model->getTable(),
@@ -74,19 +76,21 @@ class CharsController extends Controller
             return \JsonResponse::error(['messages' => 'Укажите тип']);
         }
 
-        $updateData = array_merge(\Language::returnData($this->returnDataFields),
-        [
+        $updateData = array_merge(
+            \Language::returnData($this->returnDataFields),
+            [
             'type' => $request->type
-        ]);
+        ]
+        );
 
         $data = $this->model->findOrFail($id);
         $data->fill($updateData)->save();
-        $this->saveValues($id, $request->value, $request->type);
+        $this->saveValues($id, $request->value, $request->is_color, $request->type);
 
         return \JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
     }
 
-    private function saveValues($id, $values, $type, $insert = [])
+    private function saveValues($id, $values, $type, $is_color, $insert = [])
     {
         if (!empty($values)) {
             $pageUp = 1;
@@ -94,7 +98,8 @@ class CharsController extends Controller
                 $row = [
                     'parent_id' => $id,
                     'page_up'   => $pageUp,
-                    'type'      => $type
+                    'type'      => $type,
+                    'is_color'  => $is_color
                 ];
 
                 foreach ($items as $lang => $value) {

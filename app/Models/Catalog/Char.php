@@ -8,29 +8,31 @@ use App\Models\Traits\PermisionTrait;
 
 class Char extends Model
 {
-	use OrderingTrait, PermisionTrait;
-	
-	public $timestamps = false;
+    use OrderingTrait, PermisionTrait;
+    
+    public $timestamps = false;
 
-	protected $table = 'chars';
+    protected $table = 'chars';
 
-	protected $fillable = [
-        'name_ru', 
+    protected $fillable = [
+        'name_ru',
         'name_en',
         'parent_id',
         'view_filter',
         'used_cart',
         'view',
-        'type'
+        'type',
+        'is_color'
     ];
 
-	protected $casts = [
-	    'view_filter' => 'integer',
+    protected $casts = [
+        'view_filter' => 'integer',
         'used_cart'   => 'integer',
-        'view'        => 'integer'
+        'view'        => 'integer',
+        'is_color'    => 'boolean'
     ];
 
-	public function childs()
+    public function childs()
     {
         return $this->hasMany('App\Models\Catalog\Char', 'parent_id', 'id')->orderByPageUp();
     }
@@ -50,13 +52,13 @@ class Char extends Model
         return $query->where('view_filter', 1)
                      ->where('parent_id', 0)
                      ->whereIn('type', ['checkbox', 'radio'])
-                     ->with(['childs' => function($query) use($idsCats) {
+                     ->with(['childs' => function ($query) use ($idsCats) {
                          if ($idsCats) {
-                             $query->whereHas('valuesProducts', function ($query) use($idsCats) {
-                                return $query->whereIn('id_category', $idsCats);
+                             $query->whereHas('valuesProducts', function ($query) use ($idsCats) {
+                                 return $query->whereIn('id_category', $idsCats);
                              });
                          }
-                         return $query->withCount(['valuesProducts' => function ($query) use($idsCats) {
+                         return $query->withCount(['valuesProducts' => function ($query) use ($idsCats) {
                              return $query->whereIn('id_category', $idsCats);
                          }]);
                      }])

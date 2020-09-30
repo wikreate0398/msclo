@@ -306,6 +306,15 @@ $(window).load(function () {
     initEqHeight();
 });
 
+function countChar(textarea, val, charNum) {
+    var len = textarea.value.length;
+    if (len >= val) {
+      textarea.value = textarea.value.substring(val, 0);
+    } else {
+      $("#"+charNum).text(len);
+    }
+};
+
 function initEqHeight() {
     fixHeight('.products-group-4-1-4');
     fixHeight('.catalog-product');

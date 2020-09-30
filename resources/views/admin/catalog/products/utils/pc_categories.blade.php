@@ -19,12 +19,9 @@
     @endforeach
 @endfunction
 
-<div class="form-group">
-    <label class="form-label">Категория <span class="req">*</span></label>
-    <div>
-        <select name="id_category" class="form-control">
-            <option value="0">Выбрать</option>
-            @catOptions(map_tree($categories->toArray()), 0, @$selected_category)
-        </select>
-    </div>
+<div class="form-group select pb-2">
+    <select name="id_category" class="product-form-control select">
+        <option value="0">Выберите категорию товара*</option>
+        @catOptions(map_tree($categories->toArray()), 0, @$selected_category)
+    </select>
 </div>

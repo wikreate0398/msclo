@@ -37,22 +37,43 @@
 								</div>
 							</div>
 						</div>
+						<div class="form-group">
+							<label>Добавить цвет</label>
+							<div>
+								<label class="switch s-success">
+									<input type="checkbox" name="is_color" {{ $data->is_color ? 'checked' : '' }}>
+									<span class="slider round"></span>
+								</label>
+							</div>
+						</div>
 
 						@if(!$data->parent_id)
 							<div style="{{ !in_array($data->type, ['checkbox', 'radio']) ? 'display: none;' : '' }}">
 								<button class="btn btn-sm btn-warning" type="button" onclick="addChars();">Добавить значения</button>
 
-								<table class="table table-bordered" style="<?=!$data->childs->count() ? 'display: none;' : ''?> margin-top: 20px;" id="add-chars-table">
+								<table class="table table-bordered" style="{{ !$data->childs->count() ? 'display: none;' : '' }} margin-top: 20px;" id="add-chars-table">
 									<tbody class="sort-chars">
-									<?php foreach ($data->childs as $item): ?>
+									@foreach ($data->childs as $item)
 									<tr>
 										<td style="width:50px; text-align:center;" class="handle"> </td>
 										<td style="width: calc(99% - 50px)">
-											<input type="text"
-												   name="value[ru][id:<?=$item['id']?>]"
-												   class="form-control lang-area"
-												   id="field_ru"
-												   value="<?=$item["name_ru"]?>">
+											<div class="row">
+												<div class="{{ $data->is_color ? 'col-md-6' : 'col-md-12' }}">
+													<input type="text"
+														   name="value[ru][id:{{ $item['id'] }}]"
+														   class="form-control"
+														   id="field_ru"
+														   value="{{ $item["name_ru"] }}">
+												</div>
+												@if($data->is_color)
+													<div class="col-md-6">
+														<input type="text"
+															name="product_color[ru][id:{{ $item['id'] }}]"
+															class="form-control jscolor-value"
+															data-jscolor="">
+													</div>
+												@endif
+											</div>
 										</td>
 										<td style="width:1%">
 											<a class="btn default btn-sm" data-toggle="modal" href="#deleteModal_{{ $table }}_{{ $item['id'] }}">
@@ -61,13 +82,12 @@
 											@include('admin.utils.delete', ['id' => $item['id'], 'table' => $table])
 										</td>
 									</tr>
-									<?php endforeach ?>
+									@endforeach
 									</tbody>
 								</table>
 							</div>
 						@endif
 					</div>
-
 					<button type="submit" class="btn btn-success submit-btn" style="margin-top: 20px;">Сохранить</button>
 				</form>
 			</div>

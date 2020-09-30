@@ -26,6 +26,22 @@ const productPrice = `
     </div>
 `;
 
+const productPriceNew = `
+    <div class="input-group mb-4">
+        <div class="col-md-6">
+            <input type="text" name="prices[price][]" placeholder="Стоимость товара" class="product-form-control number">
+        </div>
+        <div class="col-md-5">
+            <input type="text" name="prices[quantity][]" placeholder="Кол-во для опта" class="product-form-control number">
+        </div>
+        <div class="col-md-1 align-self-center">
+            <a href="javascript:;" onclick="deleteLoadItem(this, '.input-group')" class="btn-delete1 delete_product_btn">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+    </div>
+`;
+
 const checkboxSelf = `
     
         <input type="text" name="self_checkbox[]" class="form-control">
@@ -83,6 +99,10 @@ function addSelfCheckbox(id) {
 function addProductPrice() {
     $('#product-prices').show();
     $('#product-prices').append(productPrice);
+}
+function addProductPriceNew() {
+    $('#product-prices').show();
+    $('#product-prices').append(productPriceNew);
 }
 
 function deleteSelfCheckbox(item) {

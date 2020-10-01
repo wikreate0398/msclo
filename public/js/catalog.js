@@ -5,6 +5,9 @@ const charTr = `
         <td style="width: calc(99% - 50px)">
             <input type="text" name="value[ru][]" class="form-control lang-area" id="field_ru">
         </td>
+        <td style="width: calc(99% - 50px)">
+            <input type="text" name="color[ru][]" class="form-control lang-area" id="field_ru">
+        </td>
         <td style="width:1%">
             <a href="javascript:;" onclick="deleteLoadItem(this)" class="btn default btn-sm">
                 <i class="fa fa-times"></i> Удалить
@@ -97,6 +100,14 @@ function selectCharType(input) {
 
 function addChars() {
     $('#add-chars-table').show();
+    $('#add-chars-table tbody').append(charTr);
+    $('#add-chars-table .col-auto').not('#field_ru').hide();
+    Ajax.sortItems('.sort-chars');
+}
+
+function addCharsWithColors() {
+    $('#add-chars-table').show();
+    $('.showBlock').show();
     $('#add-chars-table tbody').append(charTr);
     $('#add-chars-table .col-auto').not('#field_ru').hide();
     Ajax.sortItems('.sort-chars');

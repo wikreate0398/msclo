@@ -27,21 +27,20 @@ class Language
      *
      * @return array
      */
-    public static function returnData($fields, $post = false)
+    public static function returnData($fields, $post = false, $data = [])
     {
         if (empty($post)) {
             $post = \Request::all();
         }
- 
+    
         foreach ($fields as $keyField => $fieldName) {
             if (!empty($post[$fieldName])) {
                 foreach ($post[$fieldName] as $keyLang => $value) {
-                    $post[$fieldName . '_' . $keyLang] = !empty($value) ? $value : '';
+                    $data[$fieldName . '_' . $keyLang] = !empty($value) ? $value : '';
                 }
-                unset($post[$fieldName]);
             }
         }
-
-        return $post;
+    
+        return $data;
     }
 }

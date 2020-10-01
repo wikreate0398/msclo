@@ -221,6 +221,9 @@ body{
     display: block;
     margin: 0 auto;
 }
+.product-page hr{
+    border-top-color: #BDBDBD !important;
+}
 .product-card{
     border: 1px solid #7FD9CF;
 }
@@ -306,4 +309,12 @@ body{
 }
 .product-image-fileuploader .fileuploader{
     background: #F2F2F2 !important;
+}
+.product-save-btn{
+    width: 197px;
+    height: 52px;
+    border-radius: 0;
+    font-family:'Avenir Next Cyr Regular';
+    font-weight: 400;
+    font-size: 18px;
 }

@@ -37,19 +37,10 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
-							<label>Добавить цвет</label>
-							<div>
-								<label class="switch s-success">
-									<input type="checkbox" name="is_color" {{ $data->is_color ? 'checked' : '' }} onclick="showBlock()">
-									<span class="slider round"></span>
-								</label>
-							</div>
-						</div>
 
 						@if(!$data->parent_id)
 							<div style="{{ !in_array($data->type, ['checkbox', 'radio']) ? 'display: none;' : '' }}">
-								<button class="btn btn-sm btn-warning" type="button" onclick="addChars();">Добавить значения</button>
+								<button class="btn btn-sm btn-warning" type="button" @if(!$data->is_color) onclick="addChars();" @else onclick="addCharsWithColors()" @endif>Добавить значения</button>
 
 								<table class="table table-bordered" style="{{ !$data->childs->count() ? 'display: none;' : '' }} margin-top: 20px;" id="add-chars-table">
 									<tbody class="sort-chars">
@@ -65,13 +56,12 @@
 														   id="field_ru"
 														   value="{{ $item["name_ru"] }}">
 												</div>
-												<div class="col-md-6 showBlock" @if($data->is_color) @else style="display:none" @endif>
-													{{-- {{ dd($item) }} --}}
+												<div class="col-md-6 showBlock" @if(!$data->is_color) style="display:none"@endif>
 													<input type="text"
-														   name="product_color[ru][id:{{ $item['id'] }}]"
-														   value="{{ $char_color }}"
+														   name="color[ru][id:{{ $item['id'] }}]"
+														   value="{{ $item['color'] }}"
 														   class="form-control jscolor-value"
-														   data-jscolor="{}">
+														   data-jscolor="">
 												</div>
 											</div>
 										</td>
@@ -94,10 +84,4 @@
 		</div>
 	</div>
 </div>
-
-{{-- <script>
-	$(document).ready(function(){
-		$('.jscolor-value').val({!! json_encode($data->charsColor->color) !!})
-	})
-</script> --}}
 @stop

@@ -22,7 +22,7 @@ class Char extends Model
         'used_cart',
         'view',
         'type',
-        'is_color'
+        'color'
     ];
 
     protected $casts = [
@@ -33,12 +33,7 @@ class Char extends Model
 
     public function childs()
     {
-        return $this->hasMany('App\Models\Catalog\Char', 'parent_id', 'id')->with('charColors')->orderByPageUp();
-    }
-
-    public function charColors()
-    {
-        return $this->hasMany(CharColor::class, 'char_id', 'id');
+        return $this->hasMany('App\Models\Catalog\Char', 'parent_id', 'id')->orderByPageUp();
     }
 
     public function charProducts()

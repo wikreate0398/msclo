@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCharColorsTable extends Migration
+class AddColorToCharsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateCharColorsTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('char_colors');
+        Schema::dropIfExists('products_colors');
         Schema::table('chars', function (Blueprint $table) {
             $table->boolean('is_color');
-        });
-        Schema::create('char_colors', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('char_id')->unsigned();
-            $table->foreign('char_id')->references('id')->on('chars')->onDelete('cascade');
             $table->string('color');
         });
     }
@@ -31,9 +28,9 @@ class CreateCharColorsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('char_colors');
         Schema::table('chars', function (Blueprint $table) {
             $table->dropColumn('is_color');
+            $table->dropColumn('color');
         });
     }
 }

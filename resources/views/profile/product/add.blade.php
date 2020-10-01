@@ -1,7 +1,7 @@
 @extends('profile.layout')
 
 @section('profile')
-    <div class="col-lg-12 order-lg-1">
+    <div class="col-lg-12 order-lg-1 product-page">
         <div class="pb-7 mb-7">
 
             <!-- Title -->
@@ -123,6 +123,13 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <hr>
+                <div style="float: right" class="mb-12">
+                    <a class="product-save-btn btn pt-5" href="{{ route('view_profile_product', ['lang' => lang()]) }}">Отмена</a>
+                    <button type="submit" class="btn btn-primary-dark-w mt-5 submit-btn product-save-btn">
+                        Добавить Товар
+                    </button>
                 </div>
             </form>
 

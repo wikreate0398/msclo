@@ -16,7 +16,8 @@ class AddColorToCharsTable extends Migration
         Schema::dropIfExists('char_colors');
         Schema::dropIfExists('products_colors');
         Schema::table('chars', function (Blueprint $table) {
-            $table->boolean('is_color');
+            //если хочешь синхронизировать таблицу, то запусти миграцию так, а потом раскоментируй строчку ниже
+            // $table->boolean('is_color');
             $table->string('color');
         });
     }

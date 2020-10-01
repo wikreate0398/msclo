@@ -6,8 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class CharColor extends Model
 {
+    public $timestamps = false;
+
+    protected $table = 'chars_color';
+
     protected $fillable = [
-        'product_id',
-        'color_id'
+        'char_id',
+        'color'
     ];
+
+    public function char()
+    {
+        return $this->hasOne(Char::class, 'id', 'char_id');
+    }
 }

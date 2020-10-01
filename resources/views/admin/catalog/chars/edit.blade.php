@@ -41,7 +41,7 @@
 							<label>Добавить цвет</label>
 							<div>
 								<label class="switch s-success">
-									<input type="checkbox" name="is_color" {{ $data->is_color ? 'checked' : '' }}>
+									<input type="checkbox" name="is_color" {{ $data->is_color ? 'checked' : '' }} onclick="showBlock()">
 									<span class="slider round"></span>
 								</label>
 							</div>
@@ -58,21 +58,21 @@
 										<td style="width:50px; text-align:center;" class="handle"> </td>
 										<td style="width: calc(99% - 50px)">
 											<div class="row">
-												<div class="{{ $data->is_color ? 'col-md-6' : 'col-md-12' }}">
+												<div class="{{ $data->is_color ? 'col-md-6' : 'col-md-12' }} decreasingBlock">
 													<input type="text"
 														   name="value[ru][id:{{ $item['id'] }}]"
 														   class="form-control"
 														   id="field_ru"
 														   value="{{ $item["name_ru"] }}">
 												</div>
-												@if($data->is_color)
-													<div class="col-md-6">
-														<input type="text"
-															name="product_color[ru][id:{{ $item['id'] }}]"
-															class="form-control jscolor-value"
-															data-jscolor="">
-													</div>
-												@endif
+												<div class="col-md-6 showBlock" @if($data->is_color) @else style="display:none" @endif>
+													{{-- {{ dd($item) }} --}}
+													<input type="text"
+														   name="product_color[ru][id:{{ $item['id'] }}]"
+														   value="{{ $char_color }}"
+														   class="form-control jscolor-value"
+														   data-jscolor="{}">
+												</div>
 											</div>
 										</td>
 										<td style="width:1%">
@@ -94,4 +94,10 @@
 		</div>
 	</div>
 </div>
+
+{{-- <script>
+	$(document).ready(function(){
+		$('.jscolor-value').val({!! json_encode($data->charsColor->color) !!})
+	})
+</script> --}}
 @stop

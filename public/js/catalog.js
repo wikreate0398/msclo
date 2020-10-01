@@ -72,6 +72,21 @@ function deleteLoadItem(item, parent) {
     }
 }
 
+function showBlock() {
+    let checkbox = $('input[name="is_color"]');
+    let neighbourBlock = $('.decreasingBlock');
+
+    if(checkbox.is(':checked')) {
+        neighbourBlock.removeClass('col-md-12');
+        neighbourBlock.addClass('col-md-6');
+        $(".showBlock").show();
+    } else {
+        neighbourBlock.removeClass('col-md-6');
+        neighbourBlock.addClass('col-md-12');
+        $(".showBlock").hide();
+    }
+}
+
 function selectCharType(input) {
     if($(input).val() == 'input') {
         $('.add-chars-values-inner').hide();
@@ -83,7 +98,7 @@ function selectCharType(input) {
 function addChars() {
     $('#add-chars-table').show();
     $('#add-chars-table tbody').append(charTr);
-    $('#add-chars-table .lang-area').not('#field_ru').hide();
+    $('#add-chars-table .col-auto').not('#field_ru').hide();
     Ajax.sortItems('.sort-chars');
 }
 

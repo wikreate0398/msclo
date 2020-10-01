@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 mt-n3">
                         <div class="product-card mb-5">
                             <h5 class="col-lg-12 px-5 py-3">Оптовые цены</h5>
                                 <div class="col-md-12 mt-6">

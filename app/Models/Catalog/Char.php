@@ -28,13 +28,17 @@ class Char extends Model
     protected $casts = [
         'view_filter' => 'integer',
         'used_cart'   => 'integer',
-        'view'        => 'integer',
-        'is_color'    => 'boolean'
+        'view'        => 'integer'
     ];
 
     public function childs()
     {
-        return $this->hasMany('App\Models\Catalog\Char', 'parent_id', 'id')->orderByPageUp();
+        return $this->hasMany('App\Models\Catalog\Char', 'parent_id', 'id')->with('charColors')->orderByPageUp();
+    }
+
+    public function charColors()
+    {
+        return $this->hasMany(CharColor::class, 'char_id', 'id');
     }
 
     public function charProducts()

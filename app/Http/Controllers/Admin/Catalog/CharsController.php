@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin\Catalog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Catalog\Char;
+use App\Models\Catalog\CharColor;
+use App\Utils\JsonResponse;
+use App\Utils\Language;
 
 class CharsController extends Controller
 {
@@ -52,7 +55,8 @@ class CharsController extends Controller
         $data = array_merge(
             \Language::returnData($this->returnDataFields),
             [
-           'type' => $request->type
+            'type'     => $request->type,
+            'is_color' => $request->is_color,
         ]
         );
 
@@ -63,34 +67,61 @@ class CharsController extends Controller
 
     public function showeditForm($id)
     {
+        $charColor = CharColor::where('char_id', $id)->get();
         return view('admin.'.$this->folder.'.edit', [
             'method'        => $this->method,
             'table'         => $this->model->getTable(),
-            'data'          => $this->model->with('childs')->findOrFail($id),
+            'data'          => $this->model->with('childs', 'charColors')->findOrFail($id),
+            'char_color'    => $charColor
         ]);
     }
 
     public function update($id, Request $request)
     {
         if (!$request->type) {
-            return \JsonResponse::error(['messages' => 'Укажите тип']);
+            return JsonResponse::error(['messages' => 'Укажите тип']);
+        }
+
+        if ($request->is_color) {
+            $is_color = 1;
         }
 
         $updateData = array_merge(
-            \Language::returnData($this->returnDataFields),
+            Language::returnData($this->returnDataFields),
             [
-            'type' => $request->type
-        ]
+                'type'     => $request->type,
+                'is_color' => $is_color ?: $request->is_color
+            ]
         );
 
         $data = $this->model->findOrFail($id);
         $data->fill($updateData)->save();
-        $this->saveValues($id, $request->value, $request->is_color, $request->type);
 
-        return \JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
+        $this->saveValues($id, $request->value, $request->type);
+        $this->saveCharColors($id, $request->product_color);
+
+        return JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
     }
 
-    private function saveValues($id, $values, $type, $is_color, $insert = [])
+    private function saveCharColors($id, $value, $insert = [])
+    {
+        CharColor::where('char_id', $id)->delete();
+        if (empty($value)) {
+            return;
+        }
+        foreach (sortValue($value) as $type => $item) {
+            $item = array_values($item);
+            $insert[] = [
+                'char_id' => $id,
+                'color' => implode($item),
+            ];
+        }
+        if (!empty($insert)) {
+            CharColor::insert($insert);
+        }
+    }
+
+    private function saveValues($id, $values, $type, $insert = [])
     {
         if (!empty($values)) {
             $pageUp = 1;
@@ -98,8 +129,7 @@ class CharsController extends Controller
                 $row = [
                     'parent_id' => $id,
                     'page_up'   => $pageUp,
-                    'type'      => $type,
-                    'is_color'  => $is_color
+                    'type'      => $type
                 ];
 
                 foreach ($items as $lang => $value) {

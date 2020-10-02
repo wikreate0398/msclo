@@ -60,7 +60,7 @@ class CharsController extends Controller
         );
 
         $id = $this->model->create($data)->id;
-        $this->saveValues($id, $request->value, $request->color, $request->type);
+        $this->saveValues($id, $request->value, $request->type);
         return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
     }
 
@@ -104,16 +104,31 @@ class CharsController extends Controller
     private function saveValues($id, $values, $type, $insert = [])
     {
         // dd($values);
+        if (count($values) == 2) {
+            $valueColor = sortValue($values[1]);
+            $values = $values[0];
+        } else {
+            $values = $values;
+        }
+        // dd($valueColor);
         if (!empty($values)) {
             $pageUp = 1;
             foreach (sortValue($values) as $key => $items) {
+                // $color = array_map(function ($item) {
+                //     return $item['ru'];
+                // }, $valueColor);
+                // $item = array_values($color);
                 $row = [
                     'parent_id' => $id,
                     'page_up'   => $pageUp,
-                    'type'      => $type,
-                    'color'     => '#0000',
+                    'type'      => $type
                 ];
-
+                if ($valueColor) {
+                    foreach ($valueColor as $item) {
+                        $item = array_values($item);
+                        $row["color"] = implode($item);
+                    }
+                }
                 foreach ($items as $lang => $value) {
                     $row["name_$lang"] = $value;
                 }
@@ -128,6 +143,7 @@ class CharsController extends Controller
 
                 $pageUp++;
             }
+            // dd($update);
 
             if (!empty($insert)) {
                 Char::insert($insert);

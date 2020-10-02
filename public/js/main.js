@@ -81,7 +81,7 @@ $(document).ready(function () {
     if ($('input.gallery_media').length) {
         var $fileuploader = $('input.gallery_media').fileuploader({
             limit: 10,
-            fileMaxSize: 3,
+            fileMaxSize: 200,
             extensions: ['image/*'],
             changeInput: ' ',
             theme: 'gallery',

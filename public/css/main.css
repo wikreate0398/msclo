@@ -257,7 +257,7 @@ body{
     display: inline-block;
     height: 35px;
     width: 35px;
-    background: #ebebeb;
+    background: var(--color);
     -webkit-appearance: none;
     -moz-appearance: none;
     -o-appearance: none;
@@ -285,7 +285,8 @@ body{
     transition: all 0.3s ease-out;
 }
 .product-card input[type="checkbox"]:checked {
-    background: #4F4F4F; 
+    background: var(--background); 
+    border: 2px solid #4F4F4F !important;
   }
 .product-card input[type="checkbox"]:checked:after {
     color: #E0E0E0;
@@ -317,4 +318,7 @@ body{
     font-family:'Avenir Next Cyr Regular';
     font-weight: 400;
     font-size: 18px;
+}
+.fileuploader-theme-gallery .fileuploader-input, .fileuploader-theme-gallery .fileuploader-items-list .fileuploader-item{
+    width: 30% !important;
 }

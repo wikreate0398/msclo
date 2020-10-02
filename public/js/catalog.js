@@ -1,12 +1,35 @@
-
 const charTr = `
     <tr>
         <td style="width:50px; text-align:center;" class="handle"> </td>
         <td style="width: calc(99% - 50px)">
             <input type="text" name="value[ru][]" class="form-control lang-area" id="field_ru">
         </td>
+        <td style="width:1%">
+            <a href="javascript:;" onclick="deleteLoadItem(this)" class="btn default btn-sm">
+                <i class="fa fa-times"></i> Удалить
+            </a>
+        </td>
+  </tr>
+`;
+
+const charTrColor = `
+    <tr>
+        <td style="width:50px; text-align:center;" class="handle"> </td>
         <td style="width: calc(99% - 50px)">
-            <input type="text" name="color[ru][]" class="form-control lang-area" id="field_ru">
+            <div class="row">
+                <div class="col-md-6 decreasingBlock">
+                    <input type="text"
+                        name="value[ru][]"
+                        class="form-control"
+                        id="field_ru">
+                </div>
+                <div class="col-md-6 showBlock">
+                    <input type="text"
+                        name="color[ru][]"
+                        class="form-control jscolor-value"
+                        data-jscolor="">
+                </div>
+            </div>
         </td>
         <td style="width:1%">
             <a href="javascript:;" onclick="deleteLoadItem(this)" class="btn default btn-sm">
@@ -63,6 +86,14 @@ $(document).ready(function () {
     }
 });
 
+function initJsColor() {
+      var allInputs = $('.jscolor-value');
+
+      var newestInput = allInputs[allInputs.length - 1]; 
+  
+      new jscolor(newestInput);
+}
+
 function deleteLoadItem(item, parent) {
     if(parent) {
         $(item).closest(parent).remove();
@@ -108,7 +139,8 @@ function addChars() {
 function addCharsWithColors() {
     $('#add-chars-table').show();
     $('.showBlock').show();
-    $('#add-chars-table tbody').append(charTr);
+    $('#add-chars-table tbody').append(charTrColor);
+    initJsColor();
     $('#add-chars-table .col-auto').not('#field_ru').hide();
     Ajax.sortItems('.sort-chars');
 }

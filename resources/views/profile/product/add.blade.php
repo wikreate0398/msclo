@@ -30,23 +30,25 @@
                     <div class="col-md-6">
                         <div class="product-card mb-5">
                             <h5 class="col px-5 py-3">Параметры товара</h5>
-                            <div class="col-md-12">
+                            <div class="col-md-12 pt-3">
                                 @foreach($chars as $char)
-                                @if($char->type != "input") <label class="col-md-12">{{ $char->name_ru }}</label> @endif
+                                @if($char->type != "input") <label class="col-md-12 mb-3">{{ $char->name_ru }}</label> @endif
                                     @if($char->childs->count())
                                     <div class="col-md-12">
                                         @foreach($char->childs as $child)
                                             <input type="{{ $char->type }}"
                                             name="char[{{ $char->type }}][{{ $char->id }}][]"
-                                                @if($child->parent_id == 8)
-                                                style="--name: '{{ $child->name_ru }}'"
-                                                @endif
+                                                    @if($child->parent_id == 8)
+                                                        style="--name: '{{ $child->name_ru }}'; --color: #ebebeb; --background: #4F4F4F"
+                                                    @elseif($child->parent_id == 3)
+                                                        style="--color: {{ $child->color }}; --background: {{ $child->color }}"
+                                                    @endif
                                             value="{{ $child->id }}"
                                             class="product-control-input"
                                             id="item-{{ $child->id }}">
                                             @endforeach
                                         </div>
-                                            <hr>
+                                            <hr class="mb-4">
                                     @elseif($char->type == 'input')
                                         <div class="col-md-12">
                                             <textarea name="char[{{ $char->type }}][{{ $char->id }}]" class="product-form-control mb-4" placeholder="{{ $char->name_ru }}"></textarea>
@@ -58,8 +60,8 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 mt-n3">
-                        <div class="product-card mb-5">
+                    <div class="col-md-6 mt-n6">
+                        <div class="product-card mb-3">
                             <h5 class="col-lg-12 px-5 py-3">Оптовые цены</h5>
                                 <div class="col-md-12 mt-6">
                                     <div class="row">
@@ -92,7 +94,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 mb-5 pr-5 product-image-fileuploader">
-                            <h5 class="col py-3 font-weight-bold">Фото товара</h5>
+                            <h5 class="col pt-3 font-weight-bold">Фото товара</h5>
                             <input type="file"
                                    name="files"
                                    class="gallery_media">

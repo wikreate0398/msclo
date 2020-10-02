@@ -10,7 +10,7 @@
             </div>
             <!-- End Title -->
 
-            <form action="{{ route('create_product', ['lang' => $lang, 'id' => $data->id]) }}" class="ajax__submit">
+            <form action="{{ route('update_product', ['lang' => $lang, 'id' => $data->id]) }}" class="ajax__submit">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
@@ -31,19 +31,21 @@
                     <div class="col-md-6">
                         <div class="product-card mb-5">
                             <h5 class="col px-5 py-3">Параметры товара</h5>
-                            <div class="col-md-12">
+                            <div class="col-md-12 pt-3">
                                 @php
                                     $productChars = $data->chars ? $data->chars->groupBy('id_char') : collect();
                                 @endphp
                                 @foreach($chars as $char)
-                                @if($char->type != "input") <label class="col-md-12">{{ $char->name_ru }}</label> @endif
+                                @if($char->type != "input") <label class="col-md-12 mb-3">{{ $char->name_ru }}</label> @endif
                                     @if($char->childs->count())
                                     <div class="col-md-12">
                                         @foreach($char->childs as $child)
                                             <input type="{{ $char->type }}"
                                             name="char[{{ $char->type }}][{{ $char->id }}][]"
                                                 @if($child->parent_id == 8)
-                                                style="--name: '{{ $child->name_ru }}'"
+                                                    style="--name: '{{ $child->name_ru }}'; --color: #ebebeb; --background: #4F4F4F"
+                                                @elseif($child->parent_id == 3)
+                                                    style="--color: {{ $child->color }}; --background: {{ $child->color }}"
                                                 @endif
                                             value="{{ $child->id }}"
                                             {{ (@$productChars[$char->id] && in_array($child->id, $productChars[$char->id]->pluck('value')->toArray())) ? 'checked' : '' }}
@@ -51,7 +53,7 @@
                                             id="item-{{ $child->id }}">
                                             @endforeach
                                         </div>
-                                            <hr>
+                                            <hr class="mb-4">
                                     @elseif($char->type == 'input')
                                         <div class="col-md-12">
                                             <textarea name="char[{{ $char->type }}][{{ $char->id }}]" class="product-form-control mb-4" placeholder="{{ $char->name_ru }}">{{ @$productChars[$char->id][0]['value'] }}</textarea>
@@ -63,13 +65,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 mt-n3">
-                        <div class="product-card mb-5">
+                    <div class="col-md-6 mt-n6">
+                        <div class="product-card mb-3">
                             <h5 class="col-lg-12 px-5 py-3">Оптовые цены</h5>
                                 <div class="col-md-12 mt-6">
                                     <div class="row">
                                         @foreach($data->prices as $item)
-                                        <div class="col-md-12">
+                                        <div class="col-md-12 mb-3">
                                             <div class="input-group">
                                                 <div class="col-md-6">
                                                     <input type="text" name="prices[price][]" value="{{ $item->price }}" placeholder="Стоимость товара" class="product-form-control number">
@@ -78,7 +80,7 @@
                                                     <input type="text" name="prices[quantity][]" value="{{ $item->quantity }}" placeholder="Кол-во для опта" class="product-form-control number">
                                                 </div>
                                                 <div class="col-md-1 align-self-center">
-                                                    <a href="javascript:;" onclick="deleteLoadItem(this, '.input-group')" class="btn-delete1 delete_product_btn">
+                                                    <a href="javascript:;" onclick="deleteLoadItem(this, '.col-md-12.mb-3')" class="btn-delete1 delete_product_btn">
                                                         <i class="fa fa-times"></i>
                                                     </a>
                                                 </div>
@@ -89,7 +91,7 @@
                                         
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12 ml-3 mb-5 mt-4">
+                                        <div class="col-md-12 ml-3 mb-5 ">
                                             <button class="add_product_price_btn" type="button" onclick="addProductPriceNew()">
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                                 Добавить цену
@@ -99,7 +101,7 @@
                             </div>
                         </div>
                         <div class="col-md-12 mb-5 pr-5 product-image-fileuploader">
-                            <h5 class="col py-3 font-weight-bold">Фото товара</h5>
+                            <h5 class="col pt-3 font-weight-bold">Фото товара</h5>
                             @php
                                 $imgData = [];
                                 if($data->images->count()){
@@ -156,7 +158,7 @@
                 <div style="float: right" class="mb-12">
                     <a class="product-save-btn btn pt-5" href="{{ route('view_profile_product', ['lang' => lang()]) }}">Отмена</a>
                     <button type="submit" class="btn btn-primary-dark-w mt-5 submit-btn product-save-btn">
-                        Добавить Товар
+                        Сохранить
                     </button>
                 </div>
             </form>

@@ -85,50 +85,27 @@ class CharsController extends Controller
                 'type'     => $request->type
             ]
         );
-        // dd($updateData);
+
         $data = $this->model->findOrFail($id);
         $data->fill($updateData)->save();
-        if ($request->color) {
-            $values = [
-                $request->value,
-                $request->color
-            ];
-        } else {
-            $values = $request->value;
-        }
-        $this->saveValues($id, $values, $request->type);
+        $this->saveValues($id, $request);
 
         return JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
     }
 
-    private function saveValues($id, $values, $type, $insert = [])
+    private function saveValues($id, $request, $insert = [])
     {
-        // dd($values);
-        if (count($values) == 2) {
-            $valueColor = sortValue($values[1]);
-            $values = $values[0];
-        } else {
-            $values = $values;
-        }
-        // dd($valueColor);
-        if (!empty($values)) {
+        if (!empty($request->value)) {
             $pageUp = 1;
-            foreach (sortValue($values) as $key => $items) {
-                // $color = array_map(function ($item) {
-                //     return $item['ru'];
-                // }, $valueColor);
-                // $item = array_values($color);
+            $colors = $request->color ? sortValue($request->color) : [];
+            foreach (sortValue($request->value) as $key => $items) {
                 $row = [
                     'parent_id' => $id,
                     'page_up'   => $pageUp,
-                    'type'      => $type
+                    'type'      => $request->type,
+                    'color'     => !empty($colors[$key]['ru']) ? $colors[$key]['ru'] : ''
                 ];
-                if ($valueColor) {
-                    foreach ($valueColor as $item) {
-                        $item = array_values($item);
-                        $row["color"] = implode($item);
-                    }
-                }
+
                 foreach ($items as $lang => $value) {
                     $row["name_$lang"] = $value;
                 }
@@ -140,10 +117,8 @@ class CharsController extends Controller
                     $update[] = $row;
                     Char::whereId($valueId)->update($row);
                 }
-
                 $pageUp++;
             }
-            // dd($update);
 
             if (!empty($insert)) {
                 Char::insert($insert);

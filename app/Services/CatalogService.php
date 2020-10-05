@@ -99,17 +99,16 @@ class CatalogService
         if (request()->files->count()) {
             $uploadImage = new UploadImage;
 
-            $images      = $uploadImage->setExtensions('jpeg,jpg,png')
-                                       ->setSize(120000)
+            $images      = $uploadImage->setExtensions('jpeg,jpg,png') 
+                                       ->setSize(525000) 
                                        ->sort($imageSort)
                                        ->multipleUpload('files', 'products');
 
             //exit(print_arr($images));
-
             foreach ($images as $key => $image) {
                 ProductImage::create([
                     'id_product' => $id,
-                    'image'      => $image['name'],
+                    'image'      => isset($image['name']) ? $image['name'] : $image,
                     'page_up'    => @$image['page_up'] ?: 1
                 ]);
             }

@@ -76,7 +76,7 @@ class CharsController extends Controller
     public function update($id, Request $request)
     {
         if (!$request->type) {
-            return JsonResponse::error(['messages' => 'Укажите тип']);
+            return JsonResponse::error(['messages' => 'Укажите тип ']);
         }
 
         $updateData = array_merge(

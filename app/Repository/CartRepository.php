@@ -57,11 +57,13 @@ class CartRepository implements CartRepositoryInterface
 
             $chars = collect();
             if ($charsData->count()) {
-                foreach ($item['chars'] as $id_char => $id_value) {
-                    $chars->push([
-                        'name'  => @$charsData[$id_char]["name_$lang"],
-                        'value' => @$charsData[$id_value]["name_$lang"],
-                    ]);
+                if (!empty($item['chars'])) {
+                    foreach ($item['chars'] as $id_char => $id_value) {
+                        $chars->push([
+                            'name'  => @$charsData[$id_char]["name_$lang"],
+                            'value' => @$charsData[$id_value]["name_$lang"],
+                        ]);
+                    }
                 }
             }
 

@@ -26,6 +26,47 @@
                                 <input type="text" class="product-form-control" name="name[ru]" autocomplete="off" placeholder="Название*">
                             </div>
                         </div>
+
+                        <div class="product-card mb-3">
+                            <h5 class="col-lg-12 px-5 py-3">Оптовые цены</h5>
+                            <div class="col-md-12 mt-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <div class="col-md-6">
+                                                <input type="text" name="prices[price][]" placeholder="Стоимость товара" class="product-form-control number">
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input type="text" name="prices[quantity][]" placeholder="Кол-во для опта" class="product-form-control number">
+                                            </div>
+                                            <div class="col-md-1 align-self-center">
+                                                <a href="javascript:;" onclick="deleteLoadItem(this, '.input-group')" class="btn-delete1 delete_product_btn">
+                                                    <i class="fa fa-times"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12" id="product-prices" style="margin-top: 15px; width: 50%;"></div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 ml-3 mb-5 mt-4">
+                                        <button class="add_product_price_btn" type="button" onclick="addProductPriceNew()">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                            Добавить цену
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="product-image-fileuploader">
+                            <h5 class="col pt-3 font-weight-bold">Фото товара</h5>
+                            <input type="file"
+                                   name="files"
+                                   class="gallery_media">
+                            <input type="hidden" name="image_sort" value="" id="img-sort">
+                        </div>
+
                     </div>
                     <div class="col-md-6">
                         <div class="product-card mb-5">
@@ -37,17 +78,17 @@
                                     <div class="col-md-12">
                                         @foreach($char->childs as $child)
                                             <input type="{{ $char->type }}"
-                                            name="char[{{ $char->type }}][{{ $char->id }}][]"
-                                                    @if($child->parent_id == 8)
-                                                        style="--name: '{{ $child->name_ru }}'; --color: #ebebeb; --background: #4F4F4F"
-                                                    @elseif($child->parent_id == 3)
+                                                   name="char[{{ $char->type }}][{{ $char->id }}][]"
+                                                    @if($char->id == 3)
                                                         style="--color: {{ $child->color }}; --background: {{ $child->color }}"
+                                                    @else
+                                                        style="--name: '{{ $child->name_ru }}'; --color: #ebebeb; --background: #4F4F4F"
                                                     @endif
                                             value="{{ $child->id }}"
                                             class="product-control-input"
                                             id="item-{{ $child->id }}">
-                                            @endforeach
-                                        </div>
+                                        @endforeach
+                                    </div>
                                             <hr class="mb-4">
                                     @elseif($char->type == 'input')
                                         <div class="col-md-12">
@@ -57,51 +98,7 @@
                                 @endforeach
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mt-n6">
-                        <div class="product-card mb-3">
-                            <h5 class="col-lg-12 px-5 py-3">Оптовые цены</h5>
-                                <div class="col-md-12 mt-6">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="input-group">
-                                                <div class="col-md-6">
-                                                    <input type="text" name="prices[price][]" placeholder="Стоимость товара" class="product-form-control number">
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <input type="text" name="prices[quantity][]" placeholder="Кол-во для опта" class="product-form-control number">
-                                                </div>
-                                                <div class="col-md-1 align-self-center">
-                                                    <a href="javascript:;" onclick="deleteLoadItem(this, '.input-group')" class="btn-delete1 delete_product_btn">
-                                                        <i class="fa fa-times"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12" id="product-prices" style="margin-top: 15px; width: 50%;"></div>
-                                        
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12 ml-3 mb-5 mt-4">
-                                            <button class="add_product_price_btn" type="button" onclick="addProductPriceNew()">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                                Добавить цену
-                                            </button>
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb-5 pr-5 product-image-fileuploader">
-                            <h5 class="col pt-3 font-weight-bold">Фото товара</h5>
-                            <input type="file"
-                                   name="files"
-                                   class="gallery_media">
-                            <input type="hidden" name="image_sort" value="" id="img-sort">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
+
                         <div class="product-card mb-5">
                             <h5 class="col px-5 py-3">Описание товара</h5>
                             <div class="col-md-12">
@@ -126,6 +123,7 @@
                         </div>
                     </div>
                 </div>
+
                 <hr>
                 <div style="float: right" class="mb-12">
                     <a class="product-save-btn btn pt-5" href="{{ route('view_profile_product', ['lang' => lang()]) }}">Отмена</a>

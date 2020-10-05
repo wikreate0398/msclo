@@ -42,10 +42,10 @@
                                         @foreach($char->childs as $child)
                                             <input type="{{ $char->type }}"
                                             name="char[{{ $char->type }}][{{ $char->id }}][]"
-                                                @if($child->parent_id == 8)
-                                                    style="--name: '{{ $child->name_ru }}'; --color: #ebebeb; --background: #4F4F4F"
-                                                @elseif($child->parent_id == 3)
-                                                    style="--color: {{ $child->color }}; --background: {{ $child->color }}"
+                                                @if($char->id == 3)
+                                                   style="--color: {{ $child->color }}; --background: {{ $child->color }}"
+                                                @else
+                                                   style="--name: '{{ $child->name_ru }}'; --color: #ebebeb; --background: #4F4F4F"
                                                 @endif
                                             value="{{ $child->id }}"
                                             {{ (@$productChars[$char->id] && in_array($child->id, $productChars[$char->id]->pluck('value')->toArray())) ? 'checked' : '' }}

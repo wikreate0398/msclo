@@ -476,7 +476,6 @@ function setLangUri($lang)
 
 function imageThumb($image = false, $path, $width, $height=null, $v)
 {
-//    if (empty($image)) return '';
     $height = empty($height) ? null : $height;
     $path = str_replace('.', '/', $path);
 
@@ -497,7 +496,7 @@ function imageThumb($image = false, $path, $width, $height=null, $v)
     $imgeThumbnailPath = public_path($path . $thumbPath . "/$image");
     $filePath          = public_path($path . "/$image");
 
-    if (empty($image)) {
+    if (empty($image) or !file_exists(public_path($path.'/'.$image))) {
         $explodePath = explode('/', $path);
         $defImg = 'no-image.png';
         if (end($explodePath) == 'users') {

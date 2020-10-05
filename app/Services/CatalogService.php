@@ -104,7 +104,6 @@ class CatalogService
                                        ->sort($imageSort)
                                        ->multipleUpload('files', 'products');
 
-            //exit(print_arr($images));
             foreach ($images as $key => $image) {
                 ProductImage::create([
                     'id_product' => $id,

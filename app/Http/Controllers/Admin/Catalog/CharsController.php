@@ -60,7 +60,7 @@ class CharsController extends Controller
         );
 
         $id = $this->model->create($data)->id;
-        $this->saveValues($id, $request->value, $request->type);
+        $this->saveValues($id, $request);
         return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
     }
 

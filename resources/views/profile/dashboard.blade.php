@@ -18,7 +18,7 @@
                                 <h5 class="mb-1 ml-3">{{ $provider['full_name'] }}</h5>
                             </div>
                             <div class="col-md-10">
-                                <p class="mb-1 description">{{ $provider['description'] }}</p>
+                                <p class="mb-1 description">{!! $provider['description'] !!}</p>
                             </div>
                             <div class="col-md-12">
                                 <p class="mb-1">{{ $provider['phone'] }} @if($provider['phone'] != "" && $provider['email'] != "") <span class="ml-3 mr-3"> | </span>@else  @endif {{ $provider['email'] }}</p>
@@ -88,9 +88,7 @@
                             @foreach($getOrders as $order)
                                 <tr>
                                     <td>
-                                        @if($order->product['images']->count())
-                                        <img src="{{ imageThumb($order->product['images']->first()['image'], 'uploads/products', 50, 50, 'list') }}" alt="">
-                                        @else @endif
+                                        <img src="{{ imageThumb($order->product['images']->count() ? $order->product['images']->first()['image'] : '', 'uploads/products', 50, 50, 'list') }}" alt="">
                                     </td>
                                     <td>
                                         <p class="mb-n1 text-dark">

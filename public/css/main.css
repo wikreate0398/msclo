@@ -252,7 +252,7 @@ body{
     position: absolute;
     margin-top: -3px;
 }
-.product-card input[type="checkbox"]{
+.product-card input[type="checkbox"], .product-card input[type="radio"]{
     position: relative;
     display: inline-block;
     height: 35px;
@@ -264,7 +264,7 @@ body{
     appearance: none;
     margin-right: 7px;
 }
-.product-card input[type="checkbox"]:after { 
+.product-card input[type="checkbox"]:after, .product-card input[type="radio"]:after {
     content: var(--name); 
     font-size: 13px;
     text-align: center;
@@ -284,15 +284,15 @@ body{
     -o-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
 }
-.product-card input[type="checkbox"]:checked {
+.product-card input[type="checkbox"]:checked, .product-card input[type="radio"]:checked {
     background: var(--background); 
     border: 2px solid #4F4F4F !important;
   }
-.product-card input[type="checkbox"]:checked:after {
+.product-card input[type="checkbox"]:checked:after, .product-card input[type="radio"]:checked:after {
     color: #E0E0E0;
   }
 
-.product-card input[type="checkbox"]:hover {
+.product-card input[type="checkbox"]:hover, .product-card input[type="radio"]:hover {
     border: 1px solid #4F4F4F;
 }
 .delete_product_btn i{

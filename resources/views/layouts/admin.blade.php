@@ -241,6 +241,13 @@
 <!-- END MAIN CONTAINER -->
 
 <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.3.3/jscolor.min.js" integrity="sha512-KVabwlnqwMHqLIONPKHQTGzW4C0dg3HEPwtTCVjzGOW508cm5Vl6qFvewK/DUbgqLPGRrMeKL3Ga3kput855HQ==" crossorigin="anonymous"></script>
+<script>
+   jscolor.presets.default = {
+      format:'hex',
+      previewSize:60
+   };
+</script>
 <script src="{{ asset('admin_theme/admin/') }}/bootstrap/js/popper.min.js"></script>
 <script src="{{ asset('admin_theme/admin/') }}/bootstrap/js/bootstrap.min.js"></script>
 <script src="{{ asset('admin_theme/admin/') }}/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>

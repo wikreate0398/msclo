@@ -1,9 +1,35 @@
-
 const charTr = `
     <tr>
         <td style="width:50px; text-align:center;" class="handle"> </td>
         <td style="width: calc(99% - 50px)">
             <input type="text" name="value[ru][]" class="form-control lang-area" id="field_ru">
+        </td>
+        <td style="width:1%">
+            <a href="javascript:;" onclick="deleteLoadItem(this)" class="btn default btn-sm">
+                <i class="fa fa-times"></i> Удалить
+            </a>
+        </td>
+  </tr>
+`;
+
+const charTrColor = `
+    <tr>
+        <td style="width:50px; text-align:center;" class="handle"> </td>
+        <td style="width: calc(99% - 50px)">
+            <div class="row">
+                <div class="col-md-6 decreasingBlock">
+                    <input type="text"
+                        name="value[ru][]"
+                        class="form-control"
+                        id="field_ru">
+                </div>
+                <div class="col-md-6 showBlock">
+                    <input type="text"
+                        name="color[ru][]"
+                        class="form-control jscolor-value"
+                        data-jscolor="">
+                </div>
+            </div>
         </td>
         <td style="width:1%">
             <a href="javascript:;" onclick="deleteLoadItem(this)" class="btn default btn-sm">
@@ -26,6 +52,22 @@ const productPrice = `
     </div>
 `;
 
+const productPriceNew = `
+    <div class="input-group mb-4">
+        <div class="col-md-6">
+            <input type="text" name="prices[price][]" placeholder="Стоимость товара" class="product-form-control number">
+        </div>
+        <div class="col-md-5">
+            <input type="text" name="prices[quantity][]" placeholder="Кол-во для опта" class="product-form-control number">
+        </div>
+        <div class="col-md-1 align-self-center">
+            <a href="javascript:;" onclick="deleteLoadItem(this, '.input-group')" class="btn-delete1 delete_product_btn">
+                <i class="fa fa-times"></i>
+            </a>
+        </div>
+    </div>
+`;
+
 const checkboxSelf = `
     
         <input type="text" name="self_checkbox[]" class="form-control">
@@ -44,6 +86,14 @@ $(document).ready(function () {
     }
 });
 
+function initJsColor() {
+      var allInputs = $('.jscolor-value');
+
+      var newestInput = allInputs[allInputs.length - 1]; 
+  
+      new jscolor(newestInput);
+}
+
 function deleteLoadItem(item, parent) {
     if(parent) {
         $(item).closest(parent).remove();
@@ -53,6 +103,21 @@ function deleteLoadItem(item, parent) {
         if ($(parent).find('tr').length <= 0) {
             $(parent).closest('table').hide();
         }
+    }
+}
+
+function showBlock() {
+    let checkbox = $('input[name="is_color"]');
+    let neighbourBlock = $('.decreasingBlock');
+
+    if(checkbox.is(':checked')) {
+        neighbourBlock.removeClass('col-md-12');
+        neighbourBlock.addClass('col-md-6');
+        $(".showBlock").show();
+    } else {
+        neighbourBlock.removeClass('col-md-6');
+        neighbourBlock.addClass('col-md-12');
+        $(".showBlock").hide();
     }
 }
 
@@ -67,7 +132,16 @@ function selectCharType(input) {
 function addChars() {
     $('#add-chars-table').show();
     $('#add-chars-table tbody').append(charTr);
-    $('#add-chars-table .lang-area').not('#field_ru').hide();
+    $('#add-chars-table .col-auto').not('#field_ru').hide();
+    Ajax.sortItems('.sort-chars');
+}
+
+function addCharsWithColors() {
+    $('#add-chars-table').show();
+    $('.showBlock').show();
+    $('#add-chars-table tbody').append(charTrColor);
+    initJsColor();
+    $('#add-chars-table .col-auto').not('#field_ru').hide();
     Ajax.sortItems('.sort-chars');
 }
 
@@ -83,6 +157,10 @@ function addSelfCheckbox(id) {
 function addProductPrice() {
     $('#product-prices').show();
     $('#product-prices').append(productPrice);
+}
+function addProductPriceNew() {
+    $('#product-prices').show();
+    $('#product-prices').append(productPriceNew);
 }
 
 function deleteSelfCheckbox(item) {

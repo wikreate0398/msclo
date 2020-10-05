@@ -99,8 +99,8 @@ class CatalogService
         if (request()->files->count()) {
             $uploadImage = new UploadImage;
 
-            $images      = $uploadImage->setExtensions('jpeg,jpg,png')
-                                       ->setSize(525000)
+            $images      = $uploadImage->setExtensions('jpeg,jpg,png') 
+                                       ->setSize(525000) 
                                        ->sort($imageSort)
                                        ->multipleUpload('files', 'products');
 

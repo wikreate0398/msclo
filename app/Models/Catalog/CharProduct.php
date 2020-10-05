@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class CharProduct extends Model
 {
-	public $timestamps = false;
+    public $timestamps = false;
 
-	protected $table = 'chars_catalog';
+    protected $table = 'chars_catalog';
 
-	protected $fillable = [
+    protected $fillable = [
         'id_product',
         'id_char',
         'value'

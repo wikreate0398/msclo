@@ -1,5 +1,3 @@
-
-
 <div class="modal fade" id="deleteModal_{{ $table }}_{{ $id }}" tabindex="-1" role="dialog" aria-labelledby="deleteModal_{{ $table }}_{{ $id }}Label" aria-hidden="true">
    <div class="modal-dialog" role="document">
       <div class="modal-content">

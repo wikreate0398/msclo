@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin\Catalog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Catalog\Char;
+use App\Models\Catalog\CharColor;
+use App\Utils\JsonResponse;
+use App\Utils\Language;
 
 class CharsController extends Controller
 {
@@ -21,7 +24,7 @@ class CharsController extends Controller
      *
      * @return void
      */
-    public function __construct() 
+    public function __construct()
     {
         $this->model  = new Char;
         $this->method = config('admin.path') . '/' . $this->method;
@@ -33,15 +36,15 @@ class CharsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show()
-    {  
+    {
         $data = [
             'data'   => $this->model->orderByRaw('page_up asc, id desc')->get(),
             'table'  => $this->model->getTable(),
             'method' => $this->method
-        ]; 
+        ];
 
         return view('admin.'.$this->folder.'.list', $data);
-    }  
+    }
 
     public function create(Request $request)
     {
@@ -49,52 +52,58 @@ class CharsController extends Controller
             return \JsonResponse::error(['messages' => 'Укажите тип']);
         }
 
-        $data = array_merge(\Language::returnData($this->returnDataFields),
-        [
-           'type' => $request->type
-        ]);
+        $data = array_merge(
+            \Language::returnData($this->returnDataFields),
+            [
+            'type'     => $request->type
+        ]
+        );
 
         $id = $this->model->create($data)->id;
         $this->saveValues($id, $request->value, $request->type);
-        return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save')); 
+        return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
     }
 
     public function showeditForm($id)
-    { 
+    {
         return view('admin.'.$this->folder.'.edit', [
             'method'        => $this->method,
             'table'         => $this->model->getTable(),
-            'data'          => $this->model->with('childs')->findOrFail($id),
+            'data'          => $this->model->with('childs')->findOrFail($id)
         ]);
     }
 
     public function update($id, Request $request)
     {
         if (!$request->type) {
-            return \JsonResponse::error(['messages' => 'Укажите тип']);
+            return JsonResponse::error(['messages' => 'Укажите тип']);
         }
 
-        $updateData = array_merge(\Language::returnData($this->returnDataFields),
-        [
-            'type' => $request->type
-        ]);
+        $updateData = array_merge(
+            Language::returnData($this->returnDataFields),
+            [
+                'type'     => $request->type
+            ]
+        );
 
         $data = $this->model->findOrFail($id);
         $data->fill($updateData)->save();
-        $this->saveValues($id, $request->value, $request->type);
+        $this->saveValues($id, $request);
 
-        return \JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
+        return JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
     }
 
-    private function saveValues($id, $values, $type, $insert = [])
+    private function saveValues($id, $request, $insert = [])
     {
-        if (!empty($values)) {
+        if (!empty($request->value)) {
             $pageUp = 1;
-            foreach (sortValue($values) as $key => $items) {
+            $colors = $request->color ? sortValue($request->color) : [];
+            foreach (sortValue($request->value) as $key => $items) {
                 $row = [
                     'parent_id' => $id,
                     'page_up'   => $pageUp,
-                    'type'      => $type
+                    'type'      => $request->type,
+                    'color'     => !empty($colors[$key]['ru']) ? $colors[$key]['ru'] : ''
                 ];
 
                 foreach ($items as $lang => $value) {
@@ -108,7 +117,6 @@ class CharsController extends Controller
                     $update[] = $row;
                     Char::whereId($valueId)->update($row);
                 }
-
                 $pageUp++;
             }
 

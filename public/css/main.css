@@ -221,3 +221,104 @@ body{
     display: block;
     margin: 0 auto;
 }
+.product-page hr{
+    border-top-color: #BDBDBD !important;
+}
+.product-card{
+    border: 1px solid #7FD9CF;
+}
+.product-card h5{
+    padding: 10px;
+    background-color: #7FD9CF;
+    font-family: 'Avenir Next Cyr Regular';
+    font-weight: 700;
+    font-size: 18px;
+}
+.product-form-control{
+    background: #F2F2F2;
+    padding: 15px 20px;
+    border: none !important;
+    -webkit-appearance: none;
+    width: 100%;
+}
+.form-group.select::before{
+    content: '';
+    background: url('../img/products_arrow_down.png');
+    float: right;
+    width: 14px;
+    height: 8px;
+    right: 45px;
+    top: 38px;
+    position: absolute;
+    margin-top: -3px;
+}
+.product-card input[type="checkbox"]{
+    position: relative;
+    display: inline-block;
+    height: 35px;
+    width: 35px;
+    background: var(--color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    margin-right: 7px;
+}
+.product-card input[type="checkbox"]:after { 
+    content: var(--name); 
+    font-size: 13px;
+    text-align: center;
+    color: #828282;
+    position: absolute;
+    margin: auto auto;
+    left: 0; right: 0; bottom: 0; top: 0;
+    display: block;
+    height: 17px;
+    width: 30px;
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+.product-card input[type="checkbox"]:checked {
+    background: var(--background); 
+    border: 2px solid #4F4F4F !important;
+  }
+.product-card input[type="checkbox"]:checked:after {
+    color: #E0E0E0;
+  }
+
+.product-card input[type="checkbox"]:hover {
+    border: 1px solid #4F4F4F;
+}
+.delete_product_btn i{
+    font-size: 25px;
+    color: black;
+}
+.add_product_price_btn{
+    border: none;
+    background: transparent;
+    color: #2F80ED;
+}
+.add_product_price_btn i {
+    margin-right: 12px;
+    font-size: 16px;
+}
+.product-image-fileuploader .fileuploader{
+    background: #F2F2F2 !important;
+}
+.product-save-btn{
+    width: 197px;
+    height: 52px;
+    border-radius: 0;
+    font-family:'Avenir Next Cyr Regular';
+    font-weight: 400;
+    font-size: 18px;
+}
+.fileuploader-theme-gallery .fileuploader-input, .fileuploader-theme-gallery .fileuploader-items-list .fileuploader-item{
+    width: 30% !important;
+}

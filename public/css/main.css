@@ -263,6 +263,7 @@ body{
     -o-appearance: none;
     appearance: none;
     margin-right: 7px;
+    border: 1px solid #ededed;
 }
 .product-card input[type="checkbox"]:after, .product-card input[type="radio"]:after {
     content: var(--name); 

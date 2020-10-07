@@ -323,3 +323,7 @@ body{
 .fileuploader-theme-gallery .fileuploader-input, .fileuploader-theme-gallery .fileuploader-items-list .fileuploader-item{
     width: 30% !important;
 }
+
+.bg-img-hero .u-slick.slick-initialized .js-slide {
+    min-height: 475px;
+}

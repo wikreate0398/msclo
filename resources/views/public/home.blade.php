@@ -146,7 +146,7 @@
                 <!-- Deal -->
                 <div class="col-md-auto mb-6 mb-md-0">
                     <div class="p-3 bg-white min-width-370">
-                        <img src="/img/270X428/img1.jpg" alt="" style="min-width: 100%;">
+                        <img src="/img/banner1.jpg" alt="" style="min-width: 100%;">
                     </div>
                 </div>
                 <!-- End Deal -->
@@ -286,7 +286,7 @@
         <div class="container">
             <div class="row min-height-564 align-items-center">
                 <div class="col-12 col-lg-4 col-xl-5 col-wd-6 d-none d-md-block">
-                    <img class="img-fluid" src="/img/665X616/img1.png" alt="Image Description">
+                    <img class="img-fluid" src="/img/banner2.jpg" alt="Image Description">
                 </div>
                 <div class="col-12 col-lg-8 col-xl-7 col-wd-6 pt-6 pt-md-0">
                     <div class=" d-flex border-bottom border-color-1 mr-md-2">

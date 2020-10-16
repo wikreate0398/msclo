@@ -24,7 +24,7 @@
                                             </h5>
                                             <div class="mb-2">
                                                 <a target="_blank" href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}" class="d-block text-center">
-                                                    <img class="img-fluid" src="{{ imageThumb(@$product->images->first()->image, 'uploads/products', 212, 200, 'list') }}" alt="{{ $product["name_$lang"] }}">
+                                                    <img class="img-fluid product-list-image" src="{{ imageThumb(@$product->images->first()->image, 'uploads/products', 212, 0, 'list') }}" alt="{{ $product["name_$lang"] }}">
                                                 </a>
                                             </div>
                                             <div class="flex-center-between mb-1">

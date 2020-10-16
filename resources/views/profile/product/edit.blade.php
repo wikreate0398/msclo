@@ -17,8 +17,25 @@
                         <div class="product-card mb-5">
                             <h5 class="col px-5 py-3">Общее</h5>
                             <div class="col-md-12 px-4 pt-3">
-                                @include('admin.catalog.products.utils.pc_categories', ['categories' => $categories, 'selected_category' => $data->id_category])
-                                <hr>
+
+                                <script>
+                                    $(document).ready(function () {
+                                        $('.cat-select select').change();
+                                    })
+                                </script>
+
+                                <div class="categories-select">
+                                    <div class="form-group cat-select select pb-2" data-depth="0">
+                                        <select name="id_category[]"
+                                                class="product-form-control select"
+                                                onchange="loadSubCategories(this, {{ $data->id_category }})" >
+                                            <option value="0">Выберите категорию товара*</option>
+                                            @foreach(map_tree($categories->toArray()) as $category)
+                                                <option {{ (find_key_value($category, 'id', $data->id_category) || $category['id'] == $data->id_category) ? 'selected' : '' }} value="{{ $category['id'] }}">{{ $category['name_ru'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-12 px-4 pt-2 pb-3">
                                 <input type="text" class="product-form-control" value="{{ $data->code }}" name="code" autocomplete="off" placeholder="Артикул*">
@@ -27,6 +44,71 @@
                                 <input type="text" class="product-form-control" value="{{ $data->name_ru }}" name="name[ru]" autocomplete="off" placeholder="Название*">
                             </div>
                         </div>
+
+                        <div class="product-card mb-3">
+                            <h5 class="col-lg-12 px-5 py-3">Оптовые цены</h5>
+                            <div class="col-md-12 mt-6">
+                                <div class="row">
+                                    @foreach($data->prices as $item)
+                                        <div class="col-md-12 mb-3">
+                                            <div class="input-group">
+                                                <div class="col-md-6">
+                                                    <input type="text" name="prices[price][]" value="{{ $item->price }}" placeholder="Стоимость товара" class="product-form-control number">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <input type="text" name="prices[quantity][]" value="{{ $item->quantity }}" placeholder="Кол-во для опта" class="product-form-control number">
+                                                </div>
+                                                <div class="col-md-1 align-self-center">
+                                                    <a href="javascript:;" onclick="deleteLoadItem(this, '.col-md-12.mb-3')" class="btn-delete1 delete_product_btn">
+                                                        <i class="fa fa-times"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                    <div class="col-md-12" id="product-prices" style="margin-top: 15px; width: 50%;"></div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 ml-3 mb-5 ">
+                                        <button class="add_product_price_btn" type="button" onclick="addProductPriceNew()">
+                                            <i class="fa fa-plus" aria-hidden="true"></i>
+                                            Добавить цену
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="product-image-fileuploader">
+                            <h5 class="col pt-3 font-weight-bold">Фото товара</h5>
+                            @php
+                                $imgData = [];
+                                if($data->images->count()){
+                                foreach($data->images->sortByDesc('page_up') as $image){
+                                    $realPath = public_path('uploads/products') . '/' . $image->image;
+                                    $fag = file_exists($realPath);
+                                    $imgData[] = [
+                                    'name' => $image->image,
+                                    'size' => $fag ? filesize($realPath) : '',
+                                    'file' => '/uploads/products/' . $image->image,
+                                    'type' => $fag ? mime_content_type($realPath) : '',
+                                    'data' => [
+                                        'thumbnail' => imageThumb($image->image, 'uploads/products', 500, 500, 1)
+                                    ]
+                                    ];
+                                }
+                                }
+                            @endphp
+                            <input type="file"
+                                   name="files"
+                                   class="gallery_media"
+                                   data-fileuploader-theme="gallery"
+                                   data-json='{"table": "catalog_images", "field": "image"}'
+                                   data-fileuploader-files='<?=json_encode($imgData)?>'>
+                            <input type="hidden" name="image_sort" value="" id="img-sort">
+                        </div>
+
                     </div>
                     <div class="col-md-6">
                         <div class="product-card mb-5">
@@ -62,74 +144,7 @@
                                 @endforeach
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mt-n6">
-                        <div class="product-card mb-3">
-                            <h5 class="col-lg-12 px-5 py-3">Оптовые цены</h5>
-                                <div class="col-md-12 mt-6">
-                                    <div class="row">
-                                        @foreach($data->prices as $item)
-                                        <div class="col-md-12 mb-3">
-                                            <div class="input-group">
-                                                <div class="col-md-6">
-                                                    <input type="text" name="prices[price][]" value="{{ $item->price }}" placeholder="Стоимость товара" class="product-form-control number">
-                                                </div>
-                                                <div class="col-md-5">
-                                                    <input type="text" name="prices[quantity][]" value="{{ $item->quantity }}" placeholder="Кол-во для опта" class="product-form-control number">
-                                                </div>
-                                                <div class="col-md-1 align-self-center">
-                                                    <a href="javascript:;" onclick="deleteLoadItem(this, '.col-md-12.mb-3')" class="btn-delete1 delete_product_btn">
-                                                        <i class="fa fa-times"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        @endforeach
-                                        <div class="col-md-12" id="product-prices" style="margin-top: 15px; width: 50%;"></div>
-                                        
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-12 ml-3 mb-5 ">
-                                            <button class="add_product_price_btn" type="button" onclick="addProductPriceNew()">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                                Добавить цену
-                                            </button>
-                                        </div>
-                                    </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb-5 pr-5 product-image-fileuploader">
-                            <h5 class="col pt-3 font-weight-bold">Фото товара</h5>
-                            @php
-                                $imgData = [];
-                                if($data->images->count()){
-                                foreach($data->images as $image){
-                                    $realPath = public_path('uploads/products') . '/' . $image->image;
-                                    $fag = file_exists($realPath);
-                                    $imgData[] = [
-                                    'name' => $image->image,
-                                    'size' => $fag ? filesize($realPath) : '',
-                                    'file' => '/uploads/products/' . $image->image,
-                                    'type' => $fag ? mime_content_type($realPath) : '',
-                                    'data' => [
-                                        'thumbnail' => imageThumb($image->image, 'uploads/products', 500, 500, 1)
-                                    ]
-                                    ];
-                                }
-                                }
-                            @endphp
-                            <input type="file"
-                                name="files"
-                                class="gallery_media"
-                                data-fileuploader-theme="gallery"
-                                data-json='{"table": "catalog_images", "field": "image"}'
-                                data-fileuploader-files='<?=json_encode($imgData)?>'>
-                            <input type="hidden" name="image_sort" value="" id="img-sort">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
+
                         <div class="product-card mb-5">
                             <h5 class="col px-5 py-3">Описание товара</h5>
                             <div class="col-md-12">

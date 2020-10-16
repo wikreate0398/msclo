@@ -42,10 +42,16 @@ class ProductsController extends Controller
         return view('profile.product.add', $data);
     }
 
+    public function in_multi_array($array, $key, $value) {
+
+    }
+
     public function showeditForm($lang, $id)
     {
+        $product = Product::with(['chars', 'prices', 'images'])->findOrFail($id);
+
         return view('profile.product.edit', [
-            'data'       => Product::with(['chars', 'prices', 'images'])->findOrFail($id),
+            'data'       => $product,
             'categories' => Category::orderByPageUp()->get(),
             'chars'      => Char::orderByPageUp()->where('parent_id', 0)->with('childs')->get(),
         ]);
@@ -84,5 +90,16 @@ class ProductsController extends Controller
         } else {
             return \JsonResponse::error(['messages' => $response->error]);
         }
+    }
+
+    public function loadSubcategories(Request $request)
+    {
+        if (empty($request->id)) return;
+        return view('profile.product.subcategories', [
+            'id'                   => $request->id,
+            'depth'                => $request->depth,
+            'selected_id_category' => $request->selected_id_category,
+            'subcats'              => $this->catalogRepository->getSubcategory($request->id)
+        ]);
     }
 }

@@ -28,7 +28,7 @@
                                     </ul>
                                 </div>
                             </li>
-                            @if($moreCats->count())
+                            @if(!empty($moreCats) && $moreCats->count())
                                 <li>
 
                                     <a class="dropdown-current active" href="javascript:;">
@@ -59,14 +59,15 @@
                     <!-- End List -->
                 </div>
 
-                @if($filters->count() or ($filterPrices['min'] && $filterPrices['max'] && $filterPrices['min'] != $filterPrices['max']))
+                <input type="hidden" id="page" id="page_num" value="{{ request('page') ?: 1 }}">
+                <input type="hidden" id="cat" value="{{ uri(3) }}">
+                <input type="hidden" id="query" value="{{ request('query') }}">
+
+                @if(!empty($filters) && $filters->count() or (!empty($filterPrices) && $filterPrices['min'] && $filterPrices['max'] && $filterPrices['min'] != $filterPrices['max']))
                     <div class="mb-6">
                         <div class="border-bottom border-color-1 mb-5">
                             <h3 class="section-title section-title__sm mb-0 pb-2 font-size-18">Фильтр</h3>
                         </div>
-
-                        <input type="hidden" id="page" id="page_num" value="{{ request('page') ?: 1 }}">
-                        <input type="hidden" id="cat" value="{{ uri(3) }}">
 
                         @if($providers->count() > 1)
                             <div class="border-bottom pb-4 mb-4">
@@ -284,7 +285,7 @@
             <div class="col-xl-9 col-wd-9gdot5">
                 <!-- Shop-control-bar Title -->
                 <div class="d-block d-md-flex flex-center-between mb-3">
-                    <h3 class="font-size-25 mb-2 mb-md-0">{{ $category["name_$lang"] }}</h3>
+                    <h3 class="font-size-25 mb-2 mb-md-0">{{ !empty($category) ? $category["name_$lang"] : 'Результаты поиска' }}</h3>
                     @if($catalog->count())
                         <p class="font-size-14 text-gray-90 mb-0">
                             Показано 1–25 из {{ $catalog->count() }} результатов
@@ -392,9 +393,11 @@
                 <!-- End Tab Content -->
                 <!-- End Shop Body -->
                 <!-- Shop Pagination -->
+
                 <nav class="d-md-flex justify-content-center align-items-center border-top pt-3" aria-label="Page navigation example">
                     {{ $catalog->appends(request()->query())->links() }}
                 </nav>
+
                 <!-- End Shop Pagination -->
             </div>
         </div>
@@ -414,6 +417,7 @@
             const page       = $('#page').val();
             const cat        = $('#cat').val();
             const sort       = $('#sort').val();
+            const query      = $('#query').val();
             const per_page   = $('#per_page').val();
             const price_from = $('#price_from').val();
             const price_to   = $('#price_to').val();
@@ -436,10 +440,10 @@
                 }
             });
 
-
             flt='?filter=1';
             if (params!='') flt+=`&params=${params}`;
             if (providers!='') flt+=`&providers=${providers}`;
+            if (query != '') flt += `&query=${query}`;
             if (sort) flt+= `&sort_by=${sort}`;
             if (per_page) flt+= `&per_page=${per_page}`;
             if (page) flt+= `&page=${page}`;

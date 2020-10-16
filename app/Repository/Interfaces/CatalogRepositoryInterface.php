@@ -25,4 +25,8 @@ interface CatalogRepositoryInterface
     public function getProductById($id);
 
     public function deleteProduct($id, $id_provider);
+
+    public function getSubcategory($id_category);
+
+    public function getSearchProducts($query, $per_page);
 }

@@ -428,3 +428,23 @@ function priceString(price, a){
     }
     return number_format(price, a, '.', ' ');
 }
+
+function loadSubCategories(select, selected_id_category) {
+    const val             = $(select).val();
+    const parentContainer = $(select).closest('.categories-select');
+    const current_depth   = $(select).closest('.cat-select').attr('data-depth');
+    const depth           = parseInt(current_depth)+1;
+
+    $(parentContainer).find('.cat-select').each(function () {
+        if (parseInt($(this).attr('data-depth')) > current_depth) {
+            $(this).remove();
+        }
+    });
+
+    $.get('/ru/profile/products/load-subcategories/', {id: val, depth: depth, selected_id_category: selected_id_category}, function (resp) {
+        $(parentContainer).append(resp);
+        if (selected_id_category && resp) {
+            $(parentContainer).find('.cat-select').last().find('select').change();
+        }
+    })
+}

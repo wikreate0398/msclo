@@ -125,10 +125,23 @@ class Product extends Model
         return $query->whereIn('id', $ids ?: [])->withRelations()->orderByPageUp()->visible()->get();
     }
 
-    public function scopeCatalog($query, $catIds)
+    public function scopeCatalog($query, $catIds = [])
     {
         return $query->select('catalog.*')
                      ->whereIn('id_category', $catIds)
+                     ->withRelations()
+                     ->visible();
+    }
+
+    public function scopeSearch($query, $param)
+    {
+        return $query->select('catalog.*')
+                     ->where(function ($where) use($param) {
+                        return $where->where('name_ru', 'like', "%$param%")
+                                    ->orWhereHas('category', function ($query) use($param) {
+                                        return $query->where('name_ru', 'like', "%$param%");
+                                    });
+                     })
                      ->withRelations()
                      ->visible();
     }

@@ -10,6 +10,17 @@ function setScript($js_folder, $path)
     return "<script src='{$path}'></script>";
 }
 
+function find_key_value($array, $key, $val){
+    foreach ($array as $item)
+    {
+        if (is_array($item) && find_key_value($item, $key, $val)) return true;
+
+        if (isset($item[$key]) && $item[$key] == $val) return true;
+    }
+
+    return false;
+}
+
 if (!function_exists('key_to_id')) {
     function key_to_id($array)
     {
@@ -146,7 +157,7 @@ function random_str(
 function sortValue($arr)
 {
     if (empty($arr)) {
-        return;
+        return [];
     }
 
     $data = array();

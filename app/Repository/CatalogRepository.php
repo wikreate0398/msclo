@@ -23,6 +23,11 @@ class CatalogRepository implements CatalogRepositoryInterface
         return Category::whereUrl($url)->with('childs')->visible()->firstOrFail();
     }
 
+    public function getSubcategory($id_category)
+    {
+        return Category::where('parent_id', $id_category)->with('childs')->visible()->get();
+    }
+
     public function getSameCats($id_parent)
     {
         return Category::where('parent_id', $id_parent)->withCount('products')->visible()->get();
@@ -34,6 +39,13 @@ class CatalogRepository implements CatalogRepositoryInterface
                        ->filter()
                        ->paginate($per_page);
         return $data;
+    }
+
+    public function getSearchProducts($query, $per_page)
+    {
+        return Product::search($query)
+                     ->filter()
+                     ->paginate($per_page);
     }
 
     public function deleteProduct($id, $id_provider)

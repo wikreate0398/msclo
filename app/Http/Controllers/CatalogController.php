@@ -42,6 +42,16 @@ class CatalogController extends Controller
         return view('public/catalog/category', compact(['category', 'providers', 'catalog', 'filters', 'breads', 'moreCats', 'filterPrices']));
     }
 
+    public function search(Request $request)
+    {
+        $crumb   = BreadFactory::init();
+        $crumb->add(Crumb::name('Поиск'));
+        $breads  = $crumb->toHtml();
+
+        $catalog = $this->repository->getSearchProducts($request['query'], request('per_page'));
+        return view('public/catalog/category', compact(['catalog', 'breads']));
+    }
+
     public function viewProduct($lang, $url)
     {
         $product   = $this->repository->getProduct($url);

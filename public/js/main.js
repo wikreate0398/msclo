@@ -76,6 +76,7 @@ $(document).ready(function () {
 
     $('.nav').find('a').on('shown.bs.tab', function () {
         fixHeight('.products-group-4-1-4');
+        fixHeight('.home-tags');
     });
 
     if ($('input.gallery_media').length) {
@@ -319,6 +320,7 @@ function initEqHeight() {
     fixHeight('.products-group-4-1-4');
     fixHeight('.catalog-product');
     fixHeight('.products-list');
+    fixHeight('.home-tags');
 }
 
 function setEqualHeight(columns, parent) {

@@ -2,7 +2,7 @@
 
 namespace App\Utils;
 
-use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\Model;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 use Illuminate\Support\Facades\Validator;
 
@@ -12,13 +12,25 @@ class UploadImage
 
     private $ext = 'jpeg,jpg,png,svg,gif';
 
-    private $size = 2000;
+    private $size = 2;
 
     private $sortCollection = [];
 
-    public function __construct()
+    private $uploadedFileName = '';
+
+    private $inputName;
+
+    private $uploadPath;
+
+    public static function init($inputName, $uploadPath)
     {
-        $this->request = request();
+        return new self($inputName, $uploadPath);
+    }
+
+    function __construct($inputName, $uploadPath) {
+        $this->request    = request();
+        $this->uploadPath = $uploadPath;
+        $this->inputName  = $inputName;
     }
 
     public function setExtensions($ext)
@@ -29,49 +41,66 @@ class UploadImage
 
     public function setSize($size)
     {
-        $this->size = $size;
+        $this->size = $size*1000;
         return $this;
     }
 
-    public function upload($name, $path, $fileName = '')
+    public function upload()
     {
-        if (!$this->request->hasFile($name)) {
-            return false;
+        if (!$this->request->hasFile($this->inputName)) {
+            return $this;
         }
 
-        if ($this->validate($name) == false) {
-            throw new \ValidationError('Убедитесь что ваш файл содержит формат ' . $this->ext . ' и его размер не превышает ' . ($this->size/1000) . 'Мб');
+        if (!$this->validate($this->inputName)) {
+            throw new \ValidationError('Убедитесь что ваш файл содержит формат ' . $this->ext . ' и его размер не превышает ' . ($this->size/1000) . 'Мб' );
         }
 
-        $file     = $this->request->file($name);
+        $file     = $this->request->file($this->inputName);
         $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-        $path     = public_path() . '/uploads/'.$path.'/';
-        $file->move($path, $fileName);
+        $this->uploadPath     = public_path() . '/uploads/'.$this->uploadPath.'/';
+        $file->move($this->uploadPath, $fileName);
 
-        $optimizerChain = OptimizerChainFactory::create();
-        $optimizerChain->optimize($path.$fileName);
-        
-        return $fileName;
+        $this->optimize($this->uploadPath.$fileName);
+
+        $this->uploadedFileName = $fileName;
+        return $this;
     }
 
-    public function sort($items = false)
+    private function optimize($pathToImg)
     {
-        if ($items instanceof \Illuminate\Support\Collection) {
+        $optimizerChain = OptimizerChainFactory::create();
+        $optimizerChain->optimize($pathToImg);
+    }
+
+    public function getUploadedFileName()
+    {
+        return $this->uploadedFileName;
+    }
+
+    public function update(Model $model, $id, $field)
+    {
+        if ($this->uploadedFileName) {
+            $model->whereId($id)->update(["$field" => $this->uploadedFileName]);
+        }
+    }
+
+    public function sort($items = false) {
+        if($items instanceof \Illuminate\Support\Collection){
             $this->sortCollection = $items->keyBy('name');
         }
         return $this;
     }
 
-    public function multipleUpload($name, $path)
+    public function multipleUpload()
     {
-        if ($this->validate($name .'.*') == false) {
-            throw new \ValidationError('Убедитесь что ваш файл содержит формат ' . $this->ext . ' и его размер не превышает ' . (($this->size*$this->countUploadFiles($name))/1000) . 'Мб');
+        if ($this->validate($this->inputName .'.*') == false) {
+            throw new \ValidationError('Убедитесь что ваш файл содержит формат ' . $this->ext . ' и его размер не превышает ' . ($this->size/1000) . 'Мб' );
         }
 
         $fileNames = [];
-        foreach ($this->request[$name] as $key => $file) {
+        foreach ($this->request[$this->inputName] as $key => $file) {
             $fileName = md5($file->getClientOriginalName() . time()) . "." . $file->getClientOriginalExtension();
-            $file->move(public_path() . '/uploads/'.$path.'/', $fileName);
+            $file->move(public_path() . '/uploads/'.$this->uploadPath.'/', $fileName);
             if (!empty($this->sortCollection)) {
                 $fileNames[] = [
                     'name'    => $fileName,
@@ -98,8 +127,7 @@ class UploadImage
         return true;
     }
 
-    private function countUploadFiles($name)
-    {
+    private function countUploadFiles($name) {
         if (strpos($name, '*') !== false) {
             $clearName = str_replace('.*', '', $name);
             return count($this->request[$clearName]);

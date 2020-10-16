@@ -51,24 +51,20 @@ class SettingsController extends Controller
                     ->where('let_alone', '0')
                     ->update(array('value' => ''));
 
-
-        if (!empty($request->settings))
-        {
-            foreach ($request->settings as $key => $value)
-            {
+        if (!empty($request->settings)) {
+            foreach ($request->settings as $key => $value) {
                 $this->model->where('id', $key)->update(array('value' => $value));
             }
         }
 
-        $files       = $this->model->where('type', 'image')->get();
-        $uploadImage = new UploadImage;
+        $files = $this->model->where('type', 'image')->get();
 
-        foreach ($files as $file)
-        {
-            if($request->hasFile($file->var))
-            {
-                if($image = $uploadImage->upload($file->var, $this->uploadFolder))
-                {
+        foreach ($files as $file) {
+            if($request->hasFile($file->var)) {
+                $image = UploadImage::init($file->var, $this->uploadFolder)
+                                    ->upload()
+                                    ->getUploadedFileName();
+                if($image) {
                     $file->value = $image;
                     $file->save();
                 }

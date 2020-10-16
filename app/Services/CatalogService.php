@@ -33,9 +33,7 @@ class CatalogService
         \DB::beginTransaction();
 
         try {
-            if (!$this->request->id_category or !$id_provider) {
-                throw new \ValidationError('Заполните обязательные поля');
-            }
+            $this->validate($id_provider);
 
             $transData  = \Language::returnData($this->returnDataFields);
 
@@ -61,14 +59,37 @@ class CatalogService
         }
     }
 
+    private function validate($id_provider)
+    {
+        if (empty($this->request->name['ru'])) {
+            throw new \ValidationError('Укажите название');
+        }
+
+        if (!$this->request->id_category or !$id_provider) {
+            throw new \ValidationError('Укажите категорию');
+        }
+
+        if (is_array($this->request->id_category)) {
+            foreach ($this->request->id_category as $key => $value) {
+                if (empty($value)) {
+                    throw new \ValidationError('Укажите категорию');
+                }
+            }
+            $id_category = $this->request->id_category[count($this->request->id_category)-1];
+            $this->request->id_category = $id_category;
+        }
+
+        if (!$this->request->code) {
+            throw new \ValidationError('Укажите артикул');
+        }
+     }
+
     public function update($id, $id_provider)
     {
         \DB::beginTransaction();
 
         try {
-            if (!$this->request->id_category or !$id_provider) {
-                throw new \ValidationError('Заполните обязательные поля');
-            }
+            $this->validate($id_provider);
 
             $data = Product::findOrFail($id);
 
@@ -97,12 +118,10 @@ class CatalogService
     {
         $imageSort   = $this->request->image_sort ? collect(json_decode($this->request->image_sort, true)) : false;
         if (request()->files->count()) {
-            $uploadImage = new UploadImage;
-
-            $images      = $uploadImage->setExtensions('jpeg,jpg,png') 
-                                       ->setSize(525000) 
-                                       ->sort($imageSort)
-                                       ->multipleUpload('files', 'products');
+            $images = UploadImage::init('files', 'products')
+                                 ->setSize(50)
+                                 ->sort($imageSort)
+                                 ->multipleUpload();
 
             foreach ($images as $key => $image) {
                 ProductImage::create([
@@ -111,13 +130,17 @@ class CatalogService
                     'page_up'    => @$image['page_up'] ?: 1
                 ]);
             }
+        } elseif (!ProductImage::where('id_product', $id)->count()) {
+            throw new \ValidationError('Добавьте изображение');
         }
 
         if (!empty($imageSort)) {
+            $i = $imageSort->count();
             foreach ($imageSort as $item) {
                 ProductImage::where('image', $item['name'])->update([
-                    'page_up' => $item['index']
+                    'page_up' => $i
                 ]);
+                $i--;
             }
         }
     }
@@ -125,10 +148,16 @@ class CatalogService
     private function savePrices($id, $prices = [], $insert = [])
     {
         ProductPrice::where('id_product', $id)->delete();
-        if (empty($prices)) {
-            return;
+
+        $sortValue = array_filter(sortValue($prices), function ($v) {
+            return ($v['price'] && $v['quantity']) ? true : false;
+        });
+
+        if (empty($prices) || empty($sortValue)) {
+            throw new \ValidationError('Укажите цену и кол-во');
         }
-        foreach (sortValue($prices) as $type => $item) {
+
+        foreach ($sortValue as $type => $item) {
             $insert[] = [
                 'id_product' => $id,
                 'price'      => toFloat($item['price']),

@@ -1,7 +1,7 @@
 <div class="cart-modal-wrapper d-flex">
     <div class="cart-modal-thumb">
         <a href="{{ route('view_product', ['lang' => $lang, 'url' => $product->url]) }}">
-            <img src="{{ imageThumb(@$product->images->first()->image, 'uploads/products', 212, 200, '212X200') }}" alt="">
+            <img src="{{ imageThumb(@$product->images->first()->image, 'uploads/products', 212, 0, '212X0') }}" alt="">
         </a>
     </div>
     <div class="cart-modal-info">

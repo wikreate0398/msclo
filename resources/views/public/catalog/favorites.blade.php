@@ -30,7 +30,7 @@
                                 <td class="d-none d-md-table-cell">
                                     <a href="{{ setUri("product/{$product->url}") }}">
                                         <img class="img-fluid max-width-100 p-1 border border-color-1"
-                                             src="{{ imageThumb(@$product->images->first()->image, 'uploads/products', 300, 300, '300X300') }}">
+                                             src="{{ imageThumb(@$product->images->first()->image, 'uploads/products', 300, 0, '300X0') }}">
                                     </a>
                                 </td>
 

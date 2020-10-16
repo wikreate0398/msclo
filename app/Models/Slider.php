@@ -17,7 +17,8 @@ class Slider extends Model
 	protected $fillable = [
         'name',
         'image',
-        'id_product'
+        'id_product',
+        'link'
     ];
 
 	public function scopeGetAll($query)

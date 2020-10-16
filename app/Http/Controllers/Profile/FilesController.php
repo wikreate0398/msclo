@@ -20,10 +20,10 @@ class FilesController extends Controller
         $fileNames = collect();
         if ($request->files->count()) {
             try {
-                $uploadImage = new UploadImage;
-                $images      = $uploadImage->setExtensions('pdf,doc,docx,word')
-                    ->setSize(525000)
-                    ->multipleUpload('files', 'provider_files');
+                $images = UploadImage::init('files', 'provider_files')
+                                     ->setExtensions('pdf,doc,docx,word')
+                                     ->setSize(50)
+                                     ->multipleUpload();
             } catch (\ValidationError $e) {
                 return \JsonResponse::error(['message' => $e->getMessage()]);
             }

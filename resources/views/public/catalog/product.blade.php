@@ -7,6 +7,13 @@
         <div class="row">
             <div class="col-md-5 mb-4 mb-md-0">
 
+                <style>
+                    #sliderSyncingNav .slick-slide img {
+                        height: 431px;
+                        object-fit: contain;
+                    }
+                </style>
+
                 <div id="sliderSyncingNav" class="js-slick-carousel u-slick mb-2"
                      data-infinite="true"
                      data-arrows-classes="d-none d-lg-inline-block u-slick__arrow-classic u-slick__arrow-centered--y rounded-circle"
@@ -15,7 +22,7 @@
                      data-nav-for="#sliderSyncingThumb">
                     @foreach($product->images as $image)
                         <div class="js-slide">
-                            <img class="img-fluid" src="{{ imageThumb($image->image, 'uploads/products', 720, 660, '720X660') }}" style="width: 100%" alt="">
+                            <img class="img-fluid" src="{{ imageThumb($image->image, 'uploads/products', 720, 0, '720X0') }}" style="width: 100%" alt="">
                         </div>
                     @endforeach
                 </div>
@@ -28,7 +35,7 @@
                          data-nav-for="#sliderSyncingNav">
                         @foreach($product->images as $image)
                             <div class="js-slide">
-                                <img class="img-fluid" src="{{ imageThumb($image->image, 'uploads/products', 720, 660, '720X660') }}" style="width: 100%" alt="">
+                                <img class="img-fluid" src="{{ imageThumb($image->image, 'uploads/products', 720, 0, '720X0') }}" style="width: 100%" alt="">
                             </div>
                         @endforeach
                     </div>
@@ -120,10 +127,10 @@
 
                         {{ csrf_field() }}
                         <input type="hidden" name="id" value="{{ $product->id }}">
-                        <div class="border-top border-bottom py-3 mb-4 d-flex">
+                        <div class="border-top border-bottom py-3 mb-4 d-flex product-chars">
                             @foreach($charsCart as $item)
                                 @if($item['value']->count())
-                                    <div class="d-flex align-items-center" style="margin-right: 15px;">
+                                    <div class="d-flex align-items-center char-select" style="margin-right: 15px;">
                                         <h6 class="font-size-14 mb-0">{{ $item['name'] }} <span class="text-danger">*</span></h6>
                                         <!-- Select -->
                                         <select class="js-select selectpicker dropdown-select ml-3"

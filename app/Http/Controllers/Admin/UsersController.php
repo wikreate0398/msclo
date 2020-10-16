@@ -72,13 +72,11 @@ class UsersController extends Controller
     {
         $this->input = $this->prepareData(false, $request->all());
 
-        if(!is_array($this->input))
-        {
+        if(!is_array($this->input)) {
             return \JsonResponse::error(['messages' => $this->input]);
         }
 
-        if (User::whereEmail($request->email)->count()) 
-        {
+        if (User::whereEmail($request->email)->count()) {
             return \JsonResponse::error(['messages' => 'Пользователь с таким имейлом уже существует']);
         }
 
@@ -135,8 +133,7 @@ class UsersController extends Controller
 
     private function validation($input)
     {
-        foreach($this->requiredFields as $key => $field)
-        {
+        foreach($this->requiredFields as $key => $field) {
             if(empty($input[$field])) return false;
         }
         return true;
@@ -144,23 +141,21 @@ class UsersController extends Controller
 
     private function prepareData($data = false, $input)
     {
-        if($this->validation($input) != true)
-        {
+        if($this->validation($input) != true) {
             return trans('admin.req_fields');
         } 
 
-        if(!empty($input['password']) or !empty($input['repeat_password']))
-        {
-            if($input['password'] != $input['repeat_password'])
-            {
+        if(!empty($input['password']) or !empty($input['repeat_password'])) {
+            if($input['password'] != $input['repeat_password']) {
                 return 'Пароль не совпадает';
             }
 
             $input['password'] = bcrypt($input['password']);
         }
 
-        $uploadImage = new UploadImage;
-        $image       = $uploadImage->upload('image', $this->uploadFolder);
+        $image = UploadImage::init('image', $this->uploadFolder)
+                            ->upload()
+                            ->getUploadedFileName();
 
         if (!empty($image)) {
             $input['image'] = $image;

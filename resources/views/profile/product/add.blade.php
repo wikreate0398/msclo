@@ -16,9 +16,20 @@
                         <div class="product-card mb-5">
                             <h5 class="col px-5 py-3">Общее</h5>
                             <div class="col-md-12 px-4 pt-3">
-                                @include('admin.catalog.products.utils.pc_categories', ['categories' => $categories])
-                                <hr>
+                                <div class="categories-select">
+                                    <div class="form-group cat-select select pb-2" data-depth="0">
+                                        <select name="id_category[]"
+                                                class="product-form-control select"
+                                                onchange="loadSubCategories(this)" >
+                                            <option value="0">Выберите категорию товара*</option>
+                                            @foreach(map_tree($categories->toArray()) as $category)
+                                                <option value="{{ $category['id'] }}">{{ $category['name_ru'] }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
+
                             <div class="col-md-12 px-4 pt-2 pb-3">
                                 <input type="text" class="product-form-control" name="code" autocomplete="off" placeholder="Артикул*">
                             </div>

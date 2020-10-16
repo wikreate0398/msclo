@@ -18,19 +18,21 @@
 
 						@include('admin.utils.input', ['label' => 'Название', 'lang' => false, 'name' => 'name'])
 
+						@include('admin.utils.input', ['label' => 'Ссылка', 'lang' => false, 'name' => 'link'])
+
 						@include('admin.utils.image', ['inputName' => 'image'])
 
-						<div class="form-group">
-							<label> Товар </label>
-							<div>
-								<select name="id_product" class="form-control basic-select2">
-									<option value="0">Выбрать</option>
-									@foreach($products as $product)
-										<option value="{{ $product->id }}">{{ $product->name_ru }}</option>
-									@endforeach
-								</select>
-							</div>
-						</div>
+{{--						<div class="form-group">--}}
+{{--							<label> Товар </label>--}}
+{{--							<div>--}}
+{{--								<select name="id_product" class="form-control basic-select2">--}}
+{{--									<option value="0">Выбрать</option>--}}
+{{--									@foreach($products as $product)--}}
+{{--										<option value="{{ $product->id }}">{{ $product->name_ru }}</option>--}}
+{{--									@endforeach--}}
+{{--								</select>--}}
+{{--							</div>--}}
+{{--						</div>--}}
 
 						<button type="submit" class="btn btn-success submit-btn">Сохранить</button>
 					</form> 

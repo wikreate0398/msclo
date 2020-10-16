@@ -207,6 +207,7 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
     });
 
     Route::group(['prefix' => 'catalog'], function () {
+        Route::get('search', 'CatalogController@search')->name('search');
         Route::get('/{url}', 'CatalogController@list')->name('view_catalog');
         Route::get('product/{url}', 'CatalogController@viewProduct')->name('view_product');
     });
@@ -282,6 +283,7 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
         Route::group(['prefix' => 'products'], function () {
             Route::get('/', 'ProductsController@index')->name('view_profile_product');
             Route::get('{id}/edit', 'ProductsController@showEditForm')->name('view_edit_product');
+            Route::get('load-subcategories', 'ProductsController@loadSubcategories');
 
             Route::get('add-form', 'ProductsController@showAddForm')->name('profile_add_product');
             Route::post('create', 'ProductsController@create')->name('create_product');

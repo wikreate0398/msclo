@@ -3,12 +3,8 @@
 namespace App\Http\Controllers\Admin\Catalog;
 
 use App\Models\Catalog\Char;
-use App\Models\Catalog\CharProduct;
-use App\Models\Catalog\ProductImage;
-use App\Models\Catalog\ProductPrice;
 use App\Models\User;
 use App\Services\CatalogService;
-use App\Utils\UploadImage;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Catalog\Category;

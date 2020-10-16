@@ -2,19 +2,20 @@
 
 @section('content')
     <div class="mb-5">
-        <div class="bg-img-hero" style="background-image: url(/img/1920X422/img1.jpg);">
+        <div class="bg-img-hero home-slider" style="background-image: url(/img/1920X422/img1.jpg);">
             <div class="min-height-420 overflow-hidden">
                 <div class="js-slick-carousel u-slick"
                      data-pagi-classes="text-center position-absolute right-0 bottom-0 left-0 u-slick__pagination u-slick__pagination--long mb-3 mb-md-4 pl-2 pb-1">
 
                     @foreach($sliders as $key => $slider)
                         <div class="js-slide bg-img-hero-center"
-                             style="background-image: url('/uploads/slider/{{ $slider->image }}')"
+                             style="background-image: url('/uploads/slider/{{ $slider->image }}'); {{ $slider->link ? 'cursor:pointer;' : '' }}"
+                             @if($slider->link) onclick="window.location='{{ $slider->link }}'" @endif
                                 {{ $key ? 'data-animation-delay="0"' : '' }}>
                             <div class="container">
                                 <div class="row min-height-420 py-7 py-md-0">
 
-                                    @if($slider->product)
+                                    @if(false)
                                         <div class="offset-xl-3 col-xl-4 col-6 mt-md-8">
                                             <h1 class="font-size-64 text-lh-57 font-weight-light"
                                                 data-scs-animation-in="fadeInUp">
@@ -141,7 +142,7 @@
             </div>
         </div>
         <!-- Deals-and-tabs -->
-        <div class="mb-5">
+        <div class="mb-5 home-tags">
             <div class="row">
                 <!-- Deal -->
                 <div class="col-md-auto mb-6 mb-md-0">
@@ -200,7 +201,7 @@
             <div class="container ">
                 <div class="position-relative text-center z-index-2 mb-3">
                     <ul class="nav nav-classic nav-tab nav-tab-sm px-md-3 justify-content-start justify-content-lg-center flex-nowrap flex-lg-wrap overflow-auto overflow-lg-visble border-md-down-bottom-0 pb-1 pb-lg-0 mb-n1 mb-lg-0" id="pills-tab-1" role="tablist">
-                        @foreach($cats as $key => $cat)
+                        @foreach($cats->take(5) as $key => $cat)
                             <li class="nav-item flex-shrink-0 flex-lg-shrink-1">
                                 <a class="nav-link {{ !$key ? 'active' : '' }}"
                                    id="cat-{{ $cat->id }}"
@@ -219,7 +220,7 @@
                 </div>
 
                 <div class="tab-content" id="Tpills-tabContent">
-                    @foreach($cats as $key => $cat)
+                    @foreach($cats->take(5) as $key => $cat)
                         <div class="tab-pane fade pt-2 {{ !$key ? 'show active' : '' }}" id="cat-tab-{{ $cat->id }}" role="tabpanel" aria-labelledby="cat-{{ $cat->id }}">
                             <div class="row no-gutters">
                                 <ul class="row list-unstyled products-group no-gutters mb-0 flex-xl-row flex-wd-row" style="width:100%;">
@@ -238,7 +239,7 @@
                                                         </h5>
                                                         <div class="mb-2">
                                                             <a href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}" class="d-block text-center">
-                                                                <img class="img-fluid" src="{{ imageThumb(@$product->images->first()->image, 'uploads/products', 212, 200, '212X200') }}" alt="Image Description">
+                                                                <img class="img-fluid product-list-image-v2" src="{{ imageThumb(@$product->images->first()->image, 'uploads/products', 212, 0, '212X0') }}" alt="Image Description">
                                                             </a>
                                                         </div>
                                                         <div class="flex-center-between mb-1">

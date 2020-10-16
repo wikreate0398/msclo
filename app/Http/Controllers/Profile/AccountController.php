@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Notifications\UploadVerificationFile;
 use App\Notifications\ChangeInvitationStatus;
 
-use App\Utils\UploadImage;
 use App\Utils\QrCodeGenerator;
 
 use App\Models\User;

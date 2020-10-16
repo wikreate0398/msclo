@@ -15,7 +15,7 @@
                     if($files->count()){
                       foreach($files as $image){
                         $realPath = public_path('uploads/provider_files') . '/' . $image->file;
-						$fag = file_exists($realPath);
+						$fab = file_exists($realPath);
                         $imgData[] = [
                           'name'  => $image->file,
 

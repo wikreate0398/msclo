@@ -237,10 +237,10 @@
                     <!-- Search bar -->
                     <div class="col align-self-center @if(uri(2) == 'profile') dashboard-area @endif">
                         <!-- Search-Form -->
-                        <form class="js-focus-state">
+                        <form class="js-focus-state" action="{{ route('search', ['lang' => $lang]) }}">
                             <label class="sr-only" for="searchProduct">Поиск</label>
                             <div class="input-group">
-                                <input type="email" class="form-control py-2 pl-5 font-size-15 height-40 rounded-left-pill" name="email" id="searchProduct" placeholder="Найти товар" aria-label="Найти товар" aria-describedby="searchProduct1" required>
+                                <input type="text" value="{{ request('query') }}" class="form-control py-2 pl-5 font-size-15 height-40 rounded-left-pill" name="query" id="searchProduct" placeholder="Найти товар" aria-label="Найти товар" aria-describedby="searchProduct1" required>
                                 <div class="input-group-append">
                                     <button class="btn btn-dark height-40 py-2 px-3 rounded-right-pill" type="button" id="searchProduct1">
                                         <span class="ec ec-search font-size-24"></span>

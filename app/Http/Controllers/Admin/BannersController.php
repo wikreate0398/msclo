@@ -51,8 +51,9 @@ class BannersController extends Controller
         ]);
 
         try {
-            $uploadImage = new UploadImage;
-            $insertData['image'] = $uploadImage->upload('image', $this->uploadFolder);
+            $insertData['image'] = UploadImage::init('image', $this->uploadFolder)
+                ->upload()
+                ->getUploadedFileName();
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -77,15 +78,16 @@ class BannersController extends Controller
         $insertData = array_merge(\Language::returnData(['name']), [
             'link'        => $request->link
         ]);
+        $data->fill($insertData)->save();
 
         try {
-            $uploadImage = new UploadImage;
-            $insertData['image'] = $uploadImage->upload('image', $this->uploadFolder);
+            UploadImage::init('image', $this->uploadFolder)
+                ->upload()
+                ->update($this->model, $id, 'image');
         } catch (\Exception $e) {
             return $e->getMessage();
         }
 
-        $data->fill($insertData)->save();
         return \JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save'));
     }
 

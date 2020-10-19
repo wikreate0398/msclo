@@ -402,10 +402,11 @@
                                 <!-- Card -->
                                 <div class="card">
                                     <div class="card-header bg-primary card-collapse border-0" id="basicsHeadingOne">
-                                        <button type="button" class="btn-link btn-remove-focus btn-block d-flex card-btn py-3 text-lh-1 px-4 shadow-none btn-primary border-0 font-weight-bold text-gray-90"
+                                        <button type="button"
+                                                class="btn-link btn-remove-focus btn-block d-flex card-btn py-3 text-lh-1 px-4 shadow-none btn-primary border-0 font-weight-bold text-gray-90 collapsed"
                                                 data-toggle="collapse"
                                                 data-target="#basicsCollapseOne"
-                                                aria-expanded="true"
+                                                aria-expanded="false"
                                                 aria-controls="basicsCollapseOne">
                                             <span class="pl-1 text-gray-90"><i class="fas fa-bars fa-lg"></i>  Все категории</span>
                                             <span class="text-gray-90 ml-3">
@@ -413,7 +414,7 @@
                                                     </span>
                                         </button>
                                     </div>
-                                    <div id="basicsCollapseOne" class="vertical-menu v1 collapse {{ (@$page_data->page_type == 'home') ? 'show' : '' }}"
+                                    <div id="basicsCollapseOne" class="vertical-menu v1 collapse {{ (@$page_data->page_type == 'home') ? '' : '' }}"
                                          aria-labelledby="basicsHeadingOne"
                                          data-parent="#basicsAccordion">
                                         <div class="card-body p-0">

@@ -12,7 +12,7 @@ class UploadImage
 
     private $ext = 'jpeg,jpg,png,svg,gif';
 
-    private $size = 2;
+    private $size = 2000;
 
     private $sortCollection = [];
 

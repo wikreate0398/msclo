@@ -202,7 +202,6 @@ $(document).ready(function () {
                     if ($target.is('.fileuploader-action-settings') || $target.parent().is('.fileuploader-action-settings')) {
                         $item.find('.gallery-item-dropdown').show(150);
                     }
-
                 });
             },
             onRemove: function (item, listEl, parentEl, newInputEl, inputEl) {

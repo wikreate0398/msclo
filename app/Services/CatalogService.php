@@ -78,10 +78,6 @@ class CatalogService
             $id_category = $this->request->id_category[count($this->request->id_category)-1];
             $this->request->id_category = $id_category;
         }
-
-        if (!$this->request->code) {
-            throw new \ValidationError('Укажите артикул');
-        }
      }
 
     public function update($id, $id_provider)
@@ -119,6 +115,7 @@ class CatalogService
         $imageSort   = $this->request->image_sort ? collect(json_decode($this->request->image_sort, true)) : false;
         if (request()->files->count()) {
             $images = UploadImage::init('files', 'products')
+                                 ->setExtensions('jpg,jpeg,png,svg')
                                  ->setSize(50)
                                  ->sort($imageSort)
                                  ->multipleUpload();

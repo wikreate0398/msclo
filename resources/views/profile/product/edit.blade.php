@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12 px-4 pt-2 pb-3">
-                                <input type="text" class="product-form-control" value="{{ $data->code }}" name="code" autocomplete="off" placeholder="Артикул*">
+                                <input type="text" class="product-form-control" value="{{ $data->code }}" name="code" autocomplete="off" placeholder="Артикул">
                             </div>
                             <div class="col-md-12 px-4 py-3 mb-4">
                                 <input type="text" class="product-form-control" value="{{ $data->name_ru }}" name="name[ru]" autocomplete="off" placeholder="Название*">

@@ -155,7 +155,7 @@
                                         <div class="js-scrollbar u-sidebar__body">
                                             <div id="headerSidebarContent" class="u-sidebar__content u-header-sidebar__content">
                                                 <!-- Logo -->
-                                                <a class="d-flex ml-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-vertical" href="/" aria-label="Massclo">
+                                                <a class="d-flexx ml-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-vertical" href="/" aria-label="Massclo">
                                                     <img src="/img/logo.png" alt="">
                                                 </a>
                                                 <!-- End Logo -->
@@ -172,6 +172,40 @@
                                                             </li>
                                                         @endif
                                                     @endforeach
+
+                                                        @foreach(map_tree($categories->toArray()) as $category)
+
+                                                            <li class="u-has-submenu u-header-collapse__submenu">
+                                                                <a class="u-header-collapse__nav-link u-header-collapse__nav-pointer"
+                                                                   href="javascript:;"
+                                                                   data-target="#cat-collapse-{{ $category["id"] }}"
+                                                                   role="button" data-toggle="collapse" aria-expanded="false"
+                                                                   aria-controls="cat-collapse-{{ $category["id"] }}">
+                                                                    {{ $category["name_$lang"] }}
+                                                                </a>
+
+                                                                @if(!empty($category['childs']))
+                                                                    <div id="cat-collapse-{{ $category["id"] }}" class="collapse" data-parent="#cat-collapse-{{ $category["id"] }}">
+                                                                        <ul class="u-header-collapse__nav-list">
+                                                                            @foreach($category['childs'] as $child)
+                                                                                @if(!empty($child['childs']))
+                                                                                    <li><span class="u-header-sidebar__sub-menu-title">{{ $child["name_$lang"] }}</span></li>
+                                                                                    @foreach($child['childs'] as $child2)
+                                                                                        <li class="">
+                                                                                            <a class="u-header-collapse__submenu-nav-link" href="{{ setUri('catalog/' . $child2['url']) }}">{{ $child2["name_$lang"] }}</a>
+                                                                                        </li>
+                                                                                    @endforeach
+                                                                                @else
+                                                                                    <li class="">
+                                                                                        <a class="u-header-collapse__submenu-nav-link" href="{{ setUri('catalog/' . $child['url']) }}">{{ $child["name_$lang"] }}</a>
+                                                                                    </li>
+                                                                                @endif
+                                                                            @endforeach
+                                                                        </ul>
+                                                                    </div>
+                                                                @endif
+                                                            </li>
+                                                        @endforeach
                                                 </ul>
                                                 <!-- End List -->
                                             </div>
@@ -235,7 +269,7 @@
                     <!-- End Logo-offcanvas-menu -->
                     <!-- Primary Menu -->
                     <!-- Search bar -->
-                    <div class="col align-self-center @if(uri(2) == 'profile') dashboard-area @endif">
+                    <div class="col search-bar align-self-center @if(uri(2) == 'profile') dashboard-area @endif">
                         <!-- Search-Form -->
                         <form class="js-focus-state" action="{{ route('search', ['lang' => $lang]) }}">
                             <label class="sr-only" for="searchProduct">Поиск</label>
@@ -252,7 +286,7 @@
                     </div>
                     <!-- End Search bar -->
                     <!-- Header Icons -->
-                    <div class="col-md-auto align-self-center @if(uri(2) == 'profile') dashboard-area @endif">
+                    <div class="col-md-auto header-icons align-self-center @if(uri(2) == 'profile') dashboard-area @endif">
                         <div class="d-flex">
                             <ul class="d-flex list-unstyled mb-0">
 {{--                                <li class="col">--}}
@@ -302,7 +336,7 @@
 {{--                    </div>--}}
                     <!-- End Customer Care -->
                     <!-- Header Icons -->
-                    @if(uri(2) != 'profile')
+                    @if(uri(2) != 'profilee')
                     <div class="d-xl-none col col-xl-auto text-right text-xl-left pl-0 pl-xl-3 position-static">
                         <div class="d-inline-flex">
                             <ul class="d-flex list-unstyled mb-0 align-items-center">

@@ -352,9 +352,36 @@ body{
     .char-select {
         margin-bottom: 20px;
     }
+
+    .u-header__navbar-brand,
+    .u-header__navbar-brand > img {
+        width: 8.5rem;
+    }
+
+    .search-bar, .header-icons {
+        display: none;
+    }
+
+    .bg-primary .vertical-navBar .list-group  {
+        flex-direction: column;
+    }
+
+    .head_profile_settings {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .home-slider .min-height-420, .home-slider .u-slick.slick-initialized .js-slide{
+        min-height: 150px;
+    }
 }
 
 .home-slider .u-slick__pagination:not(.u-slick__pagination--block) {
     height: 50px;
     pointer-events: all;
+}
+
+.home-slider img {
+    width: 100%;
 }

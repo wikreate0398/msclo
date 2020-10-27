@@ -2,20 +2,21 @@
 
 @section('content')
     <div class="mb-5">
-        <div class="bg-img-hero home-slider" style="background-image: url(/img/1920X422/img1.jpg);">
+        <div class="bg-img-hero home-slider">
             <div class="min-height-420 overflow-hidden">
                 <div class="js-slick-carousel u-slick"
                      data-pagi-classes="text-center position-absolute right-0 bottom-0 left-0 u-slick__pagination u-slick__pagination--long mb-3 mb-md-4 pl-2 pb-1">
 
                     @foreach($sliders as $key => $slider)
                         <div class="js-slide bg-img-hero-center"
-                             style="background-image: url('/uploads/slider/{{ $slider->image }}'); {{ $slider->link ? 'cursor:pointer;' : '' }}"
+                             style="{{ $slider->link ? 'cursor:pointer;' : '' }} background-image: url(/uploads/slider/{{ $slider->image }})"
                              @if($slider->link) onclick="window.location='{{ $slider->link }}'" @endif
                                 {{ $key ? 'data-animation-delay="0"' : '' }}>
-                            <div class="container">
-                                <div class="row min-height-420 py-7 py-md-0">
+{{--                            <img src="/uploads/slider/{{ $slider->image }}" alt="">--}}
 
-                                    @if(false)
+                            @if(false)
+                                <div class="container">
+                                    <div class="row min-height-420 py-7 py-md-0">
                                         <div class="offset-xl-3 col-xl-4 col-6 mt-md-8">
                                             <h1 class="font-size-64 text-lh-57 font-weight-light"
                                                 data-scs-animation-in="fadeInUp">
@@ -45,9 +46,10 @@
                                              data-scs-animation-delay="500">
                                             <img class="img-fluid" src="{{ imageThumb($slider->product->images->first()->image, 'uploads/products', 416, 420, 1) }}" alt="">
                                         </div>
-                                    @endif
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
+
                         </div>
                     @endforeach
                 </div>

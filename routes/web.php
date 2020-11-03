@@ -186,8 +186,6 @@ Route::group(['prefix' => $adminPath, 'namespace' => 'Admin', 'middleware' => ['
     Route::get('logout', 'LoginController@logout')->name('admin_logout');
 });
 
-
-
 Route::get('/', 'HomeController@index')->middleware(['lang', 'web', 'const'])->name('home');
 Route::post('/chart-data/{value}', 'Profile\DashboardController@getChartDays')->name('chart_data');
 

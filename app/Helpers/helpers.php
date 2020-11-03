@@ -379,8 +379,6 @@ function key_to_id($array)
     return $new_arr;
 }
 
-
-
 function tree($dataset)
 {
     if ($dataset instanceof Illuminate\Database\Eloquent\Collection) {

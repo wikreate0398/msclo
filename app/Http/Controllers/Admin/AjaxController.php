@@ -60,7 +60,13 @@ class AjaxController extends Controller
         
         $query = DB::table($table)->where('id', $id)->first();  
         DB::table($table)->where('id', $id)
-                         ->update(["{$row}" => !empty($query->$row) ? '0' : '1']); 
+                         ->update(["{$row}" => !empty($query->$row) ? '0' : '1']);
+
+        if ($table == 'categories') {
+            DB::table($table)->where('parent_id', $id)
+                             ->update(["{$row}" => !empty($query->$row) ? '0' : '1']);
+        }
+
         return \JsonResponse::success(['message' => trans('admin.ajax_true')]);
     }     
 

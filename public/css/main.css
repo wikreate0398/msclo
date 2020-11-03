@@ -399,4 +399,5 @@ body{
 body.u-unfold-opened {
     overflow: hidden;
     position: fixed;
+    width: 100%;
 }

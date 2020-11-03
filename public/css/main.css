@@ -395,3 +395,7 @@ body{
         padding-bottom: 0 !Important;
     }
 }
+
+body.u-unfold-opened {
+    overflow: hidden;
+}

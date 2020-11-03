@@ -8,6 +8,7 @@
 			<div class="dd3-name">
 				<label class="switch s-success mr-2">
 					<input type="checkbox"
+						   class="cat-checkbox-view"
 						   {{ !empty($item['view']) ? 'checked' : '' }}
 						   onchange="Ajax.buttonView(this, '{{ $table }}', '{{ $item["id"] }}', 'view')">
 					<span class="slider round"></span>

@@ -385,3 +385,13 @@ body{
 .home-slider img {
     width: 100%;
 }
+
+@media screen and (max-width: 500px) {
+    .cart-checkout .col1{
+        order: 2;
+    }
+
+    .cart-checkout .col2 .pb-7, .cart-checkout .col2 .py-7 {
+        padding-bottom: 0 !Important;
+    }
+}

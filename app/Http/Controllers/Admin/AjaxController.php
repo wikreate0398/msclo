@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Catalog\Category;
 use App\Repository\CatalogRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -52,7 +53,7 @@ class AjaxController extends Controller
         }   
     }
 
-    public function viewElement(Request $request)
+    public function viewElement(Request $request, CatalogRepository $catalogRepository)
     {
         $id    = $request->id;
         $table = $request->table;
@@ -63,7 +64,8 @@ class AjaxController extends Controller
                          ->update(["{$row}" => !empty($query->$row) ? '0' : '1']);
 
         if ($table == 'categories') {
-            DB::table($table)->where('parent_id', $id)
+            $ids = $catalogRepository->getSubcatsIds(Category::all()->toArray(), $id);
+            DB::table($table)->whereIn('id', $ids)
                              ->update(["{$row}" => !empty($query->$row) ? '0' : '1']);
         }
 

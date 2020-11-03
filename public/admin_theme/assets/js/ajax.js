@@ -370,7 +370,8 @@ var Ajax = {
 
     buttonView: function(click, table, id, row) {  
         row       = !row ? 'view' : row; 
-        var state = $(this).prop('checked');   
+        var state = $(click).prop('checked');
+
         $.ajax({
             type: "POST",
             url: '/'+adminArea+'/ajax/viewElement',
@@ -390,7 +391,13 @@ var Ajax = {
                 if (res.msg === 'error') { 
                     Ajax.notify('error', res.cause); 
                 } else { 
-                    Ajax.notify('success', res.message); 
+                    Ajax.notify('success', res.message);
+
+                    if (table == 'categories') {
+                        $(click).closest('li').find('input.cat-checkbox-view').each(function () {
+                            $(this).attr('checked', state);
+                        })
+                    }
                 }
             }
         }); 

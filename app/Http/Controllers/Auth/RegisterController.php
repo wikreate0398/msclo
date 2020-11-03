@@ -50,7 +50,7 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         try {
-            if (!$request->type or !$request->name or !$request->email  or !$request->password or !$request->password_confirmation) {
+            if (!$request->type or !$request->name or !$request->email  or !$request->password or !$request->password_confirmation || !$request->accept_terms) {
                 throw new \ValidationError('Заполните все поля');
             }
 

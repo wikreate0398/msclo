@@ -37528,6 +37528,12 @@ a.compare-icon.active, a.fav-icon.active {
   padding-right: 50px;
 }
 
+@media screen and (max-width: 500px) {
+  #alert_modal {
+    max-width: 90%;
+  }
+}
+
 #alert_modal p {
   margin: 0 ;
   font-size: 16px;

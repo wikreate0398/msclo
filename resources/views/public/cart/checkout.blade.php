@@ -8,8 +8,8 @@
 
         <form class="ajax__submit" action="{{ route('checkout', compact('lang')) }}">
             {{ csrf_field() }}
-            <div class="row">
-                <div class="col-lg-5 order-lg-2 mb-7 mb-lg-0">
+            <div class="row cart-checkout">
+                <div class="col-lg-5 order-lg-2 mb-7 mb-lg-0 col1">
                     <div class="pl-lg-3 ">
                         <div class="bg-gray-1 rounded-lg">
                             <!-- Order Summary -->
@@ -140,7 +140,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-7 order-lg-1">
+                <div class="col-lg-7 order-lg-1 col2">
                     <div class="pb-7 mb-7">
                         <!-- Title -->
                         <div class="border-bottom border-color-1 mb-5">

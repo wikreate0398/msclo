@@ -28,7 +28,7 @@
                                onclick="removeFromCart(this, {{ $product['id'] }}, {{ $product['cart_id'] }}); return false"
                                class="text-gray-32 font-size-26">×</a>
                         </td>
-                        <td class="d-none d-md-table-cell">
+                        <td class="d-md-table-cell">
                             <a href="{{ route('view_product', ['lang' => lang(), 'url' => $product['url']]) }}">
                                 <img class="img-fluid max-width-100 p-1 border border-color-1"
                                      src="{{ $product['image'] }}"

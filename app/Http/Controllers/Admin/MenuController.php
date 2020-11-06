@@ -41,9 +41,9 @@ class MenuController extends Controller
     } 
  
     public function create(Request $request)
-    { 
+    {
         $input = \Language::returnData($this->returnDataFields); 
-        $input['url'] = str_slug($input['url'], '-'); 
+        $input['url'] = str_slug($request->url, '-');
         Menu::create($input);
         return \App\Utils\JsonResponse::success(['redirect' => route('admin_menu')], trans('admin.save')); 
     }
@@ -57,8 +57,7 @@ class MenuController extends Controller
     { 
         $data         = Menu::findOrFail($id); 
         $input = \Language::returnData($this->returnDataFields); 
-        if ($request->has('url') )
-        {
+        if ($request->url) {
             $input['url'] = str_slug($input['url'], '-'); 
         }         
         $data->fill($input)->save(); 

@@ -37514,7 +37514,7 @@ a.compare-icon.active, a.fav-icon.active {
   display: none !important;
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 1200px) {
   #sidebarHeaderInvokerMenu {
     display: block !important;
   }

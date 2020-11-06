@@ -37514,9 +37514,17 @@ a.compare-icon.active, a.fav-icon.active {
   display: none !important;
 }
 
+.logo-sm {
+  display: none;
+}
+
 @media screen and (max-width: 1200px) {
-  #sidebarHeaderInvokerMenu {
+  #sidebarHeaderInvokerMenu, .logo-sm {
     display: block !important;
+  }
+
+  .logo-lg {
+    display: none;
   }
 }
 

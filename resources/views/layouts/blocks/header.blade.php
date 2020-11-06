@@ -104,7 +104,8 @@
                         <nav class="navbar navbar-expand u-header__navbar py-0 justify-content-xl-between max-width-270 min-width-270">
                             <!-- Logo -->
                             <a class="order-1 order-xl-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-center" href="/" aria-label="Massclo">
-                                <img src="/img/logo.png" alt="">
+                                <img src="/img/logo.png" class="logo-lg" alt="Massclo">
+                                <img src="/img/logo_sm.png" class="logo-sm" alt="Massclo">
                             </a>
                             <!-- End Logo -->
 
@@ -156,7 +157,7 @@
                                             <div id="headerSidebarContent" class="u-sidebar__content u-header-sidebar__content">
                                                 <!-- Logo -->
                                                 <a class="d-flexx ml-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-vertical" href="/" aria-label="Massclo">
-                                                    <img src="/img/logo.png" alt="">
+                                                    <img src="/img/logo.png" alt="Massclo">
                                                 </a>
                                                 <!-- End Logo -->
 

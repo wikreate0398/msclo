@@ -152,7 +152,7 @@
                                         <!-- End Toggle Button -->
 
                                         <!-- Content -->
-                                        <div class="js-scrollbar u-sidebar__body">
+                                        <div class="js-scrollbarr u-sidebar__body">
                                             <div id="headerSidebarContent" class="u-sidebar__content u-header-sidebar__content">
                                                 <!-- Logo -->
                                                 <a class="d-flexx ml-0 navbar-brand u-header__navbar-brand u-header__navbar-brand-vertical" href="/" aria-label="Massclo">

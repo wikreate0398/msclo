@@ -58,7 +58,7 @@ class MenuController extends Controller
         $data         = Menu::findOrFail($id); 
         $input = \Language::returnData($this->returnDataFields); 
         if ($request->url) {
-            $input['url'] = str_slug($input['url'], '-'); 
+            $input['url'] = str_slug($request->url, '-');
         }         
         $data->fill($input)->save(); 
         return \App\Utils\JsonResponse::success(['redirect' => route('admin_menu')], trans('admin.save')); 

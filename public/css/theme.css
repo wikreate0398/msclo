@@ -42,7 +42,7 @@
   --gray-4: #e6e6e6;
   --gray-5: #878787;
   --gray-6: #848484;
-  --gray-7: #f9f9f9;
+  --gray-7: #F2F2F2;
   --gray-8: #7b8186;
   --gray-9: #8f8f8f;
   --gray-13: #f8f8f8;
@@ -9858,7 +9858,7 @@ button.bg-gray-6:focus {
 }
 
 .bg-gray-7 {
-  background-color: #f9f9f9 !important;
+  background-color: #F2F2F2 !important;
 }
 
 a.bg-gray-7:hover, a.bg-gray-7:focus,

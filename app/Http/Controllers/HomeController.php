@@ -6,6 +6,7 @@ use App\Mail\Callback;
 use App\Models\Advantage;
 use App\Models\Banner;
 use App\Models\Brand;
+use App\Models\Catalog\Product;
 use App\Models\Catalog\Category;
 use App\Models\Catalog\Tag;
 use App\Models\Slider;
@@ -29,12 +30,13 @@ class HomeController extends Controller
         $banners    = Banner::getAll();
         $advantages = Advantage::getAll();
         $tags       = Tag::getHome();
+        $products    = Product::limit(10)->get();
         $cats       = Category::getWithProducts();
         $brands     = Brand::getAll();
         $providers  = User::getHomeProviders()->chunk(4);
         $providersCats = $this->providerRepository->getCatsGroupedByProviders();
 
-        return view('public/home', compact('sliders', 'banners', 'advantages', 'tags', 'cats', 'brands', 'providers', 'providersCats'));
+        return view('public/home', compact('sliders', 'banners', 'advantages', 'tags', 'products', 'cats', 'brands', 'providers', 'providersCats'));
     }
 
     public function page()

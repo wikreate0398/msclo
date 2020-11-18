@@ -364,5 +364,160 @@
             </div>
         @endif
     </div>
+    <!--
+    <div class="space-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Категории</h3>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+    <div class="container">
+        <div class="mb-6 row rounded-lg mx-0 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
+            <div class="media col px-6 px-xl-4 flex-shrink-0 flex-xl-shrink-1 min-width-270-all py-3">
+                <div class="u-avatar mr-2">
+                    <i class="text-primary ec ec-transport font-size-46"></i>
+                </div>
+                <div class="media-body text-center">
+                    <span class="d-block font-weight-bold text-dark">Бесплатная доставка</span>
+                    <div class=" text-secondary">от 3000{{ RUB }}</div>
+                </div>
+            </div>
+            <div class="media col px-6 px-xl-4 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
+                <div class="u-avatar mr-2">
+                    <i class="text-primary ec ec-tag font-size-46"></i>
+                </div>
+                <div class="media-body text-center">
+                    <span class="d-block font-weight-bold text-dark">Только лучшие</span>
+                    <div class=" text-secondary">Брэнды</div>
+                </div>
+            </div>
+            <div class="media col px-6 px-xl-4 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
+                <div class="u-avatar mr-2">
+                    <i class="text-primary ec ec-returning font-size-46"></i>
+                </div>
+                <div class="media-body text-center">
+                    <span class="d-block font-weight-bold text-dark">30 Дней</span>
+                    <div class=" text-secondary">Для возврата</div>
+                </div>
+            </div>
+            <div class="media col px-6 px-xl-4 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
+                <div class="u-avatar mr-2">
+                    <i class="text-primary ec ec-payment font-size-46"></i>
+                </div>
+                <div class="media-body text-center">
+                    <span class="d-block font-weight-bold text-dark">Оплата</span>
+                    <div class=" text-secondary">По безопасной системе</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="space-1 bg-gray-7">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3 class="headerBlock">Товары месяца</h3>
+                    <div class="js-slick-carousel u-slick my-1"
+                        data-slides-show="5"
+                        data-slides-scroll="1"
+                        data-arrows-classes="d-none d-lg-inline-block u-slick__arrow-normal u-slick__arrow-centered--y"
+                        data-arrow-left-classes="fa fa-angle-left u-slick__arrow-classic-inner--left z-index-9"
+                        data-arrow-right-classes="fa fa-angle-right u-slick__arrow-classic-inner--right"
+                        data-responsive='[{
+                            "breakpoint": 992,
+                            "settings": {
+                                "slidesToShow": 2
+                            }
+                        }, {
+                            "breakpoint": 768,
+                            "settings": {
+                                "slidesToShow": 1
+                            }
+                        }, {
+                            "breakpoint": 554,
+                            "settings": {
+                                "slidesToShow": 1
+                            }
+                        }]'>
+                         @foreach($products as $product)
+                            <div class="js-slide homeProductCarusel">
+                                <div class="productImage">
+                                    <img class="img-fluid product-list-image-v2" src="{{ imageThumb(@$product->images->first()->image, 'uploads/products', 720, 0, '720X0') }}" alt="Image Description">
+                                    <a href="javascript:;"
+                                        class="productFavorites fav-icon fav-icon-{{ $product->id }} {{ sessArray('favorites')->exist($product->id) ? 'active' : '' }}"
+                                        onclick="addToFav(this, {{ $product->id }}); return false;">
+                                        <i class="far fa-heart"></i>
+                                    </a>
+                                    <a href="javascript:;"
+                                        onclick="showModalCart(this, {{ $product->id }})"
+                                        class="productAddCart">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </a>
+                                </div>
+                                <span class="productCode">Код: {{ $product->code }}</span>
+                                <a href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}" class="d-block">
+                                    {{ $product["name_$lang"] }}
+                                </a>
+                                <span class="productPrice">{{ RUB }}{{ priceString(@$product->prices->first()->price) }}</span>
+                            </div>
+                        @endforeach
+
+                    </div>
+                    <!--<a href="#" class="btn btnStore">Все товары</a>-->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--
+    <div class="space-1">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h3>Лучшие поставщики</h3>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="space-1 bg-gray-7">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Вы поставщик?</h3>
+                    Привлекайте новых клиентов 
+                    Разместите все свои товары на портале и они мгновенно будут доступны миллионам предпринимателей со всех уголков России: от Калининграда до Владивостока
+
+                    Доступность для каждого 
+                    Клиенты легко найдут ваши контакты в любое время. Ваши продажи теперь не зависят от форс-мажоров, погодных условий и карантинов.
+
+                    Не нужно создавать свой сайт 
+                    Каждому пользователь может создать свой сайт всего за 30 минут. И сэкономить от 100 тыс. рублей на разработку и рекламу
+
+                    <a href="#">Подробнее</a>
+                </div>
+                <div class="col-md-6">
+                    <h4>Начать продавать</h4>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" name="name" class="form-control" placeholder="Ваше имя*">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="email" class="form-control" placeholder="E-mail*">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="phone" class="form-control" placeholder="Телефон*">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Стать поставщиком</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>-->
 @stop
 

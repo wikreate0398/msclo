@@ -401,3 +401,53 @@ body.u-unfold-opened {
     position: fixed;
     width: 100%;
 }
+
+/*Новый диз по главной*/
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+.headerBlock{
+    font-size: 36px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    margin-bottom: 40px;
+}
+.homeProductCarusel{
+    position: relative;
+}
+.homeProductCarusel a{
+    color: #333333;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+}
+.homeProductCarusel .productCode{
+    color:  #828282;
+    font-size: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+.homeProductCarusel .productPrice{
+    color: #2F80ED;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    margin-top:10px;
+}
+.homeProductCarusel .productImage{
+    position: relative;
+}
+.homeProductCarusel .productFavorites{
+    position: absolute;
+    right: 23.5px;
+    top: 23.5px;
+}
+.homeProductCarusel .productAddCart{
+    position: absolute;
+    right: 23.5px;
+    bottom: 23.5px;
+}
+
+.btnStore{
+    background: #7FD9CF;
+    border-radius: 0px;
+}

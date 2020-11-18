@@ -413,6 +413,7 @@ body.u-unfold-opened {
 }
 .homeProductCarusel{
     position: relative;
+    padding: 0 15px;
 }
 .homeProductCarusel a{
     color: #333333;

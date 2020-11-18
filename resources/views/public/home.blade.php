@@ -56,12 +56,10 @@
             </div>
         </div>
     </div>
-    <!-- End Slider Section -->
 
-    <div class="container">
+    {{-- <div class="container">
 
     @if($banners->count())
-        <!-- Banner -->
             <div class="mb-5">
                 <div class="row mb-6 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
 
@@ -92,11 +90,9 @@
                     @endforeach
                 </div>
             </div>
-            <!-- End Banner -->
         @endif
 
         <div class="mb-6 row border rounded-lg mx-0 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-            <!-- Feature List -->
             <div class="media col px-6 px-xl-4 px-wd-8 flex-shrink-0 flex-xl-shrink-1 min-width-270-all py-3">
                 <div class="u-avatar mr-2">
                     <i class="text-primary ec ec-transport font-size-46"></i>
@@ -106,9 +102,6 @@
                     <div class=" text-secondary">от 3000{{ RUB }}</div>
                 </div>
             </div>
-            <!-- End Feature List -->
-
-            <!-- Feature List -->
             <div class="media col px-6 px-xl-4 px-wd-8 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
                 <div class="u-avatar mr-2">
                     <i class="text-primary ec ec-tag font-size-46"></i>
@@ -118,9 +111,6 @@
                     <div class=" text-secondary">Брэнды</div>
                 </div>
             </div>
-            <!-- End Feature List -->
-
-            <!-- Feature List -->
             <div class="media col px-6 px-xl-4 px-wd-8 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
                 <div class="u-avatar mr-2">
                     <i class="text-primary ec ec-returning font-size-46"></i>
@@ -130,9 +120,6 @@
                     <div class=" text-secondary">Для возврата</div>
                 </div>
             </div>
-            <!-- End Feature List -->
-
-            <!-- Feature List -->
             <div class="media col px-6 px-xl-4 px-wd-8 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
                 <div class="u-avatar mr-2">
                     <i class="text-primary ec ec-payment font-size-46"></i>
@@ -143,21 +130,15 @@
                 </div>
             </div>
         </div>
-        <!-- Deals-and-tabs -->
         <div class="mb-5 home-tags">
             <div class="row">
-                <!-- Deal -->
                 <div class="col-md-auto mb-6 mb-md-0">
                     <div class="p-3 bg-white min-width-370">
                         <img src="/img/banner1.jpg" alt="" style="min-width: 100%;">
                     </div>
                 </div>
-                <!-- End Deal -->
-                <!-- Tab Prodcut -->
                 <div class="col">
-                    <!-- Features Section -->
                     <div class="">
-                        <!-- Nav Classic -->
                         <div class="position-relative bg-white text-center z-index-2">
                             <ul class="nav nav-classic nav-tab justify-content-center" id="pills-tab" role="tablist">
                                 @foreach($tags as $key => $tag)
@@ -171,9 +152,6 @@
                                 @endforeach
                             </ul>
                         </div>
-                        <!-- End Nav Classic -->
-
-                        <!-- Tab Content -->
                         <div class="tab-content" id="pills-tabContent">
                             @foreach($tags as $key => $tag)
                                 <div class="tab-pane fade pt-2 {{ !$key ? 'show active' : '' }}" id="tag-tab-{{ $tag->id }}" role="tabpanel" aria-labelledby="tag-tab-{{ $tag->id }}-control">
@@ -187,14 +165,10 @@
                                 </div>
                             @endforeach
                         </div>
-                        <!-- End Tab Content -->
                     </div>
-                    <!-- End Features Section -->
                 </div>
-                <!-- End Tab Prodcut -->
             </div>
         </div>
-        <!-- End Deals-and-tabs -->
     </div>
 
     @if($cats->count())
@@ -280,12 +254,11 @@
                         </div>
                     @endforeach
                 </div>
-                <!-- End Tab Content -->
             </div>
         </div>
-    @endif
+    @endif --}}
 
-    <div class="mb-6">
+    {{-- <div class="mb-6">
         <div class="container">
             <div class="row min-height-564 align-items-center">
                 <div class="col-12 col-lg-4 col-xl-5 col-wd-6 d-none d-md-block">
@@ -351,19 +324,19 @@
 
                                 </ul>
                             </div>
-                        @endforeach
+                        @endforeach 
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
-    <div class="container">
+    {{-- <div class="container">
         @if($brands->count())
             <div class="mb-8 mt-8">
                 @include('public/blocks/brands')
             </div>
         @endif
-    </div>
+    </div> --}}
     <!--
     <div class="space-1">
         <div class="container">
@@ -473,13 +446,52 @@
             </div>
         </div>
     </div>
-    <!--
+    
     <div class="space-1">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h3>Лучшие поставщики</h3>
-                    
+                    <h3 class="headerBlock">Лучшие поставщики</h3>
+                    <div class="js-slick-carousel position-static u-slick u-slick--gutters-2 u-slick overflow-hidden u-slick-overflow-visble py-5"
+                         data-slides-show="3"
+                         data-slides-scroll="1"
+                         data-arrows-classes="position-absolute top-0 font-size-17 u-slick__arrow-normal top-10 pt-6 pt-md-0"
+                         data-arrow-left-classes="fa fa-angle-left right-2"
+                         data-arrow-right-classes="fa fa-angle-right right-1"
+                         data-pagi-classes="text-center right-0 bottom-1 left-0 u-slick__pagination u-slick__pagination--long mb-0 z-index-n1 mt-4">
+                            @foreach($providers as $provider)
+                                <div class="js-slide homeProviderCarusel">
+                                    <div class="homeProviderInfo">
+                                        <span class="homeProviderName">{{ $provider['name'] }}</span>
+                                        <span class="homeCategoryProvider">
+                                        @foreach($providersCats[$provider->id]->sortByDesc('countProducts')->take(1) as $provider_cat)
+                                            {{ $provider_cat['category_data']["name_$lang"] }}
+                                        @endforeach
+                                        @if($providersCats[$provider->id]->count() > 1)
+                                            и ещё {{ $providersCats[$provider->id]->count() - 1}}
+                                        @endif
+                                        </span>
+                                        <span class="productProviderCount">
+                                        Кол-во товара
+                                        </span>
+                                    </div>
+                                    <div class="homeProviderImage">
+                                        <img class="img-fluid" src="{{ imageThumb($provider->image, 'uploads/users', 150, 140, '150X140') }}" alt="Поставщик {{ $provider['name'] }}">
+                                    </div>
+                                    <div class="homeProviderBtn">
+                                        <a href="{{ route('view_provider', ['lang' => $lang, 'id' => $provider->id]) }}" class="max-width-120 d-block">
+                                            Подробнее
+                                        </a>
+                                    </div>
+                                </div>
+                            @endforeach
+                    </div>
+
+
+
+
+
+
                 </div>
             </div>
         </div>
@@ -489,35 +501,36 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h3>Вы поставщик?</h3>
-                    Привлекайте новых клиентов 
-                    Разместите все свои товары на портале и они мгновенно будут доступны миллионам предпринимателей со всех уголков России: от Калининграда до Владивостока
+                    <div class="textProviderAction">
+                        <h3 class="headerBlock">Вы поставщик?</h3>
+                        <p><strong>Привлекайте новых клиентов</strong> <br><br>Разместите все свои товары на портале и они мгновенно будут доступны миллионам предпринимателей со всех уголков России: от Калининграда до Владивостока</p>
 
-                    Доступность для каждого 
-                    Клиенты легко найдут ваши контакты в любое время. Ваши продажи теперь не зависят от форс-мажоров, погодных условий и карантинов.
+                        <p><strong>Доступность для каждого</strong> <br><br>Клиенты легко найдут ваши контакты в любое время. Ваши продажи теперь не зависят от форс-мажоров, погодных условий и карантинов.</p>
 
-                    Не нужно создавать свой сайт 
-                    Каждому пользователь может создать свой сайт всего за 30 минут. И сэкономить от 100 тыс. рублей на разработку и рекламу
+                        <p><strong>Не нужно создавать свой сайт</strong> <br><br>Каждому пользователь может создать свой сайт всего за 30 минут. И сэкономить от 100 тыс. рублей на разработку и рекламу</p>
 
-                    <a href="#">Подробнее</a>
+                        <a href="#">Подробнее</a>
+                    </div>
                 </div>
                 <div class="col-md-6">
-                    <h4>Начать продавать</h4>
-                    <form>
-                        <div class="form-group">
-                            <input type="text" name="name" class="form-control" placeholder="Ваше имя*">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="email" class="form-control" placeholder="E-mail*">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="phone" class="form-control" placeholder="Телефон*">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Стать поставщиком</button>
-                    </form>
+                    <div class="formProviderAction">
+                        <h4>Начать продавать</h4>
+                        <form>
+                            <div class="form-group">
+                                <input type="text" name="name" class="form-control" placeholder="Ваше имя*">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="email" class="form-control" placeholder="E-mail*">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="phone" class="form-control" placeholder="Телефон*">
+                            </div>
+                            <button type="submit" class="btn btnStore">Стать поставщиком</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>-->
+    </div>
 @stop
 

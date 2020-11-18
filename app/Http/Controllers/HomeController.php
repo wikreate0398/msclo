@@ -30,10 +30,10 @@ class HomeController extends Controller
         $banners    = Banner::getAll();
         $advantages = Advantage::getAll();
         $tags       = Tag::getHome();
-        $products    = Product::latest()->limit(10)->get();
+        $products    = Product::latest()->limit(5)->get();
         $cats       = Category::getWithProducts();
         $brands     = Brand::getAll();
-        $providers  = User::getHomeProviders()->chunk(4);
+        $providers  = User::getHomeProviders();
         $providersCats = $this->providerRepository->getCatsGroupedByProviders();
 
         return view('public/home', compact('sliders', 'banners', 'advantages', 'tags', 'products', 'cats', 'brands', 'providers', 'providersCats'));

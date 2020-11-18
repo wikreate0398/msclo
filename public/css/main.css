@@ -441,11 +441,14 @@ body.u-unfold-opened {
     position: absolute;
     right: 23.5px;
     top: 23.5px;
+    font-size: 21px;
 }
 .homeProductCarusel .productAddCart{
     position: absolute;
     right: 23.5px;
     bottom: 23.5px;
+    color: #00B8A3;
+    font-size: 24px;
 }
 
 .btnStore{

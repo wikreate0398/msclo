@@ -427,6 +427,7 @@
                         data-slides-scroll="1"
                         data-arrows-classes="d-none d-lg-inline-block u-slick__arrow-normal u-slick__arrow-centered--y"
                         data-arrow-left-classes="fa fa-angle-left u-slick__arrow-classic-inner--left z-index-9"
+                        data-center-padding="30px"
                         data-arrow-right-classes="fa fa-angle-right u-slick__arrow-classic-inner--right"
                         data-responsive='[{
                             "breakpoint": 992,
@@ -447,7 +448,7 @@
                          @foreach($products as $product)
                             <div class="js-slide homeProductCarusel">
                                 <div class="productImage">
-                                    <img class="img-fluid product-list-image-v2" src="{{ imageThumb(@$product->images->first()->image, 'uploads/products', 720, 0, '720X0') }}" alt="Image Description">
+                                    <img class="img-fluid" src="{{ imageThumb(@$product->images->first()->image, 'uploads/products', 720, 0, '720X0') }}" alt="Image Description">
                                     <a href="javascript:;"
                                         class="productFavorites fav-icon fav-icon-{{ $product->id }} {{ sessArray('favorites')->exist($product->id) ? 'active' : '' }}"
                                         onclick="addToFav(this, {{ $product->id }}); return false;">

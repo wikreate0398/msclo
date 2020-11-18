@@ -30,7 +30,7 @@ class HomeController extends Controller
         $banners    = Banner::getAll();
         $advantages = Advantage::getAll();
         $tags       = Tag::getHome();
-        $products    = Product::limit(10)->get();
+        $products    = Product::latest()->limit(10)->get();
         $cats       = Category::getWithProducts();
         $brands     = Brand::getAll();
         $providers  = User::getHomeProviders()->chunk(4);

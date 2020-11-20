@@ -1,7 +1,7 @@
 @extends('layouts.public')
 
 @section('content')
-    <div class="mb-5">
+    <div class="mb-5 d-none d-sm-block">
         <div class="bg-img-hero home-slider">
             <div class="min-height-420 overflow-hidden">
                 <div class="js-slick-carousel u-slick"
@@ -337,11 +337,11 @@
             </div>
         @endif
     </div> --}}
-    <div class="space-1">
+    <div class="space-1 space-sm-2">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h3 class="headerBlock">Категории</h3>
+                    <h3 class="headerBlock d-none d-sm-block">Категории</h3>
                     <div class="row">
                         @foreach($cats as $category)
                         <div class="col-md-4">
@@ -403,26 +403,24 @@
         </div>
     </div>
 
-    <div class="space-1 bg-gray-7">
+    <div class="space-1 space-sm-2 bg-gray-7">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h3 class="headerBlock">Товары месяца</h3>
-                    <div class="js-slick-carousel u-slick my-1"
+                    <h3 class="headerBlock">Популярные товары</h3>
+                    <div class="js-slick-carousel u-slick slick_product_home"
                         data-slides-show="5"
                         data-slides-scroll="1"
                         data-arrows-classes="d-none d-lg-inline-block u-slick__arrow-normal u-slick__arrow-centered--y"
-                        data-arrow-left-classes="fa fa-angle-left u-slick__arrow-classic-inner--left z-index-9"
-                        data-arrow-right-classes="fa fa-angle-right u-slick__arrow-classic-inner--right"
                         data-responsive='[{
                             "breakpoint": 992,
                             "settings": {
-                                "slidesToShow": 2
+                                "slidesToShow": 3
                             }
                         }, {
                             "breakpoint": 768,
                             "settings": {
-                                "slidesToShow": 1
+                                "slidesToShow": 2
                             }
                         }, {
                             "breakpoint": 554,
@@ -454,24 +452,37 @@
                         @endforeach
 
                     </div>
-                    <!--<a href="#" class="btn btnStore">Все товары</a>-->
+                    <a href="/ru/catalog/zhenschinam-39" class="btn btnStore d-none d-sm-block">Все товары</a>
                 </div>
             </div>
         </div>
     </div>
     
-    <div class="space-1">
+    <div class="space-1 space-sm-2">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h3 class="headerBlock">Лучшие поставщики</h3>
+                    <h3 class="headerBlock">Поставщики</h3>
                     <div class="js-slick-carousel position-static u-slick u-slick--gutters-2 u-slick overflow-hidden u-slick-overflow-visble py-5"
                          data-slides-show="3"
                          data-slides-scroll="1"
-                         data-arrows-classes="position-absolute top-0 font-size-17 u-slick__arrow-normal top-10 pt-6 pt-md-0"
-                         data-arrow-left-classes="fa fa-angle-left right-2"
-                         data-arrow-right-classes="fa fa-angle-right right-1"
-                         data-pagi-classes="text-center right-0 bottom-1 left-0 u-slick__pagination u-slick__pagination--long mb-0 z-index-n1 mt-4">
+                         data-pagi-classes="text-center right-0 bottom-1 left-0 u-slick__pagination u-slick__pagination--long mb-0 z-index-n1 mt-4"
+                         data-responsive='[{
+                            "breakpoint": 992,
+                            "settings": {
+                                "slidesToShow": 3
+                            }
+                        }, {
+                            "breakpoint": 768,
+                            "settings": {
+                                "slidesToShow": 2
+                            }
+                        }, {
+                            "breakpoint": 554,
+                            "settings": {
+                                "slidesToShow": 1
+                            }
+                        }]'>
                             @foreach($providers as $provider)
                                 <div class="js-slide homeProviderCarusel">
                                     <div class="homeProviderInfo">
@@ -499,20 +510,14 @@
                                 </div>
                             @endforeach
                     </div>
-
-
-
-
-
-
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="space-1 bg-gray-7">
+    <div class="space-1 space-sm-2 bg-gray-7 d-none d-sm-block">
         <div class="container">
-            <div class="row">
+            <div class="row align-items-center">
                 <div class="col-md-6">
                     <div class="textProviderAction">
                         <h3 class="headerBlock">Вы поставщик?</h3>
@@ -522,7 +527,7 @@
 
                         <p><strong>Не нужно создавать свой сайт</strong> <br><br>Каждому пользователь может создать свой сайт всего за 30 минут. И сэкономить от 100 тыс. рублей на разработку и рекламу</p>
 
-                        <a href="#">Подробнее</a>
+                        <a href="/ru/for-providers">Подробнее</a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -538,7 +543,7 @@
                             <div class="form-group">
                                 <input type="text" name="phone" class="form-control" placeholder="Телефон*">
                             </div>
-                            <button type="submit" class="btn btnStore">Стать поставщиком</button>
+                            <button type="submit" class="btn btnStore btnProvider">Стать поставщиком</button>
                         </form>
                     </div>
                 </div>

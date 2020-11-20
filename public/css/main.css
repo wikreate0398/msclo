@@ -407,9 +407,13 @@ body.u-unfold-opened {
 
 .headerBlock{
     font-size: 36px;
+    line-height: 36px;
     font-family: 'Montserrat', sans-serif;
-    font-weight: 800;
-    margin-bottom: 40px;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+.slick_product_home{
+    margin-bottom: 50px;
 }
 .homeProductCarusel{
     position: relative;
@@ -432,21 +436,23 @@ body.u-unfold-opened {
     font-size: 14px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 500;
-    margin-top:10px;
+    margin-top:15px;
+    display: block;
 }
 .homeProductCarusel .productImage{
     position: relative;
+    margin-bottom: 20px;
 }
 .homeProductCarusel .productFavorites{
     position: absolute;
-    right: 23.5px;
-    top: 23.5px;
+    right: 17.5px;
+    top: 17.5px;
     font-size: 21px;
 }
 .homeProductCarusel .productAddCart{
     position: absolute;
-    right: 23.5px;
-    bottom: 23.5px;
+    right: 17.5px;
+    bottom: 17.5px;
     color: #00B8A3;
     font-size: 24px;
 }
@@ -454,6 +460,10 @@ body.u-unfold-opened {
 .btnStore{
     background: #7FD9CF;
     border-radius: 0px;
+}
+.btnProvider{
+    text-transform: uppercase;
+    font-weight: 700;
 }
 .homeProviderCarusel{
     position: relative;
@@ -553,8 +563,34 @@ body.u-unfold-opened {
     line-height: 22px;
     color: #000;
 }
+.homeCategory img{
+    border-radius: 9px;
+}
 .homeDescCategory{
     position: absolute;
     bottom: 30px;
     left: 30px;
+}
+
+
+@media (max-width: 575.98px) {
+    .headerBlock{
+        text-align: center;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    
+}
+
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    
+}
+
+@media (min-width: 1200px) {
+
 }

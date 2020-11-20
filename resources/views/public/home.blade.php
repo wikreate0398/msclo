@@ -347,7 +347,7 @@
                         <div class="col-md-4">
                             <div class="homeCategory">
                             <a href="{{ route('view_catalog', ['lang' => lang(), 'url' => $category->url]) }}" class="d-block">
-                            <img src="/uploads/categories/{{ $category->image }}">
+                            <img src="/uploads/categories/{{ $category->image }}" class="img-fluid">
                             <div class="homeDescCategory">
                                 <a href="{{ route('view_catalog', ['lang' => lang(), 'url' => $category->url]) }}" class="d-block">
                                     {{ $category["name_$lang"] }}

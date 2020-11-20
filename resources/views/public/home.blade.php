@@ -337,18 +337,31 @@
             </div>
         @endif
     </div> --}}
-    <!--
     <div class="space-1">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h3>Категории</h3>
-                    
+                    <h3 class="headerBlock">Категории</h3>
+                    <div class="row">
+                        @foreach($cats as $category)
+                        <div class="col-md-4">
+                            <div class="homeCategory">
+                            <a href="{{ route('view_catalog', ['lang' => lang(), 'url' => $category->url]) }}" class="d-block">
+                            <img src="/uploads/categories/{{ $category->image }}">
+                            <div class="homeDescCategory">
+                                <a href="{{ route('view_catalog', ['lang' => lang(), 'url' => $category->url]) }}" class="d-block">
+                                    {{ $category["name_$lang"] }}
+                                </a>
+                            </div>
+                            </a>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    -->
     <div class="container">
         <div class="mb-6 row rounded-lg mx-0 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
             <div class="media col px-6 px-xl-4 flex-shrink-0 flex-xl-shrink-1 min-width-270-all py-3">

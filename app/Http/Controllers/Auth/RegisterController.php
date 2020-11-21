@@ -16,6 +16,7 @@ use App\Models\UserType;
 use App\Models\LocationUser;
 
 use App\Mail\RegisterProvider;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -136,6 +137,7 @@ class RegisterController extends Controller
                 'name'             => $request->name,
                 'type'             => $request->type,
                 'email'            => $request->email,
+                'phone'            => $request->phone,
                 'confirm_hash'     => $confirm_hash,
                 'password'         => bcrypt($password),
                 'lang'             => lang(),

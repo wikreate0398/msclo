@@ -15,6 +15,8 @@ use App\Models\User;
 use App\Models\UserType;
 use App\Models\LocationUser;
 
+use App\Mail\RegisterProvider;
+
 class RegisterController extends Controller
 {
     /*
@@ -142,8 +144,10 @@ class RegisterController extends Controller
 
             $user->notify(new ConfirmRegistration($confirm_hash, lang()));
 
+            Mail::to(\Constant::get($request->email))->send(new RegisterProvider($request->email, $password));
+
             return \JsonResponse::success([
-                'messages' => 'Мы отправили на Вашу почту письмо с подтверждением регистрации.' . $password
+                'messages' => 'Мы отправили на Вашу почту письмо с подтверждением регистрации.'
             ]);
 
         } catch (\ValidationError $e) {

@@ -118,7 +118,7 @@ class RegisterController extends Controller
     public function registerProvider(Request $request)
     {
         try {
-            if (!$request->name or !$request->email || !$request->accept_terms) {
+            if (!$request->name or !$request->email) {
                 throw new \ValidationError('Заполните все поля');
             }
 
@@ -145,7 +145,7 @@ class RegisterController extends Controller
             return \JsonResponse::success([
                 'messages' => 'Мы отправили на Вашу почту письмо с подтверждением регистрации.' . $password
             ]);
-            
+
         } catch (\ValidationError $e) {
             return \JsonResponse::error(['messages' => $e->getMessage()]);
         }

@@ -16,7 +16,6 @@ use App\Models\UserType;
 use App\Models\LocationUser;
 
 use App\Mail\RegisterProvider;
-use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {

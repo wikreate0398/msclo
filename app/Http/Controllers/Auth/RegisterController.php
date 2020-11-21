@@ -114,4 +114,40 @@ class RegisterController extends Controller
         }
         return redirect()->route('home');
     }
+
+    public function registerProvider(Request $request)
+    {
+        try {
+            if (!$request->name or !$request->email || !$request->accept_terms) {
+                throw new \ValidationError('Заполните все поля');
+            }
+
+            if (User::where('email', $request->email)->count()) {
+                throw new \ValidationError('Пользователь с таким e-mail адоресом уже существует');
+            }
+
+            $password = str_random(10);
+
+            $confirm_hash = md5(microtime());
+
+            $user = User::create([
+                'name'             => $request->name,
+                'type'             => $request->type,
+                'email'            => $request->email,
+                'confirm_hash'     => $confirm_hash,
+                'password'         => bcrypt($password),
+                'lang'             => lang(),
+                // 'accept_terms'     => $request->accept_terms
+            ]);
+
+            $user->notify(new ConfirmRegistration($confirm_hash, lang()));
+
+            return \JsonResponse::success([
+                'messages' => 'Мы отправили на Вашу почту письмо с подтверждением регистрации.' . $password
+            ]);
+            
+        } catch (\ValidationError $e) {
+            return \JsonResponse::error(['messages' => $e->getMessage()]);
+        }
+    }
 }

@@ -452,7 +452,7 @@
                         @endforeach
 
                     </div>
-                    <a href="/ru/catalog/zhenschinam-39" class="btn btnStore d-none d-sm-block">Все товары</a>
+                    <span class="d-none d-sm-block"><a href="/ru/catalog/zhenschinam-39" class="btn btnStore">Все товары</a></span>
                 </div>
             </div>
         </div>
@@ -533,7 +533,9 @@
                 <div class="col-md-6">
                     <div class="formProviderAction">
                         <h4>Начать продавать</h4>
-                        <form>
+                        <form action="{{ route('register_provider', compact('lang')) }}" class="ajax__submit">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="type" value="provider">
                             <div class="form-group">
                                 <input type="text" name="name" class="form-control" placeholder="Ваше имя*">
                             </div>
@@ -544,6 +546,9 @@
                                 <input type="text" name="phone" class="form-control" placeholder="Телефон*">
                             </div>
                             <button type="submit" class="btn btnStore btnProvider">Стать поставщиком</button>
+                            <div class="form-group">
+                                Нажимая на кнопку «Стать поставщиком», я принимаю условия <a href="{{ setUri(\Pages::getUriByType('privacy')) }}" target="_blank">Пользовательского соглашения</a>
+                            </div>
                         </form>
                     </div>
                 </div>

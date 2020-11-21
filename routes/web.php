@@ -238,6 +238,8 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
         Route::post('register', 'Auth\RegisterController@register')->name('register_user');
         Route::get('registration-confirm/{confirmation_hash}', 'Auth\RegisterController@confirmation')->name('registration_confirm');
 
+        Route::post('register-provider', 'Auth\RegisterController@registerProvider')->name('register_provider');
+
         Route::post('login', 'Auth\LoginController@login')->name('login');
         Route::post('reset-password', 'Auth\ForgotPasswordController@sendResetPassword')->name('send_reset_pass');
     });

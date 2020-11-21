@@ -89,7 +89,7 @@
 <footer>
 
     <!-- Footer-newsletter -->
-    <div class="bg-primary py-3">
+    <div class="bg-primary py-3 d-none d-sm-block">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-7 mb-md-3 mb-lg-0">
@@ -122,18 +122,18 @@
     </div>
     <!-- End Footer-newsletter -->
     <!-- Footer-bottom-widgets -->
-    <div class="pt-8 pb-4 bg-gray-13">
-        <div class="container mt-1">
+    <div class="pt-4 pt-sm-8 pb-4 bg-gray-13">
+        <div class="container mt-1 text-center text-sm-left">
             <div class="row">
                 <div class="col-lg-5">
-                    <div class="mb-6">
+                    <div class="mb-3 mb-sm-6">
                         <a href="#" class="d-inline-block">
                             <img src="/img/logo.png" style="max-width: 250px;">
                         </a>
                     </div>
                     <div class="mb-4">
                         <div class="row no-gutters">
-                            <div class="col-auto">
+                            <div class="col-12 col-sm-auto">
                                 <i class="ec ec-support text-primary font-size-56"></i>
                             </div>
                             <div class="col pl-3">
@@ -181,7 +181,7 @@
                         @endif
                     </ul>
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg-7 d-none d-sm-block">
                     <div class="row">
 
                         <div class="col-12 col-md mb-4 mb-md-0">

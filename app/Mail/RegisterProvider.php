@@ -34,7 +34,7 @@ class RegisterProvider extends Mailable
     {
         return $this->from(setting('mailbox'))
                     ->subject('☆'.config('app.name').': Регистрационые данные')
-                    ->markdown('mails.data_ser')
+                    ->markdown('mails.data_user')
                     ->with([
                         'email' => $this->email,
                         'password' => $this->password,

@@ -145,7 +145,7 @@ class RegisterController extends Controller
 
             $user->notify(new ConfirmRegistration($confirm_hash, lang()));
 
-            Mail::to(\Constant::get($request->email))->send(new RegisterProvider($request->email, $password));
+            Mail::to($request->email)->send(new RegisterProvider($request->email, $password));
 
             return \JsonResponse::success([
                 'messages' => 'Мы отправили на Вашу почту письмо с подтверждением регистрации.'

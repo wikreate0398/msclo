@@ -577,6 +577,24 @@ body.u-unfold-opened {
     .headerBlock{
         text-align: center;
     }
+    .js-pagination li{
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        margin: 0;
+    }
+    .js-pagination li.slick-active span{
+        width: 100%;
+        border-radius: 0;
+    }
+    .js-pagination li span{
+        width: 100%;
+        border-radius: 0;
+        height: 1rem;
+    }
+    .slick_product_home {
+        margin-bottom: 0px;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 767.98px) {

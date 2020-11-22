@@ -363,7 +363,7 @@
         </div>
     </div>
     <div class="container">
-        <div class="mb-6 row rounded-lg mx-0 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
+        <div class="mb-6 row rounded-lg mx-0 flex-xl-wrap overflow-auto overflow-xl-visble">
             <div class="media col px-6 px-xl-4 flex-shrink-0 flex-xl-shrink-1 min-width-270-all py-3">
                 <div class="u-avatar mr-2">
                     <i class="text-primary ec ec-transport font-size-46"></i>
@@ -373,7 +373,7 @@
                     <div class=" text-secondary">от 3000{{ RUB }}</div>
                 </div>
             </div>
-            <div class="media col px-6 px-xl-4 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
+            <div class="media col px-6 px-xl-4 flex-shrink-0 flex-xl-shrink-1 min-width-270-all py-3">
                 <div class="u-avatar mr-2">
                     <i class="text-primary ec ec-tag font-size-46"></i>
                 </div>
@@ -382,7 +382,7 @@
                     <div class=" text-secondary">Брэнды</div>
                 </div>
             </div>
-            <div class="media col px-6 px-xl-4 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
+            <div class="media col px-6 px-xl-4 flex-shrink-0 flex-xl-shrink-1 min-width-270-all py-3">
                 <div class="u-avatar mr-2">
                     <i class="text-primary ec ec-returning font-size-46"></i>
                 </div>
@@ -391,7 +391,7 @@
                     <div class=" text-secondary">Для возврата</div>
                 </div>
             </div>
-            <div class="media col px-6 px-xl-4 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
+            <div class="media col px-6 px-xl-4 flex-shrink-0 flex-xl-shrink-1 min-width-270-all py-3">
                 <div class="u-avatar mr-2">
                     <i class="text-primary ec ec-payment font-size-46"></i>
                 </div>
@@ -411,7 +411,7 @@
                     <div class="js-slick-carousel u-slick slick_product_home"
                         data-slides-show="5"
                         data-slides-scroll="1"
-                        data-arrows-classes="d-none d-lg-inline-block u-slick__arrow-normal u-slick__arrow-centered--y"
+                        data-pagi-classes="text-center right-0 bottom-1 left-0 u-slick__pagination u-slick__pagination--long mb-0 z-index-n1 mt-4"
                         data-responsive='[{
                             "breakpoint": 992,
                             "settings": {

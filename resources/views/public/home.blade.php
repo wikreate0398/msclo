@@ -5,7 +5,8 @@
         <div class="bg-img-hero home-slider">
             <div class="min-height-420 overflow-hidden">
                 <div class="js-slick-carousel u-slick"
-                     data-pagi-classes="text-center position-absolute right-0 bottom-0 left-0 u-slick__pagination u-slick__pagination--long mb-3 mb-md-4 pl-2 pb-1">
+                     data-pagi-classes="text-center position-absolute right-0 bottom-0 left-0 u-slick__pagination u-slick__pagination--long mb-3 mb-md-4 pl-2 pb-1"
+                     data-autoplay="true">
 
                     @foreach($sliders as $key => $slider)
                         <div class="js-slide bg-img-hero-center"

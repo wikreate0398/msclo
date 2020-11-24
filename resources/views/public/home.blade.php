@@ -498,7 +498,7 @@
                                         @endif
                                         </span>
                                         <span class="productProviderCount">
-                                        Кол-во товара
+                                        {{ $provider->products->count() }} товаров
                                         </span>
                                     </div>
                                     <div class="homeProviderImage">

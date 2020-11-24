@@ -76,7 +76,7 @@ class CategoriesController extends Controller
         $data->fill($insertData)->save();
 
         try {
-            UploadImage::init('image', $this->folder)
+            UploadImage::init('image', $this->uploadFolder)
                         ->upload()
                         ->update($this->model, $id, 'image');
         } catch (\Exception $e) {

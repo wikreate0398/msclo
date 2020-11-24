@@ -40,7 +40,8 @@
 
                                 <td data-title="Unit Price">
                                     @if($product->prices->count())
-                                        <span class="">{{ RUB }}{{ priceString($product->prices->first()->price) }}</span>
+                                        <span class="">{{ priceString($product->prices->first()->price) }} Р</span>
+                                        {{-- {{ RUB }} --}}
                                     @else
                                         -
                                     @endif

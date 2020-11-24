@@ -12,7 +12,8 @@
             </div>
             <div class="flex-center-between mb-1">
                 <div class="prodcut-price">
-                    <div class="text-gray-100">{{ RUB }}{{ priceString(@$product->prices->first()->price) }}</div>
+                    <div class="text-gray-100">{{ priceString(@$product->prices->first()->price) }} Р</div>
+                    {{-- {{ RUB }} --}}
                 </div>
                 <div class="d-none d-xl-block prodcut-add-cart">
                     <a href="javascript:;"

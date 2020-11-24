@@ -51,7 +51,7 @@
                         </td>
 
                         <td data-title="Price">
-                            <span class="product-price-{{ $product['id'] }}-{{ $product['cart_id'] }}">{{ RUB }} {{ priceString($product['price']) }}</span>
+                            <span class="product-price-{{ $product['id'] }}-{{ $product['cart_id'] }}">{{ priceString($product['price']) }} Р</span>
                         </td>
 
                         <td data-title="Quantity">
@@ -88,7 +88,8 @@
 
                         <td data-title="Total">
                             <span class="total-product-price-{{ $product['id'] }}-{{ $product['cart_id'] }}">
-                                {{ RUB }} {{ priceString($product['price']*$product['qty']) }}
+                                {{ priceString($product['price']*$product['qty']) }} Р
+                                {{-- {{ RUB }} --}}
                             </span>
                         </td>
                     </tr>

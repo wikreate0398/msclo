@@ -21,18 +21,20 @@
                         $minPriceData = $product->prices->sortBy('price')->first();
                     @endphp
                     <ins class="font-size-25 text-decoration-none">
-                        {{ RUB }}
+                        {{-- {{ RUB }} --}}
                         <span class="product-price-{{ $product->id }}">
                             {{ priceString($price) }}
                         </span>
+                        Р
                     </ins>
                 </div>
                 @if($price > $minPriceData->price)
                     <span class="font-size-14 text-gray-6">
                         от {{ $minPriceData->quantity }}шт -
-                        {{ RUB }}
+                        {{-- {{ RUB }} --}}
                         {{ priceString($minPriceData->price) }}
                     </span>
+                    Р
                 @endif
             </div>
 

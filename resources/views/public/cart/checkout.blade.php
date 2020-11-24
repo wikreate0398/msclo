@@ -32,7 +32,7 @@
                                     @foreach($products as $product)
                                         <tr class="cart_item">
                                             <td>{{ $product['name'] }}&nbsp;<strong class="product-quantity">× {{ $product['qty'] }}</strong></td>
-                                            <td>{{ RUB }} {{ priceString($product['qty']*$product['price']) }}</td>
+                                            <td>{{ priceString($product['qty']*$product['price']) }} Р</td>
                                         </tr>
                                     @endforeach
 
@@ -40,7 +40,7 @@
                                     <tfoot>
                                     <tr>
                                         <th>Итого</th>
-                                        <td><strong>{{ RUB }} {{priceString(cart()->getTotalPrice())}}</strong></td>
+                                        <td><strong>{{priceString(cart()->getTotalPrice())}} Р</strong></td>
                                     </tr>
                                     </tfoot>
                                 </table>

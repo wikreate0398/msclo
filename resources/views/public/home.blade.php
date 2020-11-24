@@ -32,7 +32,7 @@
                                                  data-scs-animation-delay="300">
                                                 <span class="font-size-13">От</span>
                                                 <div class="font-size-50 font-weight-bold text-lh-45">
-                                                    <sup class="">{{ RUB }}</sup>{{ priceString($slider->product->price) }}
+                                                    {{ priceString($slider->product->price) }} <sup class=""> Р{{-- RUB --}}</sup>
                                                 </div>
                                             </div>
                                             <a href="{{ route('view_product', ['lang' => lang(), 'url' => $slider->product->url]) }}" class="btn btn-primary transition-3d-hover rounded-lg font-weight-normal py-2 px-md-7 px-3 font-size-16"
@@ -448,7 +448,8 @@
                                 <a href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}" class="d-block">
                                     {{ $product["name_$lang"] }}
                                 </a>
-                                <span class="productPrice">{{ RUB }}{{ priceString(@$product->prices->first()->price) }}</span>
+                                <span class="productPrice">{{ priceString(@$product->prices->first()->price) }} Р</span>
+                                {{-- <sup class="">{{ RUB }}</sup> --}}
                             </div>
                         @endforeach
 

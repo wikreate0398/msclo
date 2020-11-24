@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Catalog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Catalog\Category;
+use App\Utils\UploadImage;
 
 class CategoriesController extends Controller
 {
@@ -57,7 +58,8 @@ class CategoriesController extends Controller
         return view('admin.'.$this->folder.'.edit', [
             'method'        => $this->method,
             'table'         => $this->model->getTable(),
-            'data'          => $this->model->findOrFail($id), 
+            'data'          => $this->model->findOrFail($id),
+            'folder'        => $this->folder
         ]);
     }
 
@@ -70,6 +72,15 @@ class CategoriesController extends Controller
         ]);
 
         $data->fill($insertData)->save();
+
+        try {
+            UploadImage::init('image', $this->folder)
+                        ->upload()
+                        ->update($this->model, $id, 'image');
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+        
         return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save')); 
     }
 }

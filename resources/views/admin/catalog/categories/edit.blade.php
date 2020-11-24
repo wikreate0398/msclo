@@ -12,6 +12,14 @@
 					<div class="form-body" style="padding-top: 20px;">
 						@include('admin.utils.input', ['label' => 'Название', 'name' => 'name', 'lang' => true, 'data' => $data])
 					</div>
+					<div class="form-body" style="padding-top: 20px;">
+						@include('admin.utils.image', [
+						'inputName' => 'image',
+						'table'    => $table,
+						'folder'   => $folder,
+						'id'       => $data['id'],
+						'filename' => $data['image']])
+					</div>
 					<div class="form-actions">
 						<div class="btn-set pull-left">
 							<button type="submit" class="btn btn-success submit-btn">Сохранить</button>

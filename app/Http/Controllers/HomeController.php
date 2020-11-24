@@ -31,7 +31,7 @@ class HomeController extends Controller
         $advantages = Advantage::getAll();
         $tags       = Tag::getHome();
         $products    = Product::latest()->limit(5)->get();
-        $cats       = Category::getWithProducts();
+        $cats       = Category::getWithProducts()->random(6);
         $brands     = Brand::getAll();
         $providers  = User::getHomeProviders();
         $providersCats = $this->providerRepository->getCatsGroupedByProviders();

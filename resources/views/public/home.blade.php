@@ -445,7 +445,7 @@
                                     </a>
                                 </div>
                                 <span class="productCode">Код: {{ $product->code }}</span>
-                                <a href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}" class="d-block">
+                                <a href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}" class="productName d-block">
                                     {{ $product["name_$lang"] }}
                                 </a>
                                 <span class="productPrice">{{ priceString(@$product->prices->first()->price) }} Р</span>

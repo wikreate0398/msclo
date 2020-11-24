@@ -654,6 +654,10 @@
 <script src="/js/ajax.js?v={{ time() }}"></script>
 <script src="/js/profile.js?v={{ time() }}"></script>
 
+
+{{--Добавил скрипт автовысоты--}}
+<script src="/js/components/jquery.matchHeight-min.js"></script>
+
 <div class="popup" id="cart-popup" style="display: none">
     <div class="popup-content"></div>
 </div>
@@ -775,6 +779,9 @@
 
         // initialization of select picker
         $.HSCore.components.HSSelectPicker.init('.js-select');
+    });
+    $(function() {
+        $('.productName').matchHeight();
     });
 </script>
 

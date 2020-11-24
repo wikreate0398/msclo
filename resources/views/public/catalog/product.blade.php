@@ -22,7 +22,9 @@
                      data-nav-for="#sliderSyncingThumb">
                     @foreach($product->images as $image)
                         <div class="js-slide">
-                            <img class="img-fluid" src="{{ imageThumb($image->image, 'uploads/products', 720, 0, '720X0') }}" style="width: 100%" alt="">
+                            <a href="{{ imageThumb($image->image, 'uploads/products', 720, 0, '720X0') }}" data-fancybox="gallery">
+                                <img class="img-fluid" src="{{ imageThumb($image->image, 'uploads/products', 720, 0, '720X0') }}" style="width: 100%" alt="">
+                            </a>
                         </div>
                     @endforeach
                 </div>

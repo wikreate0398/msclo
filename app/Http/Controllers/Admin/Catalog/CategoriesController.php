@@ -13,6 +13,8 @@ class CategoriesController extends Controller
 
     private $folder = 'catalog.categories';
 
+    private $uploadFolder = 'categories';
+
     private $redirectRoute = 'admin_categories';
 
     private $returnDataFields = ['name'];
@@ -59,7 +61,7 @@ class CategoriesController extends Controller
             'method'        => $this->method,
             'table'         => $this->model->getTable(),
             'data'          => $this->model->findOrFail($id),
-            'folder'        => $this->folder
+            'folder'        => $this->uploadFolder,
         ]);
     }
 
@@ -80,7 +82,7 @@ class CategoriesController extends Controller
         } catch (\Exception $e) {
             return $e->getMessage();
         }
-        
+
         return \App\Utils\JsonResponse::success(['redirect' => route($this->redirectRoute)], trans('admin.save')); 
     }
 }

@@ -556,7 +556,7 @@ body.u-unfold-opened {
     position: absolute;
     bottom: 0px;
     left: 0px;
-    background: #7FD9CF;
+    background: rgba(127, 217, 207, 0.7);
     display: block;
     width: 100%;
     text-align: left;
@@ -569,7 +569,7 @@ body.u-unfold-opened {
     font-size: 0.875rem;
     line-height: 18px;
     color:#333e48;
-    padding: 15px 30px;
+    padding: 10px 30px;
 }
 .bg-birch{
     background: #7FD9CF;

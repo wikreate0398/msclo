@@ -345,7 +345,7 @@
                     <h3 class="headerBlock d-none d-sm-block">Категории</h3>
                     <div class="row">
                         @foreach($cats as $category)
-                        <div class="col-md-4">
+                        <div class="col-6 col-md-2">
                             <div class="homeCategory">
                             <a href="{{ route('view_catalog', ['lang' => lang(), 'url' => $category->url]) }}" class="d-block">
                                 <img src="/uploads/categories/{{ $category->image }}" class="img-fluid">

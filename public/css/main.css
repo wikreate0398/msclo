@@ -549,20 +549,27 @@ body.u-unfold-opened {
     border-radius: 9px;
     position: relative;
 }
-.homeCategory a{
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 22px;
-    color: #000;
-}
 .homeCategory img{
     border-radius: 9px;
 }
 .homeDescCategory{
     position: absolute;
-    bottom: 30px;
-    left: 30px;
+    bottom: 0px;
+    left: 0px;
+    background: #7FD9CF;
+    display: block;
+    width: 100%;
+    text-align: left;
+    border-radius: 0 0 9px 9px;
+}
+.homeDescCategory a{
+    padding: 15px 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.875rem;
+    line-height: 18px;
+    color:#333e48;
+    padding: 15px 30px;
 }
 .bg-birch{
     background: #7FD9CF;

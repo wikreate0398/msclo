@@ -432,7 +432,9 @@
                          @foreach($products as $product)
                             <div class="js-slide homeProductCarusel">
                                 <div class="productImage">
+                                    <a href="{{ route('view_product', ['lang' => lang(), 'url' => $product->url]) }}" class="d-block">
                                     <img class="img-fluid" src="{{ imageThumb(@$product->images->first()->image, 'uploads/products', 720, 0, '720X0') }}" alt="Image Description">
+                                    </a>
                                     <a href="javascript:;"
                                         class="productFavorites fav-icon fav-icon-{{ $product->id }} {{ sessArray('favorites')->exist($product->id) ? 'active' : '' }}"
                                         onclick="addToFav(this, {{ $product->id }}); return false;">

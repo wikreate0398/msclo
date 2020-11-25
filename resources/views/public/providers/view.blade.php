@@ -46,12 +46,14 @@
                         <div class="mb-2">
 
                             @foreach($providersCats[$provider->id]->sortByDesc('countProducts')->take(4) as $provider_cat)
+                                @if($provider_cat['category_data']['view'] == 1)
                                 <a href="{{ route('view_catalog', ['lang' => $lang, 'url' => $provider_cat['category_data']['url'], 'providers' => $provider->id]) }}"
                                    class="font-size-14 text-blue d-block"
                                    style="width: 100%; margin-bottom: 4px;">
                                     <i class="fa fa-angle-right"></i> &nbsp;
                                     {{ $provider_cat['category_data']["name_$lang"] }}
                                 </a>
+                                @endif
                             @endforeach
 
                         </div>

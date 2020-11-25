@@ -297,13 +297,13 @@ function adminMenu()
             'edit' => 'Редактировать'
         ],
 
-        'banners' => [
-            'name' => 'Баннера',
-            'icon' => '<i data-feather="layout"></i>',
-            'link' => '/'.config('admin.path').'/banners/',
-            'view' => true,
-            'edit' => 'Редактировать'
-        ],
+        // 'banners' => [
+        //     'name' => 'Баннера',
+        //     'icon' => '<i data-feather="layout"></i>',
+        //     'link' => '/'.config('admin.path').'/banners/',
+        //     'view' => true,
+        //     'edit' => 'Редактировать'
+        // ],
 
         'brands' => [
             'name' => 'Брэнды',

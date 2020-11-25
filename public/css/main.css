@@ -564,7 +564,7 @@ body.u-unfold-opened {
 }
 .homeDescCategory a{
     padding: 15px 30px;
-    font-family: 'Montserrat', sans-serif;
+    /* font-family: 'Montserrat', sans-serif; */
     font-weight: 700;
     font-size: 0.875rem;
     line-height: 18px;

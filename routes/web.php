@@ -205,6 +205,7 @@ Route::group(['prefix' => '{lang}', 'middleware' => ['lang', 'web', 'const']], f
     });
 
     Route::group(['prefix' => 'catalog'], function () {
+        Route::get('/', 'CatalogController@listCatalog');
         Route::get('search', 'CatalogController@search')->name('search');
         Route::get('/{url}', 'CatalogController@list')->name('view_catalog');
         Route::get('product/{url}', 'CatalogController@viewProduct')->name('view_product');

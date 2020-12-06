@@ -592,7 +592,10 @@ body.u-unfold-opened {
 .btnLogin{
     background: #fff;
 }
-
+.u-slick__arrow-classic {
+    color: #fff;
+    background-color: #7fd9cf;
+}
 @media (max-width: 575.98px) {
     .headerBlock{
         text-align: center;

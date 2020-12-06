@@ -41,6 +41,13 @@ class CatalogRepository implements CatalogRepositoryInterface
         return $data;
     }
 
+    //Список всех товаров для страницы каталога
+    public function getAllProducts($per_page = 20)
+    {
+        $data = Product::paginate($per_page);
+        return $data;
+    }
+
     public function getSearchProducts($query, $per_page)
     {
         return Product::search($query)

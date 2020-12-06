@@ -42,6 +42,28 @@ class CatalogController extends Controller
         return view('public/catalog/category', compact(['category', 'providers', 'catalog', 'filters', 'breads', 'moreCats', 'filterPrices']));
     }
 
+    public function listCatalog($lang, $url = false)
+    {
+        $category = Category::visible()->withCount('products')->orderByPageUp()->get();
+        //$allCats  = $this->repository->getCats()->keyBy('id');
+
+        //Получаем все id категорий
+        $catToArr = Category::where('view', 1)->withCount('products')->pluck('id');
+        $idsCats  = $catToArr;
+
+        //Список всех товаров
+        $catalog = $this->repository->getCategoryProducts($idsCats, request('per_page'));
+        //Фильтрация по цене
+        $filterPrices  = $this->repository->getMinMaxPrices($idsCats);
+        //Фильтры
+        $filters  = $this->repository->getFilters($idsCats);
+        //$breads   = $this->generateBreads($this->repository->getBreads($idsCats));
+        //Поставшики
+        $providers = $this->providerRep->getProvidersFilter($idsCats);
+
+        return view('public/catalog/catalog', compact(['category', 'providers', 'catalog', 'filters', 'filterPrices']));
+    }
+
     public function search(Request $request)
     {
         $crumb   = BreadFactory::init();
@@ -79,7 +101,7 @@ class CatalogController extends Controller
     private function generateBreads($items)
     {
         $crumb   = BreadFactory::init();
-        $crumb->add(Crumb::name('Каталог'));
+        $crumb->add(Crumb::name('Каталог')->link( setUri("catalog/") ) );
 
         foreach ($items as $item) {
             $crumb->add(

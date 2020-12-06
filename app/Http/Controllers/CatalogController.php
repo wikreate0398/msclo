@@ -27,7 +27,7 @@ class CatalogController extends Controller
     public function list($lang, $url)
     {
         $category = $this->repository->getCategory($url);
-        $moreCats = $category->childs->count() ? $category->childs : $this->repository->getSameCats($category->parent_id);
+        $moreCats = $category->childs->count() ? $category->childs->where('view', 1) : $this->repository->getSameCats($category->parent_id);
         $allCats  = $this->repository->getCats()->keyBy('id');
 
         $idsCats  = array_merge([$category->id], $this->repository->getSubcatsIds($allCats->toArray(), $category->id));

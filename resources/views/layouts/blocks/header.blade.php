@@ -330,7 +330,7 @@
                             <label class="sr-only" for="searchProduct">Поиск</label>
                             <div class="input-group">
                                 <div class="input-group-append">
-                                    <button class="btn btn-dark height-40 py-2 px-3" type="button" id="searchProduct1">
+                                    <button class="btn btn-dark height-40 py-2 px-3" type="submit" id="searchProduct1">
                                         <span class="ec ec-search font-size-24"></span>
                                     </button>
                                 </div>

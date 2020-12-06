@@ -57,7 +57,7 @@
                 {{-- <input type="hidden" id="cat" value="{{ uri(3) }}"> --}}
                 <input type="hidden" id="query" value="{{ request('query') }}">
 
-                {{-- @if(!empty($filters) && $filters->count() or (!empty($filterPrices) && $filterPrices['min'] && $filterPrices['max'] && $filterPrices['min'] != $filterPrices['max']))
+                @if(!empty($filters) && $filters->count() or (!empty($filterPrices) && $filterPrices['min'] && $filterPrices['max'] && $filterPrices['min'] != $filterPrices['max']))
                     <div class="mb-6">
                         <div class="border-bottom border-color-1 mb-5">
                             <h3 class="section-title section-title__sm mb-0 pb-2 font-size-18">Фильтр</h3>
@@ -149,10 +149,10 @@
                         @endif
 
                         @if(request('filter'))
-                            <a href="{{ setUri("catalog/{$category->url}") }}" class="btn btn-danger">Сбросить</a>
+                            <a href="{{ setUri("catalog/") }}" class="btn btn-danger">Сбросить</a>
                         @endif
                     </div>
-                @endif --}}
+                @endif
             </div>
             <div class="col-xl-9 col-wd-9gdot5">
                 <div class="d-block d-md-flex flex-center-between mb-3">

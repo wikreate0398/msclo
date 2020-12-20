@@ -137,7 +137,7 @@
                                 <i class="ec ec-support text-primary font-size-56"></i>
                             </div>
                             <div class="col pl-3">
-                                <div class="font-size-13 font-weight-light">Появились вопросы? Мы доступны 24/7!</div>
+                                <div class="font-size-13 font-weight-light">Появились вопросы?</div>
                                 @php $comma = ''; @endphp
                                 @foreach(explode(',', PHONE) as $key => $phone)
                                     {{ $comma }}
@@ -148,7 +148,7 @@
                         </div>
                     </div>
 
-                    <h6 class="font-weight-bold">Мы в соц-сетях</h6>
+                    {{-- <h6 class="font-weight-bold">Мы в соц-сетях</h6>
                     <ul class="list-inline mb-0 opacity-7">
                         @if(@FB)
                             <li class="list-inline-item mr-0">
@@ -179,7 +179,7 @@
                                 </a>
                             </li>
                         @endif
-                    </ul>
+                    </ul> --}}
                 </div>
                 <div class="col-lg-7 d-none d-sm-block">
                     <div class="row">
